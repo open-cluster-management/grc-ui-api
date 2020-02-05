@@ -1,20 +1,10 @@
 sudo: required
 language: node_js
 
-matrix:
-  include:
-    - os: linux-ppc64le
-      env: OSARCH=linux-ppc64le
-      dist: trusty
-    - os: linux
-      env: OSARCH=linux-amd64
-      dist: trusty
-    - os: linux-s390
-      env: OSARCH=linux-s390
-      dist: trusty
+os: linux
 
-cache:
-  apt: true
+services:
+  - docker
 
 branches:
   only:
@@ -24,48 +14,40 @@ branches:
     - /^v[0-9]+\..*$/
     - /^release-[0-9]+\..*$/
 
-services:
-  - docker
+env:
+  global:
+    # Required
+    - OS=linux
+    - COMPONENT_TAG_EXTENSION="-${TRAVIS_COMMIT}"
+    # Component Specific
+    - COMPONENT_INIT_COMMAND=${TRAVIS_BUILD_DIR}/build/install-dependencies.sh
+    - COMPONENT_BUILD_COMMAND=${TRAVIS_BUILD_DIR}/build/build.sh
+    - COMPONENT_UNIT_TEST_COMMAND=${TRAVIS_BUILD_DIR}/build/run-unit-tests.sh
+    - COMPONENT_E2E_TEST_COMMAND=${TRAVIS_BUILD_DIR}/build/run-e2e-tests.sh
 
-before_install:
+stages:
+  - build
+  - unit-test
+  - publish
+ 
+before_script:
   - make init
 
-install:
-  - npm install
-  - chmod +x copyright-check.sh
-  - make copyright-check
-  - make lint
-
-before_script:
-  - make test
-  - make local
-  - make image
-
-script:
-  - make run
-
-after_success:
-  - test "$TRAVIS_EVENT_TYPE" = "pull_request" && make push || echo "pushing to scratch"
-  - test "$TRAVIS_EVENT_TYPE" != "pull_request" && make release || echo "success"
-  - |
-      if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
-        curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
-        python travis_after_all.py https://travis.ibm.com/api
-        export $(cat .to_export_back)
-        if [[ "$BUILD_LEADER" == "YES" ]]; then
-          if [[ "$BUILD_AGGREGATE_STATUS" == "others_succeeded" ]]; then
-            echo "All jobs succeeded! Creating multi arch image..."
-            make multi-arch
-          else
-            echo "Some jobs failed" && exit 1
-          fi
-        fi
-      fi
-
-notifications:
-  slack: 
-    rooms:
-      - ibm-cloudplatform:9YJcmhOhUJM1pMJfRkYXgb5G#icp-policy-grc-build
-    on_pull_requests: false
-    on_success: change
-    on_failure: always
+jobs:
+  include:
+    - stage: build
+      name: "Build the image"
+      script:
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - make component/build
+        - make component/push
+    - stage: unit-test
+      name: "Build and run unit tests"
+      script:
+        - make component/test/unit
+    - stage: publish
+      name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
+      if: type = push AND branch IN ( master )
+      script:
+        - make component/pull 
+    

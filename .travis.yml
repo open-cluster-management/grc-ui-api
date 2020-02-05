@@ -9,7 +9,6 @@ services:
 branches:
   only:
     - master
-    - dev
     - /^[0-9]+\..*$/
     - /^v[0-9]+\..*$/
     - /^release-[0-9]+\..*$/
@@ -28,7 +27,7 @@ env:
 stages:
   - build
   - unit-test
-  - test-e2e
+  # - test-e2e
   - publish
  
 before_script:
@@ -55,7 +54,7 @@ jobs:
         - make component/test/e2e
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: type = push AND branch IN ( master )
+      # if: type = push AND branch IN ( master )
       script:
         - make pipeline-manifest/update PIPELINE_MANIFEST_COMPONENT_SHA256=${TRAVIS_COMMIT} PIPELINE_MANIFEST_COMPONENT_REPO=${TRAVIS_REPO_SLUG}
     

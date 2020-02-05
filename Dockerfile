@@ -43,4 +43,4 @@ COPY . /opt/app-root/src/grc-ui-api
 EXPOSE 4000
 
 USER ${USER_UID}
-CMD ["node", "app.js"]
+CMD ["node", "./output/index.js"]

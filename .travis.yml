@@ -28,6 +28,7 @@ env:
 stages:
   - build
   - unit-test
+  - test-e2e
   - publish
  
 before_script:
@@ -36,7 +37,7 @@ before_script:
 jobs:
   include:
     - stage: build
-      name: "Build the image"
+      name: "Build the image and push"
       script:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         - make component/build
@@ -45,9 +46,16 @@ jobs:
       name: "Build and run unit tests"
       script:
         - make component/test/unit
+    - stage: test-e2e
+      name: "Run e2e tests"
+      if: type = pull_request
+      script:
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - make component/pull
+        - make component/test/e2e
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
       if: type = push AND branch IN ( master )
       script:
-        - make component/pull 
+        - make pipeline-manifest/update PIPELINE_MANIFEST_COMPONENT_SHA256=${TRAVIS_COMMIT} PIPELINE_MANIFEST_COMPONENT_REPO=${TRAVIS_REPO_SLUG}
     

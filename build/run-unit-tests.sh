@@ -1,3 +1,4 @@
 #!/bin/bash
-npm ci
+set -e
+
 make unit-test

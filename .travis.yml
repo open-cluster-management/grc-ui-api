@@ -1,17 +1,8 @@
 sudo: required
 language: node_js
 
-os: linux
-
 services:
   - docker
-
-branches:
-  only:
-    - master
-    - /^[0-9]+\..*$/
-    - /^v[0-9]+\..*$/
-    - /^release-[0-9]+\..*$/
 
 env:
   global:

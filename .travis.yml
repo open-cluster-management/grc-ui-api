@@ -33,6 +33,8 @@ stages:
 before_script:
   - make init
 
+install: skip
+
 jobs:
   include:
     - stage: build

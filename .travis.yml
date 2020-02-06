@@ -4,6 +4,10 @@ language: node_js
 services:
   - docker
 
+branches:
+  only:
+    - /^release-[0-9]+\..*$/
+
 env:
   global:
     # Required
@@ -23,8 +27,6 @@ stages:
  
 before_script:
   - make init
-
-install: skip
 
 jobs:
   include:

@@ -55,7 +55,7 @@ async function getKubeToken({
     const response = await kubeTokenPromise;
     idToken = _.get(response, 'body.id_token');
     if (!idToken) {
-      throw new Error(`Authentication error: ${JSON.stringify(response.body)}`);
+      throw new Error(`Authentication error: ${JSON.stringify(response)}`);
     }
   }
 

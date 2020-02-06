@@ -11,11 +11,11 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { isInstance as isApolloErrorInstance, formatError as formatApolloError } from 'apollo-errors';
 import bodyParser from 'body-parser';
-import { app as inspect } from '@icp/security-middleware';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import { app as inspect } from './lib/inspect';
 
 import logger from './lib/logger';
 

@@ -14,6 +14,11 @@ import config from '../../../config';
 import IDConnector from '../connectors/idmgmt';
 import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
+import { config as authConfig } from '../config/config';
+
+const log4js = require('log4js');
+
+const logger = log4js.getLogger('server');
 
 // Async middleware error handler
 const asyncMiddleware = fn => (req, res, next) => {
@@ -23,39 +28,42 @@ const asyncMiddleware = fn => (req, res, next) => {
 
 async function getKubeToken({
   authorization,
-  cache,
-  httpLib,
+  // cache,
+  // httpLib,
   shouldLocalAuth,
 }) {
   let idToken;
   if ((_.isEmpty(authorization) && shouldLocalAuth) || process.env.MOCK === 'true') {
     // special case for graphiql to work locally
     // do not exchange for idtoken since authorization header is empty
+    // eslint-disable-next-line no-console
     idToken = config.get('localKubeToken') || 'localdev';
   } else {
     const accessToken = authorization.substring(7);
+    logger.info(authorization);
     // We cache the promise to prevent starting the same request multiple times.
-    let kubeTokenPromise = cache.get(`kubeToken_${accessToken}`);
-    if (!kubeTokenPromise) {
-      const options = {
-        url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/exchangetoken`,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        method: 'POST',
-        json: true,
-        form: {
-          access_token: accessToken,
-        },
-      };
-      kubeTokenPromise = httpLib(options);
-      cache.set(`kubeToken_${accessToken}`, kubeTokenPromise);
-    }
+    // let kubeTokenPromise = cache.get(`kubeToken_${accessToken}`);
+    // if (!kubeTokenPromise) {
+    //   logger.info('HERE3');
+    //   const options = {
+    //     url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/exchangetoken`,
+    //     headers: {
+    //       'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //     method: 'POST',
+    //     json: true,
+    //     form: {
+    //       access_token: accessToken,
+    //     },
+    //   };
+    //   kubeTokenPromise = httpLib(options);
+    //   cache.set(`kubeToken_${accessToken}`, kubeTokenPromise);
+    // }
 
-    const response = await kubeTokenPromise;
-    idToken = _.get(response, 'body.id_token');
+    // const response = await kubeTokenPromise;
+    idToken = accessToken;
     if (!idToken) {
-      throw new Error(`Authentication error: ${JSON.stringify(response)}`);
+      throw new Error('Authentication error: invalid token parsed from cookie');
     }
   }
 
@@ -109,6 +117,7 @@ export default function createAuthMiddleWare({
     }
     // special case for redhat openshift, can't get user from idtoken
     if (!userName) {
+      logger.info('NO USERNAME, ENTERING USERINFOPROMISE');
       // We cache the promise to prevent starting the same request multiple times.
       let userInfoPromise = cache.get(`userInfo_${iamToken}`);
       if (!userInfoPromise) {
@@ -138,6 +147,7 @@ export default function createAuthMiddleWare({
     // We cache the promise to prevent starting the same request multiple times.
     let nsPromise = cache.get(`namespaces_${iamToken}`);
     if (!nsPromise) {
+      logger.info('NO NAMESPACES, ENTERING NSPROMISE');
       nsPromise = getNamespaces({
         // cookies field doesn't exist on test case requests
         iamToken,
@@ -150,6 +160,7 @@ export default function createAuthMiddleWare({
     // We cache the promise to prevent starting the same request multiple times.
     let accountPromise = cache.get(`account_${iamToken}`);
     if (!accountPromise) {
+      logger.info('NO ACCT, ENTERING USERINFOPROMISE');
       accountPromise = getAccountData({
         iamToken,
         user: userName,

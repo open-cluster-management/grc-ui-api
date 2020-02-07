@@ -1,59 +1,35 @@
 const request = require('request').defaults({ rejectUnauthorized: false });
 const config = require('../config/config.js');
 // const fs = require('fs');
-const util = require('util');
 
-module.exports.list = (req, res, next) => {
-  const usertoken = req.token;
+module.exports.inspect = (req, token, cb) => {
+  // token review api to validate Bearer token/ retrieve user info
+  // const serviceaccounttoken = fs.readFileSync(config.ocp.serviceaccount_tokenpath).toString();
+  const serviceaccounttoken = config.ocp.serviceaccount_token;
   // eslint-disable-next-line no-console
-  console.log('user token: ', usertoken);
+  console.log('service account token: ', serviceaccounttoken);
 
   const options = {
-    url: `${config.ocp.apiserver_url}/apis/project.openshift.io/v1/projects`,
+    url: `${config.ocp.apiserver_url}/apis/authentication.k8s.io/v1/tokenreviews`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${usertoken}`,
+      Authorization: `Bearer ${serviceaccounttoken}`,
     },
     json: true,
+    body: {
+      apiVersion: 'authentication.k8s.io/v1',
+      kind: 'TokenReview',
+      spec: {
+        token,
+      },
+    },
   };
 
-  // retrieving projects , fall back to namespaces api if projects is unavailable
-  request.get(options, (err, response, body) => {
+  // retrieving user info through token review api
+  request.post(options, (err, resp, reviewbody) => {
     // eslint-disable-next-line no-console
-    console.log('Projects Response Code', response.statusCode);
-    if (err) {
-      return res.status(500).send(err.details);
-    } else if (response.statusCode === 404) {
-      options.url = `${config.ocp.apiserver_url}/api/v1/namespaces`;
-      request.get(options, (nmerr, nmresponse, nmbody) => {
-        // eslint-disable-next-line no-console
-        console.log('Namespaces Response Code', nmresponse.statusCode);
-        if (nmerr) {
-          return res.status(500).send(nmerr.details);
-        } else if (nmresponse.statusCode === 200 && nmbody && nmbody.items) {
-          // console.log("Namespaces Response body", nmbody)
-          for (let i = 0, l = nmbody.items.length; i < l; i += 1) {
-            const nmobj = nmbody.items[i];
-            // eslint-disable-next-line no-console
-            console.log(util.inspect(nmobj, { showHidden: false, depth: null }));
-          }
-          // eslint-disable-next-line no-param-reassign
-          res.itemslist = nmbody.items;
-          return next();
-        }
-        return res.status(500).send('Something happenned');
-      });
-    } else if (response.statusCode === 200 && body && body.items) {
-      for (let i = 0, l = body.items.length; i < l; i += 1) {
-        const obj = body.items[i];
-        // eslint-disable-next-line no-console
-        console.log(util.inspect(obj, { showHidden: false, depth: null }));
-      }
-      // eslint-disable-next-line no-param-reassign
-      res.itemslist = body.items;
-      return next();
-    }
-    return res.status(500).send('Something happenned');
+    console.log(err, reviewbody);
+    return cb(err, resp, reviewbody);
   });
 };

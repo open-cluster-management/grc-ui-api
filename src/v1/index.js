@@ -31,13 +31,15 @@ import SAModel from './models/sa';
 
 import schema from './schema/';
 import config from '../../config';
-import authMiddleware from './lib/auth-middleware';
+
+// import authMiddleware from './lib/auth-middleware';
 
 export const GRAPHQL_PATH = `${config.get('contextPath')}/graphql`;
 export const GRAPHIQL_PATH = `${config.get('contextPath')}/graphiql`;
 
 const isProd = config.get('NODE_ENV') === 'production';
 const isTest = config.get('NODE_ENV') === 'test';
+const request = require('request').defaults({ rejectUnauthorized: false });
 
 const formatError = (error) => {
   const { originalError } = error;
@@ -46,6 +48,24 @@ const formatError = (error) => {
   }
   return formatApolloError(error);
 };
+
+function getNamespaces(username, usertoken) {
+  const options = {
+    url: `${'https://api.straits.os.fyre.ibm.com:6443'}/api/v1/namespaces`,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${usertoken}`,
+    },
+    json: true,
+  };
+  let nmItems = [];
+  request.get(options, (nmerr, nmresponse, nmbody) => {
+    logger.info('Namespaces Response Code', nmresponse.statusCode);
+    nmItems = nmbody.items;
+  });
+  return nmItems;
+}
 
 const graphQLServer = express();
 graphQLServer.use(compression());
@@ -73,11 +93,18 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 
 const auth = [];
 
-if (isProd) {
-  logger.info('Authentication enabled');
-  auth.push(inspect, authMiddleware());
-} else {
-  auth.push(authMiddleware({ shouldLocalAuth: true }));
+// if (isProd) {
+//   logger.info('Authentication enabled');
+//   auth.push(inspect, authMiddleware());
+// } else {
+//   logger.info('Authentication disabled');
+//   auth.push(authMiddleware({ shouldLocalAuth: true }));
+//   graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));
+// }
+
+auth.push(inspect);
+
+if (!isProd) {
   graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));
 }
 
@@ -87,9 +114,15 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  const namespaces = req.user.namespaces.map(ns => ns.namespaceId);
+  // eslint-disable-next-line no-console
+  logger.info('here~~~');
+  // logger.info(req.cookies);
+  const nsMap = getNamespaces(req.user.username, req.cookies['cfc-access-token-cookie']);
+  logger.info(nsMap);
+  const namespaces = nsMap.map(ns => ns.metadata);
+  logger.info(namespaces);
   const kubeConnector = new KubeConnector({
-    token: req.kubeToken,
+    token: req.cookies['cfc-access-token-cookie'],
     namespaces,
   });
   if (isTest) {

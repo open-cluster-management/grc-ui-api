@@ -1,7 +1,8 @@
 node_modules
 .vscode
-build
+output
 config/config-development.json
 .idea
 coverage
 .DS_Store
+.build-harness-bootstrap

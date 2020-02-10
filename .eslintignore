@@ -1,5 +1,5 @@
 node_modules
-build
+output
 coverage
 package.json
 npm-shrinkwrap.json

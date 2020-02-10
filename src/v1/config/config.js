@@ -8,6 +8,6 @@ config.ocp = {};
 
 // for test
 config.ocp.apiserver_url = 'https://api.straits.os.fyre.ibm.com:6443';
-config.ocp.serviceaccount_token = 'rTTQjLVS84cqBgICAr7RF9fpqClp4Xs4W1PW6tu2n8M';
+config.ocp.serviceaccount_token = '3DdNt9wE_NLkVwqU1-bxtp3_e-8FXd5mnj_qZ0mGTnA';
 
 module.exports = config;

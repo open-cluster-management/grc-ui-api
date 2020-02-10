@@ -16,6 +16,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { app as inspect } from './lib/inspect';
+import requestLib from './lib/request';
+// import listNamespaces from './lib/namespaces';
 
 import logger from './lib/logger';
 
@@ -32,6 +34,7 @@ import SAModel from './models/sa';
 import schema from './schema/';
 import config from '../../config';
 
+
 // import authMiddleware from './lib/auth-middleware';
 
 export const GRAPHQL_PATH = `${config.get('contextPath')}/graphql`;
@@ -39,7 +42,10 @@ export const GRAPHIQL_PATH = `${config.get('contextPath')}/graphiql`;
 
 const isProd = config.get('NODE_ENV') === 'production';
 const isTest = config.get('NODE_ENV') === 'test';
-const request = require('request').defaults({ rejectUnauthorized: false });
+// const request = require('request').defaults({ rejectUnauthorized: false });
+// const nsUtil = require('./lib/namespaces');
+
+const apiServerUrl = 'https://api.straits.os.fyre.ibm.com:6443';
 
 const formatError = (error) => {
   const { originalError } = error;
@@ -49,22 +55,32 @@ const formatError = (error) => {
   return formatApolloError(error);
 };
 
-function getNamespaces(username, usertoken) {
+async function getNamespaces(username, usertoken) {
   const options = {
-    url: `${'https://api.straits.os.fyre.ibm.com:6443'}/api/v1/namespaces`,
+    url: `${apiServerUrl}/apis/project.openshift.io/v1/projects`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
       Authorization: `Bearer ${usertoken}`,
     },
     json: true,
+    fullResponse: false,
   };
-  let nmItems = [];
-  request.get(options, (nmerr, nmresponse, nmbody) => {
-    logger.info('Namespaces Response Code', nmresponse.statusCode);
-    nmItems = nmbody.items;
-  });
-  return nmItems;
+  // let nmItems = [];
+  // request.get(options, (nmerr, nmresponse, nmbody) => {
+  //   logger.info('Namespaces Response Code', nmresponse.statusCode);
+  //   nmItems = nmbody.items;
+  // });
+
+  // requestLib(options).then((resp) => {
+  //   // logger.info(resp.items);
+  //   return resp.items;
+  // }).catch((error) => {
+  //   logger.error(error);
+  //   return null;
+  // });
+
+  return requestLib(options);
 }
 
 const graphQLServer = express();
@@ -114,15 +130,35 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  // eslint-disable-next-line no-console
   logger.info('here~~~');
-  // logger.info(req.cookies);
-  const nsMap = getNamespaces(req.user.username, req.cookies['cfc-access-token-cookie']);
-  logger.info(nsMap);
-  const namespaces = nsMap.map(ns => ns.metadata);
-  logger.info(namespaces);
+  const nsPromise = await getNamespaces(req.user.username, req.cookies['cfc-access-token-cookie']);
+  logger.info(nsPromise);
+  const nsMap = nsPromise.items;
+  // logger.info(nsMap);
+  const namespaces = nsMap.map(ns => ns.metadata.name);
+  // logger.info(namespaces);
+
+  // let namespaces = [];
+  // const namespacePromise =
+  // await nsUtil.listNamespaces(req.cookies['cfc-access-token-cookie'], (err, nslist) => {
+  //   logger.info('inside listns callback');
+  //   if (err) {
+  //     res.status(500).send(err.details);
+  //   }
+  //   if (nslist) {
+  //     logger.info('SUCCESS');
+  //     namespaces = nslist.map(ns => ns.metadata.name);
+  //     logger.info(namespaces);
+  //   } else {
+  //     res.status(500).send('Server error processing namespace list');
+  //   }
+  // });
+  // const namespacePromise = await nsUtil.listNamespaces(req.cookies['cfc-access-token-cookie']);
+  // logger.info('POST FN');
+  // logger.info(namespacePromise);
+  logger.info(req.cookies['cfc-access-token-cookie']);
   const kubeConnector = new KubeConnector({
-    token: req.cookies['cfc-access-token-cookie'],
+    token: `Bearer ${req.cookies['cfc-access-token-cookie']}`,
     namespaces,
   });
   if (isTest) {

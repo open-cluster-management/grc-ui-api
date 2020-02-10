@@ -14,7 +14,6 @@ import config from '../../../config';
 import IDConnector from '../connectors/idmgmt';
 import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
-import { config as authConfig } from '../config/config';
 
 const log4js = require('log4js');
 

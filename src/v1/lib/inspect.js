@@ -6,9 +6,7 @@ const logger = log4js.getLogger('server');
 
 module.exports.app = (req, res, next) => {
   let token;
-  logger.info('entered app fn');
   if (req.headers.authorization || req.headers.Authorization) {
-    logger.info('req headers found');
     token = req.headers.authorization ? req.headers.authorization : req.headers.Authorization;
     const words = token.trim().split(/[\s,]+/);
     if (!(words[0].toLowerCase().match('bearer'))) {
@@ -18,7 +16,6 @@ module.exports.app = (req, res, next) => {
       [, token] = words;
     }
   } else if (req.get('Authorization')) {
-    logger.info('getting req headers');
     token = req.get('Authorization');
   }
 
@@ -34,12 +31,10 @@ module.exports.app = (req, res, next) => {
     } else if (body && body.status && body.status.user) {
       req.user = body.status.user;
       req.token = token;
-      // eslint-disable-next-line no-console
-      logger.info('security middleware check passed');
+      logger.info('Security middleware check passed');
       return next();
     }
-    // eslint-disable-next-line no-console
-    logger.info('HERE');
     return res.status(401).send('The token provided is not valid');
   });
+  return null;
 };

@@ -6,8 +6,6 @@ module.exports.inspect = (req, token, cb) => {
   // token review api to validate Bearer token/ retrieve user info
   // const serviceaccounttoken = fs.readFileSync(config.ocp.serviceaccount_tokenpath).toString();
   const serviceaccounttoken = config.ocp.serviceaccount_token;
-  // eslint-disable-next-line no-console
-  console.log('service account token: ', serviceaccounttoken);
 
   const options = {
     url: `${config.ocp.apiserver_url}/apis/authentication.k8s.io/v1/tokenreviews`,
@@ -27,9 +25,5 @@ module.exports.inspect = (req, token, cb) => {
   };
 
   // retrieving user info through token review api
-  request.post(options, (err, resp, reviewbody) => {
-    // eslint-disable-next-line no-console
-    console.log(err, reviewbody);
-    return cb(err, resp, reviewbody);
-  });
+  request.post(options, (err, resp, reviewbody) => cb(err, resp, reviewbody));
 };

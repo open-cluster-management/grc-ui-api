@@ -104,11 +104,11 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  const nsPromise = await getNamespaces(req.user.username, req.cookies['cfc-access-token-cookie']);
+  const nsPromise = await getNamespaces(req.user.username, req.cookies['acm-access-token-cookie']);
   const nsMap = nsPromise.items;
   const namespaces = nsMap.map(ns => ns.metadata.name);
   const kubeConnector = new KubeConnector({
-    token: `Bearer ${req.cookies['cfc-access-token-cookie']}`,
+    token: `Bearer ${req.cookies['acm-access-token-cookie']}`,
     namespaces,
   });
   if (isTest) {

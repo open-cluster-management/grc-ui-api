@@ -17,6 +17,7 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { app as inspect } from './lib/inspect';
 import requestLib from './lib/request';
+import authMiddleware from './lib/auth-middleware';
 
 import logger from './lib/logger';
 
@@ -88,8 +89,11 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 
 const auth = [];
 
-auth.push(inspect);
-
+if (!isTest) {
+  auth.push(inspect);
+} else {
+  auth.push(authMiddleware({ shouldLocalAuth: true }));
+}
 if (!isProd) {
   graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));
 }

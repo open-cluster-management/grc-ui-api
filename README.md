@@ -1,5 +1,5 @@
 # grc-ui-api
-[![Build Status](https://travis.ibm.com/IBMPrivateCloud/grc-ui-api.svg?token=FQtRyxd2oucrshZSEEqZ&branch=master)](https://travis.ibm.com/IBMPrivateCloud/grc-ui-api)
+[![Build Status](https://travis-ci.com/open-cluster-management/grc-ui-api.svg?token=1xoYGv8XzWhB2heDk2My&branch=master)](https://travis-ci.com/open-cluster-management/grc-ui-api)
 
 ## Running
 1. The folloing environment variables need to be set. [shared dev env](https://ibm.ent.box.com/notes/291748731101)

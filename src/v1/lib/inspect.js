@@ -34,6 +34,7 @@ module.exports.app = (req, res, next) => {
       logger.info('Security middleware check passed');
       return next();
     }
+    logger.info(body);
     return res.status(401).send('The token provided is not valid');
   });
   return null;

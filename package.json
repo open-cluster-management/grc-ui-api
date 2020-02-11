@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.js --exec babel-node",
-    "start:production": "cross-env NODE_ENV=production node ./build/index.js",
-    "start:test": "cross-env NODE_ENV=test MOCK=true node ./build/index.js",
-    "start:development": "cross-env NODE_ENV=development node ./build/index.js",
-    "build-server": "babel -d ./build ./src -s",
+    "start:production": "cross-env NODE_ENV=production node ./output/index.js",
+    "start:test": "cross-env NODE_ENV=test MOCK=true node ./output/index.js",
+    "start:development": "cross-env NODE_ENV=development node ./output/index.js",
+    "build-server": "babel -d ./output ./src -s",
     "build": "npm run clean && npm run build-server",
     "build:production": "npm run build",
-    "clean": "rm -rf build && mkdir build",
+    "clean": "rm -rf output && mkdir output",
     "shrinkwrap:clean": "del-cli node_modules npm-shrinkwrap.json && npm install --no-optional && npm prune && npm shrinkwrap",
     "lint": "eslint --ext ,.js .",
     "lint:fix": "eslint --ext .jsx,.js --fix .",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.ibm.com:IBMPrivateCloud/grc-ui-api.git"
+    "url": "git@github.com:open-cluster-management/grc-ui-api.git"
   },
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
@@ -31,7 +31,7 @@
     "npm": "6.4.1"
   },
   "dependencies": {
-    "@icp/security-middleware": "^2.0.91",
+    "@icp/security-middleware": "file:pkg/icp-security-middleware-2.0.95.tgz",
     "apollo-errors": "^1.9.0",
     "apollo-server-express": "^1.3.5",
     "body-parser": "^1.18.2",

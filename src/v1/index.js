@@ -90,10 +90,8 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 const auth = [];
 
 if (!isTest) {
-  logger.info('/////// PUSHING INSPECT AUTH MIDDLEWARE');
   auth.push(inspect);
 } else {
-  logger.info('////// USING DUMMY AUTH MIDDLEWARE');
   auth.push(authMiddleware({ shouldLocalAuth: true }));
 }
 if (!isProd) {
@@ -106,12 +104,12 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  const nsPromise = await getNamespaces(req.user.username, req.cookies['acm-access-token-cookie']);
-  const nsMap = nsPromise.items;
   let namespaces;
   if (isTest) {
     namespaces = req.user.namespaces.map(ns => ns.namespaceId);
   } else {
+    const nsPromise = await getNamespaces(req.user.username, req.cookies['acm-access-token-cookie']);
+    const nsMap = nsPromise.items;
     namespaces = nsMap.map(ns => ns.metadata.name);
   }
   const kubeConnector = new KubeConnector({

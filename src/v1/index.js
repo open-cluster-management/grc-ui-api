@@ -17,6 +17,7 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { app as inspect } from './lib/inspect';
 import requestLib from './lib/request';
+import authMiddleware from './lib/auth-middleware';
 
 import logger from './lib/logger';
 
@@ -88,8 +89,11 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 
 const auth = [];
 
-auth.push(inspect);
-
+if (!isTest) {
+  auth.push(inspect);
+} else {
+  auth.push(authMiddleware({ shouldLocalAuth: true }));
+}
 if (!isProd) {
   graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));
 }
@@ -100,11 +104,16 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  const nsPromise = await getNamespaces(req.user.username, req.cookies['cfc-access-token-cookie']);
-  const nsMap = nsPromise.items;
-  const namespaces = nsMap.map(ns => ns.metadata.name);
+  let namespaces;
+  if (isTest) {
+    namespaces = req.user.namespaces.map(ns => ns.namespaceId);
+  } else {
+    const nsPromise = await getNamespaces(req.user.username, req.cookies['acm-access-token-cookie']);
+    const nsMap = nsPromise.items;
+    namespaces = nsMap.map(ns => ns.metadata.name);
+  }
   const kubeConnector = new KubeConnector({
-    token: `Bearer ${req.cookies['cfc-access-token-cookie']}`,
+    token: `Bearer ${req.cookies['acm-access-token-cookie']}`,
     namespaces,
   });
   if (isTest) {

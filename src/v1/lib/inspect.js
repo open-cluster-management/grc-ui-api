@@ -1,9 +1,5 @@
 const inspectClient = require('./inspect-client.js');
 
-const log4js = require('log4js');
-
-const logger = log4js.getLogger('server');
-
 module.exports.app = (req, res, next) => {
   let token;
   if (req.headers.authorization || req.headers.Authorization) {
@@ -31,7 +27,6 @@ module.exports.app = (req, res, next) => {
     } else if (body && body.status && body.status.user) {
       req.user = body.status.user;
       req.token = token;
-      logger.info('Security middleware check passed');
       return next();
     }
     return res.status(401).send('The token provided is not valid');

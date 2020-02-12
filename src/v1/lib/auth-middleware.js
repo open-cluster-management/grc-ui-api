@@ -123,8 +123,6 @@ export default function createAuthMiddleWare({
       shouldLocalAuth,
     });
 
-    req.kubeToken = `Bearer ${idToken}`;
-
     const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
     let userName = _.get(jws.decode(idToken), 'payload.uniqueSecurityName');
     if (process.env.NODE_ENV === 'test' || process.env.MOCK === 'true') {

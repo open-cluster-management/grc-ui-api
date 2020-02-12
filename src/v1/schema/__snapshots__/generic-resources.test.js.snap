@@ -63,7 +63,7 @@ Object {
   \\"method\\": \\"PATCH\\",
   \\"url\\": \\"http://0.0.0.0/kubernetes/apis/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters/cluster1\\",
   \\"headers\\": {
-    \\"authorization\\": \\"Bearer undefined\\",
+    \\"authorization\\": \\"Bearer localdev\\",
     \\"content-type\\": \\"application/json-patch+json\\",
     \\"host\\": \\"0.0.0.0\\",
     \\"accept\\": \\"application/json\\",

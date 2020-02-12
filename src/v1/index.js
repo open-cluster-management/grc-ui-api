@@ -87,7 +87,6 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  // logger.info(req);
   const namespaces = req.user.namespaces.items.map(ns => ns.metadata.name);
   const kubeConnector = new KubeConnector({
     token: req.kubeToken,

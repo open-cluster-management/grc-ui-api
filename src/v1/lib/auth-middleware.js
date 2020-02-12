@@ -31,9 +31,7 @@ async function getKubeToken({
     // do not exchange for idtoken since authorization header is empty
     idToken = config.get('localKubeToken') || 'localdev';
   } else {
-    const accessToken = authorization;
-    // We cache the promise to prevent starting the same request multiple times.
-    idToken = accessToken;
+    idToken = authorization;
     if (!idToken) {
       throw new Error('Authentication error: invalid token parsed from cookie');
     }
@@ -69,47 +67,19 @@ export default function createAuthMiddleWare({
     max: 1000,
     maxAge: 2 * 60 * 1000, // 2 mins. Must keep low because user's permissions can change.
   }),
-  httpLib = request,
   shouldLocalAuth,
 } = {}) {
   return asyncMiddleware(async (req, res, next) => {
-    const idToken = await getKubeToken({
+    const iamToken = await getKubeToken({
       authorization: req.headers.authorization || req.headers.Authorization,
       shouldLocalAuth,
     });
 
-    req.kubeToken = idToken;
+    req.kubeToken = iamToken;
 
-    const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
-    let userName = _.get(jws.decode(idToken), 'payload.uniqueSecurityName');
+    let userName = _.get(jws.decode(iamToken), 'payload.uniqueSecurityName');
     if (process.env.NODE_ENV === 'test' || process.env.MOCK === 'true') {
       userName = 'admin_test';
-    }
-    // special case for redhat openshift, can't get user from idtoken
-    if (!userName) {
-      // We cache the promise to prevent starting the same request multiple times.
-      let userInfoPromise = cache.get(`userInfo_${iamToken}`);
-      if (!userInfoPromise) {
-        const options = {
-          url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/userinfo`,
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          method: 'POST',
-          json: true,
-          form: {
-            access_token: iamToken,
-          },
-        };
-        userInfoPromise = httpLib(options);
-        cache.set(`userInfo_${iamToken}`, userInfoPromise);
-      }
-
-      const response = await userInfoPromise;
-      userName = _.get(response, 'body.sub') || _.get(response, 'body.name');
-      if (!userName) {
-        throw new Error(`Authentication error: ${response.body}`);
-      }
     }
 
     // Get the namespaces for the user.

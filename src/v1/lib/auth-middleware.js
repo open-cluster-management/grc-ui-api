@@ -13,7 +13,6 @@ import jws from 'jws';
 import config from '../../../config';
 import IDConnector from '../connectors/idmgmt';
 import createMockIAMHTTP from '../mocks/iam-http';
-import request from './request';
 
 // Async middleware error handler
 const asyncMiddleware = fn => (req, res, next) => {

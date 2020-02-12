@@ -14,6 +14,10 @@ import { mockComplianceListMCMResponse, mockComplianceListDefaultResponse, mockC
 import { mockPlacementBindingResponse, mockPlacementPolicyResponse, mockSinglePolicyResponse, mockSingleNoPolicyResponse } from '../mocks/PolicyList';
 import { mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse } from '../mocks/ClusterList';
 
+const log4js = require('log4js');
+
+const logger = log4js.getLogger('server');
+
 describe('Compliance Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
@@ -117,6 +121,7 @@ describe('Compliance Resolver', () => {
       `,
       })
       .end((err, res) => {
+        logger.info(res.text);
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
@@ -159,6 +164,7 @@ describe('Compliance Resolver', () => {
       `,
       })
       .end((err, res) => {
+        logger.info(res.text);
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
@@ -328,6 +334,7 @@ describe('Compliance Resolver', () => {
       `,
       })
       .end((err, res) => {
+        logger.info(res.text);
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });

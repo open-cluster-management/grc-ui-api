@@ -10,13 +10,15 @@
 export default function createMockHttp() {
   const state = {
     namespaces: {
-      body: [
+      items: [
         { // non cluster namespace
           crn: 'crn:v1:icp:private:k8:mycluster:n/default:::',
           serviceName: 'k8',
           region: 'mycluster',
           scope: 'namespace',
-          namespaceId: 'default',
+          metadata: {
+            name: 'default',
+          },
           actions: 'CRUD',
         },
         { // non cluster namespace
@@ -24,7 +26,9 @@ export default function createMockHttp() {
           serviceName: 'k8',
           region: 'mycluster',
           scope: 'namespace',
-          namespaceId: 'kube-system',
+          metadata: {
+            name: 'kube-system',
+          },
           actions: 'CRUD',
         },
         { // non cluster namespace
@@ -32,7 +36,9 @@ export default function createMockHttp() {
           serviceName: 'k8',
           region: 'mycluster',
           scope: 'namespace',
-          namespaceId: 'mcm',
+          metadata: {
+            name: 'mcm',
+          },
           actions: 'CRUD',
         },
         { // cluster namespace
@@ -40,7 +46,9 @@ export default function createMockHttp() {
           serviceName: 'k8',
           region: 'mycluster',
           scope: 'namespace',
-          namespaceId: 'cluster1',
+          metadata: {
+            name: 'cluster1',
+          },
           actions: 'CRUD',
         },
         { // cluster namespace
@@ -48,7 +56,9 @@ export default function createMockHttp() {
           serviceName: 'k8',
           region: 'mycluster',
           scope: 'namespace',
-          namespaceId: 'clusterhub',
+          metadata: {
+            name: 'clusterhub',
+          },
           actions: 'CRUD',
         },
       ],

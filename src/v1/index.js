@@ -16,7 +16,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { app as inspect } from './lib/inspect';
-import requestLib from './lib/request';
 import authMiddleware from './lib/auth-middleware';
 
 import logger from './lib/logger';
@@ -39,7 +38,6 @@ export const GRAPHIQL_PATH = `${config.get('contextPath')}/graphiql`;
 
 const isProd = config.get('NODE_ENV') === 'production';
 const isTest = config.get('NODE_ENV') === 'test';
-const authConfig = require('./config/config');
 
 const formatError = (error) => {
   const { originalError } = error;
@@ -48,20 +46,6 @@ const formatError = (error) => {
   }
   return formatApolloError(error);
 };
-
-async function getNamespaces(username, usertoken) {
-  const options = {
-    url: `${authConfig.ocp.apiserver_url}/apis/project.openshift.io/v1/projects`,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${usertoken}`,
-    },
-    json: true,
-    fullResponse: false,
-  };
-  return requestLib(options);
-}
 
 const graphQLServer = express();
 graphQLServer.use(compression());
@@ -90,7 +74,7 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 const auth = [];
 
 if (!isTest) {
-  auth.push(inspect);
+  auth.push(inspect, authMiddleware());
 } else {
   auth.push(authMiddleware({ shouldLocalAuth: true }));
 }
@@ -104,14 +88,7 @@ if (isTest) {
 
 graphQLServer.use(...auth);
 graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  let namespaces;
-  if (isTest) {
-    namespaces = req.user.namespaces.map(ns => ns.namespaceId);
-  } else {
-    const nsPromise = await getNamespaces(req.user.username, req.cookies['acm-access-token-cookie']);
-    const nsMap = nsPromise.items;
-    namespaces = nsMap.map(ns => ns.metadata.name);
-  }
+  const namespaces = req.user.namespaces.items.map(ns => ns.metadata.name);
   const kubeConnector = new KubeConnector({
     token: `Bearer ${req.cookies['acm-access-token-cookie']}`,
     namespaces,

@@ -4,7 +4,7 @@ const config = {};
 
 config.ocp = {};
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   config.ocp.apiserver_url = process.env.API_SERVER_URL;
   config.ocp.serviceaccount_token = process.env.SERVICEACCT_TOKEN;
 } else {

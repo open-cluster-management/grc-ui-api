@@ -30,4 +30,6 @@ unit-test:
 	if [ ! -d "test-output" ]; then \
 		mkdir test-output; \
 	fi
+	export API_SERVER_URL=https://api.straits.os.fyre.ibm.com:6443
 	npm test
+	

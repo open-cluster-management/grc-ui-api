@@ -39,27 +39,7 @@ async function getKubeToken({
     idToken = config.get('localKubeToken') || 'localdev';
   } else {
     const accessToken = authorization.substring(7);
-    logger.info(authorization);
     // We cache the promise to prevent starting the same request multiple times.
-    // let kubeTokenPromise = cache.get(`kubeToken_${accessToken}`);
-    // if (!kubeTokenPromise) {
-    //   logger.info('HERE3');
-    //   const options = {
-    //     url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/exchangetoken`,
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded',
-    //     },
-    //     method: 'POST',
-    //     json: true,
-    //     form: {
-    //       access_token: accessToken,
-    //     },
-    //   };
-    //   kubeTokenPromise = httpLib(options);
-    //   cache.set(`kubeToken_${accessToken}`, kubeTokenPromise);
-    // }
-
-    // const response = await kubeTokenPromise;
     idToken = accessToken;
     if (!idToken) {
       throw new Error('Authentication error: invalid token parsed from cookie');
@@ -107,6 +87,11 @@ export default function createAuthMiddleWare({
       shouldLocalAuth,
     });
 
+    if (idToken !== 'localdev') {
+      logger.info('SOMETHING WENT WRONG');
+      logger.info(idToken);
+    }
+
     req.kubeToken = `Bearer ${idToken}`;
 
     const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
@@ -116,7 +101,6 @@ export default function createAuthMiddleWare({
     }
     // special case for redhat openshift, can't get user from idtoken
     if (!userName) {
-      logger.info('NO USERNAME, ENTERING USERINFOPROMISE');
       // We cache the promise to prevent starting the same request multiple times.
       let userInfoPromise = cache.get(`userInfo_${iamToken}`);
       if (!userInfoPromise) {
@@ -146,7 +130,6 @@ export default function createAuthMiddleWare({
     // We cache the promise to prevent starting the same request multiple times.
     let nsPromise = cache.get(`namespaces_${iamToken}`);
     if (!nsPromise) {
-      logger.info('NO NAMESPACES, ENTERING NSPROMISE');
       nsPromise = getNamespaces({
         // cookies field doesn't exist on test case requests
         iamToken,
@@ -159,7 +142,6 @@ export default function createAuthMiddleWare({
     // We cache the promise to prevent starting the same request multiple times.
     let accountPromise = cache.get(`account_${iamToken}`);
     if (!accountPromise) {
-      logger.info('NO ACCT, ENTERING USERINFOPROMISE');
       accountPromise = getAccountData({
         iamToken,
         user: userName,

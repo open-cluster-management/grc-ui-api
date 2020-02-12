@@ -90,8 +90,10 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 const auth = [];
 
 if (!isTest) {
+  logger.info('/////// PUSHING INSPECT AUTH MIDDLEWARE');
   auth.push(inspect);
 } else {
+  logger.info('////// USING DUMMY AUTH MIDDLEWARE');
   auth.push(authMiddleware({ shouldLocalAuth: true }));
 }
 if (!isProd) {

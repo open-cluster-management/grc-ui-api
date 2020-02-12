@@ -1,10 +1,8 @@
-const request = require('request').defaults({ rejectUnauthorized: false });
+const request = require('requestretry').defaults({ rejectUnauthorized: false });
 const config = require('../config/config.js');
-// const fs = require('fs');
 
 module.exports.inspect = (req, token, cb) => {
   // token review api to validate Bearer token/ retrieve user info
-  // const serviceaccounttoken = fs.readFileSync(config.ocp.serviceaccount_tokenpath).toString();
   const serviceaccounttoken = config.ocp.serviceaccount_token;
 
   const options = {

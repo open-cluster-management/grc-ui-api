@@ -15,10 +15,6 @@ import IDConnector from '../connectors/idmgmt';
 import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
 
-const log4js = require('log4js');
-
-const logger = log4js.getLogger('server');
-
 // Async middleware error handler
 const asyncMiddleware = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next))
@@ -27,18 +23,15 @@ const asyncMiddleware = fn => (req, res, next) => {
 
 async function getKubeToken({
   authorization,
-  // cache,
-  // httpLib,
   shouldLocalAuth,
 }) {
   let idToken;
   if ((_.isEmpty(authorization) && shouldLocalAuth) || process.env.MOCK === 'true') {
     // special case for graphiql to work locally
     // do not exchange for idtoken since authorization header is empty
-    // eslint-disable-next-line no-console
     idToken = config.get('localKubeToken') || 'localdev';
   } else {
-    const accessToken = authorization.substring(7);
+    const accessToken = authorization;
     // We cache the promise to prevent starting the same request multiple times.
     idToken = accessToken;
     if (!idToken) {
@@ -82,17 +75,10 @@ export default function createAuthMiddleWare({
   return asyncMiddleware(async (req, res, next) => {
     const idToken = await getKubeToken({
       authorization: req.headers.authorization || req.headers.Authorization,
-      cache,
-      httpLib,
       shouldLocalAuth,
     });
 
-    if (idToken !== 'localdev') {
-      logger.info('SOMETHING WENT WRONG');
-      logger.info(idToken);
-    }
-
-    req.kubeToken = `Bearer ${idToken}`;
+    req.kubeToken = idToken;
 
     const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
     let userName = _.get(jws.decode(idToken), 'payload.uniqueSecurityName');

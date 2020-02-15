@@ -9,7 +9,6 @@
 
 import _ from 'lodash';
 import lru from 'lru-cache';
-import jws from 'jws';
 import config from '../../../config';
 import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
@@ -87,7 +86,7 @@ async function getNamespaces(usertoken) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${usertoken}`,
+      Authorization: usertoken,
     },
     json: true,
     fullResponse: false,
@@ -122,14 +121,8 @@ export default function createAuthMiddleWare({
       authorization: req.headers.authorization || req.headers.Authorization,
       shouldLocalAuth,
     });
-
     req.kubeToken = idToken;
 
-    const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
-    let userName = _.get(jws.decode(idToken), 'payload.uniqueSecurityName');
-    if (process.env.NODE_ENV === 'test' || process.env.MOCK === 'true') {
-      userName = 'admin_test';
-    }
     // special case for redhat openshift, can't get user from idtoken
     // if (!userName) {
     //   // We cache the promise to prevent starting the same request multiple times.
@@ -159,10 +152,10 @@ export default function createAuthMiddleWare({
 
     // Get the namespaces for the user.
     // We cache the promise to prevent starting the same request multiple times.
-    let nsPromise = cache.get(`namespaces_${iamToken}`);
+    let nsPromise = cache.get(`namespaces_${idToken}`);
     if (!nsPromise) {
-      nsPromise = getNamespaces(iamToken);
-      cache.set(`namespaces_${iamToken}`, nsPromise);
+      nsPromise = getNamespaces(idToken);
+      cache.set(`namespaces_${idToken}`, nsPromise);
     }
 
     // Get user's account data.
@@ -177,10 +170,10 @@ export default function createAuthMiddleWare({
     // }
 
     req.user = {
-      name: userName,
+      // name: userName,
       namespaces: await nsPromise,
       // userAccount: await accountPromise,
-      iamToken,
+      // iamToken,
     };
 
     next();

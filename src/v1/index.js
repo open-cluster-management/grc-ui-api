@@ -15,7 +15,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import securityMW from 'security-middleware';
+import inspect from 'security-middleware';
 import authMiddleware from './lib/auth-middleware';
 
 import logger from './lib/logger';
@@ -75,7 +75,7 @@ const auth = [];
 
 if (isProd) {
   logger.info('Authentication enabled');
-  auth.push(securityMW.app, authMiddleware());
+  auth.push(inspect.app, authMiddleware());
 } else {
   auth.push(authMiddleware({ shouldLocalAuth: true }));
   graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));

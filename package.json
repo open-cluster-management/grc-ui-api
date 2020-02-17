@@ -53,7 +53,7 @@
     "morgan": "^1.9.0",
     "nconf": "^0.10.0",
     "requestretry": "^1.13.0",
-    "security-middleware": "github:open-cluster-management/security-middleware#package"
+    "security-middleware": "github:open-cluster-management/security-middleware"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

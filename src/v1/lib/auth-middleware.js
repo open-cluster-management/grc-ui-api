@@ -89,7 +89,6 @@ async function getNamespaces(usertoken) {
     json: true,
     fullResponse: false,
   };
-  console.log(options.url)
   if (process.env.NODE_ENV === 'test') {
     const mockReq = createMockIAMHTTP();
     return mockReq(options);

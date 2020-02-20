@@ -80,7 +80,7 @@ async function getKubeToken({
 
 async function getNamespaces(usertoken) {
   const options = {
-    url: `${process.env.API_SERVER_URL || 'https://kubernetes.default.svc'} /apis/project.openshift.io/v1/projects`,
+    url: `${process.env.API_SERVER_URL || 'https://kubernetes.default.svc'}/apis/project.openshift.io/v1/projects`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -89,6 +89,7 @@ async function getNamespaces(usertoken) {
     json: true,
     fullResponse: false,
   };
+  console.log(options.url)
   if (process.env.NODE_ENV === 'test') {
     const mockReq = createMockIAMHTTP();
     return mockReq(options);

@@ -48,6 +48,8 @@ jobs:
     - stage: unit-test
       name: "Build and run unit tests"
       script:
+        - chmod +x copyright-check.sh
+        - make copyright-check
         - make sonar/js/jest-init
         - make component/test/unit
         - make sonar/js

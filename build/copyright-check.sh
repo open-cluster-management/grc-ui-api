@@ -50,7 +50,6 @@ lic_rest_size=${#lic_rest[@]}
 #Used to signal an exit
 ERROR=0
 
-
 echo "##### Copyright check #####"
 #Loop through all files. Ignore .FILENAME types
 #for f in `find .. -type f ! -path "../.eslintrc.js" ! -path "../build-harness/*" ! -path "../auth-setup/*" ! -path "../sslcert/*" ! -path "../node_modules/*" ! -path "../coverage/*" ! -path "../test-output/*" ! -path "../build/*" ! -path "../nls/*" ! -path "../public/*"`; do

@@ -48,6 +48,7 @@ jobs:
     - stage: unit-test
       name: "Build and run unit tests"
       script:
+        - make copyright-check TRAVIS_BRANCH=${TRAVIS_BRANCH} TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}
         - make sonar/js/jest-init
         - make component/test/unit
         - make sonar/js

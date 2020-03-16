@@ -37,7 +37,7 @@ Object {
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -105,7 +105,7 @@ Object {
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -173,7 +173,7 @@ Object {
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -241,7 +241,7 @@ Object {
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -309,7 +309,7 @@ Object {
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -377,7 +377,7 @@ Object {
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -445,7 +445,7 @@ Object {
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -513,7 +513,7 @@ Object {
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -581,7 +581,7 @@ Object {
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },
@@ -649,7 +649,7 @@ Object {
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
-            "clusterLabels": Object {
+            "clusterSelector": Object {
               "matchLabels": Object {
                 "cloud": "IBM",
               },

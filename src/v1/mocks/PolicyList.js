@@ -1779,7 +1779,7 @@ export const mockPlacementPolicyResponse = {
         },
       },
       spec: {
-        clusterLabels: {
+        clusterSelector: {
           matchLabels: {
             cloud: 'IBM',
           },

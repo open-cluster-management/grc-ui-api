@@ -35,7 +35,7 @@ export const mockPlacementListResponse = {
       },
       spec: {
         resourceSelector: {},
-        clusterLabels: {
+        clusterSelector: {
           matchLabels: {
             cloud: 'IBM',
           },
@@ -70,7 +70,7 @@ export const mockPlacementListResponse = {
       },
       spec: {
         resourceSelector: {},
-        clusterLabels: {
+        clusterSelector: {
           matchLabels: {
             cloud: 'IBM',
           },

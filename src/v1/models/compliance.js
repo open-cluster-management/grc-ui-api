@@ -462,7 +462,7 @@ export default class ComplianceModel {
       if (pp) {
         const spec = pp.spec || {};
         placementPolicies.push({
-          clusterLabels: spec.clusterLabels,
+          clusterLabels: spec.clusterSelector,
           metadata: pp.metadata,
           raw: pp,
           clusterReplicas: spec.clusterReplicas,

@@ -1756,10 +1756,10 @@ export const mockCreatePolicy = {
 
 
 export const mockPlacementPolicyResponse = {
-  kind: 'PlacementPolicyList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
+  kind: 'PlacementRuleList',
+  apiVersion: 'apps.open-cluster-management.io/v1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies',
+    selfLink: '/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementpolicies',
     resourceVersion: '51490',
   },
   items: [
@@ -1767,7 +1767,7 @@ export const mockPlacementPolicyResponse = {
       metadata: {
         name: 'placement-xz',
         namespace: 'mcm',
-        selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-xz',
+        selfLink: '/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementpolicies/placement-xz',
         uid: '3df1e8f5-1053-11e9-a535-e2d4c161f9ad',
         resourceVersion: '51486',
         creationTimestamp: '2019-01-04T19:02:11Z',

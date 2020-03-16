@@ -19,11 +19,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:41:59Z",
           "name": "placement-my-policy",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -33,7 +33,7 @@ Object {
             "name": "placement-my-policy",
             "namespace": "mcm",
             "resourceVersion": "60",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -87,11 +87,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:45:39Z",
           "name": "placement-policy-ma",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -101,7 +101,7 @@ Object {
             "name": "placement-policy-ma",
             "namespace": "mcm",
             "resourceVersion": "98",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -155,11 +155,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:41:59Z",
           "name": "placement-my-policy",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -169,7 +169,7 @@ Object {
             "name": "placement-my-policy",
             "namespace": "mcm",
             "resourceVersion": "60",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -223,11 +223,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:45:39Z",
           "name": "placement-policy-ma",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -237,7 +237,7 @@ Object {
             "name": "placement-policy-ma",
             "namespace": "mcm",
             "resourceVersion": "98",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -291,11 +291,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:41:59Z",
           "name": "placement-my-policy",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -305,7 +305,7 @@ Object {
             "name": "placement-my-policy",
             "namespace": "mcm",
             "resourceVersion": "60",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -359,11 +359,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:45:39Z",
           "name": "placement-policy-ma",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -373,7 +373,7 @@ Object {
             "name": "placement-policy-ma",
             "namespace": "mcm",
             "resourceVersion": "98",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -427,11 +427,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:41:59Z",
           "name": "placement-my-policy",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -441,7 +441,7 @@ Object {
             "name": "placement-my-policy",
             "namespace": "mcm",
             "resourceVersion": "60",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -495,11 +495,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:45:39Z",
           "name": "placement-policy-ma",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -509,7 +509,7 @@ Object {
             "name": "placement-policy-ma",
             "namespace": "mcm",
             "resourceVersion": "98",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -563,11 +563,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:41:59Z",
           "name": "placement-my-policy",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -577,7 +577,7 @@ Object {
             "name": "placement-my-policy",
             "namespace": "mcm",
             "resourceVersion": "60",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-my-policy",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-my-policy",
             "uid": "2a52a098-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {
@@ -631,11 +631,11 @@ Object {
           "creationTimestamp": "2019-07-29T17:45:39Z",
           "name": "placement-policy-ma",
           "namespace": "mcm",
-          "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
         },
         "raw": Object {
-          "apiVersion": "mcm.ibm.com/v1alpha1",
-          "kind": "PlacementPolicy",
+          "apiVersion": "apps.open-cluster-management.io/v1",
+          "kind": "PlacementRule",
           "metadata": Object {
             "annotations": Object {
               "mcm.ibm.com/user-group": "c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk",
@@ -645,7 +645,7 @@ Object {
             "name": "placement-policy-ma",
             "namespace": "mcm",
             "resourceVersion": "98",
-            "selfLink": "/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies/placement-policy-ma",
+            "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules/placement-policy-ma",
             "uid": "ada3957f-b228-11e9-926f-eae85572ef1a",
           },
           "spec": Object {

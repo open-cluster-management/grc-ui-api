@@ -46,12 +46,12 @@ type Subject {
 export const resolver = {
   Query: {
     placementPolicies: (root, args, { PlacementModel }) =>
-      PlacementModel.getPlacementPolicies(args.selector),
+      PlacementModel.getPlacementRules(args.selector),
   },
   Placement: {
     placementBindings: (parent, args, { PlacementModel }) =>
       PlacementModel.getPlacementBindings({ matchNames: parent.placementBindingNames }),
     placementPolicies: (parent, args, { PlacementModel }) =>
-      PlacementModel.getPlacementPolicies({ matchNames: parent.placementPolicyNames }),
+      PlacementModel.getPlacementRules({ matchNames: parent.placementPolicyNames }),
   },
 };

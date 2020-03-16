@@ -444,11 +444,11 @@ export default class ComplianceModel {
     return annotations;
   }
 
-  async getPlacementPolicies(parent = {}) {
+  async getPlacementRules(parent = {}) {
     const policies = _.get(parent, 'status.placementPolicies', []);
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/placementpolicies`,
-      { kind: 'PlacementPolicy' },
+      ns => `/apis/apps.open-cluster-management.io/v1/namespaces/${ns}/placementrules`,
+      { kind: 'PlacementRule' },
     );
     const map = new Map();
     if (response) {

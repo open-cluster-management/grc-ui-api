@@ -31,13 +31,12 @@ LABEL org.label-schema.vendor="Red Hat" \
       io.k8s.description="$IMAGE_DESCRIPTION" \
       io.openshift.tags="$IMAGE_OPENSHIFT_TAGS"
 
-RUN mkdir -p /licenses
-
 ENV BABEL_DISABLE_CACHE=1 \
     NODE_ENV=production \
     USER_UID=1001
 
 RUN mkdir -p /opt/app-root/src/grc-ui-api
+RUN mkdir -p /opt/app-root/src/grc-ui-api/licenses
 WORKDIR /opt/app-root/src/grc-ui-api
 
 COPY . /opt/app-root/src/grc-ui-api

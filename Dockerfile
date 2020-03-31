@@ -13,11 +13,12 @@ ARG IMAGE_DESCRIPTION
 ARG IMAGE_SUMMARY
 ARG IMAGE_OPENSHIFT_TAGS
 
-LABEL org.label-schema.vendor="IBM" \
+LABEL org.label-schema.vendor="Red Hat" \
       org.label-schema.name="$IMAGE_NAME_ARCH" \
       org.label-schema.description="$IMAGE_DESCRIPTION" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
+      org.label-schema.license="Red Hat Advanced Cluster Management for Kubernetes EULA" \
       org.label-schema.schema-version="1.0" \
       name="$IMAGE_NAME" \
       maintainer="$IMAGE_MAINTAINER" \
@@ -29,6 +30,8 @@ LABEL org.label-schema.vendor="IBM" \
       io.k8s.display-name="$IMAGE_DISPLAY_NAME" \
       io.k8s.description="$IMAGE_DESCRIPTION" \
       io.openshift.tags="$IMAGE_OPENSHIFT_TAGS"
+
+RUN mkdir -p /licenses
 
 ENV BABEL_DISABLE_CACHE=1 \
     NODE_ENV=production \

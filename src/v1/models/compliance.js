@@ -141,6 +141,7 @@ export default class ComplianceModel {
     let policies = [];
     const urlNameSpace = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'mcm');
     const clusterNS = {};
+    const clusterConsoleURL = {};
 
     if (namespace) {
       if (name) {
@@ -167,7 +168,7 @@ export default class ComplianceModel {
       // remove cluster namespaces
       const nsPromises = allNameSpace.map(async (ns) => {
       // check ns one by one, if got normal response then it's cluster namespace
-        const URL = `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters/`;
+        const URL = `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`;
         const checkClusterNameSpace = await this.kubeConnector.get(URL);
         if (Array.isArray(checkClusterNameSpace.items) && checkClusterNameSpace.items.length > 0) {
           checkClusterNameSpace.items.forEach((item) => {
@@ -179,6 +180,10 @@ export default class ComplianceModel {
                   clusterNS[item.metadata.name] = item.metadata.namespace;
                 }
               }
+            }
+
+            if (item.metadata && item.metadata.name && item.spec && item.spec.consoleURL) {
+              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
             }
           });
           return null; // cluster namespaces
@@ -233,6 +238,7 @@ export default class ComplianceModel {
       remediation: _.get(entry, 'spec.remediationAction', ''),
       clusters: _.keys(_.get(entry, 'status.status'), ''),
       clusterNS,
+      clusterConsoleURL,
     }));
   }
 

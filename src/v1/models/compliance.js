@@ -167,11 +167,15 @@ export default class ComplianceModel {
       const allNameSpace = this.kubeConnector.namespaces;
       // remove cluster namespaces
       const nsPromises = allNameSpace.map(async (ns) => {
-      // check ns one by one, if got normal response then it's cluster namespace
-        const URL = `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`;
-        const checkClusterNameSpace = await this.kubeConnector.get(URL);
-        if (Array.isArray(checkClusterNameSpace.items) && checkClusterNameSpace.items.length > 0) {
-          checkClusterNameSpace.items.forEach((item) => {
+        // check ns one by one, if got normal response then it's cluster namespace
+        const checkClusterURL = `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters`;
+        const checkClusterStatusURL = `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`;
+        const [clusters, clusterstatuses] = await Promise.all([
+          this.kubeConnector.get(checkClusterURL),
+          this.kubeConnector.get(checkClusterStatusURL),
+        ]);
+        if (Array.isArray(clusters.items) && clusters.items.length > 0) {
+          clusters.items.forEach((item) => {
             // eslint maximum line length of 100 thus three if rather than one
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
@@ -181,9 +185,16 @@ export default class ComplianceModel {
                 }
               }
             }
-
-            if (item.metadata && item.metadata.name && item.spec && item.spec.consoleURL) {
-              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+          });
+          clusterstatuses.items.forEach((item) => {
+            // eslint maximum line length of 100 thus three if rather than one
+            if (item.metadata && item.metadata.name) {
+              // current each cluster only have one namespace
+              if (!Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)) {
+                if (item.spec && item.spec.consoleURL) {
+                  clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+                }
+              }
             }
           });
           return null; // cluster namespaces

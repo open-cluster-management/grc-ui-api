@@ -15,6 +15,7 @@ export const typeDef = `
 type Compliance implements K8sObject {
   clusterCompliant: String
   clusterNS: JSON
+  clusterConsoleURL: JSON
   compliancePolicies: [CompliancePolicies]
   compliancePolicy: [CompliancePolicyDetail]
   complianceStatus: [CompliantStatus]

@@ -158,8 +158,8 @@ export const mockClusterHubResponse = {
       kind: 'Cluster',
       apiVersion: 'clusterregistry.k8s.io/v1alpha1',
       metadata: {
-        name: 'clusterhub',
-        namespace: 'clusterhub',
+        name: '',
+        namespace: '',
         selfLink: '/apis/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/clusterhub',
         uid: '24466f0f-e482-11e9-aa00-96bb9600cc18',
         resourceVersion: '219917',
@@ -217,8 +217,8 @@ export const mockClusterHubStatusResponse = {
   items: [
     {
       metadata: {
-        name: 'clusterhub',
-        namespace: 'clusterhub',
+        name: '',
+        namespace: '',
         selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses/clusterhub',
         uid: 'cc540dfa-96b0-44e4-93d4-cfa18c387325',
         resourceVersion: '219917',
@@ -251,7 +251,7 @@ export const mockClusterHubStatusResponse = {
             ip: 'api.clusterhub.dev08.red-chesterfield.com',
           },
         ],
-        consoleURL: 'https://console-openshift-console.apps.clusterhub.dev08.red-chesterfield.com',
+        consoleURL: '',
         capacity: {
           cpu: '36',
           memory: '142867Mi',

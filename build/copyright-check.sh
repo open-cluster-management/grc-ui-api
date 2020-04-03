@@ -60,7 +60,7 @@ for f in $CHANGED_FILES; do
 
   FILETYPE=$(basename ${f##*.})
   case "${FILETYPE}" in
-  	js | go | scss | properties | java | rb)
+  	js | go | scss | java | rb)
   		COMMENT_PREFIX=""
   		;;
   	*)

@@ -6,13 +6,15 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc.
+*/
 
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import { mockComplianceListMCMResponse, mockComplianceListDefaultResponse, mockComplianceListKubeSystemResponse, mockCreateCompliance } from '../mocks/ComplianceList';
 import { mockPlacementBindingResponse, mockPlacementPolicyResponse, mockSinglePolicyResponse, mockSingleNoPolicyResponse } from '../mocks/PolicyList';
-import { mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse } from '../mocks/ClusterList';
+import { mockCluster1Response, mockCluster1StatusResponse, mockClusterHubResponse, mockClusterHubStatusResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse, mockMCMStatusResponse, mockDefaultStatusResponse, mockKubeSystemStatusResponse } from '../mocks/ClusterList';
 
 describe('Compliance Resolver', () => {
   beforeAll(() => {
@@ -67,17 +69,27 @@ describe('Compliance Resolver', () => {
       .reply(200, mockCreateCompliance);
 
     // Single cluster
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters/')
+    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters')
       .reply(200, mockCluster1Response);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/')
+    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters')
       .reply(200, mockClusterHubResponse);
+    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses')
+      .reply(200, mockCluster1StatusResponse);
+    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses')
+      .reply(200, mockClusterHubStatusResponse);
     // No cluster
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/mcm/clusters/')
+    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/mcm/clusters')
       .reply(200, mockMCMResponse);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters/')
+    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters')
       .reply(200, mockDefaultResponse);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/kube-system/clusters/')
+    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/kube-system/clusters')
       .reply(200, mockKubeSystemResponse);
+    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/mcm/clusterstatuses')
+      .reply(200, mockMCMStatusResponse);
+    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/default/clusterstatuses')
+      .reply(200, mockDefaultStatusResponse);
+    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/kube-system/clusterstatuses')
+      .reply(200, mockKubeSystemStatusResponse);
   });
 
   test('Correctly Resolves Compliance List Query', (done) => {

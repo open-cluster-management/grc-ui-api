@@ -176,7 +176,6 @@ export default class ComplianceModel {
         ]);
         if (Array.isArray(clusters.items) && clusters.items.length > 0) {
           clusters.items.forEach((item) => {
-            // eslint maximum line length of 100 thus three if rather than one
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
               if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)) {
@@ -187,7 +186,6 @@ export default class ComplianceModel {
             }
           });
           clusterstatuses.items.forEach((item) => {
-            // eslint maximum line length of 100 thus three if rather than one
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
               if (!Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)) {

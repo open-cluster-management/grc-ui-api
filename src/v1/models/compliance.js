@@ -227,6 +227,7 @@ export default class ComplianceModel {
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+            throw policyResponse.message;
           }
           return policyResponse.items;
         });

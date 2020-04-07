@@ -8,7 +8,7 @@
  ********************************************************************************
  * Copyright (c) 2020 Red Hat, Inc.
  */
-
+import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';
 import logger from '../lib/logger';
 import config from '../../../config';
@@ -227,7 +227,11 @@ export default class ComplianceModel {
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-            throw policyResponse.message;
+            if (policyResponse.code === 403) {
+              throw new ApolloError('PermissionError', {
+                message: policyResponse.message,
+              });
+            }
           }
           return policyResponse.items;
         });

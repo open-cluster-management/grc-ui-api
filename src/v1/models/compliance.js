@@ -8,7 +8,7 @@
  ********************************************************************************
  * Copyright (c) 2020 Red Hat, Inc.
  */
-
+import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';
 import logger from '../lib/logger';
 import config from '../../../config';
@@ -227,6 +227,11 @@ export default class ComplianceModel {
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+            if (policyResponse.code === 403) {
+              throw new ApolloError('PermissionError', {
+                message: policyResponse.message,
+              });
+            }
           }
           return policyResponse.items;
         });
@@ -681,10 +686,12 @@ export default class ComplianceModel {
       paresdValues.forEach((val) => {
         if (val.metadata.name === `${hubNamespace}.${policyName}`) {
           const resultInOneCluster = ComplianceModel.resolvePolicyViolations(val, key);
-          if (resultInOneCluster[0].status === 'NonCompliant') {
-            resultInOneCluster[0].cluster = key;
-            resultsWithPolicyName.push(resultInOneCluster[0]);
-          }
+          resultInOneCluster.forEach((result, index) => {
+            if (result.status.trim() === 'NonCompliant') {
+              resultInOneCluster[index].cluster = key;
+              resultsWithPolicyName.push(resultInOneCluster[index]);
+            }
+          });
         }
       });
     });

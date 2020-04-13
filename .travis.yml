@@ -45,6 +45,10 @@ jobs:
         - make component/build
         - make component/push
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then 
+            export DOCKER_TAG="dev"
+            make docker/tag
+          fi
     - stage: unit-test
       name: "Build and run unit tests"
       script:
@@ -63,6 +67,4 @@ jobs:
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
       if: type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export DOCKER_TAG="dev"; fi;
-        - make docker/tag
         - make pipeline-manifest/update PIPELINE_MANIFEST_COMPONENT_SHA256=${TRAVIS_COMMIT} PIPELINE_MANIFEST_COMPONENT_REPO=${TRAVIS_REPO_SLUG} PIPELINE_MANIFEST_BRANCH=${TRAVIS_BRANCH}

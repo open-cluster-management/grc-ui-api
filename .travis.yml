@@ -46,9 +46,9 @@ jobs:
         - make component/push
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then 
-            export DOCKER_TAG="dev"
-            make docker/tag
-          fi
+            export DOCKER_TAG="dev";
+            make docker/tag;
+          fi;
     - stage: unit-test
       name: "Build and run unit tests"
       script:

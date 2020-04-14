@@ -48,7 +48,7 @@ jobs:
         # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then 
         - export DOCKER_TAG="dev";
         - make docker/tag;
-        # - make docker/push
+        # - make docker/push;
           # fi;
     - stage: unit-test
       name: "Build and run unit tests"

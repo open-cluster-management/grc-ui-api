@@ -839,7 +839,7 @@ export default class ComplianceModel {
         });
       } else if (_.get(res, 'templateType') === 'object-templates' || _.get(res, 'templateType') === 'policy-templates') {
         violationArray.push({
-          name: _.get(res, 'objectDefinition.metadata.name', '-'),
+          name: _.get(res, 'objectDefinition.metadata.name', 'objectDefinition.metadata.kind', '-'),
           cluster: _.get(cluster, 'clustername', '-'),
           status: this.resolvePolicyStatus(res),
           message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',

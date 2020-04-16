@@ -48,8 +48,8 @@ jobs:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then 
             export COMPONENT_NEWTAG="dev";
             make component/tag;
-            export COMPONENT_VERSION="";
-            export COMPONENT_TAG_EXTENSION="dev";
+            export COMPONENT_VERSION="de";
+            export COMPONENT_TAG_EXTENSION="v";
             make component/push;
           fi;
     - stage: unit-test

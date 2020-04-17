@@ -178,7 +178,7 @@ export default class ComplianceModel {
           clusters.items.forEach((item) => {
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
-              if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name) && 
+              if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name) &&
               item.metadata.namespace) {
                 clusterNS[item.metadata.name] = item.metadata.namespace;
               }

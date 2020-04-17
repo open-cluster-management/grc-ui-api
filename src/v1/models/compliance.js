@@ -178,20 +178,18 @@ export default class ComplianceModel {
           clusters.items.forEach((item) => {
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
-              if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)) {
-                if (item.metadata.namespace) {
-                  clusterNS[item.metadata.name] = item.metadata.namespace;
-                }
+              if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name) && 
+              item.metadata.namespace) {
+                clusterNS[item.metadata.name] = item.metadata.namespace;
               }
             }
           });
           clusterstatuses.items.forEach((item) => {
             if (item.metadata && item.metadata.name) {
               // current each cluster only have one namespace
-              if (!Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)) {
-                if (item.spec && item.spec.consoleURL) {
-                  clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-                }
+              if (!Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name) &&
+              (item.spec && item.spec.consoleURL)) {
+                clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
               }
             }
           });

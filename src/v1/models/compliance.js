@@ -836,10 +836,9 @@ export default class ComplianceModel {
           selector: _.get(res, 'selector', ''),
         });
       } else if (_.get(res, 'templateType') === 'object-templates' || _.get(res, 'templateType') === 'policy-templates') {
-        let name = _.get(res, 'objectDefinition.metadata.name', '-');
-        name = name === '-' ? _.get(res, 'objectDefinition.kind', '-') : name;
         violationArray.push({
-          name,
+          name: _.get(res, 'objectDefinition.metadata.name') ?
+            _.get(res, 'objectDefinition.metadata.name') : _.get(res, 'objectDefinition.kind', '-'),
           cluster: _.get(cluster, 'clustername', '-'),
           status: this.resolvePolicyStatus(res),
           message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',

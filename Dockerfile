@@ -32,8 +32,7 @@ LABEL org.label-schema.vendor="Red Hat" \
       io.openshift.tags="$IMAGE_OPENSHIFT_TAGS"
 
 ENV BABEL_DISABLE_CACHE=1 \
-    NODE_ENV=production \
-    USER_UID=1001
+    NODE_ENV=production 
 
 RUN mkdir -p /opt/app-root/src/grc-ui-api
 RUN mkdir -p /opt/app-root/src/grc-ui-api/licenses
@@ -43,5 +42,4 @@ COPY . /opt/app-root/src/grc-ui-api
 
 EXPOSE 4000
 
-USER ${USER_UID}
 CMD ["node", "./output/index.js"]

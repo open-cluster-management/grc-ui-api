@@ -9,3 +9,6 @@ coverage
 build-harness
 build-harness-extensions
 test-report.xml
+!vbh/.build-harness-bootstrap
+!vbh/build-harness
+!vbh/build-harness-extensions

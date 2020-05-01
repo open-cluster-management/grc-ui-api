@@ -261,7 +261,7 @@ export default class KubeConnector {
             reject(err);
           }
         }
-        return 'pendingRequest';
+        return '';
       }, this.pollInterval);
 
       cancel = () => {

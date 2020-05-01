@@ -6,15 +6,18 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import KubeModel from './kube';
 import config from '../../../config';
 
+const acmAccessTokenCookie = 'acm-access-token-cookie';
+
 export default class QueryModel extends KubeModel {
   async getQueries(args) {
     const { req: { user } } = args;
-    const iamToken = _.get(args.req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
+    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
     // for getting queries list
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name}`,
@@ -31,7 +34,7 @@ export default class QueryModel extends KubeModel {
 
   async saveQuery(args) {
     const { req: { user }, resource } = args;
-    const iamToken = _.get(args.req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
+    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name || ''}`,
       headers: {
@@ -48,7 +51,9 @@ export default class QueryModel extends KubeModel {
       const target = queries[existingQuery];
       target.name = resource.name;
       target.description = resource.description;
-      if (resource.searchText !== '') target.searchText = resource.searchText;
+      if (resource.searchText !== '') {
+        target.searchText = resource.searchText;
+      }
       opts.json = {
         ...response, userQueries: queries,
       };
@@ -62,7 +67,7 @@ export default class QueryModel extends KubeModel {
 
   async deleteQuery(args) {
     const { req: { user }, resource } = args;
-    const iamToken = _.get(args.req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
+    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name || ''}`,
       headers: {

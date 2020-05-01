@@ -6,16 +6,19 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import KubeModel from './kube';
 import config from '../../../config';
 
+const acmAccessTokenCookie = 'acm-access-token-cookie';
+
 export default class SAModel extends KubeModel {
   async getOccurrences(userAccountID, req) {
     const urlUserAccountID = (userAccountID && userAccountID.length > 0) ? userAccountID : config.get('defaultUserAccountID');
     const url = config.get('NODE_ENV') === 'test' ? 'http://0.0.0.0' : config.get('cfcRouterUrl');
-    const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
+    const iamToken = _.get(req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
     const opts = {
       url: `${url}/findings/v1/${urlUserAccountID}/graph`,
       headers: {
@@ -26,60 +29,60 @@ export default class SAModel extends KubeModel {
       query: `
       {
         occurrences(kind: "FINDING") {
-          name 
-          noteName 
-          updateTime 
-          createTime 
+          name
+          noteName
+          updateTime
+          createTime
           shortDescription
           longDescription
           providerId
           providerName
-          remediation 
+          remediation
           context {
-            accountId 
-            region 
-            resourceType 
-            resourceName 
-            resourceId 
-            resourceCrn 
-            serviceName 
+            accountId
+            region
+            resourceType
+            resourceName
+            resourceId
+            resourceCrn
+            serviceName
             serviceCrn
             clusterName
             namespaceName
-          } 
+          }
           reportedBy {
-            id 
-            title 
-            url 
-          } 
+            id
+            title
+            url
+          }
           finding {
-            severity 
-            certainty 
+            severity
+            certainty
             networkConnection {
               client {
-                address 
+                address
                 port
-              } 
+              }
               server {
-                address 
+                address
                 port
-              } 
-              direction 
+              }
+              direction
               protocol
-            } 
+            }
             nextSteps {
-              title 
+              title
               url
-            } 
+            }
             dataTransferred {
-              clientBytes 
-              clientPackets 
-              serverBytes 
+              clientBytes
+              clientPackets
+              serverBytes
               serverPackets
             }
-          } 
+          }
           securityClassification { 
-            securityStandards 
+            securityStandards
             securityCategories
             securityControl
           }
@@ -95,7 +98,7 @@ export default class SAModel extends KubeModel {
 
   async deleteOccurrences(selfLink, req) {
     const url = config.get('NODE_ENV') === 'test' ? 'http://0.0.0.0' : config.get('cfcRouterUrl');
-    const iamToken = _.get(req, "cookies['acm-access-token-cookie']") || config.get('acm-access-token-cookie');
+    const iamToken = _.get(req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
     const opts = {
       url: `${url}/findings/v1/${selfLink}`,
       headers: {

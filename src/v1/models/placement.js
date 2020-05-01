@@ -9,7 +9,6 @@
  * Copyright (c) 2020 Red Hat, Inc.
  */
 
-// import _ from 'lodash';
 import KubeModel from './kube';
 
 const filterByName = (names, items) =>

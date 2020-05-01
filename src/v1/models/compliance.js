@@ -8,12 +8,30 @@
  ********************************************************************************
  * Copyright (c) 2020 Red Hat, Inc.
  */
+
 import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';
 import logger from '../lib/logger';
 import config from '../../../config';
 
 const POLICY_FAILURE_STATUS = 'Failure';
+const metadataNameStr = 'metadata.name';
+const metadataNsStr = 'metadata.namespace';
+const specReActionStr = 'spec.remediationAction';
+const statusStatusStr = 'status.status';
+const specRuntimeRulesStr = 'spec.runtime-rules';
+const roleTemplatesStr = 'role-templates';
+const roleBindingTemplatesStr = 'roleBinding-templates';
+const objectTemplatesStr = 'object-templates';
+const policyTemplatesStr = 'policy-templates';
+const runtimeRulesStr = 'runtime-rules';
+const statusResultsStr = 'status.results';
+const statusLCompliantStr = 'status.compliant';
+const statusUCompliantStr = 'status.Compliant';
+const statusLastTransTimeStr = 'status.conditions[0].lastTransitionTime';
+const statusValidityValidStr = 'status.Validity.valid';
+const statusValidityStr = 'status.Validity';
+const objMetadataNameStr = 'objectDefinition.metadata.name';
 
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
@@ -39,6 +57,15 @@ function createStatusResult(data) {
   return [...map.values()];
 }
 
+function getErrorMessage(item, errorMessage) {
+  let updatedErrorMessage = errorMessage;
+  if (item.code >= 400 || item.status === POLICY_FAILURE_STATUS) {
+    updatedErrorMessage += `${item.message}\n`;
+  }
+
+  return updatedErrorMessage;
+}
+
 export default class ComplianceModel {
   constructor({ kubeConnector }) {
     if (!kubeConnector) {
@@ -48,20 +75,17 @@ export default class ComplianceModel {
     this.kubeConnector = kubeConnector;
   }
 
-
   async createPolicy(resources) {
     // TODO: revist this, do something like application,
     // combine policy and compliance into one mutation
     let errorMessage = '';
     const result = await Promise.all(resources.map((resource) => {
-      const namespace = _.get(resource, 'metadata.namespace', (config.get('complianceNamespace') || 'mcm'));
+      const namespace = _.get(resource, metadataNsStr, (config.get('complianceNamespace') || 'mcm'));
       return this.kubeConnector.post(`/apis/policy.mcm.ibm.com/v1alpha1/namespaces/${namespace}/policies`, resource)
         .catch(err => Error(err));
     }));
     result.forEach((item) => {
-      if (item.code >= 400 || item.status === POLICY_FAILURE_STATUS) {
-        errorMessage += `${item.message}\n`;
-      }
+      errorMessage = getErrorMessage(item, errorMessage);
     });
     if (errorMessage) {
       throw new Error(errorMessage);
@@ -75,14 +99,12 @@ export default class ComplianceModel {
   async createCompliance(resources) {
     let errorMessage = '';
     const result = await Promise.all(resources.map((resource) => {
-      const namespace = _.get(resource, 'metadata.namespace', (config.get('complianceNamespace') || 'mcm'));
+      const namespace = _.get(resource, metadataNsStr, (config.get('complianceNamespace') || 'mcm'));
       return this.kubeConnector.post(`/apis/compliance.mcm.ibm.com/v1alpha1/namespaces/${namespace}/compliances`, resource)
         .catch(err => Error(err));
     }));
     result.forEach((item) => {
-      if (item.code >= 400 || item.status === POLICY_FAILURE_STATUS) {
-        errorMessage += `${item.message}\n`;
-      }
+      errorMessage = getErrorMessage(item, errorMessage);
     });
     if (errorMessage) {
       throw new Error(errorMessage);
@@ -176,21 +198,19 @@ export default class ComplianceModel {
         ]);
         if (Array.isArray(clusters.items) && clusters.items.length > 0) {
           clusters.items.forEach((item) => {
-            if (item.metadata && item.metadata.name) {
+            if (item.metadata && item.metadata.name &&
+              !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
+              && item.metadata.namespace) {
               // current each cluster only have one namespace
-              if (!Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name) &&
-              item.metadata.namespace) {
-                clusterNS[item.metadata.name] = item.metadata.namespace;
-              }
+              clusterNS[item.metadata.name] = item.metadata.namespace;
             }
           });
           clusterstatuses.items.forEach((item) => {
-            if (item.metadata && item.metadata.name) {
+            if (item.metadata && item.metadata.name &&
+              !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
+              && (item.spec && item.spec.consoleURL)) {
               // current each cluster only have one namespace
-              if (!Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name) &&
-              (item.spec && item.spec.consoleURL)) {
-                clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-              }
+              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
             }
           });
           return null; // cluster namespaces
@@ -245,10 +265,10 @@ export default class ComplianceModel {
     return policies.map(entry => ({
       ...entry,
       raw: entry,
-      name: _.get(entry, 'metadata.name', ''),
-      namespace: _.get(entry, 'metadata.namespace', ''),
-      remediation: _.get(entry, 'spec.remediationAction', ''),
-      clusters: _.keys(_.get(entry, 'status.status'), ''),
+      name: _.get(entry, metadataNameStr, ''),
+      namespace: _.get(entry, metadataNsStr, ''),
+      remediation: _.get(entry, specReActionStr, ''),
+      clusters: _.keys(_.get(entry, statusStatusStr), ''),
       clusterNS,
       clusterConsoleURL,
     }));
@@ -256,33 +276,36 @@ export default class ComplianceModel {
 
 
   static resolveCompliancePolicies(parent) {
-    const aggregatedStatus = _.get(parent, 'status.status');
+    const aggregatedStatus = _.get(parent, statusStatusStr);
     // compliance that has aggregatedStatus
-    if (aggregatedStatus) return this.resolvePolicyFromStatus(aggregatedStatus, parent);
+    if (aggregatedStatus) {
+      return this.resolvePolicyFromStatus(aggregatedStatus, parent);
+    }
     // in this case, a compliance doesn't connect with a
     // placementPolicy may not have aggregatedStatus
     return this.resolvePolicyFromSpec(parent);
   }
 
   static resolveCompliancePolicy(parent) {
-    const aggregatedStatus = _.get(parent, 'status.status');
+    const aggregatedStatus = _.get(parent, statusStatusStr);
     return this.resolveCompliancePoliciesFromSpec(parent, aggregatedStatus);
   }
 
   static resolveCompliancePoliciesFromSpec(parent, aggregatedStatus) {
     const compliancePolicies = {};
-    const policies = _.get(parent, 'spec.runtime-rules') ? _.get(parent, 'spec.runtime-rules') : [parent];
+    const policies = _.get(parent, specRuntimeRulesStr)
+      ? _.get(parent, specRuntimeRulesStr) : [parent];
     policies.forEach((policy) => {
-      const key = _.get(policy, 'metadata.name');
+      const key = _.get(policy, metadataNameStr);
       const value = {
-        name: _.get(policy, 'metadata.name'),
-        complianceName: _.get(parent, 'metadata.name'),
-        complianceNamespace: _.get(parent, 'metadata.namespace'),
+        name: _.get(policy, metadataNameStr),
+        complianceName: _.get(parent, metadataNameStr),
+        complianceNamespace: _.get(parent, metadataNsStr),
         complianceSelfLink: _.get(parent, 'metadata.selfLink'),
-        roleTemplates: this.resolvePolicyTemplates(policy, 'role-templates'),
-        roleBindingTemplates: this.resolvePolicyTemplates(policy, 'roleBinding-templates'),
-        objectTemplates: this.resolvePolicyTemplates(policy, 'object-templates'),
-        policyTemplates: this.resolvePolicyTemplates(policy, 'policy-templates'),
+        roleTemplates: this.resolvePolicyTemplates(policy, roleTemplatesStr),
+        roleBindingTemplates: this.resolvePolicyTemplates(policy, roleBindingTemplatesStr),
+        objectTemplates: this.resolvePolicyTemplates(policy, objectTemplatesStr),
+        policyTemplates: this.resolvePolicyTemplates(policy, policyTemplatesStr),
         detail: this.resolvePolicyDetails(policy),
         raw: policy,
       };
@@ -294,12 +317,12 @@ export default class ComplianceModel {
       Object.values(aggregatedStatus).forEach((cluster) => {
         Object.entries(_.get(cluster, 'aggregatePoliciesStatus', {})).forEach(([key, value]) => {
           let policy;
-          if (parent.spec['runtime-rules']) {
-            policy = parent.spec['runtime-rules'].find(p => p.metadata.name === key);
+          if (parent.spec[runtimeRulesStr]) {
+            policy = parent.spec[runtimeRulesStr].find(p => p.metadata.name === key);
           }
           const policyObject = {
             compliant: this.resolveStatus(value),
-            enforcement: _.get(policy, 'spec.remediationAction', 'unknown'),
+            enforcement: _.get(policy, specReActionStr, 'unknown'),
             message: _.get(value, 'message', '-'),
             rules: this.resolvePolicyRules(policy), // TODO: Use resolver.
             status: this.resolveStatus(value),
@@ -323,24 +346,24 @@ export default class ComplianceModel {
     Object.values(aggregatedStatus).forEach((cluster) => {
       Object.entries(_.get(cluster, 'aggregatePoliciesStatus', {})).forEach(([key, value]) => {
         let policy;
-        if (parent.spec['runtime-rules']) {
-          policy = parent.spec['runtime-rules'].find(p => p.metadata.name === key);
+        if (parent.spec[runtimeRulesStr]) {
+          policy = parent.spec[runtimeRulesStr].find(p => p.metadata.name === key);
         }
         const policyObject = {
           cluster: _.get(cluster, 'clustername', parent.metadata.namespace),
           complianceName: parent.metadata.name,
           complianceNamespace: parent.metadata.namespace,
           compliant: this.resolveStatus(value),
-          enforcement: _.get(policy, 'spec.remediationAction', 'unknown'),
+          enforcement: _.get(policy, specReActionStr, 'unknown'),
           message: _.get(value, 'message', '-'),
           name: key,
           rules: this.resolvePolicyRules(policy), // TODO: Use resolver.
           status: this.resolveStatus(value),
           valid: this.resolveValid(value),
           violations: this.resolvePolicyViolations(policy, cluster), // TODO: Use resolver.
-          roleTemplates: this.resolvePolicyTemplates(policy, 'role-templates'),
-          roleBindingTemplates: this.resolvePolicyTemplates(policy, 'roleBinding-templates'),
-          objectTemplates: this.resolvePolicyTemplates(policy, 'object-templates'),
+          roleTemplates: this.resolvePolicyTemplates(policy, roleTemplatesStr),
+          roleBindingTemplates: this.resolvePolicyTemplates(policy, roleBindingTemplatesStr),
+          objectTemplates: this.resolvePolicyTemplates(policy, objectTemplatesStr),
           detail: this.resolvePolicyDetails(policy),
           raw: policy,
           metadata: {
@@ -378,12 +401,12 @@ export default class ComplianceModel {
 
   static resolvePolicyFromSpec(parent) {
     const compliancePolicies = [];
-    const policies = _.get(parent, 'spec.runtime-rules', []);
+    const policies = _.get(parent, specRuntimeRulesStr, []);
     policies.forEach((policy) => {
       compliancePolicies.push({
-        name: _.get(policy, 'metadata.name'),
-        complianceName: _.get(parent, 'metadata.name'),
-        complianceNamespace: _.get(parent, 'metadata.namespace'),
+        name: _.get(policy, metadataNameStr),
+        complianceName: _.get(parent, metadataNameStr),
+        complianceNamespace: _.get(parent, metadataNsStr),
       });
     });
     return Object.values(compliancePolicies);
@@ -405,27 +428,32 @@ export default class ComplianceModel {
 
   static resolveComplianceStatus(parent) {
     const complianceStatus = [];
-    Object.entries(_.get(parent, 'status.status', {})).forEach(([clusterName, perClusterStatus]) => {
-      const aggregatedStatus = _.get(perClusterStatus, 'aggregatePoliciesStatus', {});
+    Object.entries(_.get(parent, statusStatusStr, {}))
+      .forEach(([clusterName, perClusterStatus]) => {
+        const aggregatedStatus = _.get(perClusterStatus, 'aggregatePoliciesStatus', {});
 
-      // get compliant status per cluster
-      if (aggregatedStatus) {
-        let validNum = 0;
-        let compliantNum = 0;
-        let policyNum = 0;
-        Object.values(aggregatedStatus).forEach((object) => {
-          if (this.resolveStatus(object) === 'Compliant') compliantNum += 1;
-          if (this.resolveValid(object)) validNum += 1;
-          policyNum += 1;
-        });
-        complianceStatus.push({
-          clusterNamespace: clusterName,
-          localCompliantStatus: `${compliantNum}/${policyNum}`,
-          localValidStatus: `${validNum}/${policyNum}`,
-          compliant: _.get(perClusterStatus, 'compliant', '-'),
-        });
-      }
-    });
+        // get compliant status per cluster
+        if (aggregatedStatus) {
+          let validNum = 0;
+          let compliantNum = 0;
+          let policyNum = 0;
+          Object.values(aggregatedStatus).forEach((object) => {
+            if (this.resolveStatus(object) === 'Compliant') {
+              compliantNum += 1;
+            }
+            if (this.resolveValid(object)) {
+              validNum += 1;
+            }
+            policyNum += 1;
+          });
+          complianceStatus.push({
+            clusterNamespace: clusterName,
+            localCompliantStatus: `${compliantNum}/${policyNum}`,
+            localValidStatus: `${validNum}/${policyNum}`,
+            compliant: _.get(perClusterStatus, 'compliant', '-'),
+          });
+        }
+      });
 
     return complianceStatus;
   }
@@ -438,7 +466,9 @@ export default class ComplianceModel {
     Object.values(status.status || []).forEach((cluster) => {
       Object.values(cluster.aggregatePoliciesStatus || {}).forEach((policyValue) => {
         totalPolicies += 1;
-        if (this.resolveStatus(policyValue).toLowerCase() === 'compliant') compliantPolicies += 1;
+        if (this.resolveStatus(policyValue).toLowerCase() === 'compliant') {
+          compliantPolicies += 1;
+        }
       });
     });
 
@@ -457,10 +487,11 @@ export default class ComplianceModel {
 
   static resolveAnnotations(parent) {
     const rawAnnotations = _.get(parent, 'metadata.annotations', {});
-    const annotations = {};
-    annotations.categories = _.get(rawAnnotations, 'policy.mcm.ibm.com/categories', '-');
-    annotations.controls = _.get(rawAnnotations, 'policy.mcm.ibm.com/controls', '-');
-    annotations.standards = _.get(rawAnnotations, 'policy.mcm.ibm.com/standards', '-');
+    const annotations = {
+      categories: _.get(rawAnnotations, 'policy.mcm.ibm.com/categories', '-'),
+      controls: _.get(rawAnnotations, 'policy.mcm.ibm.com/controls', '-'),
+      standards: _.get(rawAnnotations, 'policy.mcm.ibm.com/standards', '-'),
+    };
     return annotations;
   }
 
@@ -524,7 +555,7 @@ export default class ComplianceModel {
       return allViolationsArray;
     }
     const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const clusterResults = _.get(response, 'status.results');
+    const clusterResults = _.get(response, statusResultsStr);
     const roleTemplates = [];
     const policyTemplates = [];
     _.forIn(clusterResults, (value) => {
@@ -550,7 +581,7 @@ export default class ComplianceModel {
     if (name !== undefined) {
       // use kind when passing the apiGroup
       const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com', clusterName, name);
-      const results = _.get(response, 'status.results');
+      const results = _.get(response, statusResultsStr);
       if (results) {
         const item = _.get(results, `${clusterName}`, {});
         if (item) {
@@ -565,7 +596,7 @@ export default class ComplianceModel {
     // if policy name specified
     if (cluster !== undefined) {
       const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com', cluster, undefined, false, true);
-      const results = _.get(response, 'status.results');
+      const results = _.get(response, statusResultsStr);
       if (results) {
         const item = _.get(results, `${cluster}`, {});
         if (item) {
@@ -581,7 +612,7 @@ export default class ComplianceModel {
   async getAllClustersInPolicy(policyName, hubNamespace) {
     // if policy name specified
     const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const results = _.get(response, 'status.results');
+    const results = _.get(response, statusResultsStr);
     const policiesMap = new Map();
     if (results) {
       let result = [];
@@ -592,8 +623,8 @@ export default class ComplianceModel {
         const policies = item.items;
         // eslint-disable-next-line
         policies.forEach((policy) => {
-          if (_.get(policy, 'metadata.name') === `${hubNamespace}.${policyName}` && _.get(policy, 'metadata.namespace') === cluster) {
-            if (_.get(policy, 'status.compliant', '').toLowerCase() === 'compliant') {
+          if (_.get(policy, metadataNameStr) === `${hubNamespace}.${policyName}` && _.get(policy, metadataNsStr) === cluster) {
+            if (_.get(policy, statusLCompliantStr, '').toLowerCase() === 'compliant') {
               result.push({ name: cluster, status: 'compliant' });
             } else {
               result.push({ name: cluster, status: 'violated' });
@@ -608,9 +639,9 @@ export default class ComplianceModel {
       ]);
       const clusterMap = new Map();
       const clusterStatusMap = new Map();
-      clusters.forEach(cluster => clusterMap.set(_.get(cluster, 'metadata.name', ''), cluster));
+      clusters.forEach(cluster => clusterMap.set(_.get(cluster, metadataNameStr, ''), cluster));
       clusterstatuses.forEach((cluster) => {
-        clusterStatusMap.set(_.get(cluster, 'metadata.name', ''), { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'spec.consoleURL') } });
+        clusterStatusMap.set(_.get(cluster, metadataNameStr, ''), { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'spec.consoleURL') } });
       });
       result = createStatusResult(result);
       result = result.map((item) => {
@@ -655,7 +686,7 @@ export default class ComplianceModel {
         const innerPromises = allPoliciesInCluster.map(async (policy) => {
           if (policy.metadata) {
             const policiesKey = `${_.get(policy, 'metadata.labels.parent-policy', '')}+${clusterName}`;
-            const realNameKey = `${_.get(policy, 'metadata.name', '')}+${clusterName}`;
+            const realNameKey = `${_.get(policy, metadataNameStr, '')}+${clusterName}`;
             if (violatedPoliciesSet.has(policiesKey) || violatedPoliciesSet.has(realNameKey)) {
               const filterViolatedPolicy = policy;
               filterViolatedPolicy.cluster = clusterName;
@@ -678,7 +709,7 @@ export default class ComplianceModel {
       return resultsWithPolicyName;
     }
     const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const clusterResults = _.get(response, 'status.results');
+    const clusterResults = _.get(response, statusResultsStr);
     _.forIn(clusterResults, (value, key) => {
       const paresdValues = _.get(value, 'items');
       paresdValues.forEach((val) => {
@@ -697,7 +728,7 @@ export default class ComplianceModel {
       const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`);
       resultsWithPolicyName.forEach((resultInOneCluster) => {
         clusterstatuses.forEach((oneClusterStatus) => {
-          if (_.get(oneClusterStatus, 'metadata.name') === _.get(resultInOneCluster, 'cluster')) {
+          if (_.get(oneClusterStatus, metadataNameStr) === _.get(resultInOneCluster, 'cluster')) {
             // eslint-disable-next-line no-param-reassign
             resultInOneCluster.clusterURL = _.get(oneClusterStatus, 'spec.consoleURL');
           }
@@ -716,7 +747,7 @@ export default class ComplianceModel {
   }
 
   static resolvePolicyEnforcement(parent) {
-    return _.get(parent, 'spec.remediationAction', 'unknown');
+    return _.get(parent, specReActionStr, 'unknown');
   }
 
   static resolvePolicyRules(parent) {
@@ -732,7 +763,7 @@ export default class ComplianceModel {
               resources: _.get(rul, 'policyRule.resources', ['-']),
               verbs: _.get(rul, 'policyRule.verbs', ['-']),
               templateType: _.get(res, 'templateType', ''),
-              ruleUID: `${_.get(res, 'metadata.name', '-')}-rule-${key}`,
+              ruleUID: `${_.get(res, metadataNameStr, '-')}-rule-${key}`,
             };
             rules.push(rule);
           }
@@ -745,7 +776,7 @@ export default class ComplianceModel {
   static resolveRoleSubjects(parent) {
     let roleSubjects = [];
     getTemplates(parent).forEach((res) => {
-      if (_.get(res, 'templateType') === 'roleBinding-templates') {
+      if (_.get(res, 'templateType') === roleBindingTemplatesStr) {
         roleSubjects = [..._.get(res, 'roleBinding.subjects', [])];
       }
     });
@@ -755,7 +786,7 @@ export default class ComplianceModel {
   static resolveRoleRef(parent) {
     const roleRef = [];
     getTemplates(parent).forEach((res) => {
-      if (_.get(res, 'templateType') === 'roleBinding-templates') {
+      if (_.get(res, 'templateType') === roleBindingTemplatesStr) {
         roleRef.push(_.get(res, 'roleBinding.roleRef', {}));
       }
     });
@@ -763,8 +794,8 @@ export default class ComplianceModel {
   }
 
   static resolvePolicyStatus(parent) {
-    if (_.get(parent, 'status.Compliant') || _.get(parent, 'status.compliant')) {
-      return _.get(parent, 'status.Compliant') || _.get(parent, 'status.compliant');
+    if (_.get(parent, statusUCompliantStr) || _.get(parent, statusLCompliantStr)) {
+      return _.get(parent, statusUCompliantStr) || _.get(parent, statusLCompliantStr);
     }
     if (_.get(parent, 'status.Valid') !== undefined) {
       return _.get(parent, 'status.Valid') ? 'valid' : 'invalid';
@@ -783,37 +814,37 @@ export default class ComplianceModel {
     const tempArray = [];
     getTemplates(parent).forEach((res) => {
       if (_.get(res, 'templateType') === type) {
-        if (type === 'roleBinding-templates') {
+        if (type === roleBindingTemplatesStr) {
           tempArray.push({
             name: _.get(res, 'roleBinding.metadata.name', '-'),
-            lastTransition: _.get(res, 'status.conditions[0].lastTransitionTime', ''),
+            lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'roleBinding.apiVersion', ''),
-            compliant: _.get(res, 'status.Compliant', ''),
-            validity: _.get(res, 'status.Validity.valid') || _.get(res, 'status.Validity', ''),
+            compliant: _.get(res, statusUCompliantStr, ''),
+            validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
-        } else if (type === 'object-templates' || type === 'policy-templates') {
+        } else if (type === objectTemplatesStr || type === policyTemplatesStr) {
           tempArray.push({
-            name: _.get(res, 'objectDefinition.metadata.name', '-'),
-            lastTransition: _.get(res, 'status.conditions[0].lastTransitionTime', ''),
+            name: _.get(res, objMetadataNameStr, '-'),
+            lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'objectDefinition.apiVersion', ''),
             kind: _.get(res, 'objectDefinition.kind', ''),
-            compliant: _.get(res, 'status.Compliant', ''),
-            status: _.get(res, 'status.Compliant', ''),
-            validity: _.get(res, 'status.Validity.valid') || _.get(res, 'status.Validity', ''),
+            compliant: _.get(res, statusUCompliantStr, ''),
+            status: _.get(res, statusUCompliantStr, ''),
+            validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
         } else {
           tempArray.push({
-            name: _.get(res, 'metadata.name', '-'),
-            lastTransition: _.get(res, 'status.conditions[0].lastTransitionTime', ''),
+            name: _.get(res, metadataNameStr, '-'),
+            lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'apiVersion', ''),
-            compliant: _.get(res, 'status.Compliant', ''),
-            status: _.get(res, 'status.Compliant', ''),
-            validity: _.get(res, 'status.Validity.valid') || _.get(res, 'status.Validity', ''),
+            compliant: _.get(res, statusUCompliantStr, ''),
+            status: _.get(res, statusUCompliantStr, ''),
+            validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
         }
@@ -826,19 +857,19 @@ export default class ComplianceModel {
     const violationArray = [];
     getTemplates(parent).forEach((res) => {
       const templateCondition = _.get(res, 'status.conditions[0]');
-      if (_.get(res, 'templateType') === 'role-templates') {
+      if (_.get(res, 'templateType') === roleTemplatesStr) {
         violationArray.push({
-          name: _.get(res, 'metadata.name', '-'),
+          name: _.get(res, metadataNameStr, '-'),
           cluster: _.get(cluster, 'clustername', '-'),
           status: this.resolvePolicyStatus(res),
           message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',
           reason: (templateCondition && _.get(templateCondition, 'reason', '-')) || '-',
           selector: _.get(res, 'selector', ''),
         });
-      } else if (_.get(res, 'templateType') === 'object-templates' || _.get(res, 'templateType') === 'policy-templates') {
+      } else if (_.get(res, 'templateType') === objectTemplatesStr || _.get(res, 'templateType') === policyTemplatesStr) {
         violationArray.push({
-          name: _.get(res, 'objectDefinition.metadata.name') ?
-            _.get(res, 'objectDefinition.metadata.name') : _.get(res, 'objectDefinition.kind', '-'),
+          name: _.get(res, objMetadataNameStr) ?
+            _.get(res, objMetadataNameStr) : _.get(res, 'objectDefinition.kind', '-'),
           cluster: _.get(cluster, 'clustername', '-'),
           status: this.resolvePolicyStatus(res),
           message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',

@@ -6,6 +6,7 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import lru from 'lru-cache';
@@ -157,8 +158,7 @@ export default class KubeConnector {
         'Content-Type': 'application/json-patch+json',
       },
     };
-    const newRequest = this.http(_.merge(defaults, opts)).then(res => res.body);
-    return newRequest;
+    return this.http(_.merge(defaults, opts)).then(res => res.body);
   }
 
   put(path = '', opts = {}) {
@@ -170,8 +170,7 @@ export default class KubeConnector {
         'Content-Type': 'application/json',
       },
     };
-    const newRequest = this.http(_.merge(defaults, opts)).then(res => res.body);
-    return newRequest;
+    return this.http(_.merge(defaults, opts)).then(res => res.body);
   }
 
   // TODO: Allow filtering - 07/25/18 10:48:31 sidney.wijngaarde1@ibm.com
@@ -262,6 +261,7 @@ export default class KubeConnector {
             reject(err);
           }
         }
+        return 'pendingRequest';
       }, this.pollInterval);
 
       cancel = () => {

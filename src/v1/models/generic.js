@@ -6,10 +6,13 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
+
+const noResourcetypeStr = '##cannot find resourcetype##';
 
 export default class GenericModel extends KubeModel {
   async getResourceEndPoint(resource, k8sPaths) {
@@ -28,10 +31,9 @@ export default class GenericModel extends KubeModel {
             if (namespaced && !namespace) {
               return null;
             }
-            const requestPath = `${apiPath}/${namespaced ? `namespaces/${namespace}/` : ''}${name}`;
-            return requestPath;
+            return `${apiPath}/${namespaced ? `namespaces/${namespace}/` : ''}${name}`;
           }
-          return '##cannot find resourcetype##';
+          return noResourcetypeStr;
         })();
       }
     }
@@ -58,8 +60,8 @@ export default class GenericModel extends KubeModel {
       return {
         errors: [{ message: 'Namespace not found in the template' }],
       };
-    } else if (requestPaths.includes('##cannot find resourcetype##')) {
-      const resourceIndex = requestPaths.indexOf('##cannot find resourcetype##');
+    } else if (requestPaths.includes(noResourcetypeStr)) {
+      const resourceIndex = requestPaths.indexOf(noResourcetypeStr);
       return {
         errors: [{ message: `Cannot find resource kind "${resources[resourceIndex].kind}"` }],
       };
@@ -246,7 +248,9 @@ export default class GenericModel extends KubeModel {
     const cluster = await this.kubeConnector.getResources(ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters/${clusterName}`);
     if (cluster && cluster.length === 1) {
       const clusterNamespace = cluster[0].metadata.namespace;
-      return this.kubeConnector.get(`/apis/mcm.ibm.com/v1alpha1/namespaces/${clusterNamespace}/clusterstatuses/${clusterName}/log/${podNamespace}/${podName}/${containerName}?tailLines=1000`, { json: false }, true);
+      return this.kubeConnector.get(`/apis/mcm.ibm.com/v1alpha1/namespaces/
+      ${clusterNamespace}/clusterstatuses/${clusterName}/log/${podNamespace}/
+      ${podName}/${containerName}?tailLines=1000`, { json: false }, true);
     }
     throw new Error(`Enable to find the cluster called ${clusterName}`);
   }

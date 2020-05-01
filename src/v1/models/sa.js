@@ -12,13 +12,13 @@ import _ from 'lodash';
 import KubeModel from './kube';
 import config from '../../../config';
 
-const acmAccessTokenCookie = 'acm-access-token-cookie';
+const acmTokenCookieStr = 'acm-access-token-cookie';
 
 export default class SAModel extends KubeModel {
   async getOccurrences(userAccountID, req) {
     const urlUserAccountID = (userAccountID && userAccountID.length > 0) ? userAccountID : config.get('defaultUserAccountID');
     const url = config.get('NODE_ENV') === 'test' ? 'http://0.0.0.0' : config.get('cfcRouterUrl');
-    const iamToken = _.get(req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
+    const iamToken = _.get(req, `cookies[${acmTokenCookieStr}]`) || config.get(acmTokenCookieStr);
     const opts = {
       url: `${url}/findings/v1/${urlUserAccountID}/graph`,
       headers: {
@@ -98,7 +98,7 @@ export default class SAModel extends KubeModel {
 
   async deleteOccurrences(selfLink, req) {
     const url = config.get('NODE_ENV') === 'test' ? 'http://0.0.0.0' : config.get('cfcRouterUrl');
-    const iamToken = _.get(req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
+    const iamToken = _.get(req, `cookies[${acmTokenCookieStr}]`) || config.get(acmTokenCookieStr);
     const opts = {
       url: `${url}/findings/v1/${selfLink}`,
       headers: {

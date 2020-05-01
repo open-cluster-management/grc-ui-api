@@ -12,12 +12,12 @@ import _ from 'lodash';
 import KubeModel from './kube';
 import config from '../../../config';
 
-const acmAccessTokenCookie = 'acm-access-token-cookie';
+const acmTokenCookieStr = 'acm-access-token-cookie';
 
 export default class QueryModel extends KubeModel {
   async getQueries(args) {
     const { req: { user } } = args;
-    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
+    const iamToken = _.get(args.req, `cookies[${acmTokenCookieStr}]`) || config.get(acmTokenCookieStr);
     // for getting queries list
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name}`,
@@ -34,7 +34,7 @@ export default class QueryModel extends KubeModel {
 
   async saveQuery(args) {
     const { req: { user }, resource } = args;
-    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
+    const iamToken = _.get(args.req, `cookies[${acmTokenCookieStr}]`) || config.get(acmTokenCookieStr);
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name || ''}`,
       headers: {
@@ -67,7 +67,7 @@ export default class QueryModel extends KubeModel {
 
   async deleteQuery(args) {
     const { req: { user }, resource } = args;
-    const iamToken = _.get(args.req, `cookies[${acmAccessTokenCookie}]`) || config.get(acmAccessTokenCookie);
+    const iamToken = _.get(args.req, `cookies[${acmTokenCookieStr}]`) || config.get(acmTokenCookieStr);
     const opts = {
       url: `${config.get('cfcRouterUrl')}/idmgmt/identity/api/v1/userpreferences/preferenceId_${user.name || ''}`,
       headers: {

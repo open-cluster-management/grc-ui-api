@@ -487,12 +487,11 @@ export default class ComplianceModel {
 
   static resolveAnnotations(parent) {
     const rawAnnotations = _.get(parent, 'metadata.annotations', {});
-    const annotations = {
+    return {
       categories: _.get(rawAnnotations, 'policy.mcm.ibm.com/categories', '-'),
       controls: _.get(rawAnnotations, 'policy.mcm.ibm.com/controls', '-'),
       standards: _.get(rawAnnotations, 'policy.mcm.ibm.com/standards', '-'),
     };
-    return annotations;
   }
 
   async getPlacementRules(parent = {}) {

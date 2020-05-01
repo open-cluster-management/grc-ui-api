@@ -11,7 +11,7 @@
 import _ from 'lodash';
 import KubeModel from './kube';
 
-const metadataName = 'metadata.name';
+const metadataNameStr = 'metadata.name';
 
 // The last char(s) in usage are units - need to be removed in order to get an int for calculation
 function getPercentage(usage, capacity) {
@@ -35,7 +35,7 @@ function findClusterIntersection(clusters, clusterstatuses) {
   const intersect = new Set([...clusterSet].filter(name => clusterStatusSet.has(name)));
   const resultMap = new Map();
   clusters.forEach((cluster) => {
-    const clusterName = _.get(cluster, metadataName);
+    const clusterName = _.get(cluster, metadataNameStr);
     if (intersect.has(clusterName)) {
       resultMap.set(clusterName, { metadata: cluster.metadata, raw: cluster });
     }
@@ -47,7 +47,7 @@ function findClusterIntersection(clusters, clusterstatuses) {
 function findMatchedStatus(clusters, clusterstatuses) {
   const resultMap = findClusterIntersection(clusters, clusterstatuses);
   clusterstatuses.forEach((clusterstatus) => {
-    const clusterName = _.get(clusterstatus, metadataName);
+    const clusterName = _.get(clusterstatus, metadataNameStr);
     if (resultMap.has(clusterName)) {
       const data = {
         metadata: resultMap.get(clusterName).metadata,
@@ -67,7 +67,7 @@ function findMatchedStatus(clusters, clusterstatuses) {
 function findMatchedStatusForOverview(clusters, clusterstatuses) {
   const resultMap = findClusterIntersection(clusters, clusterstatuses);
   clusterstatuses.forEach((clusterstatus) => {
-    const clusterName = _.get(clusterstatus, metadataName);
+    const clusterName = _.get(clusterstatus, metadataNameStr);
     if (resultMap.has(clusterName)) {
       const cluster = resultMap.get(clusterName);
       const data = {

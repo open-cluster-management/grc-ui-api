@@ -42,6 +42,7 @@ jobs:
       name: "Build the image and push"
       script:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - make copyright-check TRAVIS_BRANCH=${TRAVIS_BRANCH}
         - make component/build
         - make component/push
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
@@ -55,7 +56,6 @@ jobs:
     - stage: unit-test
       name: "Build and run unit tests"
       script:
-        - make copyright-check TRAVIS_BRANCH=${TRAVIS_BRANCH}
         - make sonar/js/jest-init
         - make component/test/unit
         - make sonar/js

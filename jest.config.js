@@ -43,6 +43,7 @@ const jestConfig = {
   ],
   testEnvironment: 'node',
   setupTestFrameworkScriptFile: './jest.setup.js',
+  modulePathIgnorePatterns: ['<rootDir>/vendor'],
 };
 
 jestConfig.reporters = process.env.TRAVIS ? ['default', tapReporter] : ['default'];

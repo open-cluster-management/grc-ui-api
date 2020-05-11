@@ -1,4 +1,5 @@
 node_modules
+vendor
 .vscode
 /output
 config/config-development.json
@@ -13,3 +14,4 @@ test-report.xml
 !vbh/build-harness
 !vbh/build-harness-extensions
 !node_modules
+!vendor

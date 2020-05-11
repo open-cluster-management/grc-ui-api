@@ -6,6 +6,5 @@
 !/config
 !/jest.setup.js
 !/node_modules
-!/vendor
 !/sslcert
 !license.txt

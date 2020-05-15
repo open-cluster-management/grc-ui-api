@@ -81,7 +81,7 @@ export default class SAModel extends KubeModel {
               serverPackets
             }
           }
-          securityClassification { 
+          securityClassification {
             securityStandards
             securityCategories
             securityControl

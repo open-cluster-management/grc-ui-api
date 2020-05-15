@@ -243,8 +243,6 @@ export default class ComplianceModel {
         const promises = allNonClusterNameSpace.map(async (ns) => {
           const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies`;
           const policyResponse = await this.kubeConnector.get(URL);
-          // eslint-disable-next-line no-console
-          // console.log('PR', JSON.stringify(policyResponse));
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
             if (policyResponse.code === 403) {

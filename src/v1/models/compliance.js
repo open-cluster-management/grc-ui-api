@@ -168,7 +168,7 @@ export default class ComplianceModel {
     if (namespace) {
       if (name) {
         // get single policy with a specific name and a specific namespace
-        const URL = `/apis/policy.mcm.ibm.com/v1alpha1/namespaces/${urlNameSpace}/policies/${name}`;
+        const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${urlNameSpace}/policies/${name}`;
         const policyResponse = await this.kubeConnector.get(URL);
         if (policyResponse.code || policyResponse.message) {
           logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -177,7 +177,7 @@ export default class ComplianceModel {
         }
       } else {
         // for getting policy list with a specific namespace
-        const URL = `/apis/policy.mcm.ibm.com/v1alpha1/namespaces/${urlNameSpace}/policies`;
+        const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${urlNameSpace}/policies`;
         const policyResponse = await this.kubeConnector.get(URL);
         if (policyResponse.code || policyResponse.message) {
           logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -226,7 +226,7 @@ export default class ComplianceModel {
       if (name) {
         // get single policy with a specific name and all non-clusters namespaces
         const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/policy.mcm.ibm.com/v1alpha1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies/${name}`;
+          const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies/${name}`;
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -241,8 +241,10 @@ export default class ComplianceModel {
       } else { // most general case for all policies
         // for getting policy list with all non-clusters namespaces
         const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/policy.mcm.ibm.com/v1alpha1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies`;
+          const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies`;
           const policyResponse = await this.kubeConnector.get(URL);
+          // eslint-disable-next-line no-console
+          // console.log('PR', JSON.stringify(policyResponse));
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
             if (policyResponse.code === 403) {
@@ -495,7 +497,7 @@ export default class ComplianceModel {
   }
 
   async getPlacementRules(parent = {}) {
-    const policies = _.get(parent, 'status.placementPolicies', []);
+    const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       ns => `/apis/apps.open-cluster-management.io/v1/namespaces/${ns}/placementrules`,
       { kind: 'PlacementRule' },
@@ -505,8 +507,14 @@ export default class ComplianceModel {
       response.forEach(item => map.set(item.metadata.name, item));
     }
     const placementPolicies = [];
-    policies.forEach((policy) => {
-      const pp = map.get(policy);
+    // eslint-disable-next-line no-console
+    // console.log('ppmap', JSON.stringify(map));
+
+    placements.forEach((placement) => {
+      const rule = _.get(placement, 'placementRule', '');
+      const pp = map.get(rule);
+      // eslint-disable-next-line no-console
+      // console.log('pp', pp);
       if (pp) {
         const spec = pp.spec || {};
         placementPolicies.push({
@@ -519,23 +527,36 @@ export default class ComplianceModel {
         });
       }
     });
+    // eslint-disable-next-line no-console
+    // console.log('ppreturn', placementPolicies);
     return placementPolicies;
   }
 
   async getPlacementBindings(parent = {}) {
-    const bindings = _.get(parent, 'status.placementBindings', []);
+    // eslint-disable-next-line no-console
+    console.log('parent', JSON.stringify(parent));
+    const placements = _.get(parent, 'status.placement', []);
+    // eslint-disable-next-line no-console
+    // console.log('bindings', binding);
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/placementbindings`,
+      ns => `/apis/policies.open-cluster-management.io/v1/namespaces/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const map = new Map();
     if (response) {
+      // eslint-disable-next-line no-console
+      // console.log('response', JSON.stringify(response));
       response.forEach(item => map.set(item.metadata.name, item));
     }
+    // eslint-disable-next-line no-console
+    // console.log('pbmap', JSON.stringify(map));
     const placementBindings = [];
 
-    bindings.forEach((binding) => {
+    placements.forEach((placement) => {
+      const binding = _.get(placement, 'placementBinding', '');
       const pb = map.get(binding);
+      // eslint-disable-next-line no-console
+      // console.log('pb', pb);
       if (pb) {
         placementBindings.push({
           metadata: pb.metadata,
@@ -545,6 +566,8 @@ export default class ComplianceModel {
         });
       }
     });
+    // eslint-disable-next-line no-console
+    // console.log('pbreturn', placementBindings);
     return placementBindings;
   }
 
@@ -707,34 +730,101 @@ export default class ComplianceModel {
     if (policyName === null) {
       return resultsWithPolicyName;
     }
-    const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const clusterResults = _.get(response, statusResultsStr);
-    _.forIn(clusterResults, (value, key) => {
-      const paresdValues = _.get(value, 'items');
-      paresdValues.forEach((val) => {
-        if (val.metadata.name === `${hubNamespace}.${policyName}`) {
-          const resultInOneCluster = ComplianceModel.resolvePolicyViolations(val, key);
-          resultInOneCluster.forEach((result, index) => {
-            if (result.status.trim() === 'NonCompliant') {
-              resultInOneCluster[index].cluster = key;
-              resultsWithPolicyName.push(resultInOneCluster[index]);
-            }
-          });
-        }
-      });
-    });
-    if (!_.isEmpty(resultsWithPolicyName)) {
-      const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`);
-      resultsWithPolicyName.forEach((resultInOneCluster) => {
-        clusterstatuses.forEach((oneClusterStatus) => {
-          if (_.get(oneClusterStatus, metadataNameStr) === _.get(resultInOneCluster, 'cluster')) {
-            // eslint-disable-next-line no-param-reassign
-            resultInOneCluster.clusterURL = _.get(oneClusterStatus, 'spec.consoleURL');
+    const clusterNS = {};
+    const clusterConsoleURL = {};
+    // all possible namespaces
+    const allNameSpace = this.kubeConnector.namespaces;
+    // remove cluster namespaces
+    const nsPromises = allNameSpace.map(async (ns) => {
+      // check ns one by one, if got normal response then it's cluster namespace
+      const checkClusterURL = `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters`;
+      const checkClusterStatusURL = `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`;
+      const [clusters, clusterstatuses] = await Promise.all([
+        this.kubeConnector.get(checkClusterURL),
+        this.kubeConnector.get(checkClusterStatusURL),
+      ]);
+      if (Array.isArray(clusters.items) && clusters.items.length > 0) {
+        clusters.items.forEach((item) => {
+          if (item.metadata && item.metadata.name &&
+            !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
+            && item.metadata.namespace) {
+            // current each cluster only have one namespace
+            clusterNS[item.metadata.name] = item.metadata.namespace;
           }
         });
-      });
-    }
-    return resultsWithPolicyName;
+        clusterstatuses.items.forEach((item) => {
+          if (item.metadata && item.metadata.name &&
+            !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
+            && (item.spec && item.spec.consoleURL)) {
+            // current each cluster only have one namespace
+            clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+          }
+        });
+        return ns; // cluster namespaces
+      }
+      return null; // non cluster namespaces
+    });
+
+    // here need to await all async check cluster namespace calls completed
+    let allClusterNameSpace = await Promise.all(nsPromises);
+    // remove cluster namespaces which already set to null
+    allClusterNameSpace = allClusterNameSpace.filter(ns => ns !== null);
+
+    const promises = allClusterNameSpace.map(async (ns) => {
+      const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns}/policies/${hubNamespace}.${policyName}`;
+      const policyResponse = await this.kubeConnector.get(URL);
+      if (policyResponse.code || policyResponse.message) {
+        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        return null;// 404 or not found
+      }
+      return policyResponse;// found policy
+    });
+    // here need to await all async calls completed then combine their results together
+    const policyResponses = await Promise.all(promises);
+    // remove no found policies
+    const policies = policyResponses.filter(policyResponse => policyResponse !== null);
+    // eslint-disable-next-line no-console
+    console.log('violatedPolicies', JSON.stringify(policies));
+
+    // Policy history are to be generated from all violated policies get above.
+    // Current violation status are to be get from histroy[most-recent]
+
+    // const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${hubNamespace}/policies/${policyName}`;
+    // const policyResponse = await this.kubeConnector.get(URL);
+    // if (policyResponse.code || policyResponse.message) {
+    //   logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+    //   return null;// 404 or not found
+    // }
+    // // const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
+    // // eslint-disable-next-line no-console
+    // // console.log('policyResponse', JSON.stringify(policyResponse));
+    // const clusterResults = _.get(policyResponse, statusResultsStr);
+    // _.forIn(clusterResults, (value, key) => {
+    //   const paresdValues = _.get(value, 'items');
+    //   paresdValues.forEach((val) => {
+    //     if (val.metadata.name === `${hubNamespace}.${policyName}`) {
+    //       const resultInOneCluster = ComplianceModel.resolvePolicyViolations(val, key);
+    //       resultInOneCluster.forEach((result, index) => {
+    //         if (result.status.trim() === 'NonCompliant') {
+    //           resultInOneCluster[index].cluster = key;
+    //           resultsWithPolicyName.push(resultInOneCluster[index]);
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
+    // if (!_.isEmpty(resultsWithPolicyName)) {
+    //   const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`);
+    //   resultsWithPolicyName.forEach((resultInOneCluster) => {
+    //     clusterstatuses.forEach((oneClusterStatus) => {
+    //       if (_.get(oneClusterStatus, metadataNameStr) === _.get(resultInOneCluster, 'cluster')) {
+    //         // eslint-disable-next-line no-param-reassign
+    //         resultInOneCluster.clusterURL = _.get(oneClusterStatus, 'spec.consoleURL');
+    //       }
+    //     });
+    //   });
+    // }
+    // return resultsWithPolicyName;
   }
 
 

@@ -507,14 +507,10 @@ export default class ComplianceModel {
       response.forEach(item => map.set(item.metadata.name, item));
     }
     const placementPolicies = [];
-    // eslint-disable-next-line no-console
-    // console.log('ppmap', JSON.stringify(map));
 
     placements.forEach((placement) => {
       const rule = _.get(placement, 'placementRule', '');
       const pp = map.get(rule);
-      // eslint-disable-next-line no-console
-      // console.log('pp', pp);
       if (pp) {
         const spec = pp.spec || {};
         placementPolicies.push({
@@ -527,36 +523,24 @@ export default class ComplianceModel {
         });
       }
     });
-    // eslint-disable-next-line no-console
-    // console.log('ppreturn', placementPolicies);
     return placementPolicies;
   }
 
   async getPlacementBindings(parent = {}) {
-    // eslint-disable-next-line no-console
-    console.log('parent', JSON.stringify(parent));
     const placements = _.get(parent, 'status.placement', []);
-    // eslint-disable-next-line no-console
-    // console.log('bindings', binding);
     const response = await this.kubeConnector.getResources(
       ns => `/apis/policies.open-cluster-management.io/v1/namespaces/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const map = new Map();
     if (response) {
-      // eslint-disable-next-line no-console
-      // console.log('response', JSON.stringify(response));
       response.forEach(item => map.set(item.metadata.name, item));
     }
-    // eslint-disable-next-line no-console
-    // console.log('pbmap', JSON.stringify(map));
     const placementBindings = [];
 
     placements.forEach((placement) => {
       const binding = _.get(placement, 'placementBinding', '');
       const pb = map.get(binding);
-      // eslint-disable-next-line no-console
-      // console.log('pb', pb);
       if (pb) {
         placementBindings.push({
           metadata: pb.metadata,
@@ -566,8 +550,6 @@ export default class ComplianceModel {
         });
       }
     });
-    // eslint-disable-next-line no-console
-    // console.log('pbreturn', placementBindings);
     return placementBindings;
   }
 
@@ -599,19 +581,21 @@ export default class ComplianceModel {
   }
 
   async getPolicies(name, clusterName) {
-    // if policy name specified
-    if (name !== undefined) {
-      // use kind when passing the apiGroup
-      const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com', clusterName, name);
-      const results = _.get(response, statusResultsStr);
-      if (results) {
-        const item = _.get(results, `${clusterName}`, {});
-        if (item) {
-          return [{ ...item, cluster: clusterName, raw: item }];
-        }
-      }
+    if (name === null) {
+      return [];
     }
-    return [];
+    const policyResult = [];
+    const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${clusterName}/policies/${name}`;
+    const policyResponse = await this.kubeConnector.get(URL);
+    if (policyResponse.code || policyResponse.message) {
+      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+      return null;// 404 or not found
+    }
+    policyResult.push({
+      cluster: _.get(policyResponse, 'metadata.namespace'),
+      ...policyResponse,
+    });
+    return policyResult;
   }
 
   async getAllPoliciesInCluster(cluster) {
@@ -783,8 +767,8 @@ export default class ComplianceModel {
     const policyResponses = await Promise.all(promises);
     // remove no found policies
     const policies = policyResponses.filter(policyResponse => policyResponse !== null);
-    // eslint-disable-next-line no-console
-    console.log('violatedPolicies', JSON.stringify(policies));
+
+    return policies;
 
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]

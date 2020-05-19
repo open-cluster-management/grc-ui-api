@@ -32,6 +32,7 @@ const statusLastTransTimeStr = 'status.conditions[0].lastTransitionTime';
 const statusValidityValidStr = 'status.Validity.valid';
 const statusValidityStr = 'status.Validity';
 const objMetadataNameStr = 'objectDefinition.metadata.name';
+const apiURL = '/apis/policies.open-cluster-management.io/v1/namespaces/';
 
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
@@ -168,7 +169,7 @@ export default class ComplianceModel {
     if (namespace) {
       if (name) {
         // get single policy with a specific name and a specific namespace
-        const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${urlNameSpace}/policies/${name}`;
+        const URL = `${apiURL}${urlNameSpace}/policies/${name}`;
         const policyResponse = await this.kubeConnector.get(URL);
         if (policyResponse.code || policyResponse.message) {
           logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -177,7 +178,7 @@ export default class ComplianceModel {
         }
       } else {
         // for getting policy list with a specific namespace
-        const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${urlNameSpace}/policies`;
+        const URL = `${apiURL}${urlNameSpace}/policies`;
         const policyResponse = await this.kubeConnector.get(URL);
         if (policyResponse.code || policyResponse.message) {
           logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -226,7 +227,7 @@ export default class ComplianceModel {
       if (name) {
         // get single policy with a specific name and all non-clusters namespaces
         const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies/${name}`;
+          const URL = `${apiURL}${ns || config.get('complianceNamespace') || 'mcm'}/policies/${name}`;
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -241,7 +242,7 @@ export default class ComplianceModel {
       } else { // most general case for all policies
         // for getting policy list with all non-clusters namespaces
         const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns || config.get('complianceNamespace') || 'mcm'}/policies`;
+          const URL = `${apiURL}${ns || config.get('complianceNamespace') || 'mcm'}/policies`;
           const policyResponse = await this.kubeConnector.get(URL);
           if (policyResponse.code || policyResponse.message) {
             logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -527,7 +528,7 @@ export default class ComplianceModel {
   async getPlacementBindings(parent = {}) {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/policies.open-cluster-management.io/v1/namespaces/${ns}/placementbindings`,
+      ns => `${apiURL}${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const map = new Map();
@@ -583,7 +584,7 @@ export default class ComplianceModel {
       return [];
     }
     const policyResult = [];
-    const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${clusterName}/policies/${name}`;
+    const URL = `${apiURL}${clusterName}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
       logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -753,7 +754,7 @@ export default class ComplianceModel {
     allClusterNameSpace = allClusterNameSpace.filter(ns => ns !== null);
 
     const promises = allClusterNameSpace.map(async (ns) => {
-      const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${ns}/policies/${hubNamespace}.${policyName}`;
+      const URL = `${apiURL}${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
         logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);

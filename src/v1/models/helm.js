@@ -6,12 +6,14 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import yaml from 'js-yaml';
 import { unflatten } from 'flat';
 import KubeModel from './kube';
 import logger from '../lib/logger';
+import ApiURL from '../lib/ApiURL';
 
 export default class HelmModel extends KubeModel {
   async getReleases() {
@@ -67,7 +69,7 @@ export default class HelmModel extends KubeModel {
         },
       };
 
-      const response = await this.kubeConnector.post(`/apis/mcm.ibm.com/v1alpha1/namespaces/${workNamespace}/works`, jsonBody);
+      const response = await this.kubeConnector.post(`${ApiURL.mcmNSApiURL}${workNamespace}/works`, jsonBody);
       if (response.code || response.message) {
         logger.error(`MCM ERROR ${response.code} - ${response.message}`);
         return [{
@@ -86,7 +88,7 @@ export default class HelmModel extends KubeModel {
   }
 
   async getCharts() {
-    const response = await this.kubeConnector.get('/apis/mcm.ibm.com/v1alpha1/helmrepos');
+    const response = await this.kubeConnector.get(ApiURL.mcmHelmReposApiURL);
     if (response.code || response.message) {
       logger.error(`MCM ERROR ${response.code} - ${response.message}`);
       return [];
@@ -110,7 +112,7 @@ export default class HelmModel extends KubeModel {
   }
 
   async getRepos() {
-    const response = await this.kubeConnector.get('/apis/mcm.ibm.com/v1alpha1/helmrepos');
+    const response = await this.kubeConnector.get(ApiURL.mcmHelmReposApiURL);
     if (response.code || response.message) {
       logger.error(`MCM ERROR ${response.code} - ${response.message}`);
       return [];
@@ -132,7 +134,7 @@ export default class HelmModel extends KubeModel {
         url: input.URL,
       },
     };
-    const response = await this.kubeConnector.post('/apis/mcm.ibm.com/v1alpha1/namespaces/default/helmrepos', jsonBody);
+    const response = await this.kubeConnector.post(`${ApiURL.mcmNSApiURL}default/helmrepos`, jsonBody);
     if (response.code || response.message) {
       logger.error(`MCM ERROR ${response.code} - ${response.message}`);
       return [];
@@ -144,7 +146,7 @@ export default class HelmModel extends KubeModel {
   }
 
   async deleteRepo(input) {
-    const response = await this.kubeConnector.delete(`/apis/mcm.ibm.com/v1alpha1/namespaces/default/helmrepos/${input.Name}`);
+    const response = await this.kubeConnector.delete(`${ApiURL.mcmNSApiURL}default/helmrepos/${input.Name}`);
     if (response.code || response.message) {
       logger.error(`MCM ERROR ${response.code} - ${response.message}`);
       return [];

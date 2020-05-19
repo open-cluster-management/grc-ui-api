@@ -6,6 +6,9 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
+
+import ApiURL from '../lib/ApiURL';
 
 export const typeDef = `
 type Discoveries {
@@ -67,7 +70,7 @@ export const resolver = {
       // Namespaces
       const allNameSpace = complianceModel.kubeConnector.namespaces;
       const nsPromises = allNameSpace.map(async (ns) => {
-        const URL = `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters/`;
+        const URL = `${ApiURL.clusterRegistryApiURL}${ns}/clusters/`;
         const checkClusterNameSpace = await complianceModel.kubeConnector.get(URL);
         if (Array.isArray(checkClusterNameSpace.items) && checkClusterNameSpace.items.length > 0) {
           return null; // cluster namespaces

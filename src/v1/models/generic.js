@@ -11,6 +11,7 @@
 import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
+import ApiURL from '../lib/ApiURL';
 
 const noResourcetypeStr = '##cannot find resourcetype##';
 
@@ -217,7 +218,7 @@ export default class GenericModel extends KubeModel {
       };
     }
 
-    const response = await this.kubeConnector.post(`/apis/mcm.ibm.com/v1alpha1/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets`, body);
+    const response = await this.kubeConnector.post(`${ApiURL.mcmNSApiURL}${this.kubeConnector.resourceViewNamespace}/worksets`, body);
     if (response.status === 'Failure' || response.code >= 400) {
       throw new Error(`Create Resource Action Failed [${response.code}] - ${response.message}`);
     }
@@ -228,7 +229,7 @@ export default class GenericModel extends KubeModel {
       const result = await Promise.race([pollPromise, this.kubeConnector.timeout()]);
       logger.debug('result:', result);
       if (result) {
-        this.kubeConnector.delete(`/apis/mcm.ibm.com/v1alpha1/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
+        this.kubeConnector.delete(`${ApiURL.mcmNSApiURL}${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
           .catch(e => logger.error(`Error deleting workset ${response.metadata.name}`, e.message));
       }
       const reason = _.get(result, 'status.reason');
@@ -245,10 +246,10 @@ export default class GenericModel extends KubeModel {
   }
 
   async getLogs(containerName, podName, podNamespace, clusterName) {
-    const cluster = await this.kubeConnector.getResources(ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters/${clusterName}`);
+    const cluster = await this.kubeConnector.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters/${clusterName}`);
     if (cluster && cluster.length === 1) {
       const clusterNamespace = cluster[0].metadata.namespace;
-      return this.kubeConnector.get(`/apis/mcm.ibm.com/v1alpha1/namespaces/
+      return this.kubeConnector.get(`${ApiURL.mcmNSApiURL}
       ${clusterNamespace}/clusterstatuses/${clusterName}/log/${podNamespace}/
       ${podName}/${containerName}?tailLines=1000`, { json: false }, true);
     }

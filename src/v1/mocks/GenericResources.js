@@ -6,6 +6,9 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
+
+import ApiURL from '../lib/ApiURL';
 
 export const mockAPIResourceList = {
   kind: 'APIResourceList',
@@ -146,7 +149,7 @@ export const mockCreateResourcesResponse = {
             name: 'test-policy',
             namespace: 'mcm',
             resourceVersion: '1688805',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/test-policy',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/test-policy`,
             uid: 'fec7f06c-ae2d-11e9-8a41-005056a061f1',
           },
           spec: {
@@ -187,7 +190,7 @@ export const mockUpdateResourcesResponse = {
         name: 'test-policy',
         namespace: 'mcm',
         resourceVersion: '1673886',
-        selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/test-policy',
+        selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/test-policy`,
         uid: 'da8f9553-ae16-11e9-8a41-005056a061f1',
       },
       spec: {

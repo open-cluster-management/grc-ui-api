@@ -6,9 +6,9 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ********************************************************************************
- * Copyright (c) 2020 Red Hat, Inc.
- */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
+import ApiURL from '../lib/ApiURL';
 import KubeModel from './kube';
 
 const filterByName = (names, items) =>
@@ -19,7 +19,7 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/placementbindings`,
+      ns => `${ApiURL.mcmNSApiURL}${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const placementBindings = matchNames ? filterByName(matchNames, response) : response;
@@ -36,7 +36,7 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/apps.open-cluster-management.io/v1/namespaces/${ns}/placementrules`,
+      ns => `${ApiURL.ocmAppsApiURL}${ns}/placementrules`,
       { kind: 'PlacementRule' },
     );
     const placementPolicies = matchNames ? filterByName(matchNames, response) : response;

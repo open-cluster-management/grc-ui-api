@@ -6,20 +6,31 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
-/* Copyright (c) 2020 Red Hat, Inc.
-*/
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
-import { mockComplianceListMCMResponse, mockComplianceListDefaultResponse, mockComplianceListKubeSystemResponse, mockCreateCompliance } from '../mocks/ComplianceList';
-import { mockPlacementBindingResponse, mockPlacementPolicyResponse, mockSinglePolicyResponse, mockSingleNoPolicyResponse } from '../mocks/PolicyList';
-import { mockCluster1Response, mockCluster1StatusResponse, mockClusterHubResponse, mockClusterHubStatusResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse, mockMCMStatusResponse, mockDefaultStatusResponse, mockKubeSystemStatusResponse } from '../mocks/ClusterList';
+import ApiURL from '../lib/ApiURL';
+import {
+  mockComplianceListMCMResponse, mockComplianceListDefaultResponse,
+  mockComplianceListKubeSystemResponse, mockCreateCompliance,
+} from '../mocks/ComplianceList';
+import {
+  mockPlacementBindingResponse, mockPlacementPolicyResponse,
+  mockSinglePolicyResponse, mockSingleNoPolicyResponse,
+} from '../mocks/PolicyList';
+import {
+  mockCluster1Response, mockCluster1StatusResponse,
+  mockClusterHubResponse, mockClusterHubStatusResponse, mockMCMResponse,
+  mockDefaultResponse, mockKubeSystemResponse, mockMCMStatusResponse,
+  mockDefaultStatusResponse, mockKubeSystemStatusResponse,
+} from '../mocks/ClusterList';
 
 describe('Compliance Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
-    const APIServer = nock('http://0.0.0.0/kubernetes/apis');
+    const APIServer = nock(ApiURL.hostUrl);
 
     // Compliance / Policy list
     // define the method to be intercepted

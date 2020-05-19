@@ -5,9 +5,10 @@
  * Note to U.S. Government Users Restricted Rights:
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
- ********************************************************************************
- * Copyright (c) 2020 Red Hat, Inc.
- */
+ ******************************************************************************* */
+/* Copyright (c) 2020 Red Hat, Inc. */
+
+import ApiURL from '../lib/ApiURL';
 
 /* eslint comma-dangle: ["error", {"arrays": "ignore", "objects": "ignore"}] */
 
@@ -15,7 +16,7 @@ export const mockCompletedResourceView = {
   kind: 'ResourceView',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    name: 'policies-policy-mcm-ibm-com-1571321668198', namespace: 'default', selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews/policies-policy-mcm-ibm-com-1571321668198', uid: '6e2ecd59-f0e8-11e9-bf49-96bb9600cc18', resourceVersion: '100830', creationTimestamp: '2019-10-17T14:14:28Z', labels: { name: 'policies-policy-mcm-ibm-com-1571321668198' }, annotations: { 'mcm.ibm.com/user-group': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk', 'mcm.ibm.com/user-identity': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlZmF1bHQ=' }
+    name: 'policies-policy-mcm-ibm-com-1571321668198', namespace: 'default', selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews/policies-policy-mcm-ibm-com-1571321668198`, uid: '6e2ecd59-f0e8-11e9-bf49-96bb9600cc18', resourceVersion: '100830', creationTimestamp: '2019-10-17T14:14:28Z', labels: { name: 'policies-policy-mcm-ibm-com-1571321668198' }, annotations: { 'mcm.ibm.com/user-group': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk', 'mcm.ibm.com/user-identity': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlZmF1bHQ=' }
   },
   spec: { scope: { resource: 'policies.policy.mcm.ibm.com' } },
   status: {
@@ -37,7 +38,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace',
             namespace: 'cluster1',
             resourceVersion: '8677996',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-namespace',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-namespace`,
             uid: '6f6dacb8-ee51-11e9-946e-005056a04901'
           },
           spec: {
@@ -71,7 +72,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace-1',
             namespace: 'cluster1',
             resourceVersion: '10321887',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-namespace-1',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-namespace-1`,
             uid: 'd4b5c896-f029-11e9-946e-005056a04901'
           },
           spec: {
@@ -92,7 +93,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-role',
             namespace: 'cluster1',
             resourceVersion: '10560598',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-role`,
             uid: '6f6eb6bc-ee51-11e9-946e-005056a04901'
           },
           spec: {
@@ -129,7 +130,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-vulnerabilitypolicy',
             namespace: 'cluster1',
             resourceVersion: '10540114',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-vulnerabilitypolicy',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-vulnerabilitypolicy`,
             uid: '50d98c74-f040-11e9-946e-005056a04901'
           },
           spec: {
@@ -152,7 +153,7 @@ export const mockCompletedResourceView = {
           status: { compliant: 'Compliant' }
         }],
         kind: 'PolicyList',
-        metadata: { continue: '', resourceVersion: '10622027', selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/policies' }
+        metadata: { continue: '', resourceVersion: '10622027', selfLink: `${ApiURL.mcmV1ApiURL}policies` }
       },
       clusterhub: {
         apiVersion: 'policy.mcm.ibm.com/v1alpha1',
@@ -173,7 +174,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7816343',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-namespace',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-namespace`,
             uid: '6f66d8c4-ee51-11e9-bf6a-005056a0b88e'
           },
           spec: {
@@ -197,7 +198,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9068427',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-namespace-1',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-namespace-1`,
             uid: 'd4a28872-f029-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -221,7 +222,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7816337',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-role`,
             uid: '6f682b1e-ee51-11e9-bf6a-005056a0b88e'
           },
           spec: {
@@ -250,7 +251,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9096697',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/mcm.policy-vulnerabilitypolicy',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/mcm.policy-vulnerabilitypolicy`,
             uid: '488670bf-f039-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -282,7 +283,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7886410',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-namespace',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-namespace`,
             uid: 'b70b74e8-ee51-11e9-bf6a-005056a0b88e'
           },
           spec: {
@@ -319,7 +320,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9104393',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-namespace-1',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-namespace-1`,
             uid: 'd4a3e36c-f029-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -356,7 +357,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undef-test', uid: '7bbb8eb4-f043-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9104388',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-namespace-undef-test',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-namespace-undef-test`,
             uid: '7c55404a-f043-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -393,7 +394,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undefined', uid: '8842b32a-f047-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9105249',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-namespace-undefined',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-namespace-undefined`,
             uid: '8c0678f0-f047-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -430,7 +431,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '9302938',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-role`,
             uid: 'b7287261-ee51-11e9-bf6a-005056a0b88e'
           },
           spec: {
@@ -470,7 +471,7 @@ export const mockCompletedResourceView = {
               apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9096716',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/mcm.policy-vulnerabilitypolicy',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/mcm.policy-vulnerabilitypolicy`,
             uid: '48876af1-f039-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -504,7 +505,7 @@ export const mockCompletedResourceView = {
             name: 'policy-namespace',
             namespace: 'mcm',
             resourceVersion: '7886411',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-namespace`,
             uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
           },
           spec: {
@@ -524,7 +525,7 @@ export const mockCompletedResourceView = {
             name: 'policy-namespace-1',
             namespace: 'mcm',
             resourceVersion: '9104395',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace-1',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-namespace-1`,
             uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -544,7 +545,7 @@ export const mockCompletedResourceView = {
             name: 'policy-namespace-undef-test',
             namespace: 'mcm',
             resourceVersion: '9104389',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace-undef-test',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-namespace-undef-test`,
             uid: '7bbb8eb4-f043-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -564,7 +565,7 @@ export const mockCompletedResourceView = {
             name: 'policy-namespace-undefined',
             namespace: 'mcm',
             resourceVersion: '9105250',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace-undefined',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-namespace-undefined`,
             uid: '8842b32a-f047-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -584,7 +585,7 @@ export const mockCompletedResourceView = {
             name: 'policy-role',
             namespace: 'mcm',
             resourceVersion: '7817063',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-role`,
             uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
           },
           spec: {
@@ -609,7 +610,7 @@ export const mockCompletedResourceView = {
             name: 'policy-undef-test',
             namespace: 'mcm',
             resourceVersion: '9094409',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-undef-test',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-undef-test`,
             uid: '3bf6a043-f03e-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -642,7 +643,7 @@ export const mockCompletedResourceView = {
             name: 'policy-vulnerabilitypolicy',
             namespace: 'mcm',
             resourceVersion: '9096693',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-vulnerabilitypolicy',
+            selfLink: `${ApiURL.mcmPolicyApiURL}mcm/policies/policy-vulnerabilitypolicy`,
             uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
           },
           spec: {
@@ -659,7 +660,7 @@ export const mockCompletedResourceView = {
           status: { placementBindings: ['binding-policy-vulnerabilitypolicy'], placementPolicies: ['placement-policy-vulnerabilitypolicy'], status: { cluster1: { aggregatePoliciesStatus: { 'mcm.policy-vulnerabilitypolicy': { compliant: 'Compliant' } }, clustername: 'cluster1', compliant: 'Compliant' }, clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-vulnerabilitypolicy': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }],
         kind: 'PolicyList',
-        metadata: { continue: '', resourceVersion: '9302940', selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/policies' }
+        metadata: { continue: '', resourceVersion: '9302940', selfLink: `${ApiURL.mcmV1ApiURL}policies` }
       }
     }
   }
@@ -669,7 +670,7 @@ export const mockCreateResourceGet = {
   kind: 'ResourceViewList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews',
+    selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews`,
     resourceVersion: '144656',
   },
   items: [
@@ -677,7 +678,7 @@ export const mockCreateResourceGet = {
       metadata: {
         name: 'policies-policy-mcm-ibm-com-1563995392802',
         namespace: 'default',
-        selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews/policies-policy-mcm-ibm-com-1563995392802',
+        selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews/policies-policy-mcm-ibm-com-1563995392802`,
         uid: 'e8aad049-b222-11e9-92a6-42a4786221be',
         resourceVersion: '144656',
         creationTimestamp: '2019-07-29T17:04:21Z',
@@ -713,7 +714,7 @@ export const mockCreateResourcePost = {
     name: 'policies-policy-mcm-ibm-com-1563995392802',
     namespace: 'default',
     selfLink:
-      '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews/policies-policy-mcm-ibm-com-1563995392802',
+      `${ApiURL.mcmNSApiURL}default/resourceviews/policies-policy-mcm-ibm-com-1563995392802`,
     uid: '9db12327-ae46-11e9-aefd-d6c200451d50',
     resourceVersion: '146053',
     creationTimestamp: '2019-07-24T19:09:52Z',
@@ -757,7 +758,7 @@ export const mockClusterListResponse = {
             'mcm.ibm.com/user-identity': 'aGNtOmNsdXN0ZXJzOmNsdXN0ZXIxOmNsdXN0ZXIx',
           },
           uid: '16870299-a7ca-11e9-aefd-d6c200451d50',
-          selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses/cluster1',
+          selfLink: `${ApiURL.mcmNSApiURL}cluster1/clusterstatuses/cluster1`,
         },
         kind: 'Cluster',
         apiVersion: 'clusterregistry.k8s.io/v1alpha1',
@@ -796,7 +797,7 @@ export const mockClusterListResponse = {
             name: 'policy-role',
             namespace: 'cluster1',
             resourceVersion: '12597689',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/cluster1/policies/policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}cluster1/policies/policy-role`,
             uid: 'ea2dde00-ac86-11e9-af27-005056a0e992',
           },
           spec: {
@@ -889,7 +890,7 @@ export const mockClusterListResponse = {
             'mcm.ibm.com/user-identity': 'aGNtOmNsdXN0ZXJzOmNsdXN0ZXJodWI6Y2x1c3Rlcmh1Yg==',
           },
           uid: '3976ec4a-a7c9-11e9-aefd-d6c200451d50',
-          selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses/clusterhub',
+          selfLink: `${ApiURL.mcmNSApiURL}clusterhub/clusterstatuses/clusterhub`,
         },
         kind: 'Cluster',
         apiVersion: 'clusterregistry.k8s.io/v1alpha1',
@@ -938,7 +939,7 @@ export const mockClusterListResponse = {
               },
             ],
             resourceVersion: '1229059',
-            selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/clusterhub/policies/policy-role',
+            selfLink: `${ApiURL.mcmPolicyApiURL}clusterhub/policies/policy-role`,
             uid: 'ea2cc1bd-ac86-11e9-8a41-005056a061f1',
           },
           spec: {
@@ -1018,7 +1019,7 @@ export const mockCluster1ListResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses',
+    selfLink: `${ApiURL.mcmNSApiURL}cluster1/clusterstatuses`,
     resourceVersion: '161225'
   },
   items: [
@@ -1026,7 +1027,7 @@ export const mockCluster1ListResponse = {
       metadata: {
         name: 'cluster1',
         namespace: 'cluster1',
-        selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses/cluster1',
+        selfLink: `${ApiURL.mcmNSApiURL}cluster1/clusterstatuses/cluster1`,
         uid: 'c0eb1c8b-e482-11e9-aa00-96bb9600cc18',
         resourceVersion: '161218',
         creationTimestamp: '2019-10-01T19:36:24Z',
@@ -1103,7 +1104,7 @@ export const mockClusterHubListResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses',
+    selfLink: `${ApiURL.mcmNSApiURL}clusterhub/clusterstatuses`,
     resourceVersion: '161241'
   },
   items: [
@@ -1111,7 +1112,7 @@ export const mockClusterHubListResponse = {
       metadata: {
         name: 'clusterhub',
         namespace: 'clusterhub',
-        selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses/clusterhub',
+        selfLink: `${ApiURL.mcmNSApiURL}clusterhub/clusterstatuses/clusterhub`,
         uid: '96c98100-e482-11e9-aa00-96bb9600cc18',
         resourceVersion: '160705',
         creationTimestamp: '2019-10-01T19:35:13Z',
@@ -1187,7 +1188,7 @@ export const mockDefaultListResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/clusterstatuses',
+    selfLink: `${ApiURL.mcmNSApiURL}default/clusterstatuses`,
     resourceVersion: '161250'
   },
   items: []
@@ -1197,7 +1198,7 @@ export const mockKubeSystemListResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/kube-system/clusterstatuses',
+    selfLink: `${ApiURL.mcmNSApiURL}kube-system/clusterstatuses`,
     resourceVersion: '161284'
   },
   items: []
@@ -1227,7 +1228,7 @@ export const mockPolicyListResponse = {
   metadata: {
     name: 'policy-1546551175122',
     namespace: 'default',
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews/policy-1546551175122',
+    selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews/policy-1546551175122`,
     uid: '21c50bb6-0f9f-11e9-a535-e2d4c161f9ad',
     resourceVersion: '30574',
     creationTimestamp: '2019-01-03T21:32:55Z',
@@ -1284,7 +1285,7 @@ export const mockPolicyListResponse = {
             uid: 'c8ad7adb-0f74-11e9-9723-0e8b333ab57e',
           }],
           resourceVersion: '5543743',
-          selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm-cluster2/policies/policy-all',
+          selfLink: `${ApiURL.mcmPolicyApiURL}mcm-cluster2/policies/policy-all`,
           uid: 'c8af7ef9-0f74-11e9-9723-0e8b333ab57e',
         },
         spec: {
@@ -1569,7 +1570,7 @@ export const mockSinglePolicyResponse = {
       },
     ],
     resourceVersion: '4349995',
-    selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1',
+    selfLink: `${ApiURL.mcmPolicyApiURL}mycluster/policies/policy-xz-1`,
     uid: '82e00acc-b05d-11e8-9a12-005056a0d11b',
   },
   spec: {
@@ -1669,7 +1670,7 @@ export const mockCreatePolicy = {
     name: 'test-policy',
     namespace: 'default',
     resourceVersion: '4385854',
-    selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/default/policies/test-policy',
+    selfLink: `${ApiURL.mcmPolicyApiURL}default/policies/test-policy`,
     uid: '0c388331-b1f8-11e8-9a12-005056a0d11b',
   },
   spec: {
@@ -1761,7 +1762,7 @@ export const mockPlacementPolicyResponse = {
   kind: 'PlacementRuleList',
   apiVersion: 'apps.open-cluster-management.io/v1',
   metadata: {
-    selfLink: '/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementpolicies',
+    selfLink: `${ApiURL.ocmAppsApiURL}mcm/placementpolicies`,
     resourceVersion: '51490',
   },
   items: [
@@ -1769,7 +1770,7 @@ export const mockPlacementPolicyResponse = {
       metadata: {
         name: 'placement-xz',
         namespace: 'mcm',
-        selfLink: '/apis/apps.open-cluster-management.io/v1/namespaces/mcm/placementpolicies/placement-xz',
+        selfLink: `${ApiURL.ocmAppsApiURL}mcm/placementpolicies/placement-xz`,
         uid: '3df1e8f5-1053-11e9-a535-e2d4c161f9ad',
         resourceVersion: '51486',
         creationTimestamp: '2019-01-04T19:02:11Z',
@@ -1808,7 +1809,7 @@ export const mockPlacementBindingResponse = {
   kind: 'PlacementBindingList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementbindings',
+    selfLink: `${ApiURL.mcmNSApiURL}mcm/placementbindings`,
     resourceVersion: '48564',
   },
   items: [
@@ -1816,7 +1817,7 @@ export const mockPlacementBindingResponse = {
       metadata: {
         name: 'binding-xz',
         namespace: 'mcm',
-        selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/mcm/placementbindings/binding-xz',
+        selfLink: `${ApiURL.mcmNSApiURL}mcm/placementbindings/binding-xz`,
         uid: '7fc24685-0ec6-11e9-a535-e2d4c161f9ad',
         resourceVersion: '249',
         creationTimestamp: '2019-01-02T19:42:12Z',
@@ -1856,7 +1857,7 @@ export const mockDeleteResponse = {
     name: 'test-policy',
     namespace: 'default',
     resourceVersion: '4348453',
-    selfLink: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/default/policies/test-policy',
+    selfLink: `${ApiURL.mcmPolicyApiURL}default/policies/test-policy`,
     uid: '6b4cc90c-b1e6-11e8-9a12-005056a0d11b',
   },
   spec: {

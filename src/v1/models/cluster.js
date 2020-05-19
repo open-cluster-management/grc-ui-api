@@ -10,6 +10,7 @@
 
 import _ from 'lodash';
 import KubeModel from './kube';
+import ApiURL from '../lib/ApiURL';
 
 const metadataNameStr = 'metadata.name';
 
@@ -89,8 +90,8 @@ function findMatchedStatusForOverview(clusters, clusterstatuses) {
 export default class ClusterModel extends KubeModel {
   async getClusters(args = {}) {
     const [clusters, clusterstatuses] = await Promise.all([
-      this.kubeConnector.getResources(ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters`),
-      this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`),
+      this.kubeConnector.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters`),
+      this.kubeConnector.getResources(ns => `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`),
     ]);
     const results = findMatchedStatus(clusters, clusterstatuses);
     if (args.name) {
@@ -101,8 +102,8 @@ export default class ClusterModel extends KubeModel {
 
   async getAllClusters(args = {}) {
     const [clusters, clusterstatuses] = await Promise.all([
-      this.kubeConnector.getResources(ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters`),
-      this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`),
+      this.kubeConnector.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters`),
+      this.kubeConnector.getResources(ns => `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`),
     ]);
     const results = findMatchedStatusForOverview(clusters, clusterstatuses);
     if (args.name) {
@@ -123,7 +124,7 @@ export default class ClusterModel extends KubeModel {
 
   async getStatus(clusterstatus) {
     const [cluster] = await this.kubeConnector.getResources(
-      ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters`,
+      ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters`,
       { namespaces: [clusterstatus.metadata.namespace] },
     );
 
@@ -132,7 +133,7 @@ export default class ClusterModel extends KubeModel {
   }
 
   async getClusterStatus() {
-    const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`);
+    const clusterstatuses = await this.kubeConnector.getResources(ns => `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`);
 
     return clusterstatuses.reduce((accum, cluster) => {
       if (!cluster) {

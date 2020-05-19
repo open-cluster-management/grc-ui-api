@@ -6,6 +6,9 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
+
+import ApiURL from '../lib/ApiURL';
 
 export const mockClusterResponse = {
   body: {
@@ -16,7 +19,7 @@ export const mockClusterResponse = {
         metadata: {
           name: 'managed-cluster',
           namespace: 'default',
-          selfLink: '/apis/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters/cluster1',
+          selfLink: `${ApiURL.clusterRegistryApiURL}default/clusters/cluster1`,
           uid: 'd9f3a5aa-9f19-11e8-855e-f2b998610544',
           resourceVersion: '136558',
           creationTimestamp: '2018-08-13T16:56:41Z',

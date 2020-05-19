@@ -6,12 +6,16 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
-import { kubeGetMock, mockAPIResourceList, mockCreateResourcesResponse, mockUpdateResourcesResponse } from '../mocks/GenericResources';
-
+import {
+  kubeGetMock, mockAPIResourceList,
+  mockCreateResourcesResponse, mockUpdateResourcesResponse,
+} from '../mocks/GenericResources';
+import ApiURL from '../lib/ApiURL';
 
 describe('Generic Resources Resolver', () => {
   beforeAll(() => {
@@ -20,10 +24,10 @@ describe('Generic Resources Resolver', () => {
 
     // define the method to be intercepted
     APIServer.get('/').reply(200, kubeGetMock);
-    APIServer.get('/apis/policy.mcm.ibm.com/v1alpha1').reply(200, mockAPIResourceList);
-    APIServer.post('/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies')
+    APIServer.get(ApiURL.mcmV1ApiURL).reply(200, mockAPIResourceList);
+    APIServer.post(`${ApiURL.mcmPolicyApiURL}mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
-    APIServer.put('/apis/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances/test-policy')
+    APIServer.put(`${ApiURL.mcmComplianceApiURL}mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
   });
 

@@ -14,6 +14,7 @@ import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';
 import requestLib from '../lib/request';
+import ApiURL from '../lib/ApiURL';
 
 function selectNamespace(namespaces) {
   return namespaces.find(ns => ns === 'default') || namespaces[0];
@@ -180,7 +181,7 @@ export default class KubeConnector {
   ) {
     let clusterNamespace;
     if (resourceName || getClusterNamespace) {
-      const cluster = await this.getResources(ns => `/apis/clusterregistry.k8s.io/v1alpha1/namespaces/${ns}/clusters/${clusterName}`);
+      const cluster = await this.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters/${clusterName}`);
       if (cluster && cluster.length === 1) {
         clusterNamespace = cluster[0].metadata.namespace;
       }
@@ -218,7 +219,7 @@ export default class KubeConnector {
         };
       }
     }
-    return this.post(`/apis/mcm.ibm.com/v1alpha1/namespaces/${this.resourceViewNamespace}/resourceviews`, body);
+    return this.post(`${ApiURL.mcmNSApiURL}${this.resourceViewNamespace}/resourceviews`, body);
   }
 
   timeout() {
@@ -289,7 +290,7 @@ export default class KubeConnector {
     try {
       const result = await Promise.race([pollPromise, this.timeout()]);
       if (result) {
-        this.delete(`/apis/mcm.ibm.com/v1alpha1/namespaces/${this.resourceViewNamespace}/resourceviews/${resource.metadata.name}`)
+        this.delete(`${ApiURL.mcmNSApiURL}${this.resourceViewNamespace}/resourceviews/${resource.metadata.name}`)
           .catch(e => logger.error(`Error deleting resourceviews ${resource.metadata.name}`, e.message));
       }
       return result;

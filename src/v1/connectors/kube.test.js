@@ -6,7 +6,9 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
+import ApiURL from '../lib/ApiURL';
 import KubeConnector from './kube';
 
 const asyncReturn = (value, waitTime = 500) =>
@@ -15,7 +17,7 @@ const asyncReturn = (value, waitTime = 500) =>
 const mockWorkset = {
   body: {
     metadata: {
-      selfLink: '/apis/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews/test-set',
+      selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews/test-set`,
     },
   },
 };

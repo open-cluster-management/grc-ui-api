@@ -6,12 +6,14 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import { mockResourceView, mockResponse } from '../mocks/NamespaceList';
 import { mockResource } from '../mocks/PolicyList';
+import ApiURL from '../lib/ApiURL';
 
 function sliceIngoreEscape(str, remover, len, flag) {
   const index = flag ? str.indexOf(remover) : str.lastIndexOf(remover);
@@ -22,7 +24,7 @@ function sliceIngoreEscape(str, remover, len, flag) {
 describe('Namespace Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
-    const APIServer = nock('http://0.0.0.0/kubernetes/apis');
+    const APIServer = nock(ApiURL.hostUrl);
 
     // define the method to be intercepted
     APIServer.post('/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews')

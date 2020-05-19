@@ -771,42 +771,7 @@ export default class ComplianceModel {
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
 
-    // const URL = `/apis/policies.open-cluster-management.io/v1/namespaces/${hubNamespace}/policies/${policyName}`;
-    // const policyResponse = await this.kubeConnector.get(URL);
-    // if (policyResponse.code || policyResponse.message) {
-    //   logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-    //   return null;// 404 or not found
-    // }
-    // // const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    // // eslint-disable-next-line no-console
-    // // console.log('policyResponse', JSON.stringify(policyResponse));
-    // const clusterResults = _.get(policyResponse, statusResultsStr);
-    // _.forIn(clusterResults, (value, key) => {
-    //   const paresdValues = _.get(value, 'items');
-    //   paresdValues.forEach((val) => {
-    //     if (val.metadata.name === `${hubNamespace}.${policyName}`) {
-    //       const resultInOneCluster = ComplianceModel.resolvePolicyViolations(val, key);
-    //       resultInOneCluster.forEach((result, index) => {
-    //         if (result.status.trim() === 'NonCompliant') {
-    //           resultInOneCluster[index].cluster = key;
-    //           resultsWithPolicyName.push(resultInOneCluster[index]);
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
-    // if (!_.isEmpty(resultsWithPolicyName)) {
-    //   const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/mcm.ibm.com/v1alpha1/namespaces/${ns}/clusterstatuses`);
-    //   resultsWithPolicyName.forEach((resultInOneCluster) => {
-    //     clusterstatuses.forEach((oneClusterStatus) => {
-    //       if (_.get(oneClusterStatus, metadataNameStr) === _.get(resultInOneCluster, 'cluster')) {
-    //         // eslint-disable-next-line no-param-reassign
-    //         resultInOneCluster.clusterURL = _.get(oneClusterStatus, 'spec.consoleURL');
-    //       }
-    //     });
-    //   });
-    // }
-    // return resultsWithPolicyName;
+    // Update May19, the current return doesn't contains history info
   }
 
 

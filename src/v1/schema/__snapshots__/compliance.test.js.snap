@@ -1097,400 +1097,238 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
-            "complianceName": "policy-xz-1",
-            "complianceNamespace": "mycluster",
-            "complianceSelfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+            "complianceName": "case1-test-policy",
+            "complianceNamespace": "default",
+            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "detail": Object {
               "exclude_namespace": Array [
-                "kube*",
+                "*",
               ],
               "include_namespace": Array [
-                "default",
+                "*",
               ],
             },
-            "name": "policy-xz-1",
+            "name": "case1-test-policy",
             "objectTemplates": Array [],
             "raw": Object {
-              "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+              "apiVersion": "policies.open-cluster-management.io/v1",
               "clusterConsoleURL": Object {},
               "clusterNS": Object {},
-              "clusters": Array [],
+              "clusters": Array [
+                "0",
+              ],
               "kind": "Policy",
               "metadata": Object {
-                "creationTimestamp": "2018-09-04T16:13:50Z",
-                "finalizers": Array [
-                  "finalizer.mcm.ibm.com",
-                ],
-                "generation": 1,
-                "labels": Object {
-                  "compliance": "compliance-xz",
+                "annotations": Object {
+                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+                  "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                  "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                  "policies.open-cluster-management.io/standards": "NIST-CSF",
                 },
-                "name": "policy-xz-1",
-                "namespace": "mycluster",
-                "ownerReferences": Array [
-                  Object {
-                    "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                    "blockOwnerDeletion": true,
-                    "controller": true,
-                    "kind": "Compliance",
-                    "name": "compliance-xz",
-                    "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-                  },
-                ],
-                "resourceVersion": "4349995",
-                "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-                "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                "creationTimestamp": "2020-05-15T08:24:33Z",
+                "generation": 1,
+                "name": "case1-test-policy",
+                "namespace": "default",
+                "resourceVersion": "27550277",
+                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
               },
-              "name": "policy-xz-1",
-              "namespace": "mycluster",
+              "name": "case1-test-policy",
+              "namespace": "default",
               "raw": Object {
-                "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+                "apiVersion": "policies.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
-                  "creationTimestamp": "2018-09-04T16:13:50Z",
-                  "finalizers": Array [
-                    "finalizer.mcm.ibm.com",
-                  ],
-                  "generation": 1,
-                  "labels": Object {
-                    "compliance": "compliance-xz",
+                  "annotations": Object {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+                    "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                    "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                    "policies.open-cluster-management.io/standards": "NIST-CSF",
                   },
-                  "name": "policy-xz-1",
-                  "namespace": "mycluster",
-                  "ownerReferences": Array [
-                    Object {
-                      "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                      "blockOwnerDeletion": true,
-                      "controller": true,
-                      "kind": "Compliance",
-                      "name": "compliance-xz",
-                      "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-                    },
-                  ],
-                  "resourceVersion": "4349995",
-                  "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-                  "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                  "creationTimestamp": "2020-05-15T08:24:33Z",
+                  "generation": 1,
+                  "name": "case1-test-policy",
+                  "namespace": "default",
+                  "resourceVersion": "27550277",
+                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                  "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
                 },
                 "spec": Object {
-                  "complianceType": "",
-                  "namespaces": Object {
-                    "exclude": Array [
-                      "kube*",
-                    ],
-                    "include": Array [
-                      "default",
-                    ],
-                  },
-                  "remediationAction": "inform",
-                  "role-templates": Array [
+                  "disabled": false,
+                  "policy-templates": Array [
                     Object {
-                      "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                      "complianceType": "musthave",
-                      "kind": "RoleTemplate",
-                      "metadata": Object {
-                        "creationTimestamp": null,
-                        "name": "role-xz-1",
-                      },
-                      "rules": Array [
-                        Object {
-                          "complianceType": "musthave",
-                          "policyRule": Object {
-                            "apiGroups": Array [
-                              "extensions",
-                              "apps",
+                      "objectDefinition": Object {
+                        "apiVersion": "policies.ibm.com/v1alpha1",
+                        "kind": "TrustedContainerPolicy",
+                        "metadata": Object {
+                          "name": "case1-test-policy-trustedcontainerpolicy",
+                        },
+                        "spec": Object {
+                          "imageRegistry": "quay.io",
+                          "namespaceSelector": Object {
+                            "exclude": Array [
+                              "kube-system",
                             ],
-                            "resources": Array [
-                              "deployments",
-                            ],
-                            "verbs": Array [
-                              "get",
-                              "list",
-                              "watch",
-                              "create",
-                              "delete",
-                              "patch",
+                            "include": Array [
+                              "default",
                             ],
                           },
+                          "remediationAction": "inform",
+                          "severity": "low",
                         },
-                      ],
-                      "selector": Object {
-                        "matchLabels": Object {
-                          "cloud": "IBM",
-                        },
-                      },
-                      "status": Object {
-                        "Compliant": "NonCompliant",
-                        "Validity": Object {
-                          "valid": true,
-                        },
-                        "conditions": Array [
-                          Object {
-                            "lastTransitionTime": "2018-09-06T15:14:44Z",
-                            "message": "k8s RBAC role is missing: role-xz-1",
-                            "reason": "K8s RBAC role is missing",
-                            "status": "True",
-                            "type": "completed",
-                          },
-                        ],
                       },
                     },
                   ],
+                  "remediationAction": "inform",
                 },
                 "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Valid": true,
+                  "placement": Array [
+                    Object {
+                      "placementBinding": "case1-test-policy-pb",
+                      "placementRule": "case1-test-policy-plr",
+                    },
+                  ],
+                  "status": Array [
+                    Object {
+                      "clustername": "calamari",
+                      "clusternamespace": "calamari",
+                    },
+                  ],
                 },
               },
               "remediation": "inform",
               "spec": Object {
-                "complianceType": "",
-                "namespaces": Object {
-                  "exclude": Array [
-                    "kube*",
-                  ],
-                  "include": Array [
-                    "default",
-                  ],
-                },
-                "remediationAction": "inform",
-                "role-templates": Array [
+                "disabled": false,
+                "policy-templates": Array [
                   Object {
-                    "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                    "complianceType": "musthave",
-                    "kind": "RoleTemplate",
-                    "metadata": Object {
-                      "creationTimestamp": null,
-                      "name": "role-xz-1",
-                    },
-                    "rules": Array [
-                      Object {
-                        "complianceType": "musthave",
-                        "policyRule": Object {
-                          "apiGroups": Array [
-                            "extensions",
-                            "apps",
+                    "objectDefinition": Object {
+                      "apiVersion": "policies.ibm.com/v1alpha1",
+                      "kind": "TrustedContainerPolicy",
+                      "metadata": Object {
+                        "name": "case1-test-policy-trustedcontainerpolicy",
+                      },
+                      "spec": Object {
+                        "imageRegistry": "quay.io",
+                        "namespaceSelector": Object {
+                          "exclude": Array [
+                            "kube-system",
                           ],
-                          "resources": Array [
-                            "deployments",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "list",
-                            "watch",
-                            "create",
-                            "delete",
-                            "patch",
+                          "include": Array [
+                            "default",
                           ],
                         },
+                        "remediationAction": "inform",
+                        "severity": "low",
                       },
-                    ],
-                    "selector": Object {
-                      "matchLabels": Object {
-                        "cloud": "IBM",
-                      },
-                    },
-                    "status": Object {
-                      "Compliant": "NonCompliant",
-                      "Validity": Object {
-                        "valid": true,
-                      },
-                      "conditions": Array [
-                        Object {
-                          "lastTransitionTime": "2018-09-06T15:14:44Z",
-                          "message": "k8s RBAC role is missing: role-xz-1",
-                          "reason": "K8s RBAC role is missing",
-                          "status": "True",
-                          "type": "completed",
-                        },
-                      ],
                     },
                   },
                 ],
+                "remediationAction": "inform",
               },
               "status": Object {
-                "Compliant": "NonCompliant",
-                "Valid": true,
+                "placement": Array [
+                  Object {
+                    "placementBinding": "case1-test-policy-pb",
+                    "placementRule": "case1-test-policy-plr",
+                  },
+                ],
+                "status": Array [
+                  Object {
+                    "clustername": "calamari",
+                    "clusternamespace": "calamari",
+                  },
+                ],
               },
             },
             "roleBindingTemplates": Array [],
-            "roleTemplates": Array [
-              Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "compliant": "NonCompliant",
-                "kind": null,
-                "lastTransition": "2018-09-06T15:14:44Z",
-                "name": "role-xz-1",
-                "raw": Object {
-                  "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                  "complianceType": "musthave",
-                  "kind": "RoleTemplate",
-                  "metadata": Object {
-                    "creationTimestamp": null,
-                    "name": "role-xz-1",
-                  },
-                  "rules": Array [
-                    Object {
-                      "complianceType": "musthave",
-                      "policyRule": Object {
-                        "apiGroups": Array [
-                          "extensions",
-                          "apps",
-                        ],
-                        "resources": Array [
-                          "deployments",
-                        ],
-                        "verbs": Array [
-                          "get",
-                          "list",
-                          "watch",
-                          "create",
-                          "delete",
-                          "patch",
-                        ],
-                      },
-                    },
-                  ],
-                  "selector": Object {
-                    "matchLabels": Object {
-                      "cloud": "IBM",
-                    },
-                  },
-                  "status": Object {
-                    "Compliant": "NonCompliant",
-                    "Validity": Object {
-                      "valid": true,
-                    },
-                    "conditions": Array [
-                      Object {
-                        "lastTransitionTime": "2018-09-06T15:14:44Z",
-                        "message": "k8s RBAC role is missing: role-xz-1",
-                        "reason": "K8s RBAC role is missing",
-                        "status": "True",
-                        "type": "completed",
-                      },
-                    ],
-                  },
-                  "templateType": "role-templates",
-                },
-                "validity": "true",
-              },
-            ],
+            "roleTemplates": Array [],
             "status": null,
           },
         ],
-        "complianceStatus": Array [],
+        "complianceStatus": Array [
+          Object {
+            "clusterNamespace": "0",
+            "localCompliantStatus": "0/0",
+            "localValidStatus": "0/0",
+          },
+        ],
         "metadata": Object {
-          "creationTimestamp": "2018-09-04T16:13:50Z",
-          "name": "policy-xz-1",
-          "namespace": "mycluster",
-          "resourceVersion": "4349995",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-          "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+          "creationTimestamp": "2020-05-15T08:24:33Z",
+          "name": "case1-test-policy",
+          "namespace": "default",
+          "resourceVersion": "27550277",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+          "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
         "raw": Object {
-          "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+          "apiVersion": "policies.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
-            "creationTimestamp": "2018-09-04T16:13:50Z",
-            "finalizers": Array [
-              "finalizer.mcm.ibm.com",
-            ],
-            "generation": 1,
-            "labels": Object {
-              "compliance": "compliance-xz",
+            "annotations": Object {
+              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policies.open-cluster-management.io/standards": "NIST-CSF",
             },
-            "name": "policy-xz-1",
-            "namespace": "mycluster",
-            "ownerReferences": Array [
-              Object {
-                "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "Compliance",
-                "name": "compliance-xz",
-                "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-              },
-            ],
-            "resourceVersion": "4349995",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-            "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+            "creationTimestamp": "2020-05-15T08:24:33Z",
+            "generation": 1,
+            "name": "case1-test-policy",
+            "namespace": "default",
+            "resourceVersion": "27550277",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
           },
           "spec": Object {
-            "complianceType": "",
-            "namespaces": Object {
-              "exclude": Array [
-                "kube*",
-              ],
-              "include": Array [
-                "default",
-              ],
-            },
-            "remediationAction": "inform",
-            "role-templates": Array [
+            "disabled": false,
+            "policy-templates": Array [
               Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "kind": "RoleTemplate",
-                "metadata": Object {
-                  "creationTimestamp": null,
-                  "name": "role-xz-1",
-                },
-                "rules": Array [
-                  Object {
-                    "complianceType": "musthave",
-                    "policyRule": Object {
-                      "apiGroups": Array [
-                        "extensions",
-                        "apps",
+                "objectDefinition": Object {
+                  "apiVersion": "policies.ibm.com/v1alpha1",
+                  "kind": "TrustedContainerPolicy",
+                  "metadata": Object {
+                    "name": "case1-test-policy-trustedcontainerpolicy",
+                  },
+                  "spec": Object {
+                    "imageRegistry": "quay.io",
+                    "namespaceSelector": Object {
+                      "exclude": Array [
+                        "kube-system",
                       ],
-                      "resources": Array [
-                        "deployments",
-                      ],
-                      "verbs": Array [
-                        "get",
-                        "list",
-                        "watch",
-                        "create",
-                        "delete",
-                        "patch",
+                      "include": Array [
+                        "default",
                       ],
                     },
+                    "remediationAction": "inform",
+                    "severity": "low",
                   },
-                ],
-                "selector": Object {
-                  "matchLabels": Object {
-                    "cloud": "IBM",
-                  },
-                },
-                "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Validity": Object {
-                    "valid": true,
-                  },
-                  "conditions": Array [
-                    Object {
-                      "lastTransitionTime": "2018-09-06T15:14:44Z",
-                      "message": "k8s RBAC role is missing: role-xz-1",
-                      "reason": "K8s RBAC role is missing",
-                      "status": "True",
-                      "type": "completed",
-                    },
-                  ],
                 },
               },
             ],
+            "remediationAction": "inform",
           },
           "status": Object {
-            "Compliant": "NonCompliant",
-            "Valid": true,
+            "placement": Array [
+              Object {
+                "placementBinding": "case1-test-policy-pb",
+                "placementRule": "case1-test-policy-plr",
+              },
+            ],
+            "status": Array [
+              Object {
+                "clustername": "calamari",
+                "clusternamespace": "calamari",
+              },
+            ],
           },
         },
       },
@@ -1504,404 +1342,242 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
-            "complianceName": "policy-xz-1",
-            "complianceNamespace": "mycluster",
-            "complianceSelfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+            "complianceName": "case1-test-policy",
+            "complianceNamespace": "default",
+            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "detail": Object {
               "exclude_namespace": Array [
-                "kube*",
+                "*",
               ],
               "include_namespace": Array [
-                "default",
+                "*",
               ],
             },
-            "name": "policy-xz-1",
+            "name": "case1-test-policy",
             "objectTemplates": Array [],
             "raw": Object {
-              "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+              "apiVersion": "policies.open-cluster-management.io/v1",
               "clusterConsoleURL": Object {
                 "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
               },
               "clusterNS": Object {
                 "cluster1": "cluster1",
               },
-              "clusters": Array [],
+              "clusters": Array [
+                "0",
+              ],
               "kind": "Policy",
               "metadata": Object {
-                "creationTimestamp": "2018-09-04T16:13:50Z",
-                "finalizers": Array [
-                  "finalizer.mcm.ibm.com",
-                ],
-                "generation": 1,
-                "labels": Object {
-                  "compliance": "compliance-xz",
+                "annotations": Object {
+                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+                  "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                  "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                  "policies.open-cluster-management.io/standards": "NIST-CSF",
                 },
-                "name": "policy-xz-1",
-                "namespace": "mycluster",
-                "ownerReferences": Array [
-                  Object {
-                    "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                    "blockOwnerDeletion": true,
-                    "controller": true,
-                    "kind": "Compliance",
-                    "name": "compliance-xz",
-                    "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-                  },
-                ],
-                "resourceVersion": "4349995",
-                "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-                "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                "creationTimestamp": "2020-05-15T08:24:33Z",
+                "generation": 1,
+                "name": "case1-test-policy",
+                "namespace": "default",
+                "resourceVersion": "27550277",
+                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
               },
-              "name": "policy-xz-1",
-              "namespace": "mycluster",
+              "name": "case1-test-policy",
+              "namespace": "default",
               "raw": Object {
-                "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+                "apiVersion": "policies.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
-                  "creationTimestamp": "2018-09-04T16:13:50Z",
-                  "finalizers": Array [
-                    "finalizer.mcm.ibm.com",
-                  ],
-                  "generation": 1,
-                  "labels": Object {
-                    "compliance": "compliance-xz",
+                  "annotations": Object {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+                    "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                    "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                    "policies.open-cluster-management.io/standards": "NIST-CSF",
                   },
-                  "name": "policy-xz-1",
-                  "namespace": "mycluster",
-                  "ownerReferences": Array [
-                    Object {
-                      "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                      "blockOwnerDeletion": true,
-                      "controller": true,
-                      "kind": "Compliance",
-                      "name": "compliance-xz",
-                      "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-                    },
-                  ],
-                  "resourceVersion": "4349995",
-                  "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-                  "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                  "creationTimestamp": "2020-05-15T08:24:33Z",
+                  "generation": 1,
+                  "name": "case1-test-policy",
+                  "namespace": "default",
+                  "resourceVersion": "27550277",
+                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                  "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
                 },
                 "spec": Object {
-                  "complianceType": "",
-                  "namespaces": Object {
-                    "exclude": Array [
-                      "kube*",
-                    ],
-                    "include": Array [
-                      "default",
-                    ],
-                  },
-                  "remediationAction": "inform",
-                  "role-templates": Array [
+                  "disabled": false,
+                  "policy-templates": Array [
                     Object {
-                      "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                      "complianceType": "musthave",
-                      "kind": "RoleTemplate",
-                      "metadata": Object {
-                        "creationTimestamp": null,
-                        "name": "role-xz-1",
-                      },
-                      "rules": Array [
-                        Object {
-                          "complianceType": "musthave",
-                          "policyRule": Object {
-                            "apiGroups": Array [
-                              "extensions",
-                              "apps",
+                      "objectDefinition": Object {
+                        "apiVersion": "policies.ibm.com/v1alpha1",
+                        "kind": "TrustedContainerPolicy",
+                        "metadata": Object {
+                          "name": "case1-test-policy-trustedcontainerpolicy",
+                        },
+                        "spec": Object {
+                          "imageRegistry": "quay.io",
+                          "namespaceSelector": Object {
+                            "exclude": Array [
+                              "kube-system",
                             ],
-                            "resources": Array [
-                              "deployments",
-                            ],
-                            "verbs": Array [
-                              "get",
-                              "list",
-                              "watch",
-                              "create",
-                              "delete",
-                              "patch",
+                            "include": Array [
+                              "default",
                             ],
                           },
+                          "remediationAction": "inform",
+                          "severity": "low",
                         },
-                      ],
-                      "selector": Object {
-                        "matchLabels": Object {
-                          "cloud": "IBM",
-                        },
-                      },
-                      "status": Object {
-                        "Compliant": "NonCompliant",
-                        "Validity": Object {
-                          "valid": true,
-                        },
-                        "conditions": Array [
-                          Object {
-                            "lastTransitionTime": "2018-09-06T15:14:44Z",
-                            "message": "k8s RBAC role is missing: role-xz-1",
-                            "reason": "K8s RBAC role is missing",
-                            "status": "True",
-                            "type": "completed",
-                          },
-                        ],
                       },
                     },
                   ],
+                  "remediationAction": "inform",
                 },
                 "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Valid": true,
+                  "placement": Array [
+                    Object {
+                      "placementBinding": "case1-test-policy-pb",
+                      "placementRule": "case1-test-policy-plr",
+                    },
+                  ],
+                  "status": Array [
+                    Object {
+                      "clustername": "calamari",
+                      "clusternamespace": "calamari",
+                    },
+                  ],
                 },
               },
               "remediation": "inform",
               "spec": Object {
-                "complianceType": "",
-                "namespaces": Object {
-                  "exclude": Array [
-                    "kube*",
-                  ],
-                  "include": Array [
-                    "default",
-                  ],
-                },
-                "remediationAction": "inform",
-                "role-templates": Array [
+                "disabled": false,
+                "policy-templates": Array [
                   Object {
-                    "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                    "complianceType": "musthave",
-                    "kind": "RoleTemplate",
-                    "metadata": Object {
-                      "creationTimestamp": null,
-                      "name": "role-xz-1",
-                    },
-                    "rules": Array [
-                      Object {
-                        "complianceType": "musthave",
-                        "policyRule": Object {
-                          "apiGroups": Array [
-                            "extensions",
-                            "apps",
+                    "objectDefinition": Object {
+                      "apiVersion": "policies.ibm.com/v1alpha1",
+                      "kind": "TrustedContainerPolicy",
+                      "metadata": Object {
+                        "name": "case1-test-policy-trustedcontainerpolicy",
+                      },
+                      "spec": Object {
+                        "imageRegistry": "quay.io",
+                        "namespaceSelector": Object {
+                          "exclude": Array [
+                            "kube-system",
                           ],
-                          "resources": Array [
-                            "deployments",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "list",
-                            "watch",
-                            "create",
-                            "delete",
-                            "patch",
+                          "include": Array [
+                            "default",
                           ],
                         },
+                        "remediationAction": "inform",
+                        "severity": "low",
                       },
-                    ],
-                    "selector": Object {
-                      "matchLabels": Object {
-                        "cloud": "IBM",
-                      },
-                    },
-                    "status": Object {
-                      "Compliant": "NonCompliant",
-                      "Validity": Object {
-                        "valid": true,
-                      },
-                      "conditions": Array [
-                        Object {
-                          "lastTransitionTime": "2018-09-06T15:14:44Z",
-                          "message": "k8s RBAC role is missing: role-xz-1",
-                          "reason": "K8s RBAC role is missing",
-                          "status": "True",
-                          "type": "completed",
-                        },
-                      ],
                     },
                   },
                 ],
+                "remediationAction": "inform",
               },
               "status": Object {
-                "Compliant": "NonCompliant",
-                "Valid": true,
+                "placement": Array [
+                  Object {
+                    "placementBinding": "case1-test-policy-pb",
+                    "placementRule": "case1-test-policy-plr",
+                  },
+                ],
+                "status": Array [
+                  Object {
+                    "clustername": "calamari",
+                    "clusternamespace": "calamari",
+                  },
+                ],
               },
             },
             "roleBindingTemplates": Array [],
-            "roleTemplates": Array [
-              Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "compliant": "NonCompliant",
-                "kind": null,
-                "lastTransition": "2018-09-06T15:14:44Z",
-                "name": "role-xz-1",
-                "raw": Object {
-                  "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                  "complianceType": "musthave",
-                  "kind": "RoleTemplate",
-                  "metadata": Object {
-                    "creationTimestamp": null,
-                    "name": "role-xz-1",
-                  },
-                  "rules": Array [
-                    Object {
-                      "complianceType": "musthave",
-                      "policyRule": Object {
-                        "apiGroups": Array [
-                          "extensions",
-                          "apps",
-                        ],
-                        "resources": Array [
-                          "deployments",
-                        ],
-                        "verbs": Array [
-                          "get",
-                          "list",
-                          "watch",
-                          "create",
-                          "delete",
-                          "patch",
-                        ],
-                      },
-                    },
-                  ],
-                  "selector": Object {
-                    "matchLabels": Object {
-                      "cloud": "IBM",
-                    },
-                  },
-                  "status": Object {
-                    "Compliant": "NonCompliant",
-                    "Validity": Object {
-                      "valid": true,
-                    },
-                    "conditions": Array [
-                      Object {
-                        "lastTransitionTime": "2018-09-06T15:14:44Z",
-                        "message": "k8s RBAC role is missing: role-xz-1",
-                        "reason": "K8s RBAC role is missing",
-                        "status": "True",
-                        "type": "completed",
-                      },
-                    ],
-                  },
-                  "templateType": "role-templates",
-                },
-                "validity": "true",
-              },
-            ],
+            "roleTemplates": Array [],
             "status": null,
           },
         ],
-        "complianceStatus": Array [],
+        "complianceStatus": Array [
+          Object {
+            "clusterNamespace": "0",
+            "localCompliantStatus": "0/0",
+            "localValidStatus": "0/0",
+          },
+        ],
         "metadata": Object {
-          "creationTimestamp": "2018-09-04T16:13:50Z",
-          "name": "policy-xz-1",
-          "namespace": "mycluster",
-          "resourceVersion": "4349995",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-          "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+          "creationTimestamp": "2020-05-15T08:24:33Z",
+          "name": "case1-test-policy",
+          "namespace": "default",
+          "resourceVersion": "27550277",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+          "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
         "raw": Object {
-          "apiVersion": "policy.mcm.ibm.com/v1alpha1",
+          "apiVersion": "policies.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
-            "creationTimestamp": "2018-09-04T16:13:50Z",
-            "finalizers": Array [
-              "finalizer.mcm.ibm.com",
-            ],
-            "generation": 1,
-            "labels": Object {
-              "compliance": "compliance-xz",
+            "annotations": Object {
+              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+",
+              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policies.open-cluster-management.io/standards": "NIST-CSF",
             },
-            "name": "policy-xz-1",
-            "namespace": "mycluster",
-            "ownerReferences": Array [
-              Object {
-                "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "Compliance",
-                "name": "compliance-xz",
-                "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
-              },
-            ],
-            "resourceVersion": "4349995",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
-            "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+            "creationTimestamp": "2020-05-15T08:24:33Z",
+            "generation": 1,
+            "name": "case1-test-policy",
+            "namespace": "default",
+            "resourceVersion": "27550277",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
           },
           "spec": Object {
-            "complianceType": "",
-            "namespaces": Object {
-              "exclude": Array [
-                "kube*",
-              ],
-              "include": Array [
-                "default",
-              ],
-            },
-            "remediationAction": "inform",
-            "role-templates": Array [
+            "disabled": false,
+            "policy-templates": Array [
               Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "kind": "RoleTemplate",
-                "metadata": Object {
-                  "creationTimestamp": null,
-                  "name": "role-xz-1",
-                },
-                "rules": Array [
-                  Object {
-                    "complianceType": "musthave",
-                    "policyRule": Object {
-                      "apiGroups": Array [
-                        "extensions",
-                        "apps",
+                "objectDefinition": Object {
+                  "apiVersion": "policies.ibm.com/v1alpha1",
+                  "kind": "TrustedContainerPolicy",
+                  "metadata": Object {
+                    "name": "case1-test-policy-trustedcontainerpolicy",
+                  },
+                  "spec": Object {
+                    "imageRegistry": "quay.io",
+                    "namespaceSelector": Object {
+                      "exclude": Array [
+                        "kube-system",
                       ],
-                      "resources": Array [
-                        "deployments",
-                      ],
-                      "verbs": Array [
-                        "get",
-                        "list",
-                        "watch",
-                        "create",
-                        "delete",
-                        "patch",
+                      "include": Array [
+                        "default",
                       ],
                     },
+                    "remediationAction": "inform",
+                    "severity": "low",
                   },
-                ],
-                "selector": Object {
-                  "matchLabels": Object {
-                    "cloud": "IBM",
-                  },
-                },
-                "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Validity": Object {
-                    "valid": true,
-                  },
-                  "conditions": Array [
-                    Object {
-                      "lastTransitionTime": "2018-09-06T15:14:44Z",
-                      "message": "k8s RBAC role is missing: role-xz-1",
-                      "reason": "K8s RBAC role is missing",
-                      "status": "True",
-                      "type": "completed",
-                    },
-                  ],
                 },
               },
             ],
+            "remediationAction": "inform",
           },
           "status": Object {
-            "Compliant": "NonCompliant",
-            "Valid": true,
+            "placement": Array [
+              Object {
+                "placementBinding": "case1-test-policy-pb",
+                "placementRule": "case1-test-policy-plr",
+              },
+            ],
+            "status": Array [
+              Object {
+                "clustername": "calamari",
+                "clusternamespace": "calamari",
+              },
+            ],
           },
         },
       },

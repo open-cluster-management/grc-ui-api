@@ -17,6 +17,7 @@ import {
   mockClusterListResponse, mockCluster1ListResponse, mockClusterHubListResponse,
   mockDefaultListResponse, mockKubeSystemListResponse, mockViolationListResponse,
   mockCreateResourcePost, mockCreateResourceGet, mockCompletedResourceView,
+  mockNewAPISinglePolicyResponse,
 } from '../mocks/PolicyList';
 import { mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse } from '../mocks/ClusterList';
 
@@ -104,32 +105,37 @@ describe('Policy Resolver', () => {
 
     APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/clusterhub')
       .reply(200, mockClusterHubResponse);
+
+    APIServer.get('/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy')
+      .reply(200, mockNewAPISinglePolicyResponse);
   });
 
-  test('Correctly Resolves Policy List Query', (done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        {
-          policies {
-            enforcement
-            metadata {
-              name
-              namespace
-              selfLink
-              creationTimestamp
-            }
-            status
-          }
-        }
-      `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  });
+  // Don't currently have Policy List, remove
+
+  // test('Correctly Resolves Policy List Query', (done) => {
+  //   supertest(server)
+  //     .post(GRAPHQL_PATH)
+  //     .send({
+  //       query: `
+  //       {
+  //         policies {
+  //           enforcement
+  //           metadata {
+  //             name
+  //             namespace
+  //             selfLink
+  //             creationTimestamp
+  //           }
+  //           status
+  //         }
+  //       }
+  //     `,
+  //     })
+  //     .end((err, res) => {
+  //       expect(JSON.parse(res.text)).toMatchSnapshot();
+  //       done();
+  //     });
+  // });
 
   test('Correctly Resolves All Policies per Cluster List Query', (done) => {
     supertest(server)
@@ -205,7 +211,7 @@ describe('Policy Resolver', () => {
       .send({
         query: `
         {
-          policies(name:"policy-all", clusterName:"cluster1") {
+          policies(name:"default.case1-test-policy", clusterName:"calamari") {
             cluster
             message
             metadata {
@@ -430,28 +436,30 @@ describe('Policy Resolver', () => {
       });
   });
 
-  test('Correctly Resolves Violations List Query', (done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        {
-          violationsInPolicy(policy: "policy-namespace", namespace: "mcm") {
-            cluster
-            message
-            name
-            reason
-            selector
-            status
-          }
-        }
-      `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  });
+  // Commit out as we don't currently have violations return - May20
+
+  // test('Correctly Resolves Violations List Query', (done) => {
+  //   supertest(server)
+  //     .post(GRAPHQL_PATH)
+  //     .send({
+  //       query: `
+  //       {
+  //         violationsInPolicy(policy: "policy-namespace", namespace: "mcm") {
+  //           cluster
+  //           message
+  //           name
+  //           reason
+  //           selector
+  //           status
+  //         }
+  //       }
+  //     `,
+  //     })
+  //     .end((err, res) => {
+  //       expect(JSON.parse(res.text)).toMatchSnapshot();
+  //       done();
+  //     });
+  // });
 
   test('Correctly Resolves Delete Policy Mutation', (done) => {
     supertest(server)

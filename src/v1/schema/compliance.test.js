@@ -47,7 +47,7 @@ describe('Compliance Resolver', () => {
       .reply(200, mockCreateCompliance);
     APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/mcm/policies/case1-test-policy')
       .reply(200, mockSinglePolicyResponse);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/default/policies/compliance-xz')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/default/policies/compliance-xz')
       .reply(200, mockSinglePolicyResponse);
     APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/kube-system/policies/case1-test-policy')
       .reply(200, mockSingleNoPolicyResponse);
@@ -547,7 +547,7 @@ describe('Compliance Resolver', () => {
             spec: {
               runtimeRules: [
                 {
-                  apiVersion: "policy.mcm.ibm.com/v1alpha1",
+                  apiVersion: "policies.open-cluster-management.io/v1",
                   kind: "Policy",
                   metadata: {
                     name: "test-policy-1",
@@ -604,7 +604,7 @@ describe('Compliance Resolver', () => {
                   },
                 },
                 {
-                  apiVersion: "policy.mcm.ibm.com/v1alpha1",
+                  apiVersion: "policies.open-cluster-management.io/v1",
                   kind: "Policy",
                   metadata: {
                     name: "test-policy-2",

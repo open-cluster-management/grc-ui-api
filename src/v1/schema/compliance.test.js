@@ -34,21 +34,21 @@ describe('Compliance Resolver', () => {
 
     // Compliance / Policy list
     // define the method to be intercepted
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/mcm/policies')
       .reply(200, mockComplianceListMCMResponse);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/default/policies')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/default/policies')
       .reply(200, mockComplianceListDefaultResponse);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/kube-system/policies')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/kube-system/policies')
       .reply(200, mockComplianceListKubeSystemResponse);
 
     // Single compliance / policy
     APIServer.persist().get('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances/compliance-xz')
       .reply(200, mockCreateCompliance);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/compliance-xz')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/mcm/policies/compliance-xz')
       .reply(200, mockSinglePolicyResponse);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/default/policies/compliance-xz')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/default/policies/compliance-xz')
       .reply(200, mockSinglePolicyResponse);
-    APIServer.persist().get('/policy.mcm.ibm.com/v1alpha1/namespaces/kube-system/policies/compliance-xz')
+    APIServer.persist().get('/policies.open-cluster-management.io/v1/namespaces/kube-system/policies/compliance-xz')
       .reply(200, mockSingleNoPolicyResponse);
 
     // Placement bindings
@@ -542,7 +542,7 @@ describe('Compliance Resolver', () => {
             spec: {
               runtimeRules: [
                 {
-                  apiVersion: "policy.mcm.ibm.com/v1alpha1",
+                  apiVersion: "policies.open-cluster-management.io/v1",
                   kind: "Policy",
                   metadata: {
                     name: "test-policy-1",
@@ -599,7 +599,7 @@ describe('Compliance Resolver', () => {
                   },
                 },
                 {
-                  apiVersion: "policy.mcm.ibm.com/v1alpha1",
+                  apiVersion: "policies.open-cluster-management.io/v1",
                   kind: "Policy",
                   metadata: {
                     name: "test-policy-2",

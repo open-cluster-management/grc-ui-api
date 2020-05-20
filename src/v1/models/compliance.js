@@ -764,9 +764,8 @@ export default class ComplianceModel {
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
     // remove no found policies
-    const policies = policyResponses.filter(policyResponse => policyResponse !== null);
 
-    return policies;
+    return policyResponses.filter(policyResponse => policyResponse !== null);
 
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]

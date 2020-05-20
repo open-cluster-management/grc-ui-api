@@ -11,7 +11,7 @@
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
-import { mockPlacementListResponse } from '../mocks/PlacementList';
+import mockPlacementListResponse from '../mocks/PlacementList';
 import ApiURL from '../lib/ApiURL';
 
 describe('Placement Resolver', () => {

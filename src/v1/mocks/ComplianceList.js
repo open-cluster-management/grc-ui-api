@@ -1185,7 +1185,7 @@ export const mockRootPolicyResponse = {
   kind: 'Policy',
   metadata: {
     annotations: {
-      'kubectl.kubernetes.io/last-applied-configuration': '{\'apiVersion\':\'policies.open-cluster-management.io/v1\',\'kind\':\'Policy\',\'metadata\':{\'annotations\':{\'policies.open-cluster-management.io/categories\':\'PR.DS DataSecurity\',\'policies.open-cluster-management.io/controls\':\'PR.DS-2 Data-in-transit\',\'policies.open-cluster-management.io/standards\':\'NIST-CSF\'},\'name\':\'case1-test-policy\',\'namespace\':\'default\'},\'spec\':{\'disabled\':false,\'policy-templates\':[{\'objectDefinition\':{\'apiVersion\':\'policies.ibm.com/v1alpha1\',\'kind\':\'TrustedContainerPolicy\',\'metadata\':{\'name\':\'case1-test-policy-trustedcontainerpolicy\'},\'spec\':{\'imageRegistry\':\'quay.io\',\'namespaceSelector\':{\'exclude\':[\'kube-system\'],\'include\':[\'default\']},\'remediationAction\':\'inform\',\'severity\':\'low\'}}}],\'remediationAction\':\'inform\'}}\n', 'policies.open-cluster-management.io/categories': 'PR.DS DataSecurity', 'policies.open-cluster-management.io/controls': 'PR.DS-2 Data-in-transit', 'policies.open-cluster-management.io/standards': 'NIST-CSF'
+      'kubectl.kubernetes.io/last-applied-configuration': '{\'apiVersion\':\'policies.open-cluster-management.io/v1\',\'kind\':\'Policy\',\'metadata\':{\'annotations\':{\'policies.open-cluster-management.io/categories\':\'PR.DS DataSecurity\',\'policies.open-cluster-management.io/controls\':\'PR.DS-2 Data-in-transit\',\'policies.open-cluster-management.io/standards\':\'NIST-CSF\'},\'name\':\'case1-test-policy\',\'namespace\':\'default\'},\'spec\':{\'disabled\':false,\'policy-templates\':[{\'objectDefinition\':{\'apiVersion\':\'policies.ibm.com/v1alpha1\',\'kind\':\'TrustedContainerPolicy\',\'metadata\':{\'name\':\'case1-test-policy-trustedcontainerpolicy\'},\'spec\':{\'imageRegistry\':\'quay.io\',\'namespaceSelector\':{\'exclude\':[\'kube-system\'],\'include\':[\'default\']},\'remediationAction\':\'inform\',\'severity\':\'low\'}}}],\'remediationAction\':\'inform\'}}\n', 'policies.open-cluster-management.io/categories': 'PR.DS DataSecurity', 'policies.open-cluster-management.io/controls': 'PR.DS-2 Data-in-transit', 'policies.open-cluster-management.io/standards': 'NIST-CSF',
     },
     creationTimestamp: '2020-05-15T08:24:33Z',
     generation: 1,
@@ -1193,7 +1193,7 @@ export const mockRootPolicyResponse = {
     namespace: 'default',
     resourceVersion: '27550277',
     selfLink: '/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy',
-    uid: 'e919bf5c-df16-4b90-ae01-a39da7138623'
+    uid: 'e919bf5c-df16-4b90-ae01-a39da7138623',
   },
   spec: {
     disabled: false,
@@ -1203,13 +1203,13 @@ export const mockRootPolicyResponse = {
         kind: 'TrustedContainerPolicy',
         metadata: { name: 'case1-test-policy-trustedcontainerpolicy' },
         spec: {
-          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low'
-        }
-      }
+          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low',
+        },
+      },
     }],
-    remediationAction: 'inform'
+    remediationAction: 'inform',
   },
-  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] }
+  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] },
 };
 
 export const mockRootPoliciesListResponse = [[{
@@ -1217,7 +1217,7 @@ export const mockRootPoliciesListResponse = [[{
   kind: 'Policy',
   metadata: {
     annotations: {
-      'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{"policies.open-cluster-management.io/categories":"PR.DS DataSecurity","policies.open-cluster-management.io/controls":"PR.DS-2 Data-in-transit","policies.open-cluster-management.io/standards":"NIST-CSF"},"name":"case1-test-policy","namespace":"default"},"spec":{"disabled":false,"policy-templates":[{"objectDefinition":{"apiVersion":"policies.ibm.com/v1alpha1","kind":"TrustedContainerPolicy","metadata":{"name":"case1-test-policy-trustedcontainerpolicy"},"spec":{"imageRegistry":"quay.io","namespaceSelector":{"exclude":["kube-system"],"include":["default"]},"remediationAction":"inform","severity":"low"}}}],"remediationAction":"inform"}}\n', 'policies.open-cluster-management.io/categories': 'PR.DS DataSecurity', 'policies.open-cluster-management.io/controls': 'PR.DS-2 Data-in-transit', 'policies.open-cluster-management.io/standards': 'NIST-CSF'
+      'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{"policies.open-cluster-management.io/categories":"PR.DS DataSecurity","policies.open-cluster-management.io/controls":"PR.DS-2 Data-in-transit","policies.open-cluster-management.io/standards":"NIST-CSF"},"name":"case1-test-policy","namespace":"default"},"spec":{"disabled":false,"policy-templates":[{"objectDefinition":{"apiVersion":"policies.ibm.com/v1alpha1","kind":"TrustedContainerPolicy","metadata":{"name":"case1-test-policy-trustedcontainerpolicy"},"spec":{"imageRegistry":"quay.io","namespaceSelector":{"exclude":["kube-system"],"include":["default"]},"remediationAction":"inform","severity":"low"}}}],"remediationAction":"inform"}}\n', 'policies.open-cluster-management.io/categories': 'PR.DS DataSecurity', 'policies.open-cluster-management.io/controls': 'PR.DS-2 Data-in-transit', 'policies.open-cluster-management.io/standards': 'NIST-CSF',
     },
     creationTimestamp: '2020-05-15T08:24:33Z',
     generation: 1,
@@ -1225,7 +1225,7 @@ export const mockRootPoliciesListResponse = [[{
     namespace: 'default',
     resourceVersion: '27550277',
     selfLink: '/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy',
-    uid: 'e919bf5c-df16-4b90-ae01-a39da7138623'
+    uid: 'e919bf5c-df16-4b90-ae01-a39da7138623',
   },
   spec: {
     disabled: false,
@@ -1235,18 +1235,18 @@ export const mockRootPoliciesListResponse = [[{
         kind: 'TrustedContainerPolicy',
         metadata: { name: 'case1-test-policy-trustedcontainerpolicy' },
         spec: {
-          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low'
-        }
-      }
+          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low',
+        },
+      },
     }],
-    remediationAction: 'inform'
+    remediationAction: 'inform',
   },
-  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] }
+  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] },
 }, {
   apiVersion: 'policies.open-cluster-management.io/v1',
   kind: 'Policy',
   metadata: {
-    annotations: { 'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{},"name":"test-policy","namespace":"default"},"spec":{"disabled":false,"policy-templates":[{"objectDefinition":{"apiVersion":"policies.ibm.com/v1alpha1","kind":"TrustedContainerPolicy","metadata":{"name":"test-policy-trustedcontainerpolicy"},"spec":{"imageRegistry":"quay.io","namespaceSelector":{"exclude":["kube-system"],"include":["default"]},"remediationAction":"inform","severity":"low"}}}],"remediationAction":"inform"}}\n' }, creationTimestamp: '2020-05-13T09:07:42Z', generation: 1, name: 'test-policy', namespace: 'default', resourceVersion: '23259418', selfLink: '/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/test-policy', uid: 'a10c7723-cad8-4669-b18f-931df3e28044'
+    annotations: { 'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{},"name":"test-policy","namespace":"default"},"spec":{"disabled":false,"policy-templates":[{"objectDefinition":{"apiVersion":"policies.ibm.com/v1alpha1","kind":"TrustedContainerPolicy","metadata":{"name":"test-policy-trustedcontainerpolicy"},"spec":{"imageRegistry":"quay.io","namespaceSelector":{"exclude":["kube-system"],"include":["default"]},"remediationAction":"inform","severity":"low"}}}],"remediationAction":"inform"}}\n' }, creationTimestamp: '2020-05-13T09:07:42Z', generation: 1, name: 'test-policy', namespace: 'default', resourceVersion: '23259418', selfLink: '/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/test-policy', uid: 'a10c7723-cad8-4669-b18f-931df3e28044',
   },
   spec: {
     disabled: false,
@@ -1256,11 +1256,11 @@ export const mockRootPoliciesListResponse = [[{
         kind: 'TrustedContainerPolicy',
         metadata: { name: 'test-policy-trustedcontainerpolicy' },
         spec: {
-          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low'
-        }
-      }
+          imageRegistry: 'quay.io', namespaceSelector: { exclude: ['kube-system'], include: ['default'] }, remediationAction: 'inform', severity: 'low',
+        },
+      },
     }],
-    remediationAction: 'inform'
+    remediationAction: 'inform',
   },
-  status: {}
+  status: {},
 }]];

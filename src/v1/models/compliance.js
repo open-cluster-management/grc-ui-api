@@ -763,14 +763,25 @@ export default class ComplianceModel {
     });
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
-    // remove no found policies
-
-    return policyResponses.filter(policyResponse => policyResponse !== null);
-
+    // remove no found and comliant policies
+    policyResponses.filter((policyResponse) => {
+      if (policyResponse === null || undefined) {
+        return false;
+      }
+      return true;
+    });
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
 
-    // Update May19, the current return doesn't contains history info
+    const violations = [];
+    policyResponses.forEach((policyResponse) => {
+      violations.push({
+        cluster: _.get(policyResponse, 'metadata.labels.cluster-name', '-'),
+        name: _.get(policyResponse, 'status.details[0].history[0].eventName', '-'),
+        message: _.get(policyResponse, 'status.details[0].history[0].message', '-'),
+      });
+    });
+    return violations;
   }
 
 
@@ -830,7 +841,7 @@ export default class ComplianceModel {
 
   static resolvePolicyStatus(parent) {
     if (_.get(parent, statusUCompliantStr) || _.get(parent, statusLCompliantStr)) {
-      return _.get(parent, statusUCompliantStr) || _.get(parent, statusLCompliantStr);
+      return _.get(parent, 'status');
     }
     if (_.get(parent, 'status.Valid') !== undefined) {
       return _.get(parent, 'status.Valid') ? 'valid' : 'invalid';

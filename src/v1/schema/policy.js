@@ -17,7 +17,7 @@ type Policy implements K8sObject {
   metadata: Metadata
   rules: [PolicyRules]
   # Possible values are: compliant, notcompliant, invalid
-  status: String
+  status: JSON
   roleTemplates: [PolicyTemplate]
   roleBindingTemplates: [PolicyTemplate]
   objectTemplates: [PolicyTemplate]

@@ -597,20 +597,24 @@ export default class ComplianceModel {
   }
 
   async getAllPoliciesInCluster(cluster) {
-    // if policy name specified
+    const allPoliciesInClusterResult = [];
+    // if cluster name specified
     if (cluster !== undefined) {
-      const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com', cluster, undefined, false, true);
-      const results = _.get(response, statusResultsStr);
-      if (results) {
-        const item = _.get(results, `${cluster}`, {});
-        if (item) {
-          const result = [];
-          item.items.forEach(policy => result.push({ ...policy, raw: policy }));
-          return result;
-        }
+      const URL = `${ApiURL.ocmPoliciesApiURL}${cluster}/policies/`;
+      const policyListResponse = await this.kubeConnector.get(URL);
+      const policyListItems = _.get(policyListResponse, 'items', '');
+      if (Array.isArray(policyListItems) && policyListItems.length > 0) {
+        policyListItems.forEach((policy) => {
+          const policyNS = _.get(policy, 'metadata.namespace', 'metadata.labels.cluster-name')
+            .trim().toLowerCase();
+          if (policyNS && policyNS === cluster.trim().toLowerCase()) {
+            allPoliciesInClusterResult.push({ ...policy, raw: policy });
+          }
+        });
       }
     }
-    return [];
+
+    return allPoliciesInClusterResult;
   }
 
   async getAllClustersInPolicy(policyName, hubNamespace) {

@@ -6,6 +6,8 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc.
+*/
 
 import _ from 'lodash';
 import lru from 'lru-cache';
@@ -25,7 +27,7 @@ async function getKubeToken({
   let idToken;
   if ((_.isEmpty(authorization) && shouldLocalAuth) || process.env.MOCK === 'true') {
     // special case for graphiql to work locally
-    // do not exchange for idtoken since authorization header is empty
+    // use SERVICEACCT_TOKEN to get idtoken
     if (process.env.SERVICEACCT_TOKEN) {
       idToken = `Bearer ${process.env.SERVICEACCT_TOKEN}`;
     } else {

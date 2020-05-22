@@ -5,6 +5,5 @@
   "hcmPollInterval": 100,
   "hcmPollTimeout": 50000,
   "hcmUrl": "",
-  "httpPort": 4000,
-  "localKubeToken": ""
+  "httpPort": 4000
 }

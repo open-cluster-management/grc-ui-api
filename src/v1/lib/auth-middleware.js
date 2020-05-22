@@ -9,7 +9,6 @@
 
 import _ from 'lodash';
 import lru from 'lru-cache';
-import config from '../../../config';
 import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
 
@@ -19,46 +18,6 @@ const asyncMiddleware = fn => (req, res, next) => {
     .catch(next);
 };
 
-// async function getKubeToken({
-//   authorization,
-//   cache,
-//   httpLib,
-//   shouldLocalAuth,
-// }) {
-//   let idToken;
-//   if ((_.isEmpty(authorization) && shouldLocalAuth) || process.env.MOCK === 'true') {
-//     // special case for graphiql to work locally
-//     // do not exchange for idtoken since authorization header is empty
-//     idToken = config.get('localKubeToken') || 'localdev';
-//   } else {
-//     const accessToken = authorization.substring(7);
-//     // We cache the promise to prevent starting the same request multiple times.
-//     let kubeTokenPromise = cache.get(`kubeToken_${accessToken}`);
-//     if (!kubeTokenPromise) {
-//       const options = {
-//         url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/exchangetoken`,
-//         headers: {
-//           'Content-Type': 'application/x-www-form-urlencoded',
-//         },
-//         method: 'POST',
-//         json: true,
-//         form: {
-//           access_token: accessToken,
-//         },
-//       };
-//       kubeTokenPromise = httpLib(options);
-//       cache.set(`kubeToken_${accessToken}`, kubeTokenPromise);
-//     }
-
-//     const response = await kubeTokenPromise;
-//     idToken = _.get(response, 'body.id_token');
-//     if (!idToken) {
-//       throw new Error(`Authentication error: ${JSON.stringify(response.body)}`);
-//     }
-//   }
-
-//   return idToken;
-// }
 async function getKubeToken({
   authorization,
   shouldLocalAuth,
@@ -67,7 +26,11 @@ async function getKubeToken({
   if ((_.isEmpty(authorization) && shouldLocalAuth) || process.env.MOCK === 'true') {
     // special case for graphiql to work locally
     // do not exchange for idtoken since authorization header is empty
-    idToken = config.get('localKubeToken') || 'localdev';
+    if (process.env.SERVICEACCT_TOKEN) {
+      idToken = `Bearer ${process.env.SERVICEACCT_TOKEN}`;
+    } else {
+      idToken = 'localdev';
+    }
   } else {
     idToken = authorization;
     if (!idToken) {
@@ -96,17 +59,6 @@ async function getNamespaces(usertoken) {
   return request(options);
 }
 
-// async function getAccountData({ iamToken, user }) {
-//   const options = { iamToken };
-//   if (process.env.NODE_ENV === 'test') {
-//     options.httpLib = createMockIAMHTTP();
-//   }
-
-//   const idConnector = new IDConnector(options);
-
-//   return idConnector.get(`/identity/api/v1/users/${user}`);
-// }
-
 export default function createAuthMiddleWare({
   cache = lru({
     max: 1000,
@@ -121,57 +73,14 @@ export default function createAuthMiddleWare({
     });
     req.kubeToken = idToken;
 
-    // special case for redhat openshift, can't get user from idtoken
-    // if (!userName) {
-    //   // We cache the promise to prevent starting the same request multiple times.
-    //   let userInfoPromise = cache.get(`userInfo_${iamToken}`);
-    //   if (!userInfoPromise) {
-    //     const options = {
-    //       url: `${config.get('cfcRouterUrl')}/idprovider/v1/auth/userinfo`,
-    //       headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //       },
-    //       method: 'POST',
-    //       json: true,
-    //       form: {
-    //         access_token: iamToken,
-    //       },
-    //     };
-    //     userInfoPromise = httpLib(options);
-    //     cache.set(`userInfo_${iamToken}`, userInfoPromise);
-    //   }
-
-    //   const response = await userInfoPromise;
-    //   userName = _.get(response, 'body.sub') || _.get(response, 'body.name');
-    //   if (!userName) {
-    //     throw new Error(`Authentication error: ${response.body}`);
-    //   }
-    // }
-
-    // Get the namespaces for the user.
-    // We cache the promise to prevent starting the same request multiple times.
     let nsPromise = cache.get(`namespaces_${idToken}`);
     if (!nsPromise) {
       nsPromise = getNamespaces(idToken);
       cache.set(`namespaces_${idToken}`, nsPromise);
     }
 
-    // Get user's account data.
-    // We cache the promise to prevent starting the same request multiple times.
-    // let accountPromise = cache.get(`account_${iamToken}`);
-    // if (!accountPromise) {
-    //   accountPromise = getAccountData({
-    //     iamToken,
-    //     user: userName,
-    //   });
-    //   cache.set(`account_${iamToken}`, accountPromise);
-    // }
-
     req.user = {
-      // name: userName,
       namespaces: await nsPromise,
-      // userAccount: await accountPromise,
-      // iamToken,
     };
 
     next();

@@ -1,13 +1,19 @@
 {
-    "presets": [
-      ["env", {
-        "targets": {
-          "node": "current"
-        }
-      }]
-    ],
-    "plugins": [
-      "transform-async-to-generator",
-      "transform-object-rest-spread"
-    ]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ],
+  "plugins": [
+    "transform-async-to-generator",
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "development": {
+      "sourceMaps": "inline",
+      "retainLines": true
+    }
+  }
 }

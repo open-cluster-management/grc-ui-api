@@ -590,7 +590,7 @@ export default class ComplianceModel {
       return null;// 404 or not found
     }
     policyResult.push({
-      cluster: _.get(policyResponse, 'metadata.namespace'),
+      cluster: _.get(policyResponse, metadataNsStr),
       ...policyResponse,
     });
     return policyResult;
@@ -605,7 +605,7 @@ export default class ComplianceModel {
       const policyListItems = _.get(policyListResponse, 'items', '');
       if (Array.isArray(policyListItems) && policyListItems.length > 0) {
         policyListItems.forEach((policy) => {
-          const policyNS = _.get(policy, 'metadata.namespace', 'metadata.labels.cluster-name')
+          const policyNS = _.get(policy, metadataNsStr, 'metadata.labels.cluster-name')
             .trim().toLowerCase();
           if (policyNS && policyNS === cluster.trim().toLowerCase()) {
             allPoliciesInClusterResult.push({ ...policy, raw: policy });

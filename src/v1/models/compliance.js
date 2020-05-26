@@ -888,7 +888,7 @@ export default class ComplianceModel {
             raw: res,
           });
         } else {
-          const name = _.get(res, metadataNameStr, '-')
+          const name = _.get(res, metadataNameStr, '-');
           tempArray.push({
             name,
             lastTransition: _.get(res, statusLastTransTimeStr, ''),

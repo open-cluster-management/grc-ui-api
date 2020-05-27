@@ -25,7 +25,6 @@ const roleBindingTemplatesStr = 'roleBinding-templates';
 const objectTemplatesStr = 'object-templates';
 const policyTemplatesStr = 'policy-templates';
 const runtimeRulesStr = 'runtime-rules';
-const statusResultsStr = 'status.results';
 const statusLCompliantStr = 'status.compliant';
 const statusUCompliantStr = 'status.Compliant';
 const statusLastTransTimeStr = 'status.conditions[0].lastTransitionTime';
@@ -552,20 +551,19 @@ export default class ComplianceModel {
   }
 
   async getPolicies(name, clusterName) {
-    if (name === null) {
-      return [];
-    }
     const policyResult = [];
-    const URL = `${ApiURL.acmPoliciesApiURL}namespaces/${clusterName}/policies/${name}`;
-    const policyResponse = await this.kubeConnector.get(URL);
-    if (policyResponse.code || policyResponse.message) {
-      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-      return null;// 404 or not found
+    if (name !== null) {
+      const URL = `${ApiURL.acmPoliciesApiURL}namespaces/${clusterName}/policies/${name}`;
+      const policyResponse = await this.kubeConnector.get(URL);
+      if (policyResponse.code || policyResponse.message) {
+        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        return null;// 404 or not found
+      }
+      policyResult.push({
+        cluster: _.get(policyResponse, metadataNsStr),
+        ...policyResponse,
+      });
     }
-    policyResult.push({
-      cluster: _.get(policyResponse, metadataNsStr),
-      ...policyResponse,
-    });
     return policyResult;
   }
 
@@ -593,51 +591,41 @@ export default class ComplianceModel {
   }
 
   async getAllClustersInPolicy(policyName, hubNamespace) {
-    // if policy name specified
-    const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const results = _.get(response, statusResultsStr);
-    const policiesMap = new Map();
-    if (results) {
-      let result = [];
-      const clusterNames = Object.keys(results);
-      // eslint-disable-next-line no-restricted-syntax
-      for (const cluster of clusterNames) {
-        const item = _.get(results, `${cluster}`, {});
-        const policies = item.items;
-        // eslint-disable-next-line
-        policies.forEach((policy) => {
-          if (_.get(policy, metadataNameStr) === `${hubNamespace}.${policyName}` && _.get(policy, metadataNsStr) === cluster) {
-            if (_.get(policy, statusLCompliantStr, '').toLowerCase() === 'compliant') {
-              result.push({ name: cluster, status: 'compliant' });
-            } else {
-              result.push({ name: cluster, status: 'violated' });
-            }
-            policiesMap.set(cluster, policy);
+    let allClustersInPolicyResult = [];
+    if (policyName && hubNamespace) {
+      const URL = `${ApiURL.acmPoliciesApiURL}namespaces/${hubNamespace}/policies/${policyName}`;
+      const policyDetails = await this.kubeConnector.get(URL);
+      const clustersList = _.get(policyDetails, statusStatusStr);
+      if (Array.isArray(clustersList) && clustersList.length > 0) {
+        clustersList.forEach((cluster) => {
+          if (cluster.compliant === 'compliant') {
+            allClustersInPolicyResult.push({ name: cluster.clustername, status: 'compliant' });
+          } else {
+            allClustersInPolicyResult.push({ name: cluster.clustername, status: 'violated' });
           }
         });
+        const [clusters, clusterstatuses] = await Promise.all([
+          this.kubeConnector.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters`),
+          this.kubeConnector.getResources(ns => `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`),
+        ]);
+        const clusterMap = new Map();
+        const clusterStatusMap = new Map();
+        clusters.forEach(cluster => clusterMap.set(_.get(cluster, metadataNameStr, ''), cluster));
+        clusterstatuses.forEach((cluster) => {
+          clusterStatusMap.set(_.get(cluster, metadataNameStr, ''), { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'spec.consoleURL', '') } });
+        });
+        allClustersInPolicyResult = createStatusResult(allClustersInPolicyResult);
+        allClustersInPolicyResult = allClustersInPolicyResult.map((item) => {
+          const { name } = item;
+          const info = clusterMap.get(name);
+          const status = clusterStatusMap.get(name);
+          return {
+            ...item, ...info, ...status, policy: policyDetails,
+          };
+        });
       }
-      const [clusters, clusterstatuses] = await Promise.all([
-        this.kubeConnector.getResources(ns => `${ApiURL.clusterRegistryApiURL}${ns}/clusters`),
-        this.kubeConnector.getResources(ns => `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`),
-      ]);
-      const clusterMap = new Map();
-      const clusterStatusMap = new Map();
-      clusters.forEach(cluster => clusterMap.set(_.get(cluster, metadataNameStr, ''), cluster));
-      clusterstatuses.forEach((cluster) => {
-        clusterStatusMap.set(_.get(cluster, metadataNameStr, ''), { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'spec.consoleURL') } });
-      });
-      result = createStatusResult(result);
-      result = result.map((item) => {
-        const { name } = item;
-        const info = clusterMap.get(name);
-        const status = clusterStatusMap.get(name);
-        return {
-          ...item, ...info, ...status, policy: policiesMap.get(name),
-        };
-      });
-      return result;
     }
-    return [];
+    return allClustersInPolicyResult;
   }
 
   // input is a list of policies name with each clusterName specified

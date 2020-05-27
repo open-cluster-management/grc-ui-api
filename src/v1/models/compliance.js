@@ -775,7 +775,8 @@ export default class ComplianceModel {
     const violations = [];
     policyResponses.forEach((policyResponse) => {
       const cluster = _.get(policyResponse, 'metadata.labels["policies.open-cluster-management.io/cluster-name"]', '-');
-      const details = _.get(policyResponse, 'status.details', []);
+      let details = _.get(policyResponse, 'status.details', []);
+      details = details.filter(detail => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
       details.forEach((detail) => {
         violations.push({
           cluster,

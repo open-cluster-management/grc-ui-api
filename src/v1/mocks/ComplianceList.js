@@ -17,7 +17,7 @@ export const mockComplianceListDefaultResponse = {
   metadata: {
     continue: '',
     resourceVersion: '10793978',
-    selfLink: `${ApiURL.ocmPoliciesApiURL}default/policies`,
+    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/default/policies`,
   },
 };
 
@@ -28,7 +28,7 @@ export const mockComplianceListKubeSystemResponse = {
   metadata: {
     continue: '',
     resourceVersion: '10794564',
-    selfLink: `${ApiURL.ocmPoliciesApiURL}kube-system/policies`,
+    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/kube-system/policies`,
   },
 };
 
@@ -54,7 +54,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-certificatepolicy',
         namespace: 'mcm',
         resourceVersion: '3666045',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-certificatepolicy`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-certificatepolicy`,
         uid: '68d772b1-ce79-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -148,7 +148,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-iampolicy',
         namespace: 'mcm',
         resourceVersion: '3664798',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-iampolicy`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-iampolicy`,
         uid: 'a18d825a-cb36-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -245,7 +245,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-image',
         namespace: 'mcm',
         resourceVersion: '3459900',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-image`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-image`,
         uid: '8be1a627-cb2c-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -332,7 +332,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-limitrange',
         namespace: 'mcm',
         resourceVersion: '3489357',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-limitrange`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-limitrange`,
         uid: 'd358638d-cf30-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -425,7 +425,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-namespace',
         namespace: 'mcm',
         resourceVersion: '3665885',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-namespace`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-namespace`,
         uid: '4e21e5e7-ce78-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -505,7 +505,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-pod',
         namespace: 'mcm',
         resourceVersion: '3729666',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-pod`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-pod`,
         uid: '48316272-d009-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -598,7 +598,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-rolebinding-1',
         namespace: 'mcm',
         resourceVersion: '3665889',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-rolebinding-1`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-rolebinding-1`,
         uid: '22ac9660-cf15-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -690,7 +690,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-vulnerabilitypolicy',
         namespace: 'mcm',
         resourceVersion: '3459668',
-        selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies/policy-vulnerabilitypolicy`,
+        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-vulnerabilitypolicy`,
         uid: '2767ac02-ce7a-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -771,7 +771,7 @@ export const mockComplianceListMCMResponse = {
   metadata: {
     continue: '',
     resourceVersion: '3960466',
-    selfLink: `${ApiURL.ocmPoliciesApiURL}mcm/policies`,
+    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies`,
   },
 };
 

@@ -36,7 +36,7 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `${ApiURL.ocmAppsApiURL}${ns}/placementrules`,
+      ns => `${ApiURL.acmAppsApiURL}namespaces/${ns}/placementrules`,
       { kind: 'PlacementRule' },
     );
     const placementPolicies = matchNames ? filterByName(matchNames, response) : response;

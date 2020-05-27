@@ -186,7 +186,7 @@ export default class GenericModel extends KubeModel {
   async resourceAction(resourceType, actionType, resourceName, resourceNamespace, clusterName) {
     const name = `${resourceType}-workset-${this.kubeConnector.uid()}`;
     const body = {
-      apiVersion: 'mcm.ibm.com/v1alpha1',
+      apiVersion: ApiURL.acmApiURL,
       kind: 'WorkSet',
       metadata: {
         name,

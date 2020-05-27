@@ -25,7 +25,7 @@ describe('Generic Resources Resolver', () => {
     // define the method to be intercepted
     APIServer.get('/').reply(200, kubeGetMock);
     APIServer.get('/apis/policy.mcm.ibm.com/v1alpha1').reply(200, mockAPIResourceList);
-    APIServer.post(`${ApiURL.ocmPoliciesApiURL}mcm/policies`)
+    APIServer.post(`${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
     APIServer.put(`${ApiURL.mcmComplianceApiURL}mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);

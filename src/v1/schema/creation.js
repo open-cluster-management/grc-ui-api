@@ -54,7 +54,7 @@ export const resolver = {
         const { annotations } = metadata;
         policyNames.push(name);
         Object.keys(collection).forEach((key) => {
-          const types = annotations[`policy.mcm.ibm.com/${key}`] || '';
+          const types = annotations[`${ApiURL.acmPoliciesRootURL}/${key}`] || '';
           types.split(',').forEach((type) => {
             const ttype = type.trim();
             if (ttype) {

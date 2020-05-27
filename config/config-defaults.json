@@ -1,5 +1,5 @@
 {
-  "complianceNamespace": "mcm",
+  "complianceNamespace": "acm",
   "contextPath": "/grcuiapi",
   "defaultUserAccountID": "id-mycluster-account",
   "hcmPollInterval": 100,

@@ -8,13 +8,13 @@
  ***************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 const mockPlacementListResponse = {
   kind: 'PlacementRuleList',
   apiVersion: 'apps.open-cluster-management.io/v1',
   metadata: {
-    selfLink: `${ApiURL.acmAppsApiURL}namespaces/mcm/placementrules`,
+    selfLink: `/apis/${ApiEP.appsEP}/${ApiEP.V}/namespaces/mcm/placementrules`,
     resourceVersion: '14383',
   },
   items: [
@@ -22,7 +22,7 @@ const mockPlacementListResponse = {
       metadata: {
         name: 'placement-my-policy',
         namespace: 'mcm',
-        selfLink: `${ApiURL.acmAppsApiURL}namespaces/mcm/placementrules/placement-my-policy`,
+        selfLink: `/apis/${ApiEP.appsEP}/${ApiEP.V}/namespaces/mcm/placementrules/placement-my-policy`,
         uid: '2a52a098-b228-11e9-926f-eae85572ef1a',
         resourceVersion: '60',
         creationTimestamp: '2019-07-29T17:41:59Z',
@@ -57,7 +57,7 @@ const mockPlacementListResponse = {
       metadata: {
         name: 'placement-policy-ma',
         namespace: 'mcm',
-        selfLink: `${ApiURL.acmAppsApiURL}namespaces/mcm/placementrules/placement-policy-ma`,
+        selfLink: `/apis/${ApiEP.appsEP}/${ApiEP.V}/namespaces/mcm/placementrules/placement-policy-ma`,
         uid: 'ada3957f-b228-11e9-926f-eae85572ef1a',
         resourceVersion: '98',
         creationTimestamp: '2019-07-29T17:45:39Z',

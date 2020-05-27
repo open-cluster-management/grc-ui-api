@@ -8,13 +8,13 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 export const mockCluster1Response = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.clusterRegistryApiURL}cluster1/clusters/`,
+    selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/cluster1/clusters/`,
     resourceVersion: '219916',
   },
   items: [
@@ -24,7 +24,7 @@ export const mockCluster1Response = {
       metadata: {
         name: 'cluster1',
         namespace: 'cluster1',
-        selfLink: `${ApiURL.clusterRegistryApiURL}cluster1/clusters/cluster1`,
+        selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/cluster1/clusters/cluster1`,
         uid: '6120d6bb-e482-11e9-aa00-96bb9600cc18',
         resourceVersion: '219786',
         creationTimestamp: '2019-10-01T19:33:43Z',
@@ -76,7 +76,7 @@ export const mockCluster1StatusResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.mcmNSApiURL}cluster1/clusterstatuses`,
+    selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/cluster1/clusterstatuses`,
     resourceVersion: '219916',
   },
   items: [
@@ -84,7 +84,7 @@ export const mockCluster1StatusResponse = {
       metadata: {
         name: 'cluster1',
         namespace: 'cluster1',
-        selfLink: `${ApiURL.mcmNSApiURL}cluster1/clusterstatuses/cluster1`,
+        selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/cluster1/clusterstatuses/cluster1`,
         uid: 'cc540dfa-96b0-44e4-93d4-cfa18c387325',
         resourceVersion: '219916',
         creationTimestamp: '2020-03-30T13:37:26Z',
@@ -151,7 +151,7 @@ export const mockClusterHubResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.clusterRegistryApiURL}clusterhub/clusters/`,
+    selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/clusterhub/clusters/`,
     resourceVersion: '219917',
   },
   items: [
@@ -161,7 +161,7 @@ export const mockClusterHubResponse = {
       metadata: {
         name: '',
         namespace: '',
-        selfLink: `${ApiURL.clusterRegistryApiURL}clusterhub/clusters/clusterhub`,
+        selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/clusterhub/clusters/clusterhub`,
         uid: '24466f0f-e482-11e9-aa00-96bb9600cc18',
         resourceVersion: '219917',
         creationTimestamp: '2019-10-01T19:32:01Z',
@@ -212,7 +212,7 @@ export const mockClusterHubStatusResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.mcmNSApiURL}clusterhub/clusterstatuses`,
+    selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/clusterhub/clusterstatuses`,
     resourceVersion: '219917',
   },
   items: [
@@ -220,7 +220,7 @@ export const mockClusterHubStatusResponse = {
       metadata: {
         name: '',
         namespace: '',
-        selfLink: `${ApiURL.mcmNSApiURL}clusterhub/clusterstatuses/clusterhub`,
+        selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/clusterhub/clusterstatuses/clusterhub`,
         uid: 'cc540dfa-96b0-44e4-93d4-cfa18c387325',
         resourceVersion: '219917',
         creationTimestamp: '2020-03-30T13:37:26Z',
@@ -287,7 +287,7 @@ export const mockMCMResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.clusterRegistryApiURL}mcm/clusters/`,
+    selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/mcm/clusters/`,
     resourceVersion: '219919',
   },
   items: [],
@@ -297,7 +297,7 @@ export const mockDefaultResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.clusterRegistryApiURL}default/clusters/`,
+    selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/default/clusters/`,
     resourceVersion: '219920',
   },
   items: [],
@@ -307,7 +307,7 @@ export const mockKubeSystemResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.clusterRegistryApiURL}kube-system/clusters/`,
+    selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/kube-system/clusters/`,
     resourceVersion: '219921',
   },
   items: [],
@@ -317,7 +317,7 @@ export const mockMCMStatusResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.mcmNSApiURL}mcm/clusterstatuses`,
+    selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/mcm/clusterstatuses`,
     resourceVersion: '219919',
   },
   items: [],
@@ -327,7 +327,7 @@ export const mockDefaultStatusResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.mcmNSApiURL}default/clusterstatuses`,
+    selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/default/clusterstatuses`,
     resourceVersion: '219920',
   },
   items: [],
@@ -337,7 +337,7 @@ export const mockKubeSystemStatusResponse = {
   kind: 'ClusterStatusList',
   apiVersion: 'mcm.ibm.com/v1alpha1',
   metadata: {
-    selfLink: `${ApiURL.mcmNSApiURL}kube-system/clusterstatuses`,
+    selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/kube-system/clusterstatuses`,
     resourceVersion: '219921',
   },
   items: [],

@@ -11,7 +11,7 @@
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 import {
   mockComplianceListMCMResponse, mockComplianceListDefaultResponse,
   mockComplianceListKubeSystemResponse, mockCreateCompliance,
@@ -31,7 +31,7 @@ import {
 describe('Compliance Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
-    const APIServer = nock(ApiURL.hostUrl);
+    const APIServer = nock(ApiEP.hostUrl);
 
     // Compliance / Policy list
     // define the method to be intercepted

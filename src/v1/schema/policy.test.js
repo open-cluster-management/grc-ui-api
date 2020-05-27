@@ -11,7 +11,7 @@
 import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 import {
   mockPolicyListResponse, mockSinglePolicyResponse, mockCreatePolicy, mockDeleteResponse,
   mockClusterListResponse, mockCluster1ListResponse, mockClusterHubListResponse,
@@ -24,7 +24,7 @@ import { mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefa
 describe('Policy Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
-    const APIServer = nock(ApiURL.hostUrl);
+    const APIServer = nock(ApiEP.hostUrl);
 
     APIServer.persist()
       .post('/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews')

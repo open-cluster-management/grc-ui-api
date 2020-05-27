@@ -12,12 +12,12 @@ import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import mockPlacementListResponse from '../mocks/PlacementList';
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 describe('Placement Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
-    const APIServer = nock(ApiURL.hostUrl);
+    const APIServer = nock(ApiEP.hostUrl);
 
     APIServer.get('/apps.open-cluster-management.io/v1/namespaces/default/placementrules')
       .reply(200, mockPlacementListResponse);

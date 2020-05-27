@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 import KubeConnector from './kube';
 
 const asyncReturn = (value, waitTime = 500) =>
@@ -17,7 +17,7 @@ const asyncReturn = (value, waitTime = 500) =>
 const mockWorkset = {
   body: {
     metadata: {
-      selfLink: `${ApiURL.mcmNSApiURL}default/resourceviews/test-set`,
+      selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/default/resourceviews/test-set`,
     },
   },
 };

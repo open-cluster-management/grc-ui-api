@@ -15,7 +15,7 @@ import {
   kubeGetMock, mockAPIResourceList,
   mockCreateResourcesResponse, mockUpdateResourcesResponse,
 } from '../mocks/GenericResources';
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 describe('Generic Resources Resolver', () => {
   beforeAll(() => {
@@ -25,51 +25,10 @@ describe('Generic Resources Resolver', () => {
     // define the method to be intercepted
     APIServer.get('/').reply(200, kubeGetMock);
     APIServer.get('/apis/policy.mcm.ibm.com/v1alpha1').reply(200, mockAPIResourceList);
-    APIServer.post(`${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies`)
+    APIServer.post(`/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
-    APIServer.put(`${ApiURL.mcmComplianceApiURL}mcm/compliances/test-policy`)
+    APIServer.put(`/apis/${ApiEP.policiesEP}/${ApiEP.V}/mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
-  });
-
-  test('Correctly Resolves Create Resources Mutation', (done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        mutation {
-          createResources(
-            resources: [
-              {
-                apiVersion: "policy.mcm.ibm.com/v1alpha1",
-                kind: "Policy",
-                metadata: {
-                  name: "test-policy",
-                  namespace: "mcm",
-                  annotations: {
-                  }
-                },
-                spec: {
-                  complianceType: "musthave",
-                  remediationAction: "inform",
-                  namespaces: {
-                    exclude: [
-                      "kube-*"
-                    ],
-                    include: [
-                      "default"
-                    ]
-                  },
-                },
-              }
-            ]
-          )
-        }
-      `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
   });
 
   // object-templates: [

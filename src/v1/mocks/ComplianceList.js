@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 export const mockComplianceListDefaultResponse = {
   apiVersion: 'policy.mcm.ibm.com/v1alpha1',
@@ -17,7 +17,7 @@ export const mockComplianceListDefaultResponse = {
   metadata: {
     continue: '',
     resourceVersion: '10793978',
-    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/default/policies`,
+    selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/default/policies`,
   },
 };
 
@@ -28,7 +28,7 @@ export const mockComplianceListKubeSystemResponse = {
   metadata: {
     continue: '',
     resourceVersion: '10794564',
-    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/kube-system/policies`,
+    selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/kube-system/policies`,
   },
 };
 
@@ -54,7 +54,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-certificatepolicy',
         namespace: 'mcm',
         resourceVersion: '3666045',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-certificatepolicy`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-certificatepolicy`,
         uid: '68d772b1-ce79-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -148,7 +148,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-iampolicy',
         namespace: 'mcm',
         resourceVersion: '3664798',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-iampolicy`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-iampolicy`,
         uid: 'a18d825a-cb36-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -245,7 +245,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-image',
         namespace: 'mcm',
         resourceVersion: '3459900',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-image`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-image`,
         uid: '8be1a627-cb2c-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -332,7 +332,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-limitrange',
         namespace: 'mcm',
         resourceVersion: '3489357',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-limitrange`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-limitrange`,
         uid: 'd358638d-cf30-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -425,7 +425,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-namespace',
         namespace: 'mcm',
         resourceVersion: '3665885',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-namespace`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-namespace`,
         uid: '4e21e5e7-ce78-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -505,7 +505,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-pod',
         namespace: 'mcm',
         resourceVersion: '3729666',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-pod`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-pod`,
         uid: '48316272-d009-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -598,7 +598,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-rolebinding-1',
         namespace: 'mcm',
         resourceVersion: '3665889',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-rolebinding-1`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-rolebinding-1`,
         uid: '22ac9660-cf15-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -690,7 +690,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-vulnerabilitypolicy',
         namespace: 'mcm',
         resourceVersion: '3459668',
-        selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies/policy-vulnerabilitypolicy`,
+        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/policy-vulnerabilitypolicy`,
         uid: '2767ac02-ce7a-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -771,412 +771,7 @@ export const mockComplianceListMCMResponse = {
   metadata: {
     continue: '',
     resourceVersion: '3960466',
-    selfLink: `${ApiURL.acmPoliciesApiURL}namespaces/mcm/policies`,
-  },
-};
-
-export const mockCreateCompliance = {
-  kind: 'Compliance',
-  metadata: {
-    creationTimestamp: '2018-09-06T18:19:43Z',
-    generation: 1,
-    name: 'test-compliance',
-    namespace: 'mcm',
-    resourceVersion: '4405693',
-    selfLink: `${ApiURL.mcmComplianceApiURL}mcm/compliances/test-compliance`,
-    uid: '6d5dbb6e-b201-11e8-9a12-005056a0d11b',
-  },
-  spec: {
-    'runtime-rules': [
-      {
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
-        kind: 'Policy',
-        metadata: {
-          description: 'Instance descriptor for policy resource',
-          name: 'test-policy-1',
-        },
-        spec: {
-          namespaces: {
-            exclude: [
-              'kube*',
-            ],
-            include: [
-              'default',
-            ],
-          },
-          remediationAction: 'inform',
-          'role-templates': [
-            {
-              apiVersion: 'roletemplate.mcm.ibm.com/v1alpha1',
-              complianceType: 'musthave',
-              kind: 'RoleTemplate',
-              metadata: {
-                name: 'role-xz-1',
-                namespace: '',
-              },
-              rules: [
-                {
-                  PolicyRule: {
-                    apiGroups: [
-                      'extensions',
-                      'apps',
-                    ],
-                    resources: [
-                      'deployments',
-                    ],
-                    verbs: [
-                      'get',
-                      'list',
-                      'watch',
-                      'create',
-                      'delete',
-                      'patch',
-                    ],
-                  },
-                  complianceType: 'musthave',
-                },
-              ],
-              selector: {
-                matchLabels: {
-                  cloud: 'IBM',
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
-        kind: 'Policy',
-        metadata: {
-          description: 'Instance descriptor for policy resource',
-          name: 'test-policy-2',
-        },
-        spec: {
-          namespaces: {
-            exclude: [
-              'kube*',
-            ],
-            include: [
-              'default',
-            ],
-          },
-          remediationAction: 'enforce',
-          'role-templates': [
-            {
-              apiVersion: 'roletemplate.mcm.ibm.com/v1alpha1',
-              complianceType: 'musthave',
-              kind: 'RoleTemplate',
-              metadata: {
-                name: 'role-xz-2',
-                namespace: '',
-              },
-              rules: [
-                {
-                  PolicyRule: {
-                    apiGroups: [
-                      'extensions',
-                      'apps',
-                    ],
-                    resources: [
-                      'deployments',
-                    ],
-                    verbs: [
-                      'get',
-                      'list',
-                      'watch',
-                      'delete',
-                    ],
-                  },
-                  complianceType: 'musthave',
-                },
-                {
-                  PolicyRule: {
-                    apiGroups: [
-                      'core',
-                    ],
-                    resources: [
-                      'pods',
-                    ],
-                    verbs: [
-                      'create',
-                      'update',
-                      'patch',
-                    ],
-                  },
-                  complianceType: 'mustnothave',
-                },
-                {
-                  PolicyRule: {
-                    apiGroups: [
-                      'core',
-                    ],
-                    resources: [
-                      'secrets',
-                    ],
-                    verbs: [
-                      'get',
-                      'watch',
-                      'list',
-                      'create',
-                      'delete',
-                      'update',
-                      'patch',
-                    ],
-                  },
-                },
-              ],
-              selector: {
-                matchLabels: {
-                  cloud: 'IBM',
-                },
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-};
-
-export const mockDeleteResponse = {
-  body: {
-    apiVersion: 'compliance.mcm.ibm.com/v1alpha1',
-    kind: 'Compliance',
-    metadata: {
-      annotations: {
-        'seed-generation': '1',
-      },
-      creationTimestamp: '2019-01-02T19:42:12Z',
-      finalizers: ['finalizer.mcm.ibm.com'],
-      generation: 1,
-      name: 'compliance-all',
-      namespace: 'mcm',
-      resourceVersion: '5533372',
-      selfLink: `${ApiURL.mcmComplianceApiURL}mcm/compliances/compliance-all`,
-      uid: '7fc1f4a2-0ec6-11e9-8fd0-0ebe277f4f9c',
-    },
-    spec: {
-      'runtime-rules': [{
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
-        kind: 'Policy',
-        metadata: {
-          creationTimestamp: null,
-          labels: {
-            hipaa: 'true',
-          },
-          name: 'policy-all',
-        },
-        spec: {
-          complianceType: 'musthave',
-          namespaces: {
-            exclude: ['kube*'],
-            include: ['default'],
-          },
-          'object-templates': [{
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'v1',
-              kind: 'Pod',
-              metadata: {
-                name: 'nginx',
-              },
-              spec: {
-                containers: [{
-                  image: 'nginx:1.7.9',
-                  name: 'nginx',
-                  ports: [{
-                    containerPort: 80,
-                  }],
-                }],
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }, {
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'v1',
-              kind: 'Namespace',
-              metadata: {
-                labels: {
-                  name: 'production',
-                },
-                name: 'production',
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }, {
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'rbac.authorization.k8s.io/v1',
-              kind: 'RoleBinding',
-              metadata: {
-                name: 'operate-pods-rolebinding',
-                namespace: 'default',
-              },
-              roleRef: {
-                apiGroup: 'rbac.authorization.k8s.io',
-                kind: 'Role',
-                name: 'operator',
-              },
-              subjects: [{
-                apiGroup: 'rbac.authorization.k8s.io',
-                kind: 'User',
-                name: 'jane',
-              }],
-            },
-            status: {
-              Validity: {},
-            },
-          }, {
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'policy/v1beta1',
-              kind: 'PodSecurityPolicy',
-              metadata: {
-                annotations: {
-                  'seccomp.security.alpha.kubernetes.io/allowedProfileNames': '*',
-                },
-                name: 'privileged-mcm',
-              },
-              spec: {
-                allowPrivilegeEscalation: true,
-                allowedCapabilities: ['*'],
-                fsGroup: {
-                  rule: 'RunAsAny',
-                },
-                hostIPC: true,
-                hostNetwork: true,
-                hostPID: true,
-                hostPorts: [{
-                  max: 65535,
-                  min: 0,
-                }],
-                privileged: true,
-                runAsUser: {
-                  rule: 'RunAsAny',
-                },
-                seLinux: {
-                  rule: 'RunAsAny',
-                },
-                supplementalGroups: {
-                  rule: 'RunAsAny',
-                },
-                volumes: ['*'],
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }, {
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'networking.k8s.io/v1',
-              kind: 'NetworkPolicy',
-              metadata: {
-                name: 'allow-all-mcm',
-              },
-              spec: {
-                ingress: [{}],
-                podSelector: {},
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }, {
-            complianceType: 'musthave',
-            objectDefinition: {
-              apiVersion: 'v1',
-              kind: 'LimitRange',
-              metadata: {
-                name: 'mem-limit-range',
-              },
-              spec: {
-                limits: [{
-                  default: {
-                    memory: '512Mi',
-                  },
-                  defaultRequest: {
-                    memory: '256Mi',
-                  },
-                  type: 'Container',
-                }],
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }],
-          remediationAction: 'enforce',
-          'role-templates': [{
-            apiVersion: 'roletemplate.mcm.ibm.com/v1alpha1',
-            complianceType: 'musthave',
-            metadata: {
-              creationTimestamp: null,
-              name: 'operator-role',
-            },
-            rules: [{
-              complianceType: 'musthave',
-              policyRule: {
-                apiGroups: ['extensions', 'apps'],
-                resources: ['deployments'],
-                verbs: ['get', 'list', 'watch', 'create', 'delete', 'patch'],
-              },
-            }],
-            selector: {
-              matchLabels: {
-                hipaa: 'true',
-              },
-            },
-            status: {
-              Validity: {},
-            },
-          }],
-        },
-        status: {},
-      }],
-    },
-    status: {
-      placementBindings: ['binding-xz'],
-      placementPolicies: ['placement-xz'],
-      status: {
-        cluster1: {
-          aggregatePoliciesStatus: {
-            'policy-all': {
-              compliant: 'Compliant',
-              valid: true,
-            },
-          },
-          clustername: 'cluster1',
-          compliant: 'Compliant',
-        },
-        cluster2: {
-          aggregatePoliciesStatus: {
-            'policy-all': {
-              compliant: 'Compliant',
-              valid: true,
-            },
-          },
-          clustername: 'cluster2',
-          compliant: 'Compliant',
-        },
-        cluster3: {
-          aggregatePoliciesStatus: {
-            'policy-all': {
-              compliant: 'Compliant',
-              valid: true,
-            },
-          },
-          clustername: 'cluster3',
-          compliant: 'Compliant',
-        },
-      },
-    },
+    selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies`,
   },
 };
 

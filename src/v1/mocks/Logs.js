@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiURL from '../lib/ApiURL';
+import ApiEP from '../lib/ApiEP';
 
 export const mockClusterResponse = {
   body: {
@@ -19,7 +19,7 @@ export const mockClusterResponse = {
         metadata: {
           name: 'managed-cluster',
           namespace: 'default',
-          selfLink: `${ApiURL.clusterRegistryApiURL}default/clusters/cluster1`,
+          selfLink: `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/default/clusters/cluster1`,
           uid: 'd9f3a5aa-9f19-11e8-855e-f2b998610544',
           resourceVersion: '136558',
           creationTimestamp: '2018-08-13T16:56:41Z',

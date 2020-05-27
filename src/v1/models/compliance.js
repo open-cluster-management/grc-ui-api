@@ -81,7 +81,7 @@ export default class ComplianceModel {
     let errorMessage = '';
     const result = await Promise.all(resources.map((resource) => {
       const namespace = _.get(resource, metadataNsStr, (config.get('complianceNamespace') || 'mcm'));
-      return this.kubeConnector.post(`${ApiURL.mcmPolicyApiURL}${namespace}/policies`, resource)
+      return this.kubeConnector.post(`${ApiURL.ocmPoliciesApiURL}${namespace}/policies`, resource)
         .catch(err => Error(err));
     }));
     result.forEach((item) => {
@@ -116,7 +116,7 @@ export default class ComplianceModel {
 
 
   async deletePolicy(input) {
-    const response = await this.kubeConnector.delete(`${ApiURL.mcmPolicyApiURL}${input.namespace}/policies/${input.name}`);
+    const response = await this.kubeConnector.delete(`${ApiURL.ocmPoliciesApiURL}${input.namespace}/policies/${input.name}`);
     if (response.code || response.message) {
       throw new Error(`MCM ERROR ${response.code} - ${response.message}`);
     }

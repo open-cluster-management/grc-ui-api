@@ -7,10 +7,8 @@ const ApiURL = {
   ocmAppsApiURL: '/apis/apps.open-cluster-management.io/v1/namespaces/',
   // temporarily api url here, will update them later
   mcmV1ApiURL: '/apis/policy.mcm.ibm.com/v1alpha1/',
-  mcmPolicyApiURL: '/apis/policy.mcm.ibm.com/v1alpha1/namespaces/',
   mcmComplianceApiURL: '/apis/compliance.mcm.ibm.com/v1alpha1/namespaces/',
   mcmNSApiURL: '/apis/mcm.ibm.com/v1alpha1/namespaces/',
-  mcmHelmReposApiURL: '/apis/mcm.ibm.com/v1alpha1/helmrepos',
 };
 
 export default ApiURL;

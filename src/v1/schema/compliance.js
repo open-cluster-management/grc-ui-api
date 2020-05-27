@@ -118,8 +118,6 @@ export const resolver = {
       complianceModel.getPlacementRules(parent),
     placementBindings: (parent, args, { complianceModel }) =>
       complianceModel.getPlacementBindings(parent),
-    allTemplates: (parent, args, { complianceModel }) =>
-      complianceModel.getAllTemplates(parent),
   },
   Mutation: {
     createCompliance: (root, args, { complianceModel }) =>

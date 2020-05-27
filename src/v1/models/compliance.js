@@ -551,33 +551,6 @@ export default class ComplianceModel {
     return placementBindings;
   }
 
-  async getAllTemplates(policyName) {
-    const allViolationsArray = [];
-    if (policyName === null) {
-      return allViolationsArray;
-    }
-    const response = await this.kubeConnector.resourceViewQuery('policies.policy.mcm.ibm.com');
-    const clusterResults = _.get(response, statusResultsStr);
-    const roleTemplates = [];
-    const policyTemplates = [];
-    _.forIn(clusterResults, (value) => {
-      const paresdValues = _.get(value, 'items');
-      paresdValues.forEach((policy) => {
-        const roleTemplateResult = getTemplates(policy, 'role');
-        const policyTemplateResult = getTemplates(policy, 'object');
-        if (roleTemplateResult.length > 0) {
-          roleTemplates.push(roleTemplateResult);
-        } else if (policyTemplateResult.length > 0) {
-          policyTemplates.push(policyTemplateResult);
-        }
-      });
-    });
-    let allTemplates = _.flattenDeep(roleTemplates);
-    allTemplates = allTemplates.concat(_.flattenDeep(policyTemplates));
-
-    return allTemplates;
-  }
-
   async getPolicies(name, clusterName) {
     if (name === null) {
       return [];
@@ -596,6 +569,8 @@ export default class ComplianceModel {
     return policyResult;
   }
 
+  // for new api, policy-templates/object-templates seems doesn't have conditions in status
+  // so there isn't conditions.message and conditions.reason fields on cluster side panel
   async getAllPoliciesInCluster(cluster) {
     const allPoliciesInClusterResult = [];
     // if cluster name specified

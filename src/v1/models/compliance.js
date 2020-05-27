@@ -592,6 +592,7 @@ export default class ComplianceModel {
     policyResult.push({
       cluster: _.get(policyResponse, 'metadata.namespace'),
       ...policyResponse,
+      raw: policyResponse,
     });
     return policyResult;
   }

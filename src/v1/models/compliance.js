@@ -11,7 +11,7 @@
 import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';
 import logger from '../lib/logger';
-import config from '../../../config'
+import config from '../../../config';
 import ApiEP from '../lib/ApiEP';
 
 const POLICY_FAILURE_STATUS = 'Failure';
@@ -540,8 +540,9 @@ export default class ComplianceModel {
         return null;// 404 or not found
       }
       policyResult.push({
-        cluster: _.get(policyResponse, metadataNsStr),
+        cluster: _.get(policyResponse, 'metadata.namespace'),
         ...policyResponse,
+        raw: policyResponse,
       });
     }
     return policyResult;
@@ -676,7 +677,7 @@ export default class ComplianceModel {
         clusters.items.forEach((item) => {
           if (item.metadata && item.metadata.name &&
             !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-            && item.metadata.namespace) {
+            && (item && item.metadata.namespace)) {
             // current each cluster only have one namespace
             clusterNS[item.metadata.name] = item.metadata.namespace;
           }

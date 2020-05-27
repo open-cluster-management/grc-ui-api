@@ -12,6 +12,7 @@ import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
 import ApiEP from '../lib/ApiEP';
+
 const noResourcetypeStr = '##cannot find resourcetype##';
 
 export default class GenericModel extends KubeModel {

@@ -14,7 +14,6 @@ import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';
 import requestLib from '../lib/request';
-import ApiURL from '../lib/ApiURL';
 
 function selectNamespace(namespaces) {
   return namespaces.find(ns => ns === 'default') || namespaces[0];

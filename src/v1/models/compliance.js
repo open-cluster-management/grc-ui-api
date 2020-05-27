@@ -11,7 +11,7 @@
 import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';
 import logger from '../lib/logger';
-import config from '../../../config';
+import config from '../../../config'
 import ApiEP from '../lib/ApiEP';
 
 const POLICY_FAILURE_STATUS = 'Failure';
@@ -712,25 +712,30 @@ export default class ComplianceModel {
     const policyResponses = await Promise.all(promises);
     // remove no found and comliant policies
     policyResponses.filter((policyResponse) => {
-      if (policyResponse === null || undefined) {
+      if (policyResponse === null || policyResponse === undefined) {
         return false;
       }
       return true;
     });
+    // eslint-disable-next-line no-console
+    console.log('policyResponses', JSON.stringify(policyResponses));
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
-
     const violations = [];
     policyResponses.forEach((policyResponse) => {
-      violations.push({
-        cluster: _.get(policyResponse, 'metadata.labels.cluster-name', '-'),
-        name: _.get(policyResponse, 'status.details[0].history[0].eventName', '-'),
-        message: _.get(policyResponse, 'status.details[0].history[0].message', '-'),
+      const cluster = _.get(policyResponse, 'metadata.labels["policies.open-cluster-management.io/cluster-name"]', '-');
+      let details = _.get(policyResponse, 'status.details', []);
+      details = details.filter(detail => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
+      details.forEach((detail) => {
+        violations.push({
+          cluster,
+          name: _.get(detail, 'templateMeta.name', '-'),
+          message: _.get(detail, 'history[0].message', '-'),
+        });
       });
     });
     return violations;
   }
-
 
   static resolvePolicyDetails(parent) {
     return {
@@ -804,39 +809,43 @@ export default class ComplianceModel {
   }
 
   static resolvePolicyTemplates(parent, type) {
+    const vioArray = this.resolvePolicyViolations(parent);
     const tempArray = [];
     getTemplates(parent).forEach((res) => {
       if (_.get(res, 'templateType') === type) {
         if (type === roleBindingTemplatesStr) {
+          const name = _.get(res, 'roleBinding.metadata.name', '-');
           tempArray.push({
-            name: _.get(res, 'roleBinding.metadata.name', '-'),
+            name,
             lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'roleBinding.apiVersion', ''),
-            compliant: _.get(res, statusUCompliantStr, ''),
+            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
         } else if (type === objectTemplatesStr || type === policyTemplatesStr) {
+          const name = _.get(res, objMetadataNameStr, '-');
           tempArray.push({
-            name: _.get(res, objMetadataNameStr, '-'),
+            name,
             lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'objectDefinition.apiVersion', ''),
             kind: _.get(res, 'objectDefinition.kind', ''),
-            compliant: _.get(res, statusUCompliantStr, ''),
-            status: _.get(res, statusUCompliantStr, ''),
+            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            status: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
         } else {
+          const name = _.get(res, metadataNameStr, '-');
           tempArray.push({
-            name: _.get(res, metadataNameStr, '-'),
+            name,
             lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'apiVersion', ''),
-            compliant: _.get(res, statusUCompliantStr, ''),
-            status: _.get(res, statusUCompliantStr, ''),
+            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            status: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
@@ -846,30 +855,17 @@ export default class ComplianceModel {
     return tempArray;
   }
 
-  static resolvePolicyViolations(parent, cluster) {
+  static resolvePolicyViolations(parent) {
     const violationArray = [];
-    getTemplates(parent).forEach((res) => {
-      const templateCondition = _.get(res, 'status.conditions[0]');
-      if (_.get(res, 'templateType') === roleTemplatesStr) {
-        violationArray.push({
-          name: _.get(res, metadataNameStr, '-'),
-          cluster: _.get(cluster, 'clustername', '-'),
-          status: this.resolvePolicyStatus(res),
-          message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',
-          reason: (templateCondition && _.get(templateCondition, 'reason', '-')) || '-',
-          selector: _.get(res, 'selector', ''),
-        });
-      } else if (_.get(res, 'templateType') === objectTemplatesStr || _.get(res, 'templateType') === policyTemplatesStr) {
-        violationArray.push({
-          name: _.get(res, objMetadataNameStr) ?
-            _.get(res, objMetadataNameStr) : _.get(res, 'objectDefinition.kind', '-'),
-          cluster: _.get(cluster, 'clustername', '-'),
-          status: this.resolvePolicyStatus(res),
-          message: (templateCondition && _.get(templateCondition, 'message', '-')) || '-',
-          reason: (templateCondition && _.get(templateCondition, 'reason', '-')) || '-',
-          selector: _.get(res, 'selector', ''),
-        });
-      }
+    let details = _.get(parent, 'status.details', []);
+    details = details.filter(detail => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
+    const cluster = _.get(parent, 'cluster', '-');
+    details.forEach((detail) => {
+      violationArray.push({
+        name: _.get(detail, 'templateMeta.name', '-'),
+        cluster,
+        message: _.get(detail, 'history[0].message', '-'),
+      });
     });
     return violationArray;
   }

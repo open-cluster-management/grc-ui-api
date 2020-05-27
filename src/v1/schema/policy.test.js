@@ -110,33 +110,6 @@ describe('Policy Resolver', () => {
       .reply(200, mockNewAPISinglePolicyResponse);
   });
 
-  // Don't currently have Policy List, remove
-
-  // test('Correctly Resolves Policy List Query', (done) => {
-  //   supertest(server)
-  //     .post(GRAPHQL_PATH)
-  //     .send({
-  //       query: `
-  //       {
-  //         policies {
-  //           enforcement
-  //           metadata {
-  //             name
-  //             namespace
-  //             selfLink
-  //             creationTimestamp
-  //           }
-  //           status
-  //         }
-  //       }
-  //     `,
-  //     })
-  //     .end((err, res) => {
-  //       expect(JSON.parse(res.text)).toMatchSnapshot();
-  //       done();
-  //     });
-  // });
-
   test('Correctly Resolves All Policies per Cluster List Query', (done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
@@ -435,31 +408,6 @@ describe('Policy Resolver', () => {
         done();
       });
   });
-
-  // Commit out as we don't currently have violations return - May20
-
-  // test('Correctly Resolves Violations List Query', (done) => {
-  //   supertest(server)
-  //     .post(GRAPHQL_PATH)
-  //     .send({
-  //       query: `
-  //       {
-  //         violationsInPolicy(policy: "policy-namespace", namespace: "mcm") {
-  //           cluster
-  //           message
-  //           name
-  //           reason
-  //           selector
-  //           status
-  //         }
-  //       }
-  //     `,
-  //     })
-  //     .end((err, res) => {
-  //       expect(JSON.parse(res.text)).toMatchSnapshot();
-  //       done();
-  //     });
-  // });
 
   test('Correctly Resolves Delete Policy Mutation', (done) => {
     supertest(server)

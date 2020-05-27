@@ -1810,7 +1810,7 @@ Object {
               Object {
                 "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
                 "complianceType": "musthave",
-                "compliant": "NonCompliant",
+                "compliant": "Compliant",
                 "kind": null,
                 "lastTransition": "2018-09-06T15:14:44Z",
                 "name": "role-xz-1",

@@ -548,8 +548,6 @@ export default class ComplianceModel {
     return policyResult;
   }
 
-  // for new api, policy-templates/object-templates seems doesn't have conditions in status
-  // so there isn't conditions.message and conditions.reason fields on cluster side panel
   async getAllPoliciesInCluster(cluster) {
     const allPoliciesInClusterResult = [];
     // if cluster name specified

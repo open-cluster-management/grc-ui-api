@@ -730,7 +730,7 @@ export default class ComplianceModel {
         clusters.items.forEach((item) => {
           if (item.metadata && item.metadata.name &&
             !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-            && item.metadata.namespace) {
+            && (item && item.metadata.namespace)) {
             // current each cluster only have one namespace
             clusterNS[item.metadata.name] = item.metadata.namespace;
           }
@@ -738,7 +738,7 @@ export default class ComplianceModel {
         clusterstatuses.items.forEach((item) => {
           if (item.metadata && item.metadata.name &&
             !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
-            && (item.spec && item.spec.consoleURL)) {
+            && (item && item.spec && item.spec.consoleURL)) {
             // current each cluster only have one namespace
             clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
           }
@@ -771,6 +771,8 @@ export default class ComplianceModel {
       }
       return true;
     });
+    // eslint-disable-next-line no-console
+    console.log('policyResponses', JSON.stringify(policyResponses));
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
     const violations = [];

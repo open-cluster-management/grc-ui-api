@@ -27,7 +27,7 @@ Object {
           "name": "policy-certificatepolicy",
           "namespace": "mcm",
           "resourceVersion": "3666045",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-certificatepolicy",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
         },
         "name": "policy-certificatepolicy",
         "namespace": "mcm",
@@ -53,7 +53,7 @@ Object {
             "name": "policy-certificatepolicy",
             "namespace": "mcm",
             "resourceVersion": "3666045",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-certificatepolicy",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
             "uid": "68d772b1-ce79-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -138,7 +138,7 @@ Object {
           "name": "policy-iampolicy",
           "namespace": "mcm",
           "resourceVersion": "3664798",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-iampolicy",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
         },
         "name": "policy-iampolicy",
         "namespace": "mcm",
@@ -163,7 +163,7 @@ Object {
             "name": "policy-iampolicy",
             "namespace": "mcm",
             "resourceVersion": "3664798",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-iampolicy",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
             "uid": "a18d825a-cb36-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -253,7 +253,7 @@ Object {
           "name": "policy-image",
           "namespace": "mcm",
           "resourceVersion": "3459900",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-image",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
         },
         "name": "policy-image",
         "namespace": "mcm",
@@ -279,7 +279,7 @@ Object {
             "name": "policy-image",
             "namespace": "mcm",
             "resourceVersion": "3459900",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-image",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
             "uid": "8be1a627-cb2c-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -359,7 +359,7 @@ Object {
           "name": "policy-limitrange",
           "namespace": "mcm",
           "resourceVersion": "3489357",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-limitrange",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
         },
         "name": "policy-limitrange",
         "namespace": "mcm",
@@ -385,7 +385,7 @@ Object {
             "name": "policy-limitrange",
             "namespace": "mcm",
             "resourceVersion": "3489357",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-limitrange",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
             "uid": "d358638d-cf30-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -471,7 +471,7 @@ Object {
           "name": "policy-namespace",
           "namespace": "mcm",
           "resourceVersion": "3665885",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
         },
         "name": "policy-namespace",
         "namespace": "mcm",
@@ -497,7 +497,7 @@ Object {
             "name": "policy-namespace",
             "namespace": "mcm",
             "resourceVersion": "3665885",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-namespace",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
             "uid": "4e21e5e7-ce78-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -570,7 +570,7 @@ Object {
           "name": "policy-pod",
           "namespace": "mcm",
           "resourceVersion": "3729666",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-pod",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
         },
         "name": "policy-pod",
         "namespace": "mcm",
@@ -596,7 +596,7 @@ Object {
             "name": "policy-pod",
             "namespace": "mcm",
             "resourceVersion": "3729666",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-pod",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
             "uid": "48316272-d009-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -682,7 +682,7 @@ Object {
           "name": "policy-rolebinding-1",
           "namespace": "mcm",
           "resourceVersion": "3665889",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-rolebinding-1",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
         },
         "name": "policy-rolebinding-1",
         "namespace": "mcm",
@@ -708,7 +708,7 @@ Object {
             "name": "policy-rolebinding-1",
             "namespace": "mcm",
             "resourceVersion": "3665889",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-rolebinding-1",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
             "uid": "22ac9660-cf15-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -793,7 +793,7 @@ Object {
           "name": "policy-vulnerabilitypolicy",
           "namespace": "mcm",
           "resourceVersion": "3459668",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
         },
         "name": "policy-vulnerabilitypolicy",
         "namespace": "mcm",
@@ -819,7 +819,7 @@ Object {
             "name": "policy-vulnerabilitypolicy",
             "namespace": "mcm",
             "resourceVersion": "3459668",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
             "uid": "2767ac02-ce7a-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -914,178 +914,6 @@ Object {
         "policyCompliant": "0/0",
         "raw": "Just default it!",
         "remediation": "",
-      },
-    ],
-  },
-}
-`;
-
-exports[`Compliance Resolver Correctly Resolves Create Compliance Mutation 1`] = `
-Object {
-  "data": Object {
-    "createCompliance": Array [
-      Object {
-        "kind": "Compliance",
-        "metadata": Object {
-          "creationTimestamp": "2018-09-06T18:19:43Z",
-          "generation": 1,
-          "name": "test-compliance",
-          "namespace": "mcm",
-          "resourceVersion": "4405693",
-          "selfLink": "/apis/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances/test-compliance",
-          "uid": "6d5dbb6e-b201-11e8-9a12-005056a0d11b",
-        },
-        "spec": Object {
-          "runtime-rules": Array [
-            Object {
-              "apiVersion": "policy.mcm.ibm.com/v1alpha1",
-              "kind": "Policy",
-              "metadata": Object {
-                "description": "Instance descriptor for policy resource",
-                "name": "test-policy-1",
-              },
-              "spec": Object {
-                "namespaces": Object {
-                  "exclude": Array [
-                    "kube*",
-                  ],
-                  "include": Array [
-                    "default",
-                  ],
-                },
-                "remediationAction": "inform",
-                "role-templates": Array [
-                  Object {
-                    "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                    "complianceType": "musthave",
-                    "kind": "RoleTemplate",
-                    "metadata": Object {
-                      "name": "role-xz-1",
-                      "namespace": "",
-                    },
-                    "rules": Array [
-                      Object {
-                        "PolicyRule": Object {
-                          "apiGroups": Array [
-                            "extensions",
-                            "apps",
-                          ],
-                          "resources": Array [
-                            "deployments",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "list",
-                            "watch",
-                            "create",
-                            "delete",
-                            "patch",
-                          ],
-                        },
-                        "complianceType": "musthave",
-                      },
-                    ],
-                    "selector": Object {
-                      "matchLabels": Object {
-                        "cloud": "IBM",
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-            Object {
-              "apiVersion": "policy.mcm.ibm.com/v1alpha1",
-              "kind": "Policy",
-              "metadata": Object {
-                "description": "Instance descriptor for policy resource",
-                "name": "test-policy-2",
-              },
-              "spec": Object {
-                "namespaces": Object {
-                  "exclude": Array [
-                    "kube*",
-                  ],
-                  "include": Array [
-                    "default",
-                  ],
-                },
-                "remediationAction": "enforce",
-                "role-templates": Array [
-                  Object {
-                    "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                    "complianceType": "musthave",
-                    "kind": "RoleTemplate",
-                    "metadata": Object {
-                      "name": "role-xz-2",
-                      "namespace": "",
-                    },
-                    "rules": Array [
-                      Object {
-                        "PolicyRule": Object {
-                          "apiGroups": Array [
-                            "extensions",
-                            "apps",
-                          ],
-                          "resources": Array [
-                            "deployments",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "list",
-                            "watch",
-                            "delete",
-                          ],
-                        },
-                        "complianceType": "musthave",
-                      },
-                      Object {
-                        "PolicyRule": Object {
-                          "apiGroups": Array [
-                            "core",
-                          ],
-                          "resources": Array [
-                            "pods",
-                          ],
-                          "verbs": Array [
-                            "create",
-                            "update",
-                            "patch",
-                          ],
-                        },
-                        "complianceType": "mustnothave",
-                      },
-                      Object {
-                        "PolicyRule": Object {
-                          "apiGroups": Array [
-                            "core",
-                          ],
-                          "resources": Array [
-                            "secrets",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "watch",
-                            "list",
-                            "create",
-                            "delete",
-                            "update",
-                            "patch",
-                          ],
-                        },
-                      },
-                    ],
-                    "selector": Object {
-                      "matchLabels": Object {
-                        "cloud": "IBM",
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
       },
     ],
   },
@@ -1588,7 +1416,7 @@ Object {
           Object {
             "complianceName": "policy-xz-1",
             "complianceNamespace": "mycluster",
-            "complianceSelfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
             "detail": Object {
               "exclude_namespace": Array [
                 "kube*",
@@ -1631,7 +1459,7 @@ Object {
                   },
                 ],
                 "resourceVersion": "4349995",
-                "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
                 "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
               },
               "name": "policy-xz-1",
@@ -1661,7 +1489,7 @@ Object {
                     },
                   ],
                   "resourceVersion": "4349995",
-                  "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
                   "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
                 },
                 "spec": Object {
@@ -1878,7 +1706,7 @@ Object {
           "name": "policy-xz-1",
           "namespace": "mycluster",
           "resourceVersion": "4349995",
-          "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
           "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
         },
         "placementBindings": Array [],
@@ -1909,7 +1737,7 @@ Object {
               },
             ],
             "resourceVersion": "4349995",
-            "selfLink": "/apis/policy.mcm.ibm.com/v1alpha1/namespaces/mycluster/policies/policy-xz-1",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
             "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
           },
           "spec": Object {

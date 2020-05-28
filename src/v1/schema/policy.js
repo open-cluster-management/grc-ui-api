@@ -71,10 +71,7 @@ type Violations {
   cluster: String
   message: String
   name: String
-  reason: String
-  selector: JSON
-  clusterURL: String
-  status: String
+  timestamp: String
 }
 `;
 

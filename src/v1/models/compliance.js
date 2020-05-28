@@ -771,8 +771,6 @@ export default class ComplianceModel {
       }
       return true;
     });
-    // eslint-disable-next-line no-console
-    console.log('policyResponses', JSON.stringify(policyResponses));
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
     const violations = [];
@@ -785,6 +783,7 @@ export default class ComplianceModel {
           cluster,
           name: _.get(detail, 'templateMeta.name', '-'),
           message: _.get(detail, 'history[0].message', '-'),
+          timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
         });
       });
     });
@@ -863,7 +862,7 @@ export default class ComplianceModel {
   }
 
   static resolvePolicyTemplates(parent, type) {
-    const vioArray = this.resolvePolicyViolations(parent);
+    const vioArray = this.resolvePolicyViolations(parent, true);
     const tempArray = [];
     getTemplates(parent).forEach((res) => {
       if (_.get(res, 'templateType') === type) {
@@ -909,16 +908,19 @@ export default class ComplianceModel {
     return tempArray;
   }
 
-  static resolvePolicyViolations(parent) {
+  static resolvePolicyViolations(parent, displayVioOnly = false) {
     const violationArray = [];
     let details = _.get(parent, 'status.details', []);
-    details = details.filter(detail => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
+    if (displayVioOnly) {
+      details = details.filter(detail => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
+    }
     const cluster = _.get(parent, 'cluster', '-');
     details.forEach((detail) => {
       violationArray.push({
         name: _.get(detail, 'templateMeta.name', '-'),
         cluster,
         message: _.get(detail, 'history[0].message', '-'),
+        timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
       });
     });
     return violationArray;

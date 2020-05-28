@@ -37,6 +37,7 @@ export default class KubeConnector {
     this.namespaces = namespaces;
     this.pollInterval = pollInterval;
     this.pollTimeout = pollTimeout;
+    // to-do how to deal with this after removing all resource view
     this.resourceViewNamespace = selectNamespace(namespaces);
     this.token = token;
     this.uid = uid;

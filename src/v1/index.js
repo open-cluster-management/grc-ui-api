@@ -27,7 +27,6 @@ import PlacementModel from './models/placement';
 import GenericModel from './models/generic';
 import QueryModel from './models/userquery';
 import ComplianceModel from './models/compliance';
-import ResourceViewModel from './models/resourceview';
 import SAModel from './models/sa';
 
 import schema from './schema/';
@@ -103,7 +102,6 @@ graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) =>
     genericModel: new GenericModel({ kubeConnector }),
     queryModel: new QueryModel({ kubeConnector, req }),
     complianceModel: new ComplianceModel({ kubeConnector }),
-    resourceViewModel: new ResourceViewModel({ kubeConnector }),
     saModel: new SAModel({ kubeConnector, req }),
   };
 

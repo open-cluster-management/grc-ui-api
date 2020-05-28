@@ -188,6 +188,7 @@ export default class GenericModel extends KubeModel {
       };
     }
 
+    // to-do how to deal with this after removing all resource view
     const response = await this.kubeConnector.post(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets`, body);
     if (response.status === 'Failure' || response.code >= 400) {
       throw new Error(`Create Resource Action Failed [${response.code}] - ${response.message}`);
@@ -199,6 +200,7 @@ export default class GenericModel extends KubeModel {
       const result = await Promise.race([pollPromise, this.kubeConnector.timeout()]);
       logger.debug('result:', result);
       if (result) {
+        // to-do how to deal with this after removing all resource view
         this.kubeConnector.delete(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
           .catch(e => logger.error(`Error deleting workset ${response.metadata.name}`, e.message));
       }

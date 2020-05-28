@@ -15,6 +15,7 @@ type Namespace implements K8sObject {
 }
 `;
 
+// to-do how to deal with this after removing all resource view
 export const resolver = {
   Query: {
     namespaces: (root, args, { resourceViewModel }) =>

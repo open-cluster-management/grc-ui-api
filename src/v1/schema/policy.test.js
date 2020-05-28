@@ -275,10 +275,8 @@ describe('Policy Resolver', () => {
             violations {
               name
               cluster
-              status
               message
-              reason
-              selector
+              timestamp
             }
             rules {
               complianceType

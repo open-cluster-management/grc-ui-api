@@ -342,10 +342,8 @@ describe('Compliance Resolver', () => {
                 violations {
                   name
                   cluster
-                  status
                   message
-                  reason
-                  selector
+                  timestamp
                 }
               }
             }
@@ -511,10 +509,8 @@ describe('Compliance Resolver', () => {
                 violations {
                   name
                   cluster
-                  status
                   message
-                  reason
-                  selector
+                  timestamp
                 }
               }
             }

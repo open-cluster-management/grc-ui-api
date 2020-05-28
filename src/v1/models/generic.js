@@ -135,44 +135,14 @@ export default class GenericModel extends KubeModel {
   }
 
   async putResource(args) {
-    /*
-    update k8s resources
-    the Content-Type is 'application/json'
-    the request body should look like:
-    {
-      "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-      "kind": "Compliance",
-      "metadata": {
-        "name": "compliance-test-3",
-        "finalizers": [
-          "finalizer.mcm.ibm.com"
-        ],
-        "generation": 1,
-        "namespace": "mcm",
-        "resourceVersion": "2462226"
-      },
-     }
-    */
-    let endpointURL = '';
-    let resourceName = '';
     let response;
-    const {
-      namespace, name, resourceType, body, selfLink,
-    } = args;
+    const { body, selfLink } = args;
     const requestBody = {
       body,
     };
 
     if (!selfLink) {
-      switch (resourceType) {
-        case 'HCMCompliance':
-          endpointURL = ApiGroup.complianceGroup;
-          resourceName = 'compliances';
-          break;
-        default:
-          throw new Error('MCM ERROR cannot find matched resource type');
-      }
-      response = await this.kubeConnector.put(`/apis/${endpointURL}/v1alpha1/namespaces/${namespace}/${resourceName}/${name}`, requestBody);
+      throw new Error('MCM ERROR cannot find matched resource type');
     } else {
       // will use selfLink by default
       response = await this.kubeConnector.put(`${selfLink}`, requestBody);

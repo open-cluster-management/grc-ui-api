@@ -8,7 +8,6 @@ const ApiGroup = {
   // temporary group and version, will update them later
   clusterRegistryGroup: 'clusterregistry.k8s.io',
   mcmGroup: 'mcm.ibm.com',
-  complianceGroup: 'compliance.mcm.ibm.com',
   mcmVersion: 'v1alpha1',
 };
 

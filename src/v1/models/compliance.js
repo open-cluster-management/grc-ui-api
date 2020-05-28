@@ -102,7 +102,6 @@ export default class ComplianceModel {
     return response.metadata.name;
   }
 
-
   async deleteCompliance(input) {
     const response = await this.kubeConnector.delete(input.selfLink);
     if (response.code || response.message) {
@@ -252,7 +251,6 @@ export default class ComplianceModel {
       clusterConsoleURL,
     }));
   }
-
 
   static resolveCompliancePolicies(parent) {
     const aggregatedStatus = _.get(parent, statusStatusStr);
@@ -548,6 +546,7 @@ export default class ComplianceModel {
     return policyResult;
   }
 
+  // to-do fix the gap between policy call and resourceview for missing field on cluster side panel
   async getAllPoliciesInCluster(cluster) {
     const allPoliciesInClusterResult = [];
     // if cluster name specified
@@ -569,6 +568,7 @@ export default class ComplianceModel {
     return allPoliciesInClusterResult;
   }
 
+  // to-do fix the gap between policy call and resourceview for missing field on policy side panel
   async getAllClustersInPolicy(policyName, hubNamespace) {
     let allClustersInPolicyResult = [];
     if (policyName && hubNamespace) {

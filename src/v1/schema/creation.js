@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 
 export const typeDef = `
 type Discoveries {
@@ -54,7 +54,7 @@ export const resolver = {
         const { annotations } = metadata;
         policyNames.push(name);
         Object.keys(collection).forEach((key) => {
-          const types = annotations[`${ApiEP.policiesEP}/${key}`] || '';
+          const types = annotations[`${ApiGroup.policiesGroup}/${key}`] || '';
           types.split(',').forEach((type) => {
             const ttype = type.trim();
             if (ttype) {
@@ -70,7 +70,7 @@ export const resolver = {
       // Namespaces
       const allNameSpace = complianceModel.kubeConnector.namespaces;
       const nsPromises = allNameSpace.map(async (ns) => {
-        const URL = `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/${ns}/clusters/`;
+        const URL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters/`;
         const checkClusterNameSpace = await complianceModel.kubeConnector.get(URL);
         if (Array.isArray(checkClusterNameSpace.items) && checkClusterNameSpace.items.length > 0) {
           return null; // cluster namespaces

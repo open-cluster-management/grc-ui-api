@@ -8,7 +8,7 @@
  ********************************************************************************
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 import KubeModel from './kube';
 
 const filterByName = (names, items) =>
@@ -19,7 +19,7 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/${ns}/placementbindings`,
+      ns => `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const placementBindings = matchNames ? filterByName(matchNames, response) : response;
@@ -36,7 +36,7 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `/apis/${ApiEP.appsEP}/${ApiEP.V}/namespaces/${ns}/placementrules`,
+      ns => `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/${ns}/placementrules`,
       { kind: 'PlacementRule' },
     );
     const placementPolicies = matchNames ? filterByName(matchNames, response) : response;

@@ -11,7 +11,7 @@
 import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 
 const noResourcetypeStr = '##cannot find resourcetype##';
 
@@ -117,7 +117,7 @@ export default class GenericModel extends KubeModel {
     if (!selfLink) {
       switch (resourceType) {
         case 'HCMCluster':
-          endpointURL = `${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}`;
+          endpointURL = `${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}`;
           resourceName = 'clusters';
           break;
         default:
@@ -166,7 +166,7 @@ export default class GenericModel extends KubeModel {
     if (!selfLink) {
       switch (resourceType) {
         case 'HCMCompliance':
-          endpointURL = ApiEP.complianceEP;
+          endpointURL = ApiGroup.complianceGroup;
           resourceName = 'compliances';
           break;
         default:
@@ -186,7 +186,7 @@ export default class GenericModel extends KubeModel {
   async resourceAction(resourceType, actionType, resourceName, resourceNamespace, clusterName) {
     const name = `${resourceType}-workset-${this.kubeConnector.uid()}`;
     const body = {
-      apiVersion: `${ApiEP.policiesEP}/${ApiEP.V}`,
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'WorkSet',
       metadata: {
         name,
@@ -218,7 +218,7 @@ export default class GenericModel extends KubeModel {
       };
     }
 
-    const response = await this.kubeConnector.post(`/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets`, body);
+    const response = await this.kubeConnector.post(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets`, body);
     if (response.status === 'Failure' || response.code >= 400) {
       throw new Error(`Create Resource Action Failed [${response.code}] - ${response.message}`);
     }
@@ -229,7 +229,7 @@ export default class GenericModel extends KubeModel {
       const result = await Promise.race([pollPromise, this.kubeConnector.timeout()]);
       logger.debug('result:', result);
       if (result) {
-        this.kubeConnector.delete(`/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
+        this.kubeConnector.delete(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
           .catch(e => logger.error(`Error deleting workset ${response.metadata.name}`, e.message));
       }
       const reason = _.get(result, 'status.reason');
@@ -246,10 +246,10 @@ export default class GenericModel extends KubeModel {
   }
 
   async getLogs(containerName, podName, podNamespace, clusterName) {
-    const cluster = await this.kubeConnector.getResources(ns => `/apis/${ApiEP.clusterRegistryEP}/${ApiEP.mcmV}/namespaces/${ns}/clusters/${clusterName}`);
+    const cluster = await this.kubeConnector.getResources(ns => `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters/${clusterName}`);
     if (cluster && cluster.length === 1) {
       const clusterNamespace = cluster[0].metadata.namespace;
-      return this.kubeConnector.get(`/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/
+      return this.kubeConnector.get(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/
       ${clusterNamespace}/clusterstatuses/${clusterName}/log/${podNamespace}/
       ${podName}/${containerName}?tailLines=1000`, { json: false }, true);
     }

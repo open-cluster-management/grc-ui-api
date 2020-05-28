@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 
 export const mockAPIResourceList = {
   kind: 'APIResourceList',
@@ -149,7 +149,7 @@ export const mockCreateResourcesResponse = {
             name: 'test-policy',
             namespace: 'mcm',
             resourceVersion: '1688805',
-            selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/test-policy`,
+            selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/test-policy`,
             uid: 'fec7f06c-ae2d-11e9-8a41-005056a061f1',
           },
           spec: {
@@ -190,7 +190,7 @@ export const mockUpdateResourcesResponse = {
         name: 'test-policy',
         namespace: 'mcm',
         resourceVersion: '1673886',
-        selfLink: `/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies/test-policy`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/test-policy`,
         uid: 'da8f9553-ae16-11e9-8a41-005056a061f1',
       },
       spec: {

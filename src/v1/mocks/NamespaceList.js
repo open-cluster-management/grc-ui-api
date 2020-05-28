@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 
 export const mockResourceView = {
   body: {
@@ -17,7 +17,7 @@ export const mockResourceView = {
     metadata: {
       name: 'namespaces-1394570287',
       namespace: 'default',
-      selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/default/resourceviews/namespaces-1394570287`,
+      selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/default/resourceviews/namespaces-1394570287`,
       uid: '120ade98-b123-11e8-bd43-b69970856045',
       resourceVersion: '15529',
       creationTimestamp: '2018-09-05T15:48:01Z',
@@ -45,7 +45,7 @@ export const mockResponse = {
     metadata: {
       name: 'namespaces-1394570287',
       namespace: 'default',
-      selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/default/resourceviews/namespaces-1394570287`,
+      selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/default/resourceviews/namespaces-1394570287`,
       uid: '120ade98-b123-11e8-bd43-b69970856045',
       resourceVersion: '15533',
       creationTimestamp: '2018-09-05T15:48:01Z',

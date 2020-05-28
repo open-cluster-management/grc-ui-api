@@ -8,7 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 import KubeConnector from './kube';
 
 const asyncReturn = (value, waitTime = 500) =>
@@ -17,7 +17,7 @@ const asyncReturn = (value, waitTime = 500) =>
 const mockWorkset = {
   body: {
     metadata: {
-      selfLink: `/apis/${ApiEP.mcmEP}/${ApiEP.mcmV}/namespaces/default/resourceviews/test-set`,
+      selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/default/resourceviews/test-set`,
     },
   },
 };

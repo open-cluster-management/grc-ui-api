@@ -15,7 +15,7 @@ import {
   kubeGetMock, mockAPIResourceList,
   mockCreateResourcesResponse, mockUpdateResourcesResponse,
 } from '../mocks/GenericResources';
-import ApiEP from '../lib/ApiEP';
+import ApiGroup from '../lib/ApiGroup';
 
 describe('Generic Resources Resolver', () => {
   beforeAll(() => {
@@ -25,9 +25,9 @@ describe('Generic Resources Resolver', () => {
     // define the method to be intercepted
     APIServer.get('/').reply(200, kubeGetMock);
     APIServer.get('/apis/policy.mcm.ibm.com/v1alpha1').reply(200, mockAPIResourceList);
-    APIServer.post(`/apis/${ApiEP.policiesEP}/${ApiEP.V}/namespaces/mcm/policies`)
+    APIServer.post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
-    APIServer.put(`/apis/${ApiEP.policiesEP}/${ApiEP.V}/mcm/compliances/test-policy`)
+    APIServer.put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
   });
 

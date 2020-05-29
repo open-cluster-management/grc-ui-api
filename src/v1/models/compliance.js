@@ -713,46 +713,14 @@ export default class ComplianceModel {
     if (policyName === null) {
       return resultsWithPolicyName;
     }
-    const clusterNS = {};
-    const clusterConsoleURL = {};
-    // all possible namespaces
-    const allNameSpace = this.kubeConnector.namespaces;
-    // remove cluster namespaces
-    const nsPromises = allNameSpace.map(async (ns) => {
-      // check ns one by one, if got normal response then it's cluster namespace
-      const checkClusterURL = `${ApiURL.clusterRegistryApiURL}${ns}/clusters`;
-      const checkClusterStatusURL = `${ApiURL.mcmNSApiURL}${ns}/clusterstatuses`;
-      const [clusters, clusterstatuses] = await Promise.all([
-        this.kubeConnector.get(checkClusterURL),
-        this.kubeConnector.get(checkClusterStatusURL),
-      ]);
-      if (Array.isArray(clusters.items) && clusters.items.length > 0) {
-        clusters.items.forEach((item) => {
-          if (item.metadata && item.metadata.name &&
-            !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-            && (item && item.metadata.namespace)) {
-            // current each cluster only have one namespace
-            clusterNS[item.metadata.name] = item.metadata.namespace;
-          }
-        });
-        clusterstatuses.items.forEach((item) => {
-          if (item.metadata && item.metadata.name &&
-            !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
-            && (item && item.spec && item.spec.consoleURL)) {
-            // current each cluster only have one namespace
-            clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-          }
-        });
-        return ns; // cluster namespaces
-      }
-      return null; // non cluster namespaces
+    const checkClusterURL = '/apis/clusterregistry.k8s.io/v1alpha1/clusters';
+    const rawClusterCheck = await this.kubeConnector.get(checkClusterURL);
+    const clusters = _.get(rawClusterCheck, 'items', []);
+    const allClusterNameSpace = [];
+    clusters.forEach((cluster) => {
+      const name = _.get(cluster, 'metadata.name', '');
+      allClusterNameSpace.push(name);
     });
-
-    // here need to await all async check cluster namespace calls completed
-    let allClusterNameSpace = await Promise.all(nsPromises);
-    // remove cluster namespaces which already set to null
-    allClusterNameSpace = allClusterNameSpace.filter(ns => ns !== null);
-
     const promises = allClusterNameSpace.map(async (ns) => {
       const URL = `${ApiURL.ocmPoliciesApiURL}${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);
@@ -787,6 +755,30 @@ export default class ComplianceModel {
         });
       });
     });
+    // For violated cluster, get their consoleURL
+    if (!_.isEmpty(violations)) {
+      const allClusterStatusURL = [];
+      violations.forEach((violation) => {
+        const namespace = _.get(violation, 'cluster', '');
+        const clusterStatusURL = `/apis/mcm.ibm.com/v1alpha1/namespaces/${namespace}/clusterstatuses`;
+        allClusterStatusURL.push(clusterStatusURL);
+      });
+      const allClusterStatusPromise = [];
+      allClusterStatusURL.forEach((url) => {
+        allClusterStatusPromise.push(this.kubeConnector.get(url));
+      });
+      const allRawClusterStatus = await Promise.all(allClusterStatusPromise);
+      const allConsoleURL = {};
+      allRawClusterStatus.forEach((status) => {
+        const namespace = _.get(status, 'items[0].metadata.namespace', '-');
+        const consoleURL = _.get(status, 'items[0].spec.consoleURL');
+        allConsoleURL[namespace] = consoleURL;
+      });
+      violations.forEach((violation) => {
+        // eslint-disable-next-line no-param-reassign
+        violation.consoleURL = allConsoleURL[violation.cluster];
+      });
+    }
     return violations;
   }
 

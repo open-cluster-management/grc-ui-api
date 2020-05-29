@@ -72,6 +72,7 @@ type Violations {
   message: String
   name: String
   timestamp: String
+  consoleURL: String
 }
 `;
 

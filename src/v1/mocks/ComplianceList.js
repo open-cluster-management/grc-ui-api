@@ -11,7 +11,7 @@
 import ApiGroup from '../lib/ApiGroup';
 
 export const mockComplianceListDefaultResponse = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   items: ['Just default it!'],
   kind: 'PolicyList',
   metadata: {
@@ -22,7 +22,7 @@ export const mockComplianceListDefaultResponse = {
 };
 
 export const mockComplianceListKubeSystemResponse = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   items: [],
   kind: 'PolicyList',
   metadata: {
@@ -33,16 +33,16 @@ export const mockComplianceListKubeSystemResponse = {
 };
 
 export const mockComplianceListMCMResponse = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   items: [
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity',
-          'policy.mcm.ibm.com/controls': 'CertManager',
-          'policy.mcm.ibm.com/standards': 'FISMA, PCI',
+          'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity',
+          'policies.open-cluster-management.io/controls': 'CertManager',
+          'policies.open-cluster-management.io/standards': 'FISMA, PCI',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-03T18:34:05Z',
@@ -131,13 +131,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'MutationAdvisor',
-          'policy.mcm.ibm.com/standards': 'FISMA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'MutationAdvisor',
+          'policies.open-cluster-management.io/standards': 'FISMA',
         },
         creationTimestamp: '2019-08-30T14:58:31Z',
         finalizers: [
@@ -227,13 +227,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'VA',
-          'policy.mcm.ibm.com/standards': 'FISMA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'VA',
+          'policies.open-cluster-management.io/standards': 'FISMA',
           'seed-generation': '4',
         },
         creationTimestamp: '2019-08-30T13:46:19Z',
@@ -314,13 +314,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'CertManager',
-          'policy.mcm.ibm.com/standards': 'HIPAA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'CertManager',
+          'policies.open-cluster-management.io/standards': 'HIPAA',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-04T16:27:02Z',
@@ -407,13 +407,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'policy',
-          'policy.mcm.ibm.com/standards': 'FISMA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'policy',
+          'policies.open-cluster-management.io/standards': 'FISMA',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-03T18:26:11Z',
@@ -487,13 +487,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'MutationAdvisor',
-          'policy.mcm.ibm.com/standards': 'FISMA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'MutationAdvisor',
+          'policies.open-cluster-management.io/standards': 'FISMA',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-05T18:16:29Z',
@@ -580,13 +580,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections',
-          'policy.mcm.ibm.com/controls': 'MutationAdvisor',
-          'policy.mcm.ibm.com/standards': 'FISMA',
+          'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
+          'policies.open-cluster-management.io/controls': 'MutationAdvisor',
+          'policies.open-cluster-management.io/standards': 'FISMA',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-04T13:08:49Z',
@@ -672,13 +672,13 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+      apiVersion: 'policies.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity',
-          'policy.mcm.ibm.com/controls': 'VA',
-          'policy.mcm.ibm.com/standards': 'PCI',
+          'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity',
+          'policies.open-cluster-management.io/controls': 'VA',
+          'policies.open-cluster-management.io/standards': 'PCI',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-09-03T18:39:25Z',

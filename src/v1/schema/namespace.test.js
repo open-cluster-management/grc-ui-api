@@ -31,7 +31,7 @@ describe('Namespace Resolver', () => {
       .reply(200, mockResource);
     APIServer.get('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/namespaces')
       .reply(200, mockResourceView);
-    APIServer.get('/policy.mcm.ibm.com/v1alpha1/namespaces/mcm/namespaces')
+    APIServer.get('/policies.open-cluster-management.io/v1/namespaces/mcm/namespaces')
       .reply(200, mockResponse);
   });
 

@@ -18,18 +18,18 @@ export const mockCompletedResourceView = {
   metadata: {
     name: 'policies-policy-mcm-ibm-com-1571321668198', namespace: 'default', selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/default/resourceviews/policies-policy-mcm-ibm-com-1571321668198`, uid: '6e2ecd59-f0e8-11e9-bf49-96bb9600cc18', resourceVersion: '100830', creationTimestamp: '2019-10-17T14:14:28Z', labels: { name: 'policies-policy-mcm-ibm-com-1571321668198' }, annotations: { 'mcm.ibm.com/user-group': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk', 'mcm.ibm.com/user-identity': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlZmF1bHQ=' }
   },
-  spec: { scope: { resource: 'policies.policy.mcm.ibm.com' } },
+  spec: { scope: { resource: 'policies.policies.open-cluster-management.io' } },
   status: {
     conditions: [{ type: 'Completed', lastUpdateTime: '2019-10-17T14:14:28Z' }],
     results: {
       cluster1: {
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+        apiVersion: 'policies.open-cluster-management.io/v1',
         items: [{
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'SecretEncryption', 'policy.mcm.ibm.com/standards': 'FISMA', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'SecretEncryption', 'policies.open-cluster-management.io/standards': 'FISMA', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-14T07:08:34Z',
             finalizers: ['policy.finalizer.mcm.ibm.com', 'sync.finalizer.mcm.ibm.com'],
@@ -59,11 +59,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': '', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': '', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': '', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': '', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T15:30:06Z',
             finalizers: ['sync.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -80,11 +80,11 @@ export const mockCompletedResourceView = {
           },
           status: {}
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'FISMA, Test', 'seed-generation': '71770'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'FISMA, Test', 'seed-generation': '71770'
             },
             creationTimestamp: '2019-10-14T07:08:34Z',
             finalizers: ['sync.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -117,11 +117,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant', valid: true }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'HIPAA', 'seed-generation': '4'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'HIPAA', 'seed-generation': '4'
             },
             creationTimestamp: '2019-10-16T18:11:03Z',
             finalizers: ['policy.finalizer.mcm.ibm.com', 'sync.finalizer.mcm.ibm.com'],
@@ -156,13 +156,13 @@ export const mockCompletedResourceView = {
         metadata: { continue: '', resourceVersion: '10622027', selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/policies` }
       },
       clusterhub: {
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+        apiVersion: 'policies.open-cluster-management.io/v1',
         items: [{
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'SecretEncryption', 'policy.mcm.ibm.com/standards': 'FISMA', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'SecretEncryption', 'policies.open-cluster-management.io/standards': 'FISMA', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-14T07:08:34Z',
             finalizers: ['propagator.finalizer.mcm.ibm.com', 'finalizer.policies.ibm.com'],
@@ -171,7 +171,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace',
             namespace: 'cluster1',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7816343',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/mcm.policy-namespace`,
@@ -182,11 +182,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': '', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': '', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': '', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': '', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T15:30:06Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -195,7 +195,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace-1',
             namespace: 'cluster1',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9068427',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/mcm.policy-namespace-1`,
@@ -206,11 +206,11 @@ export const mockCompletedResourceView = {
           },
           status: {}
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'FISMA, Test', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'FISMA, Test', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-14T07:08:34Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -219,7 +219,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-role',
             namespace: 'cluster1',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7816337',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/mcm.policy-role`,
@@ -235,11 +235,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant', valid: true }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'HIPAA', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'HIPAA', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-16T17:20:43Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -248,7 +248,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-vulnerabilitypolicy',
             namespace: 'cluster1',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9096697',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/mcm.policy-vulnerabilitypolicy`,
@@ -267,11 +267,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'Compliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'SecretEncryption', 'policy.mcm.ibm.com/standards': 'FISMA', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'SecretEncryption', 'policies.open-cluster-management.io/standards': 'FISMA', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-14T07:10:34Z',
             finalizers: ['propagator.finalizer.mcm.ibm.com', 'finalizer.policies.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -280,7 +280,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace', uid: '7f62f150-e617-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '7886410',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-namespace`,
@@ -304,11 +304,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': '', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': '', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': '', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': '', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-16T15:30:06Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -317,7 +317,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace-1',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-1', uid: 'caa40de4-f029-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9104393',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-namespace-1`,
@@ -341,11 +341,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'VulnerbilityAdvisor', 'policy.mcm.ibm.com/standards': 'Test', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'VulnerbilityAdvisor', 'policies.open-cluster-management.io/standards': 'Test', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-16T18:33:45Z',
             finalizers: ['propagator.finalizer.mcm.ibm.com', 'finalizer.policies.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -354,7 +354,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace-undef-test',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undef-test', uid: '7bbb8eb4-f043-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undef-test', uid: '7bbb8eb4-f043-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9104388',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-namespace-undef-test`,
@@ -378,11 +378,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': 'Test', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': 'Test', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-16T19:02:49Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -391,7 +391,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-namespace-undefined',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undefined', uid: '8842b32a-f047-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-namespace-undefined', uid: '8842b32a-f047-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9105249',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-namespace-undefined`,
@@ -415,11 +415,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'FISMA, Test', 'seed-generation': '74258'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'FISMA, Test', 'seed-generation': '74258'
             },
             creationTimestamp: '2019-10-14T07:10:34Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -428,7 +428,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-role',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-role', uid: 'ecc8a84e-e616-11e9-bf67-005056a0b88e'
             }],
             resourceVersion: '9302938',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-role`,
@@ -455,11 +455,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant', valid: true }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'HIPAA', 'seed-generation': '4'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'HIPAA', 'seed-generation': '4'
             },
             creationTimestamp: '2019-10-16T17:20:43Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com', 'policy.finalizer.mcm.ibm.com'],
@@ -468,7 +468,7 @@ export const mockCompletedResourceView = {
             name: 'mcm.policy-vulnerabilitypolicy',
             namespace: 'clusterhub',
             ownerReferences: [{
-              apiVersion: 'policy.mcm.ibm.com/v1alpha1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
+              apiVersion: 'policies.open-cluster-management.io/v1', blockOwnerDeletion: true, controller: true, kind: 'Policy', name: 'mcm.policy-vulnerabilitypolicy', uid: '3f0b8a31-f039-11e9-bf6c-005056a0b88e'
             }],
             resourceVersion: '9096716',
             selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/clusterhub/policies/mcm.policy-vulnerabilitypolicy`,
@@ -493,11 +493,11 @@ export const mockCompletedResourceView = {
           },
           status: { compliant: 'NonCompliant' }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'SecretEncryption', 'policy.mcm.ibm.com/standards': 'FISMA', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'SecretEncryption', 'policies.open-cluster-management.io/standards': 'FISMA', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-03T19:53:40Z',
             finalizers: ['propagator.finalizer.mcm.ibm.com', 'finalizer.policies.ibm.com'],
@@ -513,11 +513,11 @@ export const mockCompletedResourceView = {
           },
           status: { placementBindings: ['binding-policy-namespace'], placementPolicies: ['placement-policy-namespace'], status: { cluster1: { aggregatePoliciesStatus: { 'mcm.policy-namespace': { compliant: 'NonCompliant' } }, clustername: 'cluster1', compliant: 'NonCompliant' }, clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-namespace': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': '', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': '', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': '', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': '', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T15:29:49Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -533,11 +533,11 @@ export const mockCompletedResourceView = {
           },
           status: { placementBindings: ['binding-policy-namespace-1'], placementPolicies: ['placement-policy-namespace-1'], status: { cluster1: { aggregatePoliciesStatus: { 'mcm.policy-namespace-1': {} }, clustername: 'cluster1' }, clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-namespace-1': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'VulnerbilityAdvisor', 'policy.mcm.ibm.com/standards': 'Test', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'VulnerbilityAdvisor', 'policies.open-cluster-management.io/standards': 'Test', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T18:33:44Z',
             finalizers: ['propagator.finalizer.mcm.ibm.com', 'finalizer.policies.ibm.com'],
@@ -553,11 +553,11 @@ export const mockCompletedResourceView = {
           },
           status: { placementBindings: ['binding-policy-namespace-undef-test'], placementPolicies: ['placement-policy-namespace-undef-test'], status: { clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-namespace-undef-test': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': '', 'policy.mcm.ibm.com/standards': 'Test', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': '', 'policies.open-cluster-management.io/standards': 'Test', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T19:02:43Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -573,11 +573,11 @@ export const mockCompletedResourceView = {
           },
           status: { placementBindings: ['binding-policy-namespace-undefined'], placementPolicies: ['placement-policy-namespace-undefined'], status: { clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-namespace-undefined': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'FISMA, Test', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'FISMA, Test', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-03T19:49:34Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -598,11 +598,11 @@ export const mockCompletedResourceView = {
           },
           status: { placementBindings: ['binding-policy-role'], placementPolicies: ['placement-policy-role'], status: { cluster1: { aggregatePoliciesStatus: { 'mcm.policy-role': { compliant: 'NonCompliant' } }, clustername: 'cluster1', compliant: 'NonCompliant' }, clusterhub: { aggregatePoliciesStatus: { 'mcm.policy-role': { compliant: 'NonCompliant' } }, clustername: 'clusterhub', compliant: 'NonCompliant' } } }
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'Test', 'seed-generation': '1'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'Test', 'seed-generation': '1'
             },
             creationTimestamp: '2019-10-16T17:56:09Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -631,11 +631,11 @@ export const mockCompletedResourceView = {
           },
           status: {}
         }, {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'policy.mcm.ibm.com/categories': 'SystemAndInformationIntegrity', 'policy.mcm.ibm.com/controls': 'MutationAdvisor', 'policy.mcm.ibm.com/standards': 'HIPAA', 'seed-generation': '2'
+              'policies.open-cluster-management.io/categories': 'SystemAndInformationIntegrity', 'policies.open-cluster-management.io/controls': 'MutationAdvisor', 'policies.open-cluster-management.io/standards': 'HIPAA', 'seed-generation': '2'
             },
             creationTimestamp: '2019-10-16T17:20:27Z',
             finalizers: ['finalizer.policies.ibm.com', 'propagator.finalizer.mcm.ibm.com'],
@@ -692,7 +692,7 @@ export const mockCreateResourceGet = {
       },
       spec: {
         scope: {
-          resource: 'policies.policy.mcm.ibm.com',
+          resource: 'policies.policies.open-cluster-management.io',
         },
       },
       status: {
@@ -728,7 +728,7 @@ export const mockCreateResourcePost = {
   },
   spec: {
     scope: {
-      resource: 'policies.policy.mcm.ibm.com',
+      resource: 'policies.policies.open-cluster-management.io',
     },
   },
   status: {},
@@ -778,14 +778,14 @@ export const mockClusterListResponse = {
         total: '1',
         violated: '0',
         policy: {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policy.mcm.ibm.com/v1alpha1","kind":"Policy","metadata":{"annotations":{"policy.mcm.ibm.com/categories":"SystemAndCommunicationsProtections,SystemAndInformationIntegrity","policy.mcm.ibm.com/controls":"MutationAdvisor,VA","policy.mcm.ibm.com/standards":"NIST,HIPAA"},"name":"policy-role","namespace":"mcm"},"spec":{"namespaces":{"exclude":["kube*"],"include":["default"]},"remediationAction":"inform","role-templates":[{"apiVersion":"roletemplate.mcm.ibm.com/v1alpha1","complianceType":"musthave","metadata":{"name":"operator-role-policy","namespace":""},"rules":[{"complianceType":"musthave","policyRule":{"apiGroups":["extensions","apps"],"resources":["deployments"],"verbs":["get","list","watch","create","delete","patch"]}}],"selector":{"matchLabels":{"dev":"true"}}}]}}',
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections,SystemAndInformationIntegrity',
-              'policy.mcm.ibm.com/controls': 'MutationAdvisor,VA',
-              'policy.mcm.ibm.com/standards': 'NIST,HIPAA',
+              'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{"policies.open-cluster-management.io/categories":"SystemAndCommunicationsProtections,SystemAndInformationIntegrity","policies.open-cluster-management.io/controls":"MutationAdvisor,VA","policies.open-cluster-management.io/standards":"NIST,HIPAA"},"name":"policy-role","namespace":"mcm"},"spec":{"namespaces":{"exclude":["kube*"],"include":["default"]},"remediationAction":"inform","role-templates":[{"apiVersion":"roletemplate.mcm.ibm.com/v1alpha1","complianceType":"musthave","metadata":{"name":"operator-role-policy","namespace":""},"rules":[{"complianceType":"musthave","policyRule":{"apiGroups":["extensions","apps"],"resources":["deployments"],"verbs":["get","list","watch","create","delete","patch"]}}],"selector":{"matchLabels":{"dev":"true"}}}]}}',
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections,SystemAndInformationIntegrity',
+              'policies.open-cluster-management.io/controls': 'MutationAdvisor,VA',
+              'policies.open-cluster-management.io/standards': 'NIST,HIPAA',
               'seed-generation': '2',
             },
             creationTimestamp: '2019-07-22T13:45:06Z',
@@ -910,14 +910,14 @@ export const mockClusterListResponse = {
         total: '1',
         violated: '1',
         policy: {
-          apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+          apiVersion: 'policies.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             annotations: {
-              'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policy.mcm.ibm.com/v1alpha1","kind":"Policy","metadata":{"annotations":{"policy.mcm.ibm.com/categories":"SystemAndCommunicationsProtections,SystemAndInformationIntegrity","policy.mcm.ibm.com/controls":"MutationAdvisor,VA","policy.mcm.ibm.com/standards":"NIST,HIPAA"},"name":"policy-role","namespace":"mcm"},"spec":{"namespaces":{"exclude":["kube*"],"include":["default"]},"remediationAction":"inform","role-templates":[{"apiVersion":"roletemplate.mcm.ibm.com/v1alpha1","complianceType":"musthave","metadata":{"name":"operator-role-policy","namespace":""},"rules":[{"complianceType":"musthave","policyRule":{"apiGroups":["extensions","apps"],"resources":["deployments"],"verbs":["get","list","watch","create","delete","patch"]}}],"selector":{"matchLabels":{"dev":"true"}}}]}}',
-              'policy.mcm.ibm.com/categories': 'SystemAndCommunicationsProtections,SystemAndInformationIntegrity',
-              'policy.mcm.ibm.com/controls': 'MutationAdvisor,VA',
-              'policy.mcm.ibm.com/standards': 'NIST,HIPAA',
+              'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policies.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{"policies.open-cluster-management.io/categories":"SystemAndCommunicationsProtections,SystemAndInformationIntegrity","policies.open-cluster-management.io/controls":"MutationAdvisor,VA","policies.open-cluster-management.io/standards":"NIST,HIPAA"},"name":"policy-role","namespace":"mcm"},"spec":{"namespaces":{"exclude":["kube*"],"include":["default"]},"remediationAction":"inform","role-templates":[{"apiVersion":"roletemplate.mcm.ibm.com/v1alpha1","complianceType":"musthave","metadata":{"name":"operator-role-policy","namespace":""},"rules":[{"complianceType":"musthave","policyRule":{"apiGroups":["extensions","apps"],"resources":["deployments"],"verbs":["get","list","watch","create","delete","patch"]}}],"selector":{"matchLabels":{"dev":"true"}}}]}}',
+              'policies.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections,SystemAndInformationIntegrity',
+              'policies.open-cluster-management.io/controls': 'MutationAdvisor,VA',
+              'policies.open-cluster-management.io/standards': 'NIST,HIPAA',
               'seed-generation': '3004',
             },
             creationTimestamp: '2019-07-22T13:45:06Z',
@@ -930,7 +930,7 @@ export const mockClusterListResponse = {
             namespace: 'clusterhub',
             ownerReferences: [
               {
-                apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+                apiVersion: 'policies.open-cluster-management.io/v1',
                 blockOwnerDeletion: true,
                 controller: true,
                 kind: 'Policy',
@@ -1259,7 +1259,7 @@ export const mockPolicyListResponse = {
     }],
     results: {
       cluster2: {
-        apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+        apiVersion: 'policies.open-cluster-management.io/v1',
         kind: 'Policy',
         metadata: {
           annotations: {
@@ -1546,7 +1546,7 @@ export const mockPolicyListResponse = {
 };
 
 export const mockSinglePolicyResponse = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   kind: 'Policy',
   metadata: {
     creationTimestamp: '2018-09-04T16:13:50Z',
@@ -1651,18 +1651,18 @@ export const mockSingleNoPolicyResponse = {
 
   },
   status: 'Failure',
-  message: 'policies.policy.mcm.ibm.com "compliance-xz" not found',
+  message: 'policies.policies.open-cluster-management.io "compliance-xz" not found',
   reason: 'NotFound',
   details: {
     name: 'compliance-xz',
-    group: 'policy.mcm.ibm.com',
+    group: 'policies.open-cluster-management.io',
     kind: 'policies'
   },
   code: 404
 };
 
 export const mockCreatePolicy = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   kind: 'Policy',
   metadata: {
     creationTimestamp: '2018-09-06T17:12:34Z',
@@ -1844,7 +1844,7 @@ export const mockPlacementBindingResponse = {
 };
 
 export const mockDeleteResponse = {
-  apiVersion: 'policy.mcm.ibm.com/v1alpha1',
+  apiVersion: 'policies.open-cluster-management.io/v1',
   kind: 'Policy',
   metadata: {
     creationTimestamp: '2018-09-06T15:06:23Z',

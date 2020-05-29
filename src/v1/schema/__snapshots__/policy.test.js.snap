@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Policy Resolver Correctly Resolves All Policies per Application List Query 1`] = `
+Object {
+  "data": Object {
+    "policiesInApplication": null,
+  },
+  "errors": Array [
+    Object {
+      "locations": Array [
+        Object {
+          "column": 9,
+          "line": 3,
+        },
+      ],
+      "message": "Nock: No match for request {
+  \\"method\\": \\"GET\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
+  \\"headers\\": {
+    \\"authorization\\": \\"localdev\\",
+    \\"host\\": \\"0.0.0.0\\",
+    \\"accept\\": \\"application/json\\"
+  }
+}",
+      "path": Array [
+        "policiesInApplication",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves All Policies per Cluster List Query 1`] = `
+Object {
+  "data": Object {
+    "policiesInCluster": null,
+  },
+  "errors": Array [
+    Object {
+      "locations": Array [
+        Object {
+          "column": 11,
+          "line": 3,
+        },
+      ],
+      "message": "Nock: No match for request {
+  \\"method\\": \\"GET\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
+  \\"headers\\": {
+    \\"authorization\\": \\"localdev\\",
+    \\"host\\": \\"0.0.0.0\\",
+    \\"accept\\": \\"application/json\\"
+  }
+}",
+      "path": Array [
+        "policiesInCluster",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Cluster List Query 1`] = `
+Object {
+  "data": Object {
+    "clustersInPolicy": null,
+  },
+  "errors": Array [
+    Object {
+      "locations": Array [
+        Object {
+          "column": 11,
+          "line": 3,
+        },
+      ],
+      "message": "Nock: No match for request {
+  \\"method\\": \\"GET\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace\\",
+  \\"headers\\": {
+    \\"authorization\\": \\"localdev\\",
+    \\"host\\": \\"0.0.0.0\\",
+    \\"accept\\": \\"application/json\\"
+  }
+}",
+      "path": Array [
+        "clustersInPolicy",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Create Policy Mutation 1`] = `
+Object {
+  "data": Object {
+    "createPolicy": Array [
+      Object {},
+    ],
+  },
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Delete Policy Mutation 1`] = `
+Object {
+  "data": Object {
+    "deletePolicy": "test-policy",
+  },
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Single Policy Query 1`] = `
+Object {
+  "data": Object {
+    "policies": Array [
+      Object {
+        "cluster": "calamari",
+        "detail": Object {
+          "exclude_namespace": Array [
+            "*",
+          ],
+          "include_namespace": Array [
+            "*",
+          ],
+        },
+        "enforcement": "inform",
+        "message": "-",
+        "metadata": Object {
+          "annotations": Object {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policies.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policies.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policies.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policies.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
+",
+            "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+            "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+            "policies.open-cluster-management.io/standards": "NIST-CSF",
+          },
+          "creationTimestamp": "2020-05-17T22:56:03Z",
+          "name": "default.case1-test-policy",
+          "namespace": "calamari",
+          "resourceVersion": "27550274",
+          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+          "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
+        },
+        "objectTemplates": Array [],
+        "policyTemplates": Array [
+          Object {
+            "apiVersion": "policies.ibm.com/v1alpha1",
+            "complianceType": "",
+            "kind": "TrustedContainerPolicy",
+            "lastTransition": "",
+            "name": "case1-test-policy-trustedcontainerpolicy",
+            "raw": Object {
+              "objectDefinition": Object {
+                "apiVersion": "policies.ibm.com/v1alpha1",
+                "kind": "TrustedContainerPolicy",
+                "metadata": Object {
+                  "name": "case1-test-policy-trustedcontainerpolicy",
+                },
+                "spec": Object {
+                  "imageRegistry": "quay.io",
+                  "namespaceSelector": Object {
+                    "exclude": Array [
+                      "kube-system",
+                    ],
+                    "include": Array [
+                      "default",
+                    ],
+                  },
+                  "remediationAction": "inform",
+                  "severity": "low",
+                },
+              },
+              "templateType": "policy-templates",
+            },
+            "status": "Compliant",
+          },
+        ],
+        "raw": Object {
+          "apiVersion": "policies.open-cluster-management.io/v1",
+          "kind": "Policy",
+          "metadata": Object {
+            "annotations": Object {
+              "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policies.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policies.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policies.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policies.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
+",
+              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policies.open-cluster-management.io/standards": "NIST-CSF",
+            },
+            "creationTimestamp": "2020-05-17T22:56:03Z",
+            "generation": 1,
+            "labels": Object {
+              "cluster-name": "calamari",
+              "cluster-namespace": "calamari",
+              "root-policy": "default.case1-test-policy",
+            },
+            "name": "default.case1-test-policy",
+            "namespace": "calamari",
+            "ownerReferences": Array [
+              Object {
+                "apiVersion": "policies.open-cluster-management.io/v1",
+                "blockOwnerDeletion": true,
+                "controller": true,
+                "kind": "Policy",
+                "name": "case1-test-policy",
+                "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
+              },
+            ],
+            "resourceVersion": "27550274",
+            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+            "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
+          },
+          "spec": Object {
+            "disabled": false,
+            "policy-templates": Array [
+              Object {
+                "objectDefinition": Object {
+                  "apiVersion": "policies.ibm.com/v1alpha1",
+                  "kind": "TrustedContainerPolicy",
+                  "metadata": Object {
+                    "name": "case1-test-policy-trustedcontainerpolicy",
+                  },
+                  "spec": Object {
+                    "imageRegistry": "quay.io",
+                    "namespaceSelector": Object {
+                      "exclude": Array [
+                        "kube-system",
+                      ],
+                      "include": Array [
+                        "default",
+                      ],
+                    },
+                    "remediationAction": "inform",
+                    "severity": "low",
+                  },
+                },
+              },
+            ],
+            "remediationAction": "inform",
+          },
+        },
+        "roleBindingTemplates": Array [],
+        "roleTemplates": Array [],
+        "rules": Array [],
+        "status": "unknown",
+        "violations": Array [],
+      },
+    ],
+  },
+}
+`;

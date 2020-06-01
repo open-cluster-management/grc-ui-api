@@ -249,7 +249,7 @@ export default class ComplianceModel {
   }
 
   async getCompliances(name, namespace) {
-    const urlNameSpace = (namespace || (config.get('complianceNamespace')) ? config.get('complianceNamespace') : 'acm');
+    const urlNameSpace = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
     let policies = [];
     let clusterNS = {};
     let clusterConsoleURL = {};

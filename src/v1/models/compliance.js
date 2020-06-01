@@ -137,8 +137,8 @@ export default class ComplianceModel {
     return errors;
   }
 
+  // get single policy with a specific name and a specific namespace
   async getSinglePolicy(policies, name, urlNameSpace) {
-    // get single policy with a specific name and a specific namespace
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
@@ -149,8 +149,8 @@ export default class ComplianceModel {
     return policies;
   }
 
+  // get single policy with a specific name and all non-clusters namespaces
   async getSinglePolicyAllNS(name, allNonClusterNameSpace) {
-    // get single policy with a specific name and all non-clusters namespaces
     const promises = allNonClusterNameSpace.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
       const policyResponse = await this.kubeConnector.get(URL);
@@ -166,8 +166,8 @@ export default class ComplianceModel {
     return policyResponses.filter(policyResponse => policyResponse !== null);
   }
 
+  // for getting policy list with a specific namespace
   async getPolicyListSingleNS(urlNameSpace) {
-    // for getting policy list with a specific namespace
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
@@ -176,9 +176,8 @@ export default class ComplianceModel {
     return policyResponse.items || [];
   }
 
+  // most general case for all policies, getting policy list with all non-clusters namespaces
   async getPolicyListAllNS(allNonClusterNameSpace) {
-    // most general case for all policies
-    // for getting policy list with all non-clusters namespaces
     const promises = allNonClusterNameSpace.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
       const policyResponse = await this.kubeConnector.get(URL);
@@ -200,6 +199,7 @@ export default class ComplianceModel {
     return _.flatten(policies);
   }
 
+  // get the list of all non cluster namespace
   async getNonClusterNS() {
     const clusterNS = {};
     const clusterConsoleURL = {};

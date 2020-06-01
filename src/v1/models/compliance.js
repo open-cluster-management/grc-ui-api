@@ -137,106 +137,141 @@ export default class ComplianceModel {
     return errors;
   }
 
-  async getCompliances(name, namespace) {
-    let policies = [];
-    const urlNameSpace = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
+  async getSinglePolicy(policies, name, urlNameSpace) {
+    // get single policy with a specific name and a specific namespace
+    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
+    const policyResponse = await this.kubeConnector.get(URL);
+    if (policyResponse.code || policyResponse.message) {
+      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+    } else {
+      policies.push(policyResponse);
+    }
+    return policies;
+  }
+
+  async getSinglePolicyAllNS(name, allNonClusterNameSpace) {
+    // get single policy with a specific name and all non-clusters namespaces
+    const promises = allNonClusterNameSpace.map(async (ns) => {
+      const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
+      const policyResponse = await this.kubeConnector.get(URL);
+      if (policyResponse.code || policyResponse.message) {
+        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        return null;// 404 or not found
+      }
+      return policyResponse;// found policy
+    });
+    // here need to await all async calls completed then combine their results together
+    const policyResponses = await Promise.all(promises);
+    // remove no found policies
+    return policyResponses.filter(policyResponse => policyResponse !== null);
+  }
+
+  async getPolicyListSingleNS(urlNameSpace) {
+    // for getting policy list with a specific namespace
+    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies`;
+    const policyResponse = await this.kubeConnector.get(URL);
+    if (policyResponse.code || policyResponse.message) {
+      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+    }
+    return policyResponse.items || [];
+  }
+
+  async getPolicyListAllNS(allNonClusterNameSpace) {
+    // most general case for all policies
+    // for getting policy list with all non-clusters namespaces
+    const promises = allNonClusterNameSpace.map(async (ns) => {
+      const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
+      const policyResponse = await this.kubeConnector.get(URL);
+      if (policyResponse.code || policyResponse.message) {
+        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        if (policyResponse.code === 403) {
+          throw new ApolloError('PermissionError', {
+            message: policyResponse.message,
+          });
+        }
+      }
+      return policyResponse.items;
+    });
+    // here need to await all async calls completed then combine their results together
+    const policyResponses = await Promise.all(promises);
+    // remove empty policies namespaces
+    const policies = policyResponses.filter(policyResponse => policyResponse.length > 0);
+    // flatten 'array of array of object' to 'array of object'
+    return _.flatten(policies);
+  }
+
+  async getNonClusterNS() {
     const clusterNS = {};
     const clusterConsoleURL = {};
+    // all possible namespaces
+    const allNameSpace = this.kubeConnector.namespaces;
+    // remove cluster namespaces
+    const nsPromises = allNameSpace.map(async (ns) => {
+      // check ns one by one, if got normal response then it's cluster namespace
+      const checkClusterURL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`;
+      const checkClusterStatusURL = `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`;
+      const [clusters, clusterstatuses] = await Promise.all([
+        this.kubeConnector.get(checkClusterURL),
+        this.kubeConnector.get(checkClusterStatusURL),
+      ]);
+      if (Array.isArray(clusters.items) && clusters.items.length > 0) {
+        clusters.items.forEach((item) => {
+          if (item.metadata && item.metadata.name &&
+              !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
+              && item.metadata.namespace) {
+            // current each cluster only have one namespace
+            clusterNS[item.metadata.name] = item.metadata.namespace;
+          }
+        });
+        clusterstatuses.items.forEach((item) => {
+          if (item.metadata && item.metadata.name &&
+              !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
+              && (item.spec && item.spec.consoleURL)) {
+            // current each cluster only have one namespace
+            clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+          }
+        });
+        return null; // cluster namespaces
+      }
+      return ns; // non cluster namespaces
+    });
+
+      // here need to await all async check cluster namespace calls completed
+    let allNonClusterNameSpace = await Promise.all(nsPromises);
+    // remove cluster namespaces which already set to null
+    allNonClusterNameSpace = allNonClusterNameSpace.filter(ns => ns !== null);
+
+    return {
+      clusterNS,
+      clusterConsoleURL,
+      allNonClusterNameSpace,
+    };
+  }
+
+  async getCompliances(name, namespace) {
+    const urlNameSpace = (namespace || (config.get('complianceNamespace')) ? config.get('complianceNamespace') : 'acm');
+    let policies = [];
+    let clusterNS = {};
+    let clusterConsoleURL = {};
 
     if (namespace) {
       if (name) {
-        // get single policy with a specific name and a specific namespace
-        const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
-        const policyResponse = await this.kubeConnector.get(URL);
-        if (policyResponse.code || policyResponse.message) {
-          logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-        } else {
-          policies.push(policyResponse);
-        }
+        policies = await this.getSinglePolicy(policies, name, urlNameSpace);
       } else {
-        // for getting policy list with a specific namespace
-        const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies`;
-        const policyResponse = await this.kubeConnector.get(URL);
-        if (policyResponse.code || policyResponse.message) {
-          logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-        }
-        policies = policyResponse.items || [];
+        policies = await this.getPolicyListSingleNS(urlNameSpace);
       }
     } else {
-      // all possible namespaces
-      const allNameSpace = this.kubeConnector.namespaces;
-      // remove cluster namespaces
-      const nsPromises = allNameSpace.map(async (ns) => {
-        // check ns one by one, if got normal response then it's cluster namespace
-        const checkClusterURL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`;
-        const checkClusterStatusURL = `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`;
-        const [clusters, clusterstatuses] = await Promise.all([
-          this.kubeConnector.get(checkClusterURL),
-          this.kubeConnector.get(checkClusterStatusURL),
-        ]);
-        if (Array.isArray(clusters.items) && clusters.items.length > 0) {
-          clusters.items.forEach((item) => {
-            if (item.metadata && item.metadata.name &&
-              !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-              && item.metadata.namespace) {
-              // current each cluster only have one namespace
-              clusterNS[item.metadata.name] = item.metadata.namespace;
-            }
-          });
-          clusterstatuses.items.forEach((item) => {
-            if (item.metadata && item.metadata.name &&
-              !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
-              && (item.spec && item.spec.consoleURL)) {
-              // current each cluster only have one namespace
-              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-            }
-          });
-          return null; // cluster namespaces
-        }
-        return ns; // non cluster namespaces
-      });
-
-      // here need to await all async check cluster namespace calls completed
-      let allNonClusterNameSpace = await Promise.all(nsPromises);
-      // remove cluster namespaces which already set to null
-      allNonClusterNameSpace = allNonClusterNameSpace.filter(ns => ns !== null);
-
+      const {
+        clusterNS: localClusterNS,
+        clusterConsoleURL: localClusterConsoleURL,
+        allNonClusterNameSpace,
+      } = await this.getNonClusterNS();
+      clusterNS = localClusterNS;
+      clusterConsoleURL = localClusterConsoleURL;
       if (name) {
-        // get single policy with a specific name and all non-clusters namespaces
-        const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
-          const policyResponse = await this.kubeConnector.get(URL);
-          if (policyResponse.code || policyResponse.message) {
-            logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-            return null;// 404 or not found
-          }
-          return policyResponse;// found policy
-        });
-        // here need to await all async calls completed then combine their results together
-        const policyResponses = await Promise.all(promises);
-        // remove no found policies
-        policies = policyResponses.filter(policyResponse => policyResponse !== null);
-      } else { // most general case for all policies
-        // for getting policy list with all non-clusters namespaces
-        const promises = allNonClusterNameSpace.map(async (ns) => {
-          const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
-          const policyResponse = await this.kubeConnector.get(URL);
-          if (policyResponse.code || policyResponse.message) {
-            logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-            if (policyResponse.code === 403) {
-              throw new ApolloError('PermissionError', {
-                message: policyResponse.message,
-              });
-            }
-          }
-          return policyResponse.items;
-        });
-        // here need to await all async calls completed then combine their results together
-        const policyResponses = await Promise.all(promises);
-        // remove empty policies namespaces
-        policies = policyResponses.filter(policyResponse => policyResponse.length > 0);
-        // flatten 'array of array of object' to 'array of object'
-        policies = _.flatten(policies);
+        policies = await this.getSinglePolicyAllNS(name, allNonClusterNameSpace);
+      } else {
+        policies = await this.getPolicyListAllNS(allNonClusterNameSpace);
       }
     }
 

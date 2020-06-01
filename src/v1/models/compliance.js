@@ -137,7 +137,7 @@ export default class ComplianceModel {
     return errors;
   }
 
-  // get single policy with a specific name and a specific namespace
+  // get a single policy on a specific namespace
   async getSinglePolicy(policies, name, urlNameSpace) {
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
@@ -149,7 +149,7 @@ export default class ComplianceModel {
     return policies;
   }
 
-  // get single policy with a specific name and all non-clusters namespaces
+  // get a single policy on all non-clusters namespaces
   async getSinglePolicyAllNS(name, allNonClusterNameSpace) {
     const promises = allNonClusterNameSpace.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
@@ -166,7 +166,7 @@ export default class ComplianceModel {
     return policyResponses.filter(policyResponse => policyResponse !== null);
   }
 
-  // for getting policy list with a specific namespace
+  // get the policy list on a specific namespace
   async getPolicyListSingleNS(urlNameSpace) {
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies`;
     const policyResponse = await this.kubeConnector.get(URL);
@@ -176,7 +176,7 @@ export default class ComplianceModel {
     return policyResponse.items || [];
   }
 
-  // most general case for all policies, getting policy list with all non-clusters namespaces
+  // general case for all policies, get the policy list on all non-clusters namespaces
   async getPolicyListAllNS(allNonClusterNameSpace) {
     const promises = allNonClusterNameSpace.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
@@ -199,7 +199,7 @@ export default class ComplianceModel {
     return _.flatten(policies);
   }
 
-  // get the list of all non cluster namespace
+  // get the list of all non-clusters namespaces
   async getNonClusterNS() {
     const clusterNS = {};
     const clusterConsoleURL = {};

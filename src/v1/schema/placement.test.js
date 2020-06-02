@@ -31,7 +31,7 @@ describe('Placement Resolver', () => {
       .reply(200, mockPlacementListResponse);
   });
 
-  test('Correctly Resolves Placement Policy List Query', (done) => {
+  test('Correctly Resolves Placement Policy List Query', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -58,5 +58,5 @@ describe('Placement Resolver', () => {
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
-  });
+  }));
 });

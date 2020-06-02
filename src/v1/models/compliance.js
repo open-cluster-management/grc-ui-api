@@ -236,7 +236,7 @@ export default class ComplianceModel {
       return ns; // non cluster namespaces
     });
 
-      // here need to await all async check cluster namespace calls completed
+    // here need to await all async check cluster namespace calls completed
     let allNonClusterNameSpace = await Promise.all(nsPromises);
     // remove cluster namespaces which already set to null
     allNonClusterNameSpace = allNonClusterNameSpace.filter(ns => ns !== null);

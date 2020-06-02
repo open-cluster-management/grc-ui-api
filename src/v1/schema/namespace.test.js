@@ -35,7 +35,7 @@ describe('Namespace Resolver', () => {
       .reply(200, mockResponse);
   });
 
-  test('Correctly Resolves Namespace Query', (done) => {
+  test('Correctly Resolves Namespace Query', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -60,5 +60,5 @@ describe('Namespace Resolver', () => {
         expect(textMessage).toMatchSnapshot();
         done();
       });
-  });
+  }));
 });

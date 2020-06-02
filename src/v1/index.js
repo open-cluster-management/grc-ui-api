@@ -56,7 +56,7 @@ const requestLogger = isProd ?
   })
   : morgan('dev');
 
-graphQLServer.use('*', helmet({// These headers are dealt with in icp-management-ingress
+graphQLServer.use('*', helmet({ // These headers are dealt with in icp-management-ingress
   frameguard: false,
   noSniff: false,
   xssFilter: false,

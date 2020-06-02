@@ -31,7 +31,7 @@ describe('Generic Resources Resolver', () => {
       .reply(200, mockUpdateResourcesResponse);
   });
 
-  test('Correctly Resolves Create Resources Mutation', (done) => {
+  test('Correctly Resolves Create Resources Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -70,9 +70,9 @@ describe('Generic Resources Resolver', () => {
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
-  });
+  }));
 
-  test('Correctly Resolves Update Resource Mutation', (done) => {
+  test('Correctly Resolves Update Resource Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -103,9 +103,9 @@ describe('Generic Resources Resolver', () => {
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
-  });
+  }));
 
-  test('Correctly Resolves Update Resource Labels Mutation', (done) => {
+  test('Correctly Resolves Update Resource Labels Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -132,5 +132,5 @@ describe('Generic Resources Resolver', () => {
         expect(JSON.parse(res.text)).toMatchSnapshot();
         done();
       });
-  });
+  }));
 });

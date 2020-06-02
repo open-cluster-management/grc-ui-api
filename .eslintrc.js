@@ -8,6 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 module.exports = {
+  "parser": "babel-eslint",
   "plugins": ["jest"],
   "extends": ["plugin:jest/recommended", "airbnb-base"],
   "rules": {

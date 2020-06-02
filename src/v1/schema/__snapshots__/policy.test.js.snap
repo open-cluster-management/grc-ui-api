@@ -15,7 +15,7 @@ Object {
       ],
       "message": "Nock: No match for request {
   \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
   \\"headers\\": {
     \\"authorization\\": \\"localdev\\",
     \\"host\\": \\"0.0.0.0\\",
@@ -45,7 +45,7 @@ Object {
       ],
       "message": "Nock: No match for request {
   \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
   \\"headers\\": {
     \\"authorization\\": \\"localdev\\",
     \\"host\\": \\"0.0.0.0\\",
@@ -75,7 +75,7 @@ Object {
       ],
       "message": "Nock: No match for request {
   \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace\\",
   \\"headers\\": {
     \\"authorization\\": \\"localdev\\",
     \\"host\\": \\"0.0.0.0\\",
@@ -126,17 +126,17 @@ Object {
         "message": "-",
         "metadata": Object {
           "annotations": Object {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policies.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policies.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policies.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policies.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
+            "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policy.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policy.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policy.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policy.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
 ",
-            "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-            "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-            "policies.open-cluster-management.io/standards": "NIST-CSF",
+            "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+            "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+            "policy.open-cluster-management.io/standards": "NIST-CSF",
           },
           "creationTimestamp": "2020-05-17T22:56:03Z",
           "name": "default.case1-test-policy",
           "namespace": "calamari",
           "resourceVersion": "27550274",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
           "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
         },
         "objectTemplates": Array [],
@@ -174,15 +174,15 @@ Object {
           },
         ],
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policies.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policies.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policies.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policies.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
+              "kubectl.kubernetes.io/last-applied-configuration": "{\\"apiVersion\\":\\"policy.open-cluster-management.io/v1\\",\\"kind\\":\\"Policy\\",\\"metadata\\":{\\"annotations\\":{\\"policy.open-cluster-management.io/categories\\":\\"PR.DS DataSecurity\\",\\"policy.open-cluster-management.io/controls\\":\\"PR.DS-2 Data-in-transit\\",\\"policy.open-cluster-management.io/standards\\":\\"NIST-CSF\\"},\\"name\\":\\"case1-test-policy\\",\\"namespace\\":\\"default\\"},\\"spec\\":{\\"disabled\\":false,\\"policy-templates\\":[{\\"objectDefinition\\":{\\"apiVersion\\":\\"policies.ibm.com/v1alpha1\\",\\"kind\\":\\"TrustedContainerPolicy\\",\\"metadata\\":{\\"name\\":\\"case1-test-policy-trustedcontainerpolicy\\"},\\"spec\\":{\\"imageRegistry\\":\\"quay.io\\",\\"namespaceSelector\\":{\\"exclude\\":[\\"kube-system\\"],\\"include\\":[\\"default\\"]},\\"remediationAction\\":\\"inform\\",\\"severity\\":\\"low\\"}}}],\\"remediationAction\\":\\"inform\\"}}
 ",
-              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-              "policies.open-cluster-management.io/standards": "NIST-CSF",
+              "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policy.open-cluster-management.io/standards": "NIST-CSF",
             },
             "creationTimestamp": "2020-05-17T22:56:03Z",
             "generation": 1,
@@ -195,7 +195,7 @@ Object {
             "namespace": "calamari",
             "ownerReferences": Array [
               Object {
-                "apiVersion": "policies.open-cluster-management.io/v1",
+                "apiVersion": "policy.open-cluster-management.io/v1",
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "Policy",
@@ -204,7 +204,7 @@ Object {
               },
             ],
             "resourceVersion": "27550274",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
             "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
           },
           "spec": Object {

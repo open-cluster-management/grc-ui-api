@@ -2,7 +2,7 @@
 // acm api group and version
 const ApiGroup = {
   hostUrl: 'http://0.0.0.0/kubernetes/apis',
-  policiesGroup: 'policies.open-cluster-management.io',
+  policiesGroup: 'policy.open-cluster-management.io',
   appsGroup: 'apps.open-cluster-management.io',
   version: 'v1',
   // temporary group and version, will update them later

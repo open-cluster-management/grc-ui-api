@@ -12,7 +12,7 @@ Object {
               "errors": Array [],
               "result": Array [
                 Object {
-                  "apiVersion": "policies.open-cluster-management.io/v1",
+                  "apiVersion": "policy.open-cluster-management.io/v1",
                   "kind": "Policy",
                   "metadata": Object {
                     "creationTimestamp": "2019-07-24T16:13:38Z",
@@ -20,7 +20,7 @@ Object {
                     "name": "test-policy",
                     "namespace": "mcm",
                     "resourceVersion": "1688805",
-                    "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
                     "uid": "fec7f06c-ae2d-11e9-8a41-005056a061f1",
                   },
                   "spec": Object {

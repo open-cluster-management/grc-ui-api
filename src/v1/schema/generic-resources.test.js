@@ -40,7 +40,7 @@ describe('Generic Resources Resolver', () => {
           createResources(
             resources: [
               {
-                apiVersion: "policies.open-cluster-management.io/v1",
+                apiVersion: "policy.open-cluster-management.io/v1",
                 kind: "Policy",
                 metadata: {
                   name: "test-policy",
@@ -83,7 +83,7 @@ describe('Generic Resources Resolver', () => {
             namespace: "mcm", 
             resourceType: "HCMCompliance", 
             body: [{
-              apiVersion: "policies.open-cluster-management.io/v1", 
+              apiVersion: "policy.open-cluster-management.io/v1", 
               kind: "Policy", 
               metadata: {
                 name: "test-policy",

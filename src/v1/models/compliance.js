@@ -756,7 +756,7 @@ export default class ComplianceModel {
     // Current violation status are to be get from histroy[most-recent]
     const violations = [];
     policyResponses.forEach((policyResponse) => {
-      const cluster = _.get(policyResponse, 'metadata.labels["policies.open-cluster-management.io/cluster-name"]', '-');
+      const cluster = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-name"]', '-');
       let details = _.get(policyResponse, 'status.details', []);
       details = details.filter(detail => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
       details.forEach((detail) => {

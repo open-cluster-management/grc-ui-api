@@ -19,15 +19,15 @@ Object {
         "clusterCompliant": "0/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-            "policies.open-cluster-management.io/controls": "CertManager",
-            "policies.open-cluster-management.io/standards": "FISMA, PCI",
+            "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
+            "policy.open-cluster-management.io/controls": "CertManager",
+            "policy.open-cluster-management.io/standards": "FISMA, PCI",
             "seed-generation": "1",
           },
           "name": "policy-certificatepolicy",
           "namespace": "mcm",
           "resourceVersion": "3666045",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
         },
         "name": "policy-certificatepolicy",
         "namespace": "mcm",
@@ -35,13 +35,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "0/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-              "policies.open-cluster-management.io/controls": "CertManager",
-              "policies.open-cluster-management.io/standards": "FISMA, PCI",
+              "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
+              "policy.open-cluster-management.io/controls": "CertManager",
+              "policy.open-cluster-management.io/standards": "FISMA, PCI",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-03T18:34:05Z",
@@ -53,7 +53,7 @@ Object {
             "name": "policy-certificatepolicy",
             "namespace": "mcm",
             "resourceVersion": "3666045",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
             "uid": "68d772b1-ce79-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -131,14 +131,14 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "MutationAdvisor",
-            "policies.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "MutationAdvisor",
+            "policy.open-cluster-management.io/standards": "FISMA",
           },
           "name": "policy-iampolicy",
           "namespace": "mcm",
           "resourceVersion": "3664798",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
         },
         "name": "policy-iampolicy",
         "namespace": "mcm",
@@ -146,13 +146,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "MutationAdvisor",
-              "policies.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "MutationAdvisor",
+              "policy.open-cluster-management.io/standards": "FISMA",
             },
             "creationTimestamp": "2019-08-30T14:58:31Z",
             "finalizers": Array [
@@ -163,7 +163,7 @@ Object {
             "name": "policy-iampolicy",
             "namespace": "mcm",
             "resourceVersion": "3664798",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
             "uid": "a18d825a-cb36-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -245,15 +245,15 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "VA",
-            "policies.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "VA",
+            "policy.open-cluster-management.io/standards": "FISMA",
             "seed-generation": "4",
           },
           "name": "policy-image",
           "namespace": "mcm",
           "resourceVersion": "3459900",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
         },
         "name": "policy-image",
         "namespace": "mcm",
@@ -261,13 +261,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "VA",
-              "policies.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "VA",
+              "policy.open-cluster-management.io/standards": "FISMA",
               "seed-generation": "4",
             },
             "creationTimestamp": "2019-08-30T13:46:19Z",
@@ -279,7 +279,7 @@ Object {
             "name": "policy-image",
             "namespace": "mcm",
             "resourceVersion": "3459900",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
             "uid": "8be1a627-cb2c-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -351,15 +351,15 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "CertManager",
-            "policies.open-cluster-management.io/standards": "HIPAA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "CertManager",
+            "policy.open-cluster-management.io/standards": "HIPAA",
             "seed-generation": "1",
           },
           "name": "policy-limitrange",
           "namespace": "mcm",
           "resourceVersion": "3489357",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
         },
         "name": "policy-limitrange",
         "namespace": "mcm",
@@ -367,13 +367,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "CertManager",
-              "policies.open-cluster-management.io/standards": "HIPAA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "CertManager",
+              "policy.open-cluster-management.io/standards": "HIPAA",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-04T16:27:02Z",
@@ -385,7 +385,7 @@ Object {
             "name": "policy-limitrange",
             "namespace": "mcm",
             "resourceVersion": "3489357",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
             "uid": "d358638d-cf30-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -463,15 +463,15 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "policy",
-            "policies.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "policy",
+            "policy.open-cluster-management.io/standards": "FISMA",
             "seed-generation": "1",
           },
           "name": "policy-namespace",
           "namespace": "mcm",
           "resourceVersion": "3665885",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
         },
         "name": "policy-namespace",
         "namespace": "mcm",
@@ -479,13 +479,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "policy",
-              "policies.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "policy",
+              "policy.open-cluster-management.io/standards": "FISMA",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-03T18:26:11Z",
@@ -497,7 +497,7 @@ Object {
             "name": "policy-namespace",
             "namespace": "mcm",
             "resourceVersion": "3665885",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
             "uid": "4e21e5e7-ce78-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -562,15 +562,15 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "MutationAdvisor",
-            "policies.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "MutationAdvisor",
+            "policy.open-cluster-management.io/standards": "FISMA",
             "seed-generation": "1",
           },
           "name": "policy-pod",
           "namespace": "mcm",
           "resourceVersion": "3729666",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
         },
         "name": "policy-pod",
         "namespace": "mcm",
@@ -578,13 +578,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "MutationAdvisor",
-              "policies.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "MutationAdvisor",
+              "policy.open-cluster-management.io/standards": "FISMA",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-05T18:16:29Z",
@@ -596,7 +596,7 @@ Object {
             "name": "policy-pod",
             "namespace": "mcm",
             "resourceVersion": "3729666",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
             "uid": "48316272-d009-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -674,15 +674,15 @@ Object {
         "clusterCompliant": "2/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-            "policies.open-cluster-management.io/controls": "MutationAdvisor",
-            "policies.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+            "policy.open-cluster-management.io/controls": "MutationAdvisor",
+            "policy.open-cluster-management.io/standards": "FISMA",
             "seed-generation": "1",
           },
           "name": "policy-rolebinding-1",
           "namespace": "mcm",
           "resourceVersion": "3665889",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
         },
         "name": "policy-rolebinding-1",
         "namespace": "mcm",
@@ -690,13 +690,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "2/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
-              "policies.open-cluster-management.io/controls": "MutationAdvisor",
-              "policies.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
+              "policy.open-cluster-management.io/controls": "MutationAdvisor",
+              "policy.open-cluster-management.io/standards": "FISMA",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-04T13:08:49Z",
@@ -708,7 +708,7 @@ Object {
             "name": "policy-rolebinding-1",
             "namespace": "mcm",
             "resourceVersion": "3665889",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
             "uid": "22ac9660-cf15-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -785,15 +785,15 @@ Object {
         "clusterCompliant": "1/2",
         "metadata": Object {
           "annotations": Object {
-            "policies.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-            "policies.open-cluster-management.io/controls": "VA",
-            "policies.open-cluster-management.io/standards": "PCI",
+            "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
+            "policy.open-cluster-management.io/controls": "VA",
+            "policy.open-cluster-management.io/standards": "PCI",
             "seed-generation": "1",
           },
           "name": "policy-vulnerabilitypolicy",
           "namespace": "mcm",
           "resourceVersion": "3459668",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
         },
         "name": "policy-vulnerabilitypolicy",
         "namespace": "mcm",
@@ -801,13 +801,13 @@ Object {
         "placementPolicies": Array [],
         "policyCompliant": "1/2",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "policies.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-              "policies.open-cluster-management.io/controls": "VA",
-              "policies.open-cluster-management.io/standards": "PCI",
+              "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
+              "policy.open-cluster-management.io/controls": "VA",
+              "policy.open-cluster-management.io/standards": "PCI",
               "seed-generation": "1",
             },
             "creationTimestamp": "2019-09-03T18:39:25Z",
@@ -819,7 +819,7 @@ Object {
             "name": "policy-vulnerabilitypolicy",
             "namespace": "mcm",
             "resourceVersion": "3459668",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
             "uid": "2767ac02-ce7a-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -931,7 +931,7 @@ Object {
           Object {
             "complianceName": "case1-test-policy",
             "complianceNamespace": "default",
-            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "complianceSelfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "detail": Object {
               "exclude_namespace": Array [
                 "*",
@@ -943,7 +943,7 @@ Object {
             "name": "case1-test-policy",
             "objectTemplates": Array [],
             "raw": Object {
-              "apiVersion": "policies.open-cluster-management.io/v1",
+              "apiVersion": "policy.open-cluster-management.io/v1",
               "clusterConsoleURL": Object {},
               "clusterNS": Object {},
               "clusters": Array [
@@ -952,39 +952,39 @@ Object {
               "kind": "Policy",
               "metadata": Object {
                 "annotations": Object {
-                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-                  "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-                  "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-                  "policies.open-cluster-management.io/standards": "NIST-CSF",
+                  "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                  "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                  "policy.open-cluster-management.io/standards": "NIST-CSF",
                 },
                 "creationTimestamp": "2020-05-15T08:24:33Z",
                 "generation": 1,
                 "name": "case1-test-policy",
                 "namespace": "default",
                 "resourceVersion": "27550277",
-                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
                 "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
               },
               "name": "case1-test-policy",
               "namespace": "default",
               "raw": Object {
-                "apiVersion": "policies.open-cluster-management.io/v1",
+                "apiVersion": "policy.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
                   "annotations": Object {
-                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-                    "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-                    "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-                    "policies.open-cluster-management.io/standards": "NIST-CSF",
+                    "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                    "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                    "policy.open-cluster-management.io/standards": "NIST-CSF",
                   },
                   "creationTimestamp": "2020-05-15T08:24:33Z",
                   "generation": 1,
                   "name": "case1-test-policy",
                   "namespace": "default",
                   "resourceVersion": "27550277",
-                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                  "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
                   "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
                 },
                 "spec": Object {
@@ -1091,29 +1091,29 @@ Object {
           "name": "case1-test-policy",
           "namespace": "default",
           "resourceVersion": "27550277",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
           "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-              "policies.open-cluster-management.io/standards": "NIST-CSF",
+              "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policy.open-cluster-management.io/standards": "NIST-CSF",
             },
             "creationTimestamp": "2020-05-15T08:24:33Z",
             "generation": 1,
             "name": "case1-test-policy",
             "namespace": "default",
             "resourceVersion": "27550277",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
           },
           "spec": Object {
@@ -1176,7 +1176,7 @@ Object {
           Object {
             "complianceName": "case1-test-policy",
             "complianceNamespace": "default",
-            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "complianceSelfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "detail": Object {
               "exclude_namespace": Array [
                 "*",
@@ -1188,7 +1188,7 @@ Object {
             "name": "case1-test-policy",
             "objectTemplates": Array [],
             "raw": Object {
-              "apiVersion": "policies.open-cluster-management.io/v1",
+              "apiVersion": "policy.open-cluster-management.io/v1",
               "clusterConsoleURL": Object {
                 "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
               },
@@ -1201,39 +1201,39 @@ Object {
               "kind": "Policy",
               "metadata": Object {
                 "annotations": Object {
-                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+                  "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-                  "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-                  "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-                  "policies.open-cluster-management.io/standards": "NIST-CSF",
+                  "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                  "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                  "policy.open-cluster-management.io/standards": "NIST-CSF",
                 },
                 "creationTimestamp": "2020-05-15T08:24:33Z",
                 "generation": 1,
                 "name": "case1-test-policy",
                 "namespace": "default",
                 "resourceVersion": "27550277",
-                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
                 "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
               },
               "name": "case1-test-policy",
               "namespace": "default",
               "raw": Object {
-                "apiVersion": "policies.open-cluster-management.io/v1",
+                "apiVersion": "policy.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
                   "annotations": Object {
-                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+                    "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-                    "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-                    "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-                    "policies.open-cluster-management.io/standards": "NIST-CSF",
+                    "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+                    "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+                    "policy.open-cluster-management.io/standards": "NIST-CSF",
                   },
                   "creationTimestamp": "2020-05-15T08:24:33Z",
                   "generation": 1,
                   "name": "case1-test-policy",
                   "namespace": "default",
                   "resourceVersion": "27550277",
-                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+                  "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
                   "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
                 },
                 "spec": Object {
@@ -1340,29 +1340,29 @@ Object {
           "name": "case1-test-policy",
           "namespace": "default",
           "resourceVersion": "27550277",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
           "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
-              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policies.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policies.open-cluster-management.io/categories':'PR.DS DataSecurity','policies.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policies.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
+              "kubectl.kubernetes.io/last-applied-configuration": "{'apiVersion':'policy.open-cluster-management.io/v1','kind':'Policy','metadata':{'annotations':{'policy.open-cluster-management.io/categories':'PR.DS DataSecurity','policy.open-cluster-management.io/controls':'PR.DS-2 Data-in-transit','policy.open-cluster-management.io/standards':'NIST-CSF'},'name':'case1-test-policy','namespace':'default'},'spec':{'disabled':false,'policy-templates':[{'objectDefinition':{'apiVersion':'policies.ibm.com/v1alpha1','kind':'TrustedContainerPolicy','metadata':{'name':'case1-test-policy-trustedcontainerpolicy'},'spec':{'imageRegistry':'quay.io','namespaceSelector':{'exclude':['kube-system'],'include':['default']},'remediationAction':'inform','severity':'low'}}}],'remediationAction':'inform'}}
 ",
-              "policies.open-cluster-management.io/categories": "PR.DS DataSecurity",
-              "policies.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
-              "policies.open-cluster-management.io/standards": "NIST-CSF",
+              "policy.open-cluster-management.io/categories": "PR.DS DataSecurity",
+              "policy.open-cluster-management.io/controls": "PR.DS-2 Data-in-transit",
+              "policy.open-cluster-management.io/standards": "NIST-CSF",
             },
             "creationTimestamp": "2020-05-15T08:24:33Z",
             "generation": 1,
             "name": "case1-test-policy",
             "namespace": "default",
             "resourceVersion": "27550277",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/case1-test-policy",
             "uid": "e919bf5c-df16-4b90-ae01-a39da7138623",
           },
           "spec": Object {
@@ -1416,7 +1416,7 @@ Object {
           Object {
             "complianceName": "policy-xz-1",
             "complianceNamespace": "mycluster",
-            "complianceSelfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+            "complianceSelfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
             "detail": Object {
               "exclude_namespace": Array [
                 "kube*",
@@ -1428,7 +1428,7 @@ Object {
             "name": "policy-xz-1",
             "objectTemplates": Array [],
             "raw": Object {
-              "apiVersion": "policies.open-cluster-management.io/v1",
+              "apiVersion": "policy.open-cluster-management.io/v1",
               "clusterConsoleURL": Object {
                 "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
               },
@@ -1459,13 +1459,13 @@ Object {
                   },
                 ],
                 "resourceVersion": "4349995",
-                "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+                "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
                 "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
               },
               "name": "policy-xz-1",
               "namespace": "mycluster",
               "raw": Object {
-                "apiVersion": "policies.open-cluster-management.io/v1",
+                "apiVersion": "policy.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
                   "creationTimestamp": "2018-09-04T16:13:50Z",
@@ -1489,7 +1489,7 @@ Object {
                     },
                   ],
                   "resourceVersion": "4349995",
-                  "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+                  "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
                   "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
                 },
                 "spec": Object {
@@ -1706,14 +1706,14 @@ Object {
           "name": "policy-xz-1",
           "namespace": "mycluster",
           "resourceVersion": "4349995",
-          "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
           "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
         "raw": Object {
-          "apiVersion": "policies.open-cluster-management.io/v1",
+          "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
             "creationTimestamp": "2018-09-04T16:13:50Z",
@@ -1737,7 +1737,7 @@ Object {
               },
             ],
             "resourceVersion": "4349995",
-            "selfLink": "/apis/policies.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
             "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
           },
           "spec": Object {

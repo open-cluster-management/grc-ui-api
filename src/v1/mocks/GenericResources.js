@@ -13,7 +13,7 @@ import ApiGroup from '../lib/ApiGroup';
 export const mockAPIResourceList = {
   kind: 'APIResourceList',
   apiVersion: 'v1',
-  groupVersion: 'policies.open-cluster-management.io/v1',
+  groupVersion: 'policy.open-cluster-management.io/v1',
   resources:
   [
     {
@@ -90,8 +90,8 @@ export const kubeGetMock = {
     '/apis/policies.ibm.com',
     '/apis/policies.ibm.com/v1alpha1',
     '/apis/policy',
-    '/apis/policies.open-cluster-management.io',
-    '/apis/policies.open-cluster-management.io/v1',
+    '/apis/policy.open-cluster-management.io',
+    '/apis/policy.open-cluster-management.io/v1',
     '/apis/policy/v1beta1',
     '/apis/rbac.authorization.k8s.io',
     '/apis/rbac.authorization.k8s.io/v1',
@@ -141,7 +141,7 @@ export const mockCreateResourcesResponse = {
       errors: [],
       result: [
         {
-          apiVersion: 'policies.open-cluster-management.io/v1',
+          apiVersion: 'policy.open-cluster-management.io/v1',
           kind: 'Policy',
           metadata: {
             creationTimestamp: '2019-07-24T16:13:38Z',
@@ -173,13 +173,13 @@ export const mockCreateResourcesResponse = {
 export const mockUpdateResourcesResponse = {
   data: {
     updateResource: {
-      apiVersion: 'policies.open-cluster-management.io/v1',
+      apiVersion: 'policy.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
         annotations: {
-          'policies.open-cluster-management.io/categories': 'hello',
-          'policies.open-cluster-management.io/controls': '',
-          'policies.open-cluster-management.io/standards': '',
+          'policy.open-cluster-management.io/categories': 'hello',
+          'policy.open-cluster-management.io/controls': '',
+          'policy.open-cluster-management.io/standards': '',
           'seed-generation': '1',
         },
         creationTimestamp: '2019-07-24T13:27:59Z',

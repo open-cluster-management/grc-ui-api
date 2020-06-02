@@ -49,7 +49,7 @@ describe('Policy Resolver', () => {
     APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses')
       .reply(200, mockClusterHubListResponse);
 
-    APIServer.post('/policies.policies.open-cluster-management.io')
+    APIServer.post('/policies.policy.open-cluster-management.io')
       .reply(200, mockViolationListResponse);
 
     APIServer.delete(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies/test-policy`)
@@ -92,7 +92,7 @@ describe('Policy Resolver', () => {
     APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/clusterhub')
       .reply(200, mockClusterHubResponse);
 
-    APIServer.get('/policies.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy')
+    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy')
       .reply(200, mockNewAPISinglePolicyResponse);
   });
 
@@ -270,7 +270,7 @@ describe('Policy Resolver', () => {
         query: `
         mutation {
           createPolicy(resources:[{
-            apiVersion: "policies.open-cluster-management.io/v1",
+            apiVersion: "policy.open-cluster-management.io/v1",
             kind: "Policy",
             metadata: {
               name: "test-policy",

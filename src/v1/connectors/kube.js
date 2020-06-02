@@ -9,7 +9,7 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
-import lru from 'lru-cache';
+import LRU from 'lru-cache';
 import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';
@@ -21,7 +21,7 @@ function selectNamespace(namespaces) {
 
 export default class KubeConnector {
   constructor({
-    cache = lru(),
+    cache = new LRU(),
     token = 'Bearer localdev',
     httpLib = requestLib,
     kubeApiEndpoint = process.env.API_SERVER_URL || 'https://kubernetes.default.svc',

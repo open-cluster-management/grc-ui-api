@@ -26,7 +26,6 @@ import KubeConnector from './connectors/kube';
 import ClusterModel from './models/cluster';
 import PlacementModel from './models/placement';
 import GenericModel from './models/generic';
-import QueryModel from './models/userquery';
 import ComplianceModel from './models/compliance';
 import SAModel from './models/sa';
 
@@ -101,7 +100,6 @@ graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) =>
     clusterModel: new ClusterModel({ kubeConnector }),
     PlacementModel: new PlacementModel({ kubeConnector }),
     genericModel: new GenericModel({ kubeConnector }),
-    queryModel: new QueryModel({ kubeConnector, req }),
     complianceModel: new ComplianceModel({ kubeConnector }),
     saModel: new SAModel({ kubeConnector, req }),
   };

@@ -581,19 +581,17 @@ export default class ComplianceModel {
     return policyResult;
   }
 
-  // to-do fix the gap between policy call and resourceview for missing field on cluster side panel
   async getAllPoliciesInCluster(cluster) {
     const allPoliciesInClusterResult = [];
     // if cluster name specified
     if (cluster !== undefined) {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster}/policies/`;
       const policyListResponse = await this.kubeConnector.get(URL);
-      const policyListItems = _.get(policyListResponse, 'items', '');
-      if (Array.isArray(policyListItems) && policyListItems.length > 0) {
-        policyListItems.forEach((policy) => {
-          const policyNS = _.get(policy, metadataNsStr, 'metadata.labels.cluster-name')
-            .trim().toLowerCase();
-          if (policyNS && policyNS === cluster.trim().toLowerCase()) {
+      const policyList = _.get(policyListResponse, 'items', '');
+      if (Array.isArray(policyList) && policyList.length > 0) {
+        policyList.forEach((policy) => {
+          const policyNS = _.get(policy, metadataNsStr, '');
+          if (policyNS && policyNS.trim().toLowerCase() === cluster.trim().toLowerCase()) {
             allPoliciesInClusterResult.push({ ...policy, raw: policy });
           }
         });

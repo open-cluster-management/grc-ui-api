@@ -587,12 +587,12 @@ export default class ComplianceModel {
     if (cluster !== undefined) {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster}/policies/`;
       const policyListResponse = await this.kubeConnector.get(URL);
-      const policyList = _.get(policyListResponse, 'items', '');
-      if (Array.isArray(policyList) && policyList.length > 0) {
-        policyList.forEach((policy) => {
-          const policyNS = _.get(policy, metadataNsStr, '');
+      const policyListItems = _.get(policyListResponse, 'items', '');
+      if (Array.isArray(policyListItems) && policyListItems.length > 0) {
+        policyListItems.forEach((policyItem) => {
+          const policyNS = _.get(policyItem, metadataNsStr, '');
           if (policyNS && policyNS.trim().toLowerCase() === cluster.trim().toLowerCase()) {
-            allPoliciesInClusterResult.push({ ...policy, raw: policy });
+            allPoliciesInClusterResult.push({ ...policyItem, raw: policyItem });
           }
         });
       }

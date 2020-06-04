@@ -638,6 +638,7 @@ export default class ComplianceModel {
                 policyListDetails.forEach((detail) => {
                   policyListStatuses.push({
                     name: _.get(detail, 'templateMeta.name', '-'),
+                    compliant: _.get(detail, 'compliant', '-'),
                     message: _.get(detail, 'history[0].message', '-'),
                     timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
                   });

@@ -1758,11 +1758,11 @@ export const mockCreatePolicy = {
 };
 
 
-export const mockPlacementPolicyResponse = {
+export const mockPlacementRuleResponse = {
   kind: 'PlacementRuleList',
   apiVersion: 'apps.open-cluster-management.io/v1',
   metadata: {
-    selfLink: `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/mcm/placementpolicies`,
+    selfLink: `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/mcm/placementrules`,
     resourceVersion: '51490',
   },
   items: [
@@ -1770,7 +1770,7 @@ export const mockPlacementPolicyResponse = {
       metadata: {
         name: 'placement-xz',
         namespace: 'mcm',
-        selfLink: `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/mcm/placementpolicies/placement-xz`,
+        selfLink: `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/mcm/placementrules/placement-xz`,
         uid: '3df1e8f5-1053-11e9-a535-e2d4c161f9ad',
         resourceVersion: '51486',
         creationTimestamp: '2019-01-04T19:02:11Z',
@@ -1807,9 +1807,9 @@ export const mockPlacementPolicyResponse = {
 
 export const mockPlacementBindingResponse = {
   kind: 'PlacementBindingList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
+  apiVersion: 'policy.open-cluster-management.io/v1',
   metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/mcm/placementbindings`,
+    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/placementbindings`,
     resourceVersion: '48564',
   },
   items: [
@@ -1817,7 +1817,7 @@ export const mockPlacementBindingResponse = {
       metadata: {
         name: 'binding-xz',
         namespace: 'mcm',
-        selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/mcm/placementbindings/binding-xz`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/placementbindings/binding-xz`,
         uid: '7fc24685-0ec6-11e9-a535-e2d4c161f9ad',
         resourceVersion: '249',
         creationTimestamp: '2019-01-02T19:42:12Z',

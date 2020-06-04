@@ -18,7 +18,7 @@ import {
   mockRootPoliciesListResponse, mockRootPolicyResponse,
 } from '../mocks/ComplianceList';
 import {
-  mockPlacementBindingResponse, mockPlacementPolicyResponse,
+  mockPlacementBindingResponse, mockPlacementRuleResponse,
   mockSinglePolicyResponse, mockSingleNoPolicyResponse,
 } from '../mocks/PolicyList';
 import {
@@ -57,28 +57,28 @@ describe('Compliance Resolver', () => {
     APIServer.get('/policy.open-cluster-management.io/v1/namespaces/default/policies')
       .reply(200, mockRootPoliciesListResponse);
     // Placement bindings
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/mcm/placementbindings')
+    APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/mcm/placementbindings')
       .reply(200, mockPlacementBindingResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/cluster1/placementbindings')
+    APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/cluster1/placementbindings')
       .reply(200, mockPlacementBindingResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/placementbindings')
+    APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/clusterhub/placementbindings')
       .reply(200, mockPlacementBindingResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/kube-system/placementbindings')
+    APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/kube-system/placementbindings')
       .reply(200, mockPlacementBindingResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/default/placementbindings')
+    APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/default/placementbindings')
       .reply(200, mockPlacementBindingResponse);
 
-    // Placement policies
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/mcm/placementpolicies')
-      .reply(200, mockPlacementPolicyResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/cluster1/placementpolicies')
-      .reply(200, mockPlacementPolicyResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/placementpolicies')
-      .reply(200, mockPlacementPolicyResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/kube-system/placementpolicies')
-      .reply(200, mockPlacementPolicyResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/default/placementpolicies')
-      .reply(200, mockPlacementPolicyResponse);
+    // Placement rules
+    APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/mcm/placementrules')
+      .reply(200, mockPlacementRuleResponse);
+    APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/cluster1/placementrules')
+      .reply(200, mockPlacementRuleResponse);
+    APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/clusterhub/placementrules')
+      .reply(200, mockPlacementRuleResponse);
+    APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/kube-system/placementrules')
+      .reply(200, mockPlacementRuleResponse);
+    APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/default/placementrules')
+      .reply(200, mockPlacementRuleResponse);
 
     // Create compliance
     APIServer.post('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances')

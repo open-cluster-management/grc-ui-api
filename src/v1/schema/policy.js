@@ -31,14 +31,11 @@ type Policy implements K8sObject {
 
 type ClusterInfo implements K8sObject {
   name: String
-  kind: String
-  apiVersion: String
-  spec: JSON
-  metadata: Metadata
-  status: JSON
   total: String
   violated: String
-  policy: JSON
+  policyListStatuses: JSON
+  metadata: Metadata
+  spec: JSON
 }
 
 type PolicyDetail {

@@ -627,18 +627,23 @@ export default class ComplianceModel {
             `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster.name}/policies/`;
           const singlePolicyList = await this.kubeConnector.get(singlePolicyListURL);
           const policyListItems = _.get(singlePolicyList, 'items');
-          let policyListStatuses = [];
+          const policyListStatuses = [];
           // only keep policies list info for this policy (policyName)
           if (Array.isArray(policyListItems) && policyListItems.length > 0) {
-            const policyListStatusesPromise = policyListItems.map(async (policyListItem) => {
-              const policyNameTemp = _.get(policyListItem, 'metadata.name').trim().toLowerCase();
-              if (policyNameTemp === `${hubNamespace.trim().toLowerCase()}.${policyName.trim().toLowerCase()}`
-              || policyNameTemp === policyName.trim().toLowerCase()) {
-                return _.get(policyListItem, statusDetails);
+            policyListItems.forEach((policyListItem) => {
+              const itemName = _.get(policyListItem, 'metadata.name').trim().toLowerCase();
+              if (itemName === `${hubNamespace.trim().toLowerCase()}.${policyName.trim().toLowerCase()}`
+              || itemName === policyName.trim().toLowerCase()) {
+                const policyListDetails = _.get(policyListItem, statusDetails);
+                policyListDetails.forEach((detail) => {
+                  policyListStatuses.push({
+                    name: _.get(detail, 'templateMeta.name', '-'),
+                    message: _.get(detail, 'history[0].message', '-'),
+                    timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+                  });
+                });
               }
-              return null;
             });
-            policyListStatuses = await Promise.all(policyListStatusesPromise);
           }
           return {
             ...cluster,
@@ -666,7 +671,6 @@ export default class ComplianceModel {
         });
       }
     }
-
     return allClustersInPolicyResult;
   }
 

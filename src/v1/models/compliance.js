@@ -31,6 +31,7 @@ const statusLastTransTimeStr = 'status.conditions[0].lastTransitionTime';
 const statusValidityValidStr = 'status.Validity.valid';
 const statusValidityStr = 'status.Validity';
 const objMetadataNameStr = 'objectDefinition.metadata.name';
+const statusDetails = 'status.details';
 
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
@@ -633,7 +634,7 @@ export default class ComplianceModel {
               const policyNameTemp = _.get(policyListItem, 'metadata.name').trim().toLowerCase();
               if (policyNameTemp === `${hubNamespace.trim().toLowerCase()}.${policyName.trim().toLowerCase()}`
               || policyNameTemp === policyName.trim().toLowerCase()) {
-                return _.get(policyListItem, 'status.details');
+                return _.get(policyListItem, statusDetails);
               }
               return null;
             });
@@ -784,7 +785,7 @@ export default class ComplianceModel {
     const violations = [];
     policyResponses.forEach((policyResponse) => {
       const cluster = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-name"]', '-');
-      let details = _.get(policyResponse, 'status.details', []);
+      let details = _.get(policyResponse, statusDetails, []);
       details = details.filter(detail => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
       details.forEach((detail) => {
         violations.push({
@@ -919,7 +920,7 @@ export default class ComplianceModel {
 
   static resolvePolicyViolations(parent, displayVioOnly = false) {
     const violationArray = [];
-    let details = _.get(parent, 'status.details', []);
+    let details = _.get(parent, statusDetails, []);
     if (displayVioOnly) {
       details = details.filter(detail => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
     }

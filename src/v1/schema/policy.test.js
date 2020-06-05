@@ -28,6 +28,9 @@ describe('Policy Resolver', () => {
     APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
       .reply(200, mockPolicyListResponse);
 
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies`)
+      .reply(200, mockPolicyListResponse);
+
     APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-all`)
       .reply(200, mockSinglePolicyResponse);
 
@@ -104,6 +107,8 @@ describe('Policy Resolver', () => {
         {
           policiesInCluster(cluster: "cluster1") {
             cluster
+            apiVersion
+            kind
             metadata {
               name
               namespace
@@ -113,13 +118,9 @@ describe('Policy Resolver', () => {
               resourceVersion
               uid
             }
+            spec
             status
-            enforcement
-            detail {
-              exclude_namespace
-              include_namespace
-            }
-            raw
+            policiesStatusDetails
           }
         }
       `,
@@ -376,6 +377,9 @@ describe('Policy Resolver', () => {
         {
           clustersInPolicy(policy: "policy-namespace", hubNamespace: "mcm") {
             name
+            total
+            violated
+            policyListStatuses
             metadata {
               labels
               name
@@ -384,13 +388,7 @@ describe('Policy Resolver', () => {
               uid
               selfLink
             }
-            kind
-            apiVersion
             spec
-            status
-            total
-            violated
-            policy
           }
         }
       `,

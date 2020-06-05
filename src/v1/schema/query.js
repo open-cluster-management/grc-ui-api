@@ -16,7 +16,7 @@ type Query {
 
   # Policies and Compliances
   policies(name: String, clusterName: String): [Policy]
-  policiesInCluster(cluster: String): [Policy]
+  policiesInCluster(cluster: String): [PolicyInfo]
   clustersInPolicy(policy: String, hubNamespace: String): [ClusterInfo]
   policiesInApplication(violatedPolicies: JSON): [Policy]
   violationsInPolicy(policy: String, namespace: String): [Violations]

@@ -588,12 +588,22 @@ export default class ComplianceModel {
     if (cluster !== undefined) {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster}/policies/`;
       const policyListResponse = await this.kubeConnector.get(URL);
-      const policyListItems = _.get(policyListResponse, 'items', '');
+      const policyListItems = _.get(policyListResponse, 'items');
       if (Array.isArray(policyListItems) && policyListItems.length > 0) {
-        policyListItems.forEach((policyItem) => {
-          const policyNS = _.get(policyItem, metadataNsStr, '');
+        policyListItems.forEach((policyListItem) => {
+          const policyNS = _.get(policyListItem, metadataNsStr);
           if (policyNS && policyNS.trim().toLowerCase() === cluster.trim().toLowerCase()) {
-            allPoliciesInClusterResult.push({ ...policyItem, raw: policyItem });
+            const policiesStatusDetails = [];
+            const policyListDetails = _.get(policyListItem, statusDetails);
+            policyListDetails.forEach((detail) => {
+              policiesStatusDetails.push({
+                name: _.get(detail, 'templateMeta.name', '-'),
+                compliant: _.get(detail, 'compliant', '-'),
+                message: _.get(detail, 'history[0].message', '-'),
+                timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+              });
+            });
+            allPoliciesInClusterResult.push({ cluster, ...policyListItem, policiesStatusDetails });
           }
         });
       }

@@ -600,7 +600,7 @@ export default class ComplianceModel {
                 name: _.get(detail, 'templateMeta.name', '-'),
                 compliant: _.get(detail, 'compliant', '-'),
                 message: _.get(detail, 'history[0].message', '-'),
-                timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+                lastTimestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
               });
             });
             allPoliciesInClusterResult.push({ cluster, ...policyListItem, policiesStatusDetails });
@@ -650,7 +650,7 @@ export default class ComplianceModel {
                     name: _.get(detail, 'templateMeta.name', '-'),
                     compliant: _.get(detail, 'compliant', '-'),
                     message: _.get(detail, 'history[0].message', '-'),
-                    timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+                    lastTimestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
                   });
                 });
               }

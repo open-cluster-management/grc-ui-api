@@ -32,6 +32,9 @@ const statusValidityValidStr = 'status.Validity.valid';
 const statusValidityStr = 'status.Validity';
 const objMetadataNameStr = 'objectDefinition.metadata.name';
 const statusDetails = 'status.details';
+const templateMetaNameStr = 'templateMeta.name';
+const historyLatestMessageStr = 'history[0].message';
+const historyLatestTimestampStr = 'history[0].lastTimestamp';
 
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
@@ -597,10 +600,10 @@ export default class ComplianceModel {
             const policyListDetails = _.get(policyListItem, statusDetails);
             policyListDetails.forEach((detail) => {
               policiesStatusDetails.push({
-                name: _.get(detail, 'templateMeta.name', '-'),
+                name: _.get(detail, templateMetaNameStr, '-'),
                 compliant: _.get(detail, 'compliant', '-'),
-                message: _.get(detail, 'history[0].message', '-'),
-                lastTimestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+                message: _.get(detail, historyLatestMessageStr, '-'),
+                lastTimestamp: _.get(detail, historyLatestTimestampStr, '-'),
               });
             });
             allPoliciesInClusterResult.push({ cluster, ...policyListItem, policiesStatusDetails });
@@ -647,10 +650,10 @@ export default class ComplianceModel {
                 const policyListDetails = _.get(policyListItem, statusDetails);
                 policyListDetails.forEach((detail) => {
                   policyListStatuses.push({
-                    name: _.get(detail, 'templateMeta.name', '-'),
+                    name: _.get(detail, templateMetaNameStr, '-'),
                     compliant: _.get(detail, 'compliant', '-'),
-                    message: _.get(detail, 'history[0].message', '-'),
-                    lastTimestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+                    message: _.get(detail, historyLatestMessageStr, '-'),
+                    lastTimestamp: _.get(detail, historyLatestTimestampStr, '-'),
                   });
                 });
               }
@@ -805,9 +808,9 @@ export default class ComplianceModel {
       details.forEach((detail) => {
         violations.push({
           cluster,
-          name: _.get(detail, 'templateMeta.name', '-'),
-          message: _.get(detail, 'history[0].message', '-'),
-          timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+          name: _.get(detail, templateMetaNameStr, '-'),
+          message: _.get(detail, historyLatestMessageStr, '-'),
+          timestamp: _.get(detail, historyLatestTimestampStr, '-'),
           consoleURL: clusterConsoleURL[cluster],
         });
       });
@@ -942,10 +945,10 @@ export default class ComplianceModel {
     const cluster = _.get(parent, 'cluster', '-');
     details.forEach((detail) => {
       violationArray.push({
-        name: _.get(detail, 'templateMeta.name', '-'),
+        name: _.get(detail, templateMetaNameStr, '-'),
         cluster,
-        message: _.get(detail, 'history[0].message', '-'),
-        timestamp: _.get(detail, 'history[0].lastTimestamp', '-'),
+        message: _.get(detail, historyLatestMessageStr, '-'),
+        timestamp: _.get(detail, historyLatestTimestampStr, '-'),
       });
     });
     return violationArray;

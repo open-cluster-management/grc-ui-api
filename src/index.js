@@ -30,3 +30,15 @@ server.listen(GRAPHQL_PORT, () => {
     logger.info(`GraphiQL is now running on https://localhost:${GRAPHQL_PORT}${CONTEXT_PATH}/graphiql`);
   }
 });
+
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received.  Shutting down express server.');
+  server.close((err) => {
+    if (err) {
+      logger.error(err);
+      process.exit(1);
+    }
+    logger.info('Server shutdown successfully.');
+    process.exit(0);
+  });
+});

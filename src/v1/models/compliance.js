@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /** *****************************************************************************
  * Licensed Materials - Property of IBM
  * (c) Copyright IBM Corporation 2018, 2019. All Rights Reserved.
@@ -125,11 +126,10 @@ export default class ComplianceModel {
     }
 
     const result = await Promise.all(resources.map(resource =>
-      this.kubeConnector.delete(resource.selfLink)
-        .catch(err => ({
-          status: 'Failure',
-          message: err.message,
-        }))));
+      this.kubeConnector.delete(resource.selfLink).catch(err => ({
+        status: 'Failure',
+        message: err.message,
+      }))));
 
     const errors = [];
     result.forEach((item) => {
@@ -211,28 +211,19 @@ export default class ComplianceModel {
     const allNameSpace = this.kubeConnector.namespaces;
     // remove cluster namespaces
     const nsPromises = allNameSpace.map(async (ns) => {
-      // check ns one by one, if got normal response then it's cluster namespace
-      const checkClusterURL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`;
-      const checkClusterStatusURL = `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`;
-      const [clusters, clusterstatuses] = await Promise.all([
-        this.kubeConnector.get(checkClusterURL),
-        this.kubeConnector.get(checkClusterStatusURL),
-      ]);
-      if (Array.isArray(clusters.items) && clusters.items.length > 0) {
-        clusters.items.forEach((item) => {
-          if (item.metadata && item.metadata.name &&
-              !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
+      const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
+      const [clustersInfo] = await Promise.all([this.kubeConnector.get(checkClustersInfoURL)]);
+      const clusterItems = _.get(clustersInfo, 'items');
+      if (Array.isArray(clusterItems) && clusterItems.length > 0) {
+        clusterItems.forEach((item) => {
+          if (item.metadata && item.metadata.name
+              && !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
               && item.metadata.namespace) {
             // current each cluster only have one namespace
             clusterNS[item.metadata.name] = item.metadata.namespace;
-          }
-        });
-        clusterstatuses.items.forEach((item) => {
-          if (item.metadata && item.metadata.name &&
-              !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
-              && (item.spec && item.spec.consoleURL)) {
-            // current each cluster only have one namespace
-            clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+            if (item.status && item.status.consoleURL) {
+              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
+            }
           }
         });
         return null; // cluster namespaces
@@ -328,7 +319,6 @@ export default class ComplianceModel {
       compliancePolicies[key] = value;
     });
 
-
     if (aggregatedStatus) {
       Object.values(aggregatedStatus).forEach((cluster) => {
         Object.entries(_.get(cluster, 'aggregatePoliciesStatus', {})).forEach(([key, value]) => {
@@ -414,7 +404,6 @@ export default class ComplianceModel {
     return Object.values(tempResult);
   }
 
-
   static resolvePolicyFromSpec(parent) {
     const compliancePolicies = [];
     const policies = _.get(parent, specRuntimeRulesStr, []);
@@ -474,7 +463,6 @@ export default class ComplianceModel {
     return complianceStatus;
   }
 
-
   static resolvePolicyCompliant({ status = {} }) {
     let totalPolicies = 0;
     let compliantPolicies = 0;
@@ -490,7 +478,6 @@ export default class ComplianceModel {
 
     return `${totalPolicies - compliantPolicies}/${totalPolicies}`;
   }
-
 
   static resolveClusterCompliant({ status = {} }) {
     if (status && status.status) {
@@ -618,8 +605,7 @@ export default class ComplianceModel {
     let allClustersInPolicyResult = [];
     if (policyName && hubNamespace) {
       // step 1 get the clusters associated with this policy (policyName)
-      const policyDetailsURL =
-        `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${hubNamespace}/policies/${policyName}`;
+      const policyDetailsURL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${hubNamespace}/policies/${policyName}`;
       const policyDetails = await this.kubeConnector.get(policyDetailsURL);
       const clustersList = _.get(policyDetails, statusStatusStr);
       if (Array.isArray(clustersList) && clustersList.length > 0) {
@@ -636,8 +622,7 @@ export default class ComplianceModel {
         temp = createStatusResult(temp);
         // step 4 for each cluster from step 1, get the policies list info on that cluster
         const policyListPromise = temp.map(async (cluster) => {
-          const singlePolicyListURL =
-            `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster.name}/policies/`;
+          const singlePolicyListURL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${cluster.name}/policies/`;
           const singlePolicyList = await this.kubeConnector.get(singlePolicyListURL);
           const policyListItems = _.get(singlePolicyList, 'items');
           const policyListStatuses = [];
@@ -667,8 +652,7 @@ export default class ComplianceModel {
         allClustersInPolicyResult = await Promise.all(policyListPromise);
         // step 5 get cluster info like consoleURL, need to update cluster Api after installer2.0
         const [clusterStatuses] = await Promise.all([
-          this.kubeConnector.getResources(ns =>
-            `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`),
+          this.kubeConnector.getResources(ns => `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`),
         ]);
         const clusterStatusMap = new Map();
         clusterStatuses.forEach((cluster) => {
@@ -749,22 +733,22 @@ export default class ComplianceModel {
       // check ns one by one, if got normal response then it's cluster namespace
       const checkClusterURL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`;
       const checkClusterStatusURL = `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`;
-      const [clusters, clusterstatuses] = await Promise.all([
+      const [clusters, clusterStatuses] = await Promise.all([
         this.kubeConnector.get(checkClusterURL),
         this.kubeConnector.get(checkClusterStatusURL),
       ]);
       if (Array.isArray(clusters.items) && clusters.items.length > 0) {
         clusters.items.forEach((item) => {
-          if (item && item.metadata && item.metadata.name &&
-            !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
+          if (item && item.metadata && item.metadata.name
+            && !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
             && item.metadata.namespace) {
             // current each cluster only have one namespace
             clusterNS[item.metadata.name] = item.metadata.namespace;
           }
         });
-        clusterstatuses.items.forEach((item) => {
-          if (item && item.metadata && item.metadata.name &&
-            !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
+        clusterStatuses.items.forEach((item) => {
+          if (item && item.metadata && item.metadata.name
+            && !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
             && (item.spec && item.spec.consoleURL)) {
             // current each cluster only have one namespace
             clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;

@@ -14,6 +14,7 @@ import _ from 'lodash';
 import logger from '../lib/logger';
 import config from '../../../config';
 import ApiGroup from '../lib/ApiGroup';
+import getTypedNS from '../lib/getTypedNS';
 
 const POLICY_FAILURE_STATUS = 'Failure';
 const metadataNameStr = 'metadata.name';
@@ -142,15 +143,13 @@ export default class ComplianceModel {
   }
 
   // get a single policy on a specific namespace
-  async getSinglePolicy(policies, name, urlNameSpace) {
+  async getSinglePolicy(name, urlNameSpace) {
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
       logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-    } else {
-      policies.push(policyResponse);
     }
-    return policies;
+    return policyResponse;
   }
 
   // get a single policy on all non-clusters namespaces
@@ -203,45 +202,54 @@ export default class ComplianceModel {
     return _.flatten(policies);
   }
 
-  // get the list of all non-clusters namespaces
-  async getNonClusterNS() {
-    const clusterNS = {};
-    const clusterConsoleURL = {};
-    // all possible namespaces
-    const allNameSpace = this.kubeConnector.namespaces;
-    // remove cluster namespaces
-    const nsPromises = allNameSpace.map(async (ns) => {
-      const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
-      const [clustersInfo] = await Promise.all([this.kubeConnector.get(checkClustersInfoURL)]);
-      const clusterItems = _.get(clustersInfo, 'items');
-      if (Array.isArray(clusterItems) && clusterItems.length > 0) {
-        clusterItems.forEach((item) => {
-          if (item.metadata && item.metadata.name
-              && !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-              && item.metadata.namespace) {
-            // current each cluster only have one namespace
-            clusterNS[item.metadata.name] = item.metadata.namespace;
-            if (item.status && item.status.consoleURL) {
-              clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-            }
-          }
-        });
-        return null; // cluster namespaces
-      }
-      return ns; // non cluster namespaces
-    });
+  // // if nsType === 'allNonClusteNS', get the list of all non-clusters namespaces
+  // // if nsType === 'allClusterNS', get the list of all clusters namespaces
+  // async getTypedNS(nsType) {
+  //   const clusterNSTemp = {};
+  //   const clusterConsoleURLTemp = {};
 
-    // here need to await all async check cluster namespace calls completed
-    let allNonClusterNameSpace = await Promise.all(nsPromises);
-    // remove cluster namespaces which already set to null
-    allNonClusterNameSpace = allNonClusterNameSpace.filter(ns => ns !== null);
+  //   // all possible namespaces
+  //   const allNameSpace = this.kubeConnector.namespaces;
+  //   // remove cluster namespaces
+  //   const nsPromises = allNameSpace.map(async (ns) => {
+  //     const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
+  //     const [clustersInfo] = await Promise.all([this.kubeConnector.get(checkClustersInfoURL)]);
+  //     const clusterItems = _.get(clustersInfo, 'items');
+  //     if (Array.isArray(clusterItems) && clusterItems.length > 0) {
+  //       logger.info(`ns is ${ns} : ${JSON.stringify(clusterItems)}`);
+  //       clusterItems.forEach((item) => {
+  //         if (item.metadata && item.metadata.name
+  //             && !Object.prototype.hasOwnProperty.call(clusterNSTemp, item.metadata.name)
+  //             && item.metadata.namespace) {
+  //           // current each cluster only have one namespace
+  //           clusterNSTemp[item.metadata.name] = item.metadata.namespace;
+  //           if (item.status && item.status.consoleURL) {
+  //             clusterConsoleURLTemp[item.metadata.name] = item.spec.consoleURL;
+  //           }
+  //         }
+  //       });// if nsType === 'allClusterNS', put cluster namespaces into final result
+  //       return (nsType === 'allNonClusterNS') ? null : ns;
+  //     }// if nsType === 'allNonClusteNS', put non cluster namespaces into final result
+  //     return (nsType === 'allNonClusterNS') ? ns : null;
+  //   });
 
-    return {
-      clusterNS,
-      clusterConsoleURL,
-      allNonClusterNameSpace,
-    };
-  }
+  //   let nsResults = await Promise.all(nsPromises);
+  //   nsResults = nsResults.filter(ns => ns !== null);
+
+  //   const finalResult = (nsType === 'allNonClusterNS') ?
+  //     {
+  //       clusterNSTemp,
+  //       clusterConsoleURLTemp,
+  //       allNonClusterNS: nsResults,
+  //     } :
+  //     {
+  //       clusterNSTemp,
+  //       clusterConsoleURLTemp,
+  //       allClusterNS: nsResults,
+  //     };
+
+  //   return finalResult;
+  // }
 
   async getCompliances(name, namespace) {
     const urlNameSpace = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
@@ -251,22 +259,22 @@ export default class ComplianceModel {
 
     if (namespace) {
       if (name) {
-        policies = await this.getSinglePolicy(policies, name, urlNameSpace);
+        policies.push(await this.getSinglePolicy(name, urlNameSpace));
       } else {
         policies = await this.getPolicyListSingleNS(urlNameSpace);
       }
     } else {
       const {
-        clusterNS: localClusterNS,
-        clusterConsoleURL: localClusterConsoleURL,
-        allNonClusterNameSpace,
-      } = await this.getNonClusterNS();
-      clusterNS = localClusterNS;
-      clusterConsoleURL = localClusterConsoleURL;
+        clusterNSTemp,
+        clusterConsoleURLTemp,
+        allNonClusterNS,
+      } = await getTypedNS(this.kubeConnector, 'allNonClusterNS');
+      clusterNS = clusterNSTemp;
+      clusterConsoleURL = clusterConsoleURLTemp;
       if (name) {
-        policies = await this.getSinglePolicyAllNS(name, allNonClusterNameSpace);
+        policies = await this.getSinglePolicyAllNS(name, allNonClusterNS);
       } else {
-        policies = await this.getPolicyListAllNS(allNonClusterNameSpace);
+        policies = await this.getPolicyListAllNS(allNonClusterNS);
       }
     }
 
@@ -723,48 +731,11 @@ export default class ComplianceModel {
     if (policyName === null) {
       return resultsWithPolicyName;
     }
-    const clusterNS = {};
     const clusterConsoleURL = {};
+    // nsType === 'allClusterNS', get the list of all clusters namespaces
+    const { allClusterNS } = await getTypedNS(this.kubeConnector, 'allClusterNS');
 
-    // all possible namespaces
-    const allNameSpace = this.kubeConnector.namespaces;
-    // remove cluster namespaces
-    const nsPromises = allNameSpace.map(async (ns) => {
-      // check ns one by one, if got normal response then it's cluster namespace
-      const checkClusterURL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`;
-      const checkClusterStatusURL = `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`;
-      const [clusters, clusterStatuses] = await Promise.all([
-        this.kubeConnector.get(checkClusterURL),
-        this.kubeConnector.get(checkClusterStatusURL),
-      ]);
-      if (Array.isArray(clusters.items) && clusters.items.length > 0) {
-        clusters.items.forEach((item) => {
-          if (item && item.metadata && item.metadata.name
-            && !Object.prototype.hasOwnProperty.call(clusterNS, item.metadata.name)
-            && item.metadata.namespace) {
-            // current each cluster only have one namespace
-            clusterNS[item.metadata.name] = item.metadata.namespace;
-          }
-        });
-        clusterStatuses.items.forEach((item) => {
-          if (item && item.metadata && item.metadata.name
-            && !Object.prototype.hasOwnProperty.call(clusterConsoleURL, item.metadata.name)
-            && (item.spec && item.spec.consoleURL)) {
-            // current each cluster only have one namespace
-            clusterConsoleURL[item.metadata.name] = item.spec.consoleURL;
-          }
-        });
-        return ns; // cluster namespaces
-      }
-      return null; // non cluster namespaces
-    });
-
-    // here need to await all async check cluster namespace calls completed
-    let allClusterNameSpace = await Promise.all(nsPromises);
-    // remove cluster namespaces which already set to null
-    allClusterNameSpace = allClusterNameSpace.filter(ns => ns !== null);
-
-    const promises = allClusterNameSpace.map(async (ns) => {
+    const promises = allClusterNS.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {

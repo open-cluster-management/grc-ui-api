@@ -1,17 +1,17 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 import _ from 'lodash';
 
-// if nsType === 'allNonClusteNS', get the list of all non-clusters namespaces
-// if nsType === 'allClusterNS', get the list of all clusters namespaces
-// here passed kubeConnector as a parameter so this function can be reused anywhere
-export default async function getTypedNS(kubeConnectorPara, nsType) {
+// nsType === 'allNonClusteNS' then get the list of all non-clusters namespaces
+// nsType === 'allClusterNS' then get the list of all clusters namespaces
+// here kubeConnector is passed as parameter so getTypedNS function can be reused anywhere
+export default async function getTypedNS(kubeConnector, nsType) {
   const clusterNSTemp = {};
   const clusterConsoleURLTemp = {};
   // all possible namespaces
-  const allNameSpace = kubeConnectorPara.namespaces;
-  const nsPromises = allNameSpace.map(async (ns) => {
+  const allNS = kubeConnector.namespaces;
+  const nsPromises = allNS.map(async (ns) => {
     const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
-    const [clustersInfo] = await Promise.all([kubeConnectorPara.get(checkClustersInfoURL)]);
+    const [clustersInfo] = await Promise.all([kubeConnector.get(checkClustersInfoURL)]);
     const clusterItems = _.get(clustersInfo, 'items');
     if (Array.isArray(clusterItems) && clusterItems.length > 0) {
       clusterItems.forEach((item) => {
@@ -21,7 +21,7 @@ export default async function getTypedNS(kubeConnectorPara, nsType) {
           // current each cluster only have one namespace
           clusterNSTemp[item.metadata.name] = item.metadata.namespace;
           if (item.status && item.status.consoleURL) {
-            clusterConsoleURLTemp[item.metadata.name] = item.spec.consoleURL;
+            clusterConsoleURLTemp[item.metadata.name] = item.status.consoleUR;
           }
         }
       });// if nsType === 'allClusterNS', put cluster namespaces into final result
@@ -33,7 +33,7 @@ export default async function getTypedNS(kubeConnectorPara, nsType) {
   let nsResults = await Promise.all(nsPromises);
   nsResults = nsResults.filter(ns => ns !== null);
 
-  const finalTypedResult = (nsType === 'allNonClusterNS') ?
+  const finalResult = (nsType === 'allNonClusterNS') ?
     {
       clusterNSTemp,
       clusterConsoleURLTemp,
@@ -45,5 +45,5 @@ export default async function getTypedNS(kubeConnectorPara, nsType) {
       allClusterNS: nsResults,
     };
 
-  return finalTypedResult;
+  return finalResult;
 }

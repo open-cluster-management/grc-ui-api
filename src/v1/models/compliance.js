@@ -143,8 +143,8 @@ export default class ComplianceModel {
   }
 
   // get a single policy on a specific namespace
-  async getSinglePolicy(name, urlNameSpace) {
-    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies/${name}`;
+  async getSinglePolicy(name, urlNS) {
+    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNS}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
       logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -153,8 +153,8 @@ export default class ComplianceModel {
   }
 
   // get a single policy on all non-clusters namespaces
-  async getSinglePolicyAllNS(name, allNonClusterNameSpace) {
-    const promises = allNonClusterNameSpace.map(async (ns) => {
+  async getSinglePolicyAllNS(name, allNonClusterNS) {
+    const promises = allNonClusterNS.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
@@ -170,8 +170,8 @@ export default class ComplianceModel {
   }
 
   // get the policy list on a specific namespace
-  async getPolicyListSingleNS(urlNameSpace) {
-    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNameSpace}/policies`;
+  async getPolicyListSingleNS(urlNS) {
+    const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNS}/policies`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
       logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
@@ -180,8 +180,8 @@ export default class ComplianceModel {
   }
 
   // general case for all policies, get the policy list on all non-clusters namespaces
-  async getPolicyListAllNS(allNonClusterNameSpace) {
-    const promises = allNonClusterNameSpace.map(async (ns) => {
+  async getPolicyListAllNS(allNonClusterNS) {
+    const promises = allNonClusterNS.map(async (ns) => {
       const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
@@ -203,16 +203,16 @@ export default class ComplianceModel {
   }
 
   async getCompliances(name, namespace) {
-    const urlNameSpace = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
+    const urlNS = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
     let policies = [];
     let clusterNS = {};
     let clusterConsoleURL = {};
 
     if (namespace) {
       if (name) {
-        policies.push(await this.getSinglePolicy(name, urlNameSpace));
+        policies.push(await this.getSinglePolicy(name, urlNS));
       } else {
-        policies = await this.getPolicyListSingleNS(urlNameSpace);
+        policies = await this.getPolicyListSingleNS(urlNS);
       }
     } else {
       const {

@@ -45,26 +45,6 @@ function findClusterIntersection(clusters, clusterstatuses) {
   return resultMap;
 }
 
-function findMatchedStatus(clusters, clusterstatuses) {
-  const resultMap = findClusterIntersection(clusters, clusterstatuses);
-  clusterstatuses.forEach((clusterstatus) => {
-    const clusterName = _.get(clusterstatus, metadataNameStr);
-    if (resultMap.has(clusterName)) {
-      const data = {
-        metadata: resultMap.get(clusterName).metadata,
-        nodes: _.get(clusterstatus, 'spec.capacity.nodes'),
-        clusterip: _.get(clusterstatus, 'spec.masterAddresses[0].ip'),
-        consoleURL: _.get(clusterstatus, 'spec.consoleURL'),
-        rawStatus: clusterstatus,
-        klusterletVersion: _.get(clusterstatus, 'spec.klusterletVersion', '-'),
-        k8sVersion: _.get(clusterstatus, 'spec.version', '-'),
-      };
-      resultMap.set(clusterName, data);
-    }
-  });
-  return [...resultMap.values()];
-}
-
 function findMatchedStatusForOverview(clusters, clusterstatuses) {
   const resultMap = findClusterIntersection(clusters, clusterstatuses);
   clusterstatuses.forEach((clusterstatus) => {
@@ -88,18 +68,6 @@ function findMatchedStatusForOverview(clusters, clusterstatuses) {
 }
 
 export default class ClusterModel extends KubeModel {
-  async getClusters(args = {}) {
-    const [clusters, clusterstatuses] = await Promise.all([
-      this.kubeConnector.getResources(ns => `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`),
-      this.kubeConnector.getResources(ns => `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`),
-    ]);
-    const results = findMatchedStatus(clusters, clusterstatuses);
-    if (args.name) {
-      return results.filter(c => c.metadata.name === args.name)[0];
-    }
-    return results;
-  }
-
   async getAllClusters(args = {}) {
     const [clusters, clusterstatuses] = await Promise.all([
       this.kubeConnector.getResources(ns => `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`),
@@ -110,47 +78,5 @@ export default class ClusterModel extends KubeModel {
       return results.filter(c => c.metadata.name === args.name)[0];
     }
     return results;
-  }
-
-  static resolveUsage(kind, clusterstatus) {
-    const usage = _.get(clusterstatus, `spec.usage.${kind}`, '0000Mi');
-    const capacity = _.get(clusterstatus, `spec.capacity.${kind}`, '0001Mi');
-    if (kind === 'cpu') {
-      return parseInt(getCPUPercentage(usage, capacity), 10);
-    }
-
-    return parseInt(getPercentage(usage, capacity), 10);
-  }
-
-  async getStatus(clusterstatus) {
-    const [cluster] = await this.kubeConnector.getResources(
-      ns => `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters`,
-      { namespaces: [clusterstatus.metadata.namespace] },
-    );
-
-    const status = _.get(cluster, 'status.conditions[0].type', 'offline');
-    return status === '' ? 'offline' : status.toLowerCase();
-  }
-
-  async getClusterStatus() {
-    const clusterstatuses = await this.kubeConnector.getResources(ns => `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`);
-
-    return clusterstatuses.reduce((accum, cluster) => {
-      if (!cluster) {
-        return accum;
-      }
-
-      accum.push({
-        metadata: cluster.metadata,
-        nodes: _.get(cluster, 'spec.capacity.nodes'),
-        pods: _.get(cluster, 'spec.usage.pods'),
-        ip: cluster.spec.masterAddresses[0].ip,
-        memoryUtilization: this.constructor.resolveUsage('memory', cluster),
-        storageUtilization: this.constructor.resolveUsage('storage', cluster),
-        cpuUtilization: this.constructor.resolveUsage('cpu', cluster),
-      });
-
-      return accum;
-    }, []);
   }
 }

@@ -216,15 +216,4 @@ export default class GenericModel extends KubeModel {
       throw e;
     }
   }
-
-  async getLogs(containerName, podName, podNamespace, clusterName) {
-    const cluster = await this.kubeConnector.getResources(ns => `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters/${clusterName}`);
-    if (cluster && cluster.length === 1) {
-      const clusterNamespace = cluster[0].metadata.namespace;
-      return this.kubeConnector.get(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/
-      ${clusterNamespace}/clusterstatuses/${clusterName}/log/${podNamespace}/
-      ${podName}/${containerName}?tailLines=1000`, { json: false }, true);
-    }
-    throw new Error(`Enable to find the cluster called ${clusterName}`);
-  }
 }

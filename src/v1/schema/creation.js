@@ -69,7 +69,7 @@ export const resolver = {
       const templates = [];
 
       // Namespaces
-      const { allNonClusterNS } = await getTypedNS(complianceModel, 'allNonClusterNS');
+      const { allNonClusterNS } = await getTypedNS(complianceModel.kubeConnector, 'allNonClusterNS');
 
       return {
         clusterLabels,

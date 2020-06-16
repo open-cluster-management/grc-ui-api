@@ -121,7 +121,7 @@ export default class GenericModel extends KubeModel {
           resourceName = 'clusters';
           break;
         default:
-          throw new Error('MCM ERROR cannot find matched resource type');
+          throw new Error('ACM ERROR cannot find matched resource type');
       }
       response = await this.kubeConnector.patch(`/apis/${endpointURL}/namespaces/${namespace}/${resourceName}/${name}`, requestBody);
     } else {
@@ -142,7 +142,7 @@ export default class GenericModel extends KubeModel {
     };
 
     if (!selfLink) {
-      throw new Error('MCM ERROR cannot find matched resource type');
+      throw new Error('ACM ERROR cannot find matched resource type');
     } else {
       // will use selfLink by default
       response = await this.kubeConnector.put(`${selfLink}`, requestBody);

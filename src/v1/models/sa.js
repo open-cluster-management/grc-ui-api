@@ -107,7 +107,7 @@ export default class SAModel extends KubeModel {
     };
     const response = await this.kubeConnector.delete('', '', opts);
     if (response.code || response.message) {
-      throw new Error(`MCM ERROR ${response.code} - ${response.message}`);
+      throw new Error(`ACM ERROR ${response.code} - ${response.message}`);
     }
     return response || 'Scucessfully delete occurrences';
   }

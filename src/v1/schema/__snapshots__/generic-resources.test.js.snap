@@ -92,7 +92,7 @@ Object {
           "line": 3,
         },
       ],
-      "message": "MCM ERROR cannot find matched resource type",
+      "message": "ACM ERROR cannot find matched resource type",
       "path": Array [
         "updateResource",
       ],

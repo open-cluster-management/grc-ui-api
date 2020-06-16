@@ -10,7 +10,7 @@
  */
 
 export const typeDef = `
-# MCM Placement
+# ACM Placement
 type Placement implements K8sObject {
   metadata: Metadata
   placementBindings: [PlacementBinding]

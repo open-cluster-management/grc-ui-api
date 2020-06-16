@@ -104,7 +104,7 @@ export default class ComplianceModel {
   async deletePolicy(input) {
     const response = await this.kubeConnector.delete(`${policyAPIPrefix}/${input.namespace}/policies/${input.name}`);
     if (response.code || response.message) {
-      throw new Error(`MCM ERROR ${response.code} - ${response.message}`);
+      throw new Error(`ACM ERROR ${response.code} - ${response.message}`);
     }
     return response.metadata.name;
   }
@@ -619,15 +619,15 @@ export default class ComplianceModel {
           };
         });
         allClustersInPolicyResult = await Promise.all(policyListPromise);
-        // step 5 get cluster info like consoleURL, need to update cluster Api after installer2.0
+        // step 5 get cluster info like consoleURL
         const [clusterStatuses] = await Promise.all([
-          this.kubeConnector.getResources(ns => `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusterstatuses`),
+          this.kubeConnector.getResources(ns => `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`),
         ]);
         const clusterStatusMap = new Map();
         clusterStatuses.forEach((cluster) => {
           clusterStatusMap.set(
             _.get(cluster, metadataNameStr, ''),
-            { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'spec.consoleURL', '') } },
+            { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'status.consoleURL', '') } },
           );
         });
         allClustersInPolicyResult = allClustersInPolicyResult.map((clusterInfo) => {

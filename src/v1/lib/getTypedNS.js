@@ -7,6 +7,7 @@ import _ from 'lodash';
 export default async function getTypedNS(kubeConnector, nsType) {
   const clusterNSTemp = {};
   const clusterConsoleURLTemp = {};
+  const typeFlag = (nsType === 'allNonClusterNS');
   // all possible namespaces
   const allNameSpace = kubeConnector.namespaces;
   const nsPromises = allNameSpace.map(async (ns) => {
@@ -25,15 +26,15 @@ export default async function getTypedNS(kubeConnector, nsType) {
           }
         }
       });// if nsType === 'allClusterNS', put cluster namespaces into final result
-      return (nsType === 'allNonClusterNS') ? null : ns;
+      return typeFlag ? null : ns;
     }// if nsType === 'allNonClusteNS', put non cluster namespaces into final result
-    return (nsType === 'allNonClusterNS') ? ns : null;
+    return typeFlag ? ns : null;
   });
 
   let nsResults = await Promise.all(nsPromises);
   nsResults = nsResults.filter(ns => ns !== null);
 
-  const finalResult = (nsType === 'allNonClusterNS') ?
+  const finalResult = typeFlag ?
     {
       clusterNSTemp,
       clusterConsoleURLTemp,

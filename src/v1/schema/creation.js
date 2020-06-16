@@ -9,6 +9,7 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 
 import ApiGroup from '../lib/ApiGroup';
+import getTypedNS from '../lib/getTypedNS';
 
 export const typeDef = `
 type Discoveries {
@@ -68,24 +69,14 @@ export const resolver = {
       const templates = [];
 
       // Namespaces
-      const allNameSpace = complianceModel.kubeConnector.namespaces;
-      const nsPromises = allNameSpace.map(async (ns) => {
-        const URL = `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/${ns}/clusters/`;
-        const checkClusterNameSpace = await complianceModel.kubeConnector.get(URL);
-        if (Array.isArray(checkClusterNameSpace.items) && checkClusterNameSpace.items.length > 0) {
-          return null; // cluster namespaces
-        }
-        return ns; // non cluster namespaces
-      });
-      let allNonClusterNameSpace = await Promise.all(nsPromises);
-      allNonClusterNameSpace = allNonClusterNameSpace.filter(ns => ns !== null);
+      const { allNonClusterNS } = await getTypedNS(complianceModel, 'allNonClusterNS');
 
       return {
         clusterLabels,
         policyNames,
         annotations: collection,
         templates,
-        namespaces: allNonClusterNameSpace,
+        namespaces: allNonClusterNS,
       };
     },
   },

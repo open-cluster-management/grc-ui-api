@@ -22,7 +22,7 @@ export default async function getTypedNS(kubeConnector, nsType) {
           // current each cluster only have one namespace
           clusterNSTemp[item.metadata.name] = item.metadata.namespace;
           if (item.status && item.status.consoleURL) {
-            clusterConsoleURLTemp[item.metadata.name] = item.status.consoleUR;
+            clusterConsoleURLTemp[item.metadata.name] = item.status.consoleURL;
           }
         }
       });// if nsType === 'allClusterNS', put cluster namespaces into final result

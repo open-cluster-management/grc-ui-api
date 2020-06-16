@@ -8,8 +8,8 @@ export default async function getTypedNS(kubeConnector, nsType) {
   const clusterNSTemp = {};
   const clusterConsoleURLTemp = {};
   // all possible namespaces
-  const allNS = kubeConnector.namespaces;
-  const nsPromises = allNS.map(async (ns) => {
+  const allNameSpace = kubeConnector.namespaces;
+  const nsPromises = allNameSpace.map(async (ns) => {
     const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
     const [clustersInfo] = await Promise.all([kubeConnector.get(checkClustersInfoURL)]);
     const clusterItems = _.get(clustersInfo, 'items');

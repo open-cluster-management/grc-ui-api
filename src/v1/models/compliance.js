@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /** *****************************************************************************
  * Licensed Materials - Property of IBM
  * (c) Copyright IBM Corporation 2018, 2019. All Rights Reserved.
@@ -143,13 +142,15 @@ export default class ComplianceModel {
   }
 
   // get a single policy on a specific namespace
-  async getSinglePolicy(name, urlNS) {
+  async getSinglePolicy(policies, name, urlNS) {
     const URL = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/${urlNS}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
       logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+    } else {
+      policies.push(policyResponse);
     }
-    return policyResponse;
+    return policies;
   }
 
   // get a single policy on all non-clusters namespaces
@@ -210,7 +211,7 @@ export default class ComplianceModel {
 
     if (namespace) {
       if (name) {
-        policies.push(await this.getSinglePolicy(name, urlNS));
+        policies = await this.getSinglePolicy(policies, name, urlNS);
       } else {
         policies = await this.getPolicyListSingleNS(urlNS);
       }

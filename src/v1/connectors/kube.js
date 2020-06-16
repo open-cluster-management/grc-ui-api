@@ -91,15 +91,15 @@ export default class KubeConnector {
       try {
         response = await this.get(urlTemplate(ns));
       } catch (err) {
-        logger.error(`MCM REQUEST ERROR - ${err.message}`);
+        logger.error(`ACM REQUEST ERROR - ${err.message}`);
         return [];
       }
 
       if (response.code || response.message) {
         if (response.code === 404) {
-          logger.info(`MCM INFO ${response.code} - ${response.message}`);
+          logger.info(`ACM INFO ${response.code} - ${response.message}`);
         } else {
-          logger.error(`MCM ERROR ${response.code} - ${response.message}`);
+          logger.error(`ACM ERROR ${response.code} - ${response.message}`);
         }
         return [];
       }
@@ -113,7 +113,7 @@ export default class KubeConnector {
         }
       });
       if (strs.length > 0) {
-        logger.error(`MCM RESPONSE ERROR, Expected Objects but Returned this: ${strs.join(', ')}`);
+        logger.error(`ACM RESPONSE ERROR, Expected Objects but Returned this: ${strs.join(', ')}`);
         return [];
       }
 

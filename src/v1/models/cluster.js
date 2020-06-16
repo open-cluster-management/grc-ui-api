@@ -14,15 +14,6 @@ import ApiGroup from '../lib/ApiGroup';
 
 const metadataNameStr = 'metadata.name';
 
-// The last char(s) in usage are units - need to be removed in order to get an int for calculation
-function getPercentage(usage, capacity) {
-  return (usage.substring(0, usage.length - 2) / capacity.substring(0, capacity.length - 2)) * 100;
-}
-
-function getCPUPercentage(usage, capacity) {
-  return ((usage.substring(0, usage.length - 1) / 1000) / capacity) * 100;
-}
-
 function getStatus(cluster) {
   const status = _.get(cluster, 'status.conditions[0].type', 'offline');
   return status === '' ? 'offline' : status.toLowerCase();

@@ -12,7 +12,6 @@ import _ from 'lodash';
 import KubeModel from './kube';
 import ApiGroup from '../lib/ApiGroup';
 
-// const metadataNameStr = 'metadata.name';
 const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
 function getStatus(cluster) {
   const status = _.get(cluster, 'status.conditions[0].type', 'offline');

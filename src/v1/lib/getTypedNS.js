@@ -36,7 +36,7 @@ export default async function getTypedNS(kubeConnector, nsType) {
   let nsResults = await Promise.all(nsPromises);
   nsResults = nsResults.filter(ns => ns !== null);
 
-  const finalResult = typeFlag ?
+  return typeFlag ?
     {
       clusterNSTemp,
       clusterConsoleURLTemp,
@@ -47,6 +47,4 @@ export default async function getTypedNS(kubeConnector, nsType) {
       clusterConsoleURLTemp,
       allClusterNS: nsResults,
     };
-
-  return finalResult;
 }

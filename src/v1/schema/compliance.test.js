@@ -14,18 +14,16 @@ import server, { GRAPHQL_PATH } from '../index';
 import ApiGroup from '../lib/ApiGroup';
 import {
   mockComplianceListMCMResponse, mockComplianceListDefaultResponse,
-  mockComplianceListKubeSystemResponse, mockCreateCompliance,
-  mockRootPoliciesListResponse, mockRootPolicyResponse,
+  mockComplianceListKubeSystemResponse, mockRootPoliciesListResponse,
+  mockRootPolicyResponse,
 } from '../mocks/ComplianceList';
 import {
   mockPlacementBindingResponse, mockPlacementRuleResponse,
   mockSinglePolicyResponse, mockSingleNoPolicyResponse,
 } from '../mocks/PolicyList';
 import {
-  mockCluster1Response, mockCluster1StatusResponse,
-  mockClusterHubResponse, mockClusterHubStatusResponse, mockMCMResponse,
-  mockDefaultResponse, mockKubeSystemResponse, mockMCMStatusResponse,
-  mockDefaultStatusResponse, mockKubeSystemStatusResponse,
+  mockCluster1Response, mockClusterHubResponse, mockMCMResponse,
+  mockDefaultResponse, mockKubeSystemResponse,
 } from '../mocks/ClusterList';
 
 describe('Compliance Resolver', () => {
@@ -43,8 +41,6 @@ describe('Compliance Resolver', () => {
       .reply(200, mockComplianceListKubeSystemResponse);
 
     // Single compliance / policy
-    APIServer.persist().get('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances/compliance-xz')
-      .reply(200, mockCreateCompliance);
     APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/mcm/policies/case1-test-policy')
       .reply(200, mockSinglePolicyResponse);
     APIServer.persist().get('/policy.open-cluster-management.io/v1/namespaces/default/policies/compliance-xz')
@@ -80,32 +76,18 @@ describe('Compliance Resolver', () => {
     APIServer.persist().get('/apps.open-cluster-management.io/v1/namespaces/default/placementrules')
       .reply(200, mockPlacementRuleResponse);
 
-    // Create compliance
-    APIServer.post('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/compliances')
-      .reply(200, mockCreateCompliance);
-
     // Single cluster
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters')
+    APIServer.persist().get('/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos')
       .reply(200, mockCluster1Response);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters')
+    APIServer.persist().get('/internal.open-cluster-management.io/v1beta1/namespaces/clusterhub/managedclusterinfos')
       .reply(200, mockClusterHubResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses')
-      .reply(200, mockCluster1StatusResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses')
-      .reply(200, mockClusterHubStatusResponse);
     // No cluster
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/mcm/clusters')
+    APIServer.persist().get('/internal.open-cluster-management.io/v1beta1/namespaces/mcm/managedclusterinfos')
       .reply(200, mockMCMResponse);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters')
+    APIServer.persist().get('/internal.open-cluster-management.io/v1beta1/namespaces/default/managedclusterinfos')
       .reply(200, mockDefaultResponse);
-    APIServer.persist().get('/clusterregistry.k8s.io/v1alpha1/namespaces/kube-system/clusters')
+    APIServer.persist().get('/internal.open-cluster-management.io/v1beta1/namespaces/kube-system/managedclusterinfos')
       .reply(200, mockKubeSystemResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/mcm/clusterstatuses')
-      .reply(200, mockMCMStatusResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/default/clusterstatuses')
-      .reply(200, mockDefaultStatusResponse);
-    APIServer.persist().get('/mcm.ibm.com/v1alpha1/namespaces/kube-system/clusterstatuses')
-      .reply(200, mockKubeSystemStatusResponse);
   });
 
   test('Correctly Resolves Compliance List Query', () => new Promise((done) => {

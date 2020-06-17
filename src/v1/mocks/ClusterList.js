@@ -72,81 +72,6 @@ export const mockCluster1Response = {
   ],
 };
 
-export const mockCluster1StatusResponse = {
-  kind: 'ClusterStatusList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/cluster1/clusterstatuses`,
-    resourceVersion: '219916',
-  },
-  items: [
-    {
-      metadata: {
-        name: 'cluster1',
-        namespace: 'cluster1',
-        selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/cluster1/clusterstatuses/cluster1`,
-        uid: 'cc540dfa-96b0-44e4-93d4-cfa18c387325',
-        resourceVersion: '219916',
-        creationTimestamp: '2020-03-30T13:37:26Z',
-        labels: {
-          cloud: 'Amazon',
-          name: 'cluster1',
-          vendor: 'OpenShift',
-        },
-        annotations: {
-          'mcm.ibm.com/deployer-prefix': 'md',
-          'mcm.ibm.com/secretRef': 'cluster1-federation-secret',
-          'mcm.ibm.com/user-group': 'aGNtOmNsdXN0ZXJzLHN5c3RlbTphdXRoZW50aWNhdGVk',
-          'mcm.ibm.com/user-identity': 'aGNtOmNsdXN0ZXJzOmNhbGFtYXJpOmNhbGFtYXJp',
-        },
-        ownerReferences: [
-          {
-            apiVersion: 'mcm.ibm.com/__internal',
-            kind: 'Cluster',
-            name: 'cluster1',
-            uid: '8f3724f1-2d9b-4a1d-8dd8-b88e59675c45',
-            controller: true,
-            blockOwnerDeletion: true,
-          },
-        ],
-      },
-      spec: {
-        masterAddresses: [
-          {
-            ip: 'api.cluster1.dev08.red-chesterfield.com',
-          },
-        ],
-        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
-        capacity: {
-          cpu: '36',
-          memory: '142867Mi',
-          nodes: '6',
-          storage: '0',
-        },
-        usage: {
-          cpu: '9155m',
-          memory: '22188Mi',
-          pods: '225',
-          storage: '0',
-        },
-        klusterletEndpoint: {
-          ip: '',
-          hostname: 'endpoint-workmgr-multicluster-endpoint.apps.cluster1.dev08.red-chesterfield.com',
-        },
-        klusterletPort: {
-          name: 'https',
-          port: 443,
-          protocol: 'TCP',
-        },
-        monitoringScrapeTarget: 'kubernetes-cadvisor',
-        klusterletVersion: '0.0.1-SNAPSHOT-2020-03-12-20-43-45-9-g4d01dc75b4f8bf',
-        version: 'v1.16.2+rhos',
-        klusterletCA: 'Test klusterletCA',
-      },
-    },
-  ],
-};
-
 export const mockClusterHubResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
@@ -208,80 +133,6 @@ export const mockClusterHubResponse = {
   ],
 };
 
-export const mockClusterHubStatusResponse = {
-  kind: 'ClusterStatusList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/clusterhub/clusterstatuses`,
-    resourceVersion: '219917',
-  },
-  items: [
-    {
-      metadata: {
-        name: '',
-        namespace: '',
-        selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/clusterhub/clusterstatuses/clusterhub`,
-        uid: 'cc540dfa-96b0-44e4-93d4-cfa18c387325',
-        resourceVersion: '219917',
-        creationTimestamp: '2020-03-30T13:37:26Z',
-        labels: {
-          cloud: 'Amazon',
-          name: 'clusterhub',
-          vendor: 'OpenShift',
-        },
-        annotations: {
-          'mcm.ibm.com/deployer-prefix': 'md',
-          'mcm.ibm.com/secretRef': 'clusterhub-federation-secret',
-          'mcm.ibm.com/user-group': 'aGNtOmNsdXN0ZXJzLHN5c3RlbTphdXRoZW50aWNhdGVk',
-          'mcm.ibm.com/user-identity': 'aGNtOmNsdXN0ZXJzOmNhbGFtYXJpOmNhbGFtYXJp',
-        },
-        ownerReferences: [
-          {
-            apiVersion: 'mcm.ibm.com/__internal',
-            kind: 'Cluster',
-            name: 'clusterhub',
-            uid: '8f3724f1-2d9b-4a1d-8dd8-b88e59675c45',
-            controller: true,
-            blockOwnerDeletion: true,
-          },
-        ],
-      },
-      spec: {
-        masterAddresses: [
-          {
-            ip: 'api.clusterhub.dev08.red-chesterfield.com',
-          },
-        ],
-        consoleURL: '',
-        capacity: {
-          cpu: '36',
-          memory: '142867Mi',
-          nodes: '6',
-          storage: '0',
-        },
-        usage: {
-          cpu: '9155m',
-          memory: '22188Mi',
-          pods: '225',
-          storage: '0',
-        },
-        klusterletEndpoint: {
-          ip: '',
-          hostname: 'endpoint-workmgr-multicluster-endpoint.apps.clusterhub.dev08.red-chesterfield.com',
-        },
-        klusterletPort: {
-          name: 'https',
-          port: 443,
-          protocol: 'TCP',
-        },
-        monitoringScrapeTarget: 'kubernetes-cadvisor',
-        klusterletVersion: '0.0.1-SNAPSHOT-2020-03-12-20-43-45-9-g4d01dc75b4f8bf',
-        version: 'v1.16.2+rhos',
-        klusterletCA: 'Test klusterletCA',
-      },
-    },
-  ],
-};
 
 export const mockMCMResponse = {
   kind: 'ClusterList',
@@ -308,36 +159,6 @@ export const mockKubeSystemResponse = {
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',
   metadata: {
     selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/kube-system/clusters/`,
-    resourceVersion: '219921',
-  },
-  items: [],
-};
-
-export const mockMCMStatusResponse = {
-  kind: 'ClusterStatusList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/mcm/clusterstatuses`,
-    resourceVersion: '219919',
-  },
-  items: [],
-};
-
-export const mockDefaultStatusResponse = {
-  kind: 'ClusterStatusList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/default/clusterstatuses`,
-    resourceVersion: '219920',
-  },
-  items: [],
-};
-
-export const mockKubeSystemStatusResponse = {
-  kind: 'ClusterStatusList',
-  apiVersion: 'mcm.ibm.com/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/kube-system/clusterstatuses`,
     resourceVersion: '219921',
   },
   items: [],

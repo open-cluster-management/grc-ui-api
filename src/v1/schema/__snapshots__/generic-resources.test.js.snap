@@ -61,7 +61,7 @@ Object {
       ],
       "message": "Nock: No match for request {
   \\"method\\": \\"PATCH\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters/cluster1\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos/cluster1\\",
   \\"headers\\": {
     \\"authorization\\": \\"localdev\\",
     \\"content-type\\": \\"application/json-patch+json\\",

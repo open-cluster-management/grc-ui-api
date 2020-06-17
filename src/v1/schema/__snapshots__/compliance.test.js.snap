@@ -97,6 +97,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placementBindings": Array [
               "binding-policy-certificatepolicy",
             ],
@@ -128,7 +129,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "3/3",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -236,13 +237,14 @@ Object {
                 "clustername": "clusterhub",
                 "compliant": "NonCompliant",
               },
+              "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             },
           },
         },
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "3/3",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -342,6 +344,7 @@ Object {
                 "clustername": "clusterhub",
                 "compliant": "NonCompliant",
               },
+              "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             },
           },
         },
@@ -429,6 +432,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placementBindings": Array [
               "binding-policy-limitrange",
             ],
@@ -528,6 +532,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placementBindings": Array [
               "binding-policy-namespace",
             ],
@@ -751,6 +756,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placementBindings": Array [
               "binding-policy-rolebinding-1",
             ],
@@ -865,6 +871,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placementBindings": Array [
               "binding-policy-vulnerabilitypolicy",
             ],
@@ -1016,6 +1023,7 @@ Object {
                   "remediationAction": "inform",
                 },
                 "status": Object {
+                  "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
                   "placement": Array [
                     Object {
                       "placementBinding": "case1-test-policy-pb",
@@ -1060,6 +1068,7 @@ Object {
                 "remediationAction": "inform",
               },
               "status": Object {
+                "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
                 "placement": Array [
                   Object {
                     "placementBinding": "case1-test-policy-pb",
@@ -1145,6 +1154,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placement": Array [
               Object {
                 "placementBinding": "case1-test-policy-pb",
@@ -1189,9 +1199,7 @@ Object {
             "objectTemplates": Array [],
             "raw": Object {
               "apiVersion": "policy.open-cluster-management.io/v1",
-              "clusterConsoleURL": Object {
-                "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
-              },
+              "clusterConsoleURL": Object {},
               "clusterNS": Object {
                 "cluster1": "cluster1",
               },
@@ -1265,6 +1273,7 @@ Object {
                   "remediationAction": "inform",
                 },
                 "status": Object {
+                  "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
                   "placement": Array [
                     Object {
                       "placementBinding": "case1-test-policy-pb",
@@ -1309,6 +1318,7 @@ Object {
                 "remediationAction": "inform",
               },
               "status": Object {
+                "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
                 "placement": Array [
                   Object {
                     "placementBinding": "case1-test-policy-pb",
@@ -1394,6 +1404,7 @@ Object {
             "remediationAction": "inform",
           },
           "status": Object {
+            "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
             "placement": Array [
               Object {
                 "placementBinding": "case1-test-policy-pb",
@@ -1429,9 +1440,7 @@ Object {
             "objectTemplates": Array [],
             "raw": Object {
               "apiVersion": "policy.open-cluster-management.io/v1",
-              "clusterConsoleURL": Object {
-                "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
-              },
+              "clusterConsoleURL": Object {},
               "clusterNS": Object {
                 "cluster1": "cluster1",
               },

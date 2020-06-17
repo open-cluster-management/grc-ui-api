@@ -19,6 +19,9 @@ export const mockComplianceListDefaultResponse = {
     resourceVersion: '10793978',
     selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies`,
   },
+  status: {
+    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
+  },
 };
 
 export const mockComplianceListKubeSystemResponse = {
@@ -29,6 +32,9 @@ export const mockComplianceListKubeSystemResponse = {
     continue: '',
     resourceVersion: '10794564',
     selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/kube-system/policies`,
+  },
+  status: {
+    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
   },
 };
 
@@ -128,6 +134,7 @@ export const mockComplianceListMCMResponse = {
             compliant: 'Compliant',
           },
         },
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
       },
     },
     {
@@ -223,6 +230,7 @@ export const mockComplianceListMCMResponse = {
             clustername: 'clusterhub',
             compliant: 'NonCompliant',
           },
+          consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
         },
       },
     },
@@ -310,6 +318,7 @@ export const mockComplianceListMCMResponse = {
             clustername: 'clusterhub',
             compliant: 'NonCompliant',
           },
+          consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
         },
       },
     },
@@ -404,6 +413,7 @@ export const mockComplianceListMCMResponse = {
             compliant: 'NonCompliant',
           },
         },
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
       },
     },
     {
@@ -484,6 +494,7 @@ export const mockComplianceListMCMResponse = {
             compliant: 'NonCompliant',
           },
         },
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
       },
     },
     {
@@ -669,6 +680,7 @@ export const mockComplianceListMCMResponse = {
             compliant: 'NonCompliant',
           },
         },
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
       },
     },
     {
@@ -764,6 +776,7 @@ export const mockComplianceListMCMResponse = {
             compliant: 'NonCompliant',
           },
         },
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
       },
     },
   ],
@@ -804,7 +817,14 @@ export const mockRootPolicyResponse = {
     }],
     remediationAction: 'inform',
   },
-  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] },
+  status: {
+    placement: [{
+      placementBinding: 'case1-test-policy-pb',
+      placementRule: 'case1-test-policy-plr',
+    }],
+    status: [{ clustername: 'calamari', clusternamespace: 'calamari' }],
+    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
+  },
 };
 
 export const mockRootPoliciesListResponse = [[{
@@ -836,7 +856,11 @@ export const mockRootPoliciesListResponse = [[{
     }],
     remediationAction: 'inform',
   },
-  status: { placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }], status: [{ clustername: 'calamari', clusternamespace: 'calamari' }] },
+  status: {
+    placement: [{ placementBinding: 'case1-test-policy-pb', placementRule: 'case1-test-policy-plr' }],
+    status: [{ clustername: 'calamari', clusternamespace: 'calamari' }],
+    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
+  },
 }, {
   apiVersion: 'policy.open-cluster-management.io/v1',
   kind: 'Policy',

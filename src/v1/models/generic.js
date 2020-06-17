@@ -10,7 +10,6 @@
 
 import _ from 'lodash';
 import KubeModel from './kube';
-import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
 const noResourcetypeStr = '##cannot find resourcetype##';

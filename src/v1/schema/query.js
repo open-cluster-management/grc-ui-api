@@ -12,7 +12,6 @@ export const typeDef = `
 type Query {
   #applications(name: String, namespace: String): [Application]
   namespaces: [Namespace]
-  logs(containerName: String!, podName: String!, podNamespace: String!, clusterName: String!): String
   discoveries: Discoveries
 
   # Policies and Compliances

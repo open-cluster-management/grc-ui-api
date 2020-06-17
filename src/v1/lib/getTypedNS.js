@@ -1,6 +1,8 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 import _ from 'lodash';
+import ApiGroup from '../lib/ApiGroup';
 
+const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
 // nsType === 'allNonClusteNS' then get the list of all non-clusters namespaces
 // nsType === 'allClusterNS' then get the list of all clusters namespaces
 // here kubeConnector is passed as parameter so getTypedNS function can be reused anywhere
@@ -11,11 +13,11 @@ export default async function getTypedNS(kubeConnector, nsType) {
   // all possible namespaces
   const allNameSpace = kubeConnector.namespaces;
   const nsPromises = allNameSpace.map(async (ns) => {
-    const checkClustersInfoURL = `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`;
-    const [clustersInfo] = await Promise.all([kubeConnector.get(checkClustersInfoURL)]);
-    const clusterItems = _.get(clustersInfo, 'items');
-    if (Array.isArray(clusterItems) && clusterItems.length > 0) {
-      clusterItems.forEach((item) => {
+    const checkClustersInfoURL = `${clusterAPIPrefix}/${ns}/managedclusterinfos`;
+    const [clustersInfos] = await Promise.all([kubeConnector.get(checkClustersInfoURL)]);
+    const clustersItems = _.get(clustersInfos, 'items');
+    if (Array.isArray(clustersItems) && clustersItems.length > 0) {
+      clustersItems.forEach((item) => {
         if (item.metadata && item.metadata.name
             && !Object.prototype.hasOwnProperty.call(clusterNSTemp, item.metadata.name)
             && item.metadata.namespace) {

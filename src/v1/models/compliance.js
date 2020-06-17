@@ -17,6 +17,7 @@ import getTypedNS from '../lib/getTypedNS';
 
 const policyAPIPrefix = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces`;
 const appAPIPrefix = `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces`;
+const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
 const POLICY_FAILURE_STATUS = 'Failure';
 const metadataNameStr = 'metadata.name';
 const metadataNsStr = 'metadata.namespace';
@@ -620,20 +621,22 @@ export default class ComplianceModel {
         });
         allClustersInPolicyResult = await Promise.all(policyListPromise);
         // step 5 get cluster info like consoleURL
-        const [clusterStatuses] = await Promise.all([
-          this.kubeConnector.getResources(ns => `/apis/internal.open-cluster-management.io/v1beta1/namespaces/${ns}/managedclusterinfos`),
+        const [clustersInfos] = await Promise.all([
+          this.kubeConnector.getResources(ns => `${clusterAPIPrefix}/${ns}/managedclusterinfos`),
         ]);
-        const clusterStatusMap = new Map();
-        clusterStatuses.forEach((cluster) => {
-          clusterStatusMap.set(
-            _.get(cluster, metadataNameStr, ''),
-            { metadata: _.get(cluster, 'metadata'), spec: { consoleURL: _.get(cluster, 'status.consoleURL', '') } },
-          );
-        });
-        allClustersInPolicyResult = allClustersInPolicyResult.map((clusterInfo) => {
-          const status = clusterStatusMap.get(clusterInfo.name);
+        const clustersInfosMap = new Map();
+        if (Array.isArray(clustersInfos) && clustersInfos.length > 0) {
+          clustersInfos.forEach((info) => {
+            clustersInfosMap.set(
+              _.get(info, metadataNameStr, ''),
+              { metadata: _.get(info, 'metadata'), status: { consoleURL: _.get(info, 'status.consoleURL', '') } },
+            );
+          });
+        }
+        allClustersInPolicyResult = allClustersInPolicyResult.map((clusterData) => {
+          const clusterInfo = clustersInfosMap.get(clusterData.name);
           return {
-            ...clusterInfo, ...status,
+            ...clusterData, ...clusterInfo,
           };
         });
       }

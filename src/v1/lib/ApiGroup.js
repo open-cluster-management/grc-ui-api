@@ -5,11 +5,8 @@ const ApiGroup = {
   policiesGroup: 'policy.open-cluster-management.io',
   appsGroup: 'apps.open-cluster-management.io',
   version: 'v1',
-  // temporary group and version, will update them later
-  // to-do update cluster api group to new api
-  clusterRegistryGroup: 'clusterregistry.k8s.io',
-  mcmGroup: 'mcm.ibm.com',
-  mcmVersion: 'v1alpha1',
+  clusterInfoGroup: 'internal.open-cluster-management.io',
+  clusterAPIVersion: 'v1beta1',
 };
 
 export default ApiGroup;

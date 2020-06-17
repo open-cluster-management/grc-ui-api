@@ -117,8 +117,8 @@ export default class GenericModel extends KubeModel {
     if (!selfLink) {
       switch (resourceType) {
         case 'HCMCluster':
-          endpointURL = `${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}`;
-          resourceName = 'clusters';
+          endpointURL = `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`;
+          resourceName = 'managedclusterinfos';
           break;
         default:
           throw new Error('ACM ERROR cannot find matched resource type');
@@ -151,69 +151,5 @@ export default class GenericModel extends KubeModel {
       throw new Error(`${response.code} - ${response.message}`);
     }
     return response;
-  }
-
-  async resourceAction(resourceType, actionType, resourceName, resourceNamespace, clusterName) {
-    const name = `${resourceType}-workset-${this.kubeConnector.uid()}`;
-    const body = {
-      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
-      kind: 'WorkSet',
-      metadata: {
-        name,
-      },
-      spec: {
-        clusterSelector: {
-          matchLabels: {
-            name: clusterName,
-          },
-        },
-        template: {
-          spec: {
-            type: 'Action',
-            actionType,
-          },
-        },
-      },
-    };
-    if (resourceType === 'helm') {
-      body.spec.template.spec.helm = {
-        releaseName: resourceName,
-        namespace: resourceNamespace,
-      };
-    } else {
-      body.spec.template.spec.kube = {
-        resource: resourceType,
-        name: resourceName,
-        namespace: resourceNamespace,
-      };
-    }
-
-    // to-do how to deal with this after removing all resource view
-    const response = await this.kubeConnector.post(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets`, body);
-    if (response.status === 'Failure' || response.code >= 400) {
-      throw new Error(`Create Resource Action Failed [${response.code}] - ${response.message}`);
-    }
-
-    const { cancel, promise: pollPromise } = this.kubeConnector.pollView(_.get(response, 'metadata.selfLink'));
-
-    try {
-      const result = await Promise.race([pollPromise, this.kubeConnector.timeout()]);
-      logger.debug('result:', result);
-      if (result) {
-        // to-do how to deal with this after removing all resource view
-        this.kubeConnector.delete(`/apis/${ApiGroup.mcmGroup}/${ApiGroup.mcmVersion}/namespaces/${this.kubeConnector.resourceViewNamespace}/worksets/${response.metadata.name}`)
-          .catch(e => logger.error(`Error deleting workset ${response.metadata.name}`, e.message));
-      }
-      const reason = _.get(result, 'status.reason');
-      if (reason) {
-        throw new Error(`Failed to delete ${resourceName}: ${reason}`);
-      } else {
-        return _.get(result, 'metadata.name');
-      }
-    } catch (e) {
-      logger.error('Resource Action Error:', e.message);
-      cancel();
-      throw e;
-    }
   }
 }

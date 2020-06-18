@@ -7,6 +7,11 @@
  * Contract with IBM Corp.
  ****************************************************************************** */
 
-const request = require('requestretry').defaults({ json: true, maxAttempts: 1, strictSSL: false });
+const request = require('requestretry').defaults({
+  json: true,
+  maxAttempts: 5,
+  retryDelay: 500,
+  strictSSL: false,
+});
 
 export default request;

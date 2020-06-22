@@ -8,9 +8,9 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
+import _ from 'lodash';
 import ApiGroup from '../lib/ApiGroup';
 import getTypedNS from '../lib/getTypedNS';
-import _ from 'lodash';
 
 export const typeDef = `
 type Discoveries {

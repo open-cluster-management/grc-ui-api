@@ -72,6 +72,144 @@ export const mockCluster1Response = {
   ],
 };
 
+export const mockClusterIronmanResponse
+ = [
+   {
+     apiVersion: 'internal.open-cluster-management.io/v1beta1',
+     kind: 'ManagedClusterInfo',
+     metadata: {
+       creationTimestamp: '2020-06-16T13:58:50Z',
+       generation: 2,
+       labels: {
+         cloud: 'auto-detect',
+         environment: '',
+         name: 'ironman',
+         vendor: 'auto-detect',
+       },
+       name: 'ironman',
+       namespace: 'ironman',
+       resourceVersion: '5002550',
+       selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/ironman/managedclusterinfos/ironman',
+       uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
+     },
+     spec: {
+       masterEndpoint: 'api.ironman.dev08.red-chesterfield.com:6443',
+     },
+     status: {
+       conditions: [
+         {
+           lastTransitionTime: '2020-06-19T13:13:59Z',
+           message: 'cluster is posting ready status',
+           reason: 'ClusterReady',
+           status: 'True',
+           type: 'ManagedClusterJoined',
+         },
+       ],
+       distributionInfo: {
+         ocp: {},
+       },
+       loggingEndpoint: {
+         ip: '',
+       },
+       loggingPort: {
+         port: 0,
+       },
+     },
+   },
+ ];
+
+export const mockClusterDefaultResponse
+ = [
+   {
+     apiVersion: 'internal.open-cluster-management.io/v1beta1',
+     kind: 'ManagedClusterInfo',
+     metadata: {
+       creationTimestamp: '2020-06-16T13:58:50Z',
+       generation: 2,
+       labels: {
+         cloud: 'auto-detect',
+         environment: '',
+         name: 'default',
+         vendor: 'auto-detect',
+       },
+       name: 'default',
+       namespace: 'default',
+       resourceVersion: '5002550',
+       selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/default/managedclusterinfos/default',
+       uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
+     },
+     spec: {
+       masterEndpoint: 'api.default.dev08.red-chesterfield.com:6443',
+     },
+     status: {
+       conditions: [
+         {
+           lastTransitionTime: '2020-06-19T13:13:59Z',
+           message: 'cluster is posting ready status',
+           reason: 'ClusterReady',
+           status: 'True',
+           type: 'ManagedClusterJoined',
+         },
+       ],
+       distributionInfo: {
+         ocp: {},
+       },
+       loggingEndpoint: {
+         ip: '',
+       },
+       loggingPort: {
+         port: 0,
+       },
+     },
+   },
+ ];
+
+export const mockClusterKubeSystemResponse
+ = [
+   {
+     apiVersion: 'internal.open-cluster-management.io/v1beta1',
+     kind: 'ManagedClusterInfo',
+     metadata: {
+       creationTimestamp: '2020-06-16T13:58:50Z',
+       generation: 2,
+       labels: {
+         cloud: 'auto-detect',
+         environment: '',
+         name: 'kube-system',
+         vendor: 'auto-detect',
+       },
+       name: 'kube-system',
+       namespace: 'kube-system',
+       resourceVersion: '5002550',
+       selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/kube-system/managedclusterinfos/kube-system',
+       uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
+     },
+     spec: {
+       masterEndpoint: 'api.kube-system.dev08.red-chesterfield.com:6443',
+     },
+     status: {
+       conditions: [
+         {
+           lastTransitionTime: '2020-06-19T13:13:59Z',
+           message: 'cluster is posting ready status',
+           reason: 'ClusterReady',
+           status: 'True',
+           type: 'ManagedClusterJoined',
+         },
+       ],
+       distributionInfo: {
+         ocp: {},
+       },
+       loggingEndpoint: {
+         ip: '',
+       },
+       loggingPort: {
+         port: 0,
+       },
+     },
+   },
+ ];
+
 export const mockClusterHubResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',

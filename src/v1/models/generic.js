@@ -20,11 +20,11 @@ export default class GenericModel extends KubeModel {
     // ie.https://ec2-54-84-124-218.compute-1.amazonaws.com:8443/kubernetes/
     if (k8sPaths) {
       const { apiVersion, kind } = resource;
-      const apiPath = k8sPaths.paths.find(path => path.match(`/[0-9a-zA-z]*/?${apiVersion}`));
+      const apiPath = k8sPaths.paths.find((path) => path.match(`/[0-9a-zA-z]*/?${apiVersion}`));
       if (apiPath) {
         return (async () => {
           const k8sResourceList = await this.kubeConnector.get(`${apiPath}`);
-          const resourceType = k8sResourceList.resources.find(item => item.kind === kind);
+          const resourceType = k8sResourceList.resources.find((item) => item.kind === kind);
           const namespace = _.get(resource, 'metadata.namespace');
           if (resourceType) {
             const { name, namespaced } = resourceType;
@@ -44,8 +44,7 @@ export default class GenericModel extends KubeModel {
     const { resources } = args;
     const k8sPaths = await this.kubeConnector.get('/');
     // get resource end point for each resource
-    const requestPaths = await Promise.all(resources.map(async resource =>
-      this.getResourceEndPoint(resource, k8sPaths)));
+    const requestPaths = await Promise.all(resources.map(async (resource) => this.getResourceEndPoint(resource, k8sPaths)));
     if (requestPaths.length === 0 || requestPaths.includes(undefined)) {
       if (requestPaths.length > 0) {
         const resourceIndex = requestPaths.indexOf(undefined);
@@ -56,22 +55,23 @@ export default class GenericModel extends KubeModel {
       return {
         errors: [{ message: 'Cannot find resource path' }],
       };
-    } else if (requestPaths.includes(null)) {
+    }
+    if (requestPaths.includes(null)) {
       return {
         errors: [{ message: 'Namespace not found in the template' }],
       };
-    } else if (requestPaths.includes(noResourcetypeStr)) {
+    }
+    if (requestPaths.includes(noResourcetypeStr)) {
       const resourceIndex = requestPaths.indexOf(noResourcetypeStr);
       return {
         errors: [{ message: `Cannot find resource kind "${resources[resourceIndex].kind}"` }],
       };
     }
-    const result = await Promise.all(resources.map((resource, index) =>
-      this.kubeConnector.post(requestPaths[index], resource)
-        .catch(err => ({
-          status: 'Failure',
-          message: err.message,
-        }))));
+    const result = await Promise.all(resources.map((resource, index) => this.kubeConnector.post(requestPaths[index], resource)
+      .catch((err) => ({
+        status: 'Failure',
+        message: err.message,
+      }))));
 
     const errors = [];
     result.forEach((item) => {

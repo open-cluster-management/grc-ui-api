@@ -31,6 +31,6 @@ export default class IDConnector {
       },
     };
 
-    return this.http(_.merge(defaults, opts)).then(res => res.body);
+    return this.http(_.merge(defaults, opts)).then((res) => res.body);
   }
 }

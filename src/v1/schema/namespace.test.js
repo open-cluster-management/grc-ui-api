@@ -12,7 +12,6 @@ import supertest from 'supertest';
 import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import { mockResourceView, mockResponse } from '../mocks/NamespaceList';
-import { mockResource } from '../mocks/PolicyList';
 import ApiGroup from '../lib/ApiGroup';
 
 function sliceIngoreEscape(str, remover, len, flag) {
@@ -27,8 +26,6 @@ describe('Namespace Resolver', () => {
     const APIServer = nock(ApiGroup.hostUrl);
 
     // define the method to be intercepted
-    APIServer.post('/mcm.ibm.com/v1alpha1/namespaces/default/resourceviews')
-      .reply(200, mockResource);
     APIServer.get('/compliance.mcm.ibm.com/v1alpha1/namespaces/mcm/namespaces')
       .reply(200, mockResourceView);
     APIServer.get('/policy.open-cluster-management.io/v1/namespaces/mcm/namespaces')

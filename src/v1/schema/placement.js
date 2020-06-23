@@ -6,10 +6,10 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ********************************************************************************
- * Copyright (c) 2020 Red Hat, Inc.
- */
+/* Copyright (c) 2020 Red Hat, Inc. */
+import { gql } from 'apollo-server-express';
 
-export const typeDef = `
+export const typeDef = gql`
 # ACM Placement
 type Placement implements K8sObject {
   metadata: Metadata
@@ -47,13 +47,10 @@ type Subject {
 
 export const resolver = {
   Query: {
-    placementPolicies: (root, args, { PlacementModel }) =>
-      PlacementModel.getPlacementRules(args.selector),
+    placementPolicies: (root, args, { PlacementModel }) => PlacementModel.getPlacementRules(args.selector),
   },
   Placement: {
-    placementBindings: (parent, args, { PlacementModel }) =>
-      PlacementModel.getPlacementBindings({ matchNames: parent.placementBindingNames }),
-    placementPolicies: (parent, args, { PlacementModel }) =>
-      PlacementModel.getPlacementRules({ matchNames: parent.placementPolicyNames }),
+    placementBindings: (parent, args, { PlacementModel }) => PlacementModel.getPlacementBindings({ matchNames: parent.placementBindingNames }),
+    placementPolicies: (parent, args, { PlacementModel }) => PlacementModel.getPlacementRules({ matchNames: parent.placementPolicyNames }),
   },
 };

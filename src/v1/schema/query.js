@@ -7,8 +7,9 @@
  * Contract with IBM Corp.
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
+import { gql } from 'apollo-server-express';
 
-export const typeDef = `
+export const typeDef = gql`
 type Query {
   #applications(name: String, namespace: String): [Application]
   namespaces: [Namespace]

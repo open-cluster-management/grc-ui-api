@@ -18,7 +18,9 @@ import {
   mockDefaultListResponse, mockKubeSystemListResponse, mockViolationListResponse,
   mockNewAPISinglePolicyResponse,
 } from '../mocks/PolicyList';
-import { mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse } from '../mocks/ClusterList';
+import {
+  mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse,
+} from '../mocks/ClusterList';
 
 describe('Policy Resolver', () => {
   beforeAll(() => {

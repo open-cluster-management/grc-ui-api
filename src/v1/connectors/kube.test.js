@@ -10,8 +10,10 @@
 
 import KubeConnector from './kube';
 
-const asyncReturn = (value, waitTime = 500) =>
-  new Promise(res => setTimeout(res, waitTime, value));
+const asyncReturn = (
+  value,
+  waitTime = 500,
+) => new Promise((res) => setTimeout(res, waitTime, value));
 
 describe('KubeConnector', () => {
   describe('Get', () => {
@@ -31,9 +33,7 @@ describe('KubeConnector', () => {
     });
 
     test('correctly merges additional arguments', async () => {
-      const mockHttp = jest.fn(() =>
-        new Promise(res =>
-          setTimeout(res, 200, { body: { test: 'value' } })));
+      const mockHttp = jest.fn(() => new Promise((res) => setTimeout(res, 200, { body: { test: 'value' } })));
 
       const connector = new KubeConnector({
         kubeApiEndpoint: 'kubernetes',

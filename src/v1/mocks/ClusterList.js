@@ -133,7 +133,6 @@ export const mockClusterHubResponse = {
   ],
 };
 
-
 export const mockMCMResponse = {
   kind: 'ClusterList',
   apiVersion: 'clusterregistry.k8s.io/v1alpha1',

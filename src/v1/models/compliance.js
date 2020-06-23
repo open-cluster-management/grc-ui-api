@@ -44,7 +44,7 @@ function getTemplates(policy = {}, templateType = '') {
   const templates = [];
   Object.entries(policy.spec || []).forEach(([key, value]) => {
     if (key.endsWith(`${templateType}-templates`)) {
-      value.forEach(item => templates.push({ ...item, templateType: key }));
+      value.forEach((item) => templates.push({ ...item, templateType: key }));
     }
   });
   return templates;
@@ -89,7 +89,7 @@ export default class ComplianceModel {
     const result = await Promise.all(resources.map((resource) => {
       const namespace = _.get(resource, metadataNsStr, (config.get('complianceNamespace') || 'acm'));
       return this.kubeConnector.post(`${policyAPIPrefix}/${namespace}/policies`, resource)
-        .catch(err => Error(err));
+        .catch((err) => Error(err));
     }));
     result.forEach((item) => {
       errorMessage = getErrorMessage(item, errorMessage);
@@ -128,11 +128,10 @@ export default class ComplianceModel {
       return [];
     }
 
-    const result = await Promise.all(resources.map(resource =>
-      this.kubeConnector.delete(resource.selfLink).catch(err => ({
-        status: 'Failure',
-        message: err.message,
-      }))));
+    const result = await Promise.all(resources.map((resource) => this.kubeConnector.delete(resource.selfLink).catch((err) => ({
+      status: 'Failure',
+      message: err.message,
+    }))));
 
     const errors = [];
     result.forEach((item) => {
@@ -170,7 +169,7 @@ export default class ComplianceModel {
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
     // remove no found policies
-    return policyResponses.filter(policyResponse => policyResponse !== null);
+    return policyResponses.filter((policyResponse) => policyResponse !== null);
   }
 
   // get the policy list on a specific namespace
@@ -201,7 +200,7 @@ export default class ComplianceModel {
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
     // remove empty policies namespaces
-    const policies = policyResponses.filter(policyResponse => policyResponse.length > 0);
+    const policies = policyResponses.filter((policyResponse) => policyResponse.length > 0);
     // flatten 'array of array of object' to 'array of object'
     return _.flatten(policies);
   }
@@ -233,7 +232,7 @@ export default class ComplianceModel {
       }
     }
 
-    return policies.map(entry => ({
+    return policies.map((entry) => ({
       ...entry,
       raw: entry,
       name: _.get(entry, metadataNameStr, ''),
@@ -287,7 +286,7 @@ export default class ComplianceModel {
         Object.entries(_.get(cluster, 'aggregatePoliciesStatus', {})).forEach(([key, value]) => {
           let policy;
           if (parent.spec[runtimeRulesStr]) {
-            policy = parent.spec[runtimeRulesStr].find(p => p.metadata.name === key);
+            policy = parent.spec[runtimeRulesStr].find((p) => p.metadata.name === key);
           }
           const policyObject = {
             compliant: this.resolveStatus(value),
@@ -316,7 +315,7 @@ export default class ComplianceModel {
       Object.entries(_.get(cluster, 'aggregatePoliciesStatus', {})).forEach(([key, value]) => {
         let policy;
         if (parent.spec[runtimeRulesStr]) {
-          policy = parent.spec[runtimeRulesStr].find(p => p.metadata.name === key);
+          policy = parent.spec[runtimeRulesStr].find((p) => p.metadata.name === key);
         }
         const policyObject = {
           cluster: _.get(cluster, 'clustername', parent.metadata.namespace),
@@ -446,7 +445,7 @@ export default class ComplianceModel {
     if (status && status.status) {
       const totalClusters = Object.keys(status.status).length;
       const compliantClusters = Object.values(status.status || [])
-        .filter(cluster => (_.get(cluster, 'compliant', '').toLowerCase() === 'compliant'));
+        .filter((cluster) => (_.get(cluster, 'compliant', '').toLowerCase() === 'compliant'));
       return `${totalClusters - compliantClusters.length}/${totalClusters}`;
     }
     return '0/0';
@@ -464,12 +463,12 @@ export default class ComplianceModel {
   async getPlacementRules(parent = {}) {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
-      ns => `${appAPIPrefix}/${ns}/placementrules`,
+      (ns) => `${appAPIPrefix}/${ns}/placementrules`,
       { kind: 'PlacementRule' },
     );
     const map = new Map();
     if (response) {
-      response.forEach(item => map.set(item.metadata.name, item));
+      response.forEach((item) => map.set(item.metadata.name, item));
     }
     const placementPolicies = [];
 
@@ -494,12 +493,12 @@ export default class ComplianceModel {
   async getPlacementBindings(parent = {}) {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
-      ns => `${policyAPIPrefix}/${ns}/placementbindings`,
+      (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const map = new Map();
     if (response) {
-      response.forEach(item => map.set(item.metadata.name, item));
+      response.forEach((item) => map.set(item.metadata.name, item));
     }
     const placementBindings = [];
 
@@ -622,7 +621,7 @@ export default class ComplianceModel {
         allClustersInPolicyResult = await Promise.all(policyListPromise);
         // step 5 get cluster info like consoleURL
         const [clustersInfos] = await Promise.all([
-          this.kubeConnector.getResources(ns => `${clusterAPIPrefix}/${ns}/managedclusterinfos`),
+          this.kubeConnector.getResources((ns) => `${clusterAPIPrefix}/${ns}/managedclusterinfos`),
         ]);
         const clustersInfosMap = new Map();
         if (Array.isArray(clustersInfos) && clustersInfos.length > 0) {
@@ -723,7 +722,7 @@ export default class ComplianceModel {
     policyResponses.forEach((policyResponse) => {
       const cluster = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-name"]', '-');
       let details = _.get(policyResponse, statusDetails, []);
-      details = details.filter(detail => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
+      details = details.filter((detail) => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
       details.forEach((detail) => {
         violations.push({
           cluster,
@@ -820,7 +819,7 @@ export default class ComplianceModel {
             lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'roleBinding.apiVersion', ''),
-            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            compliant: _.isEmpty(vioArray.filter((vio) => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
@@ -832,8 +831,8 @@ export default class ComplianceModel {
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'objectDefinition.apiVersion', ''),
             kind: _.get(res, 'objectDefinition.kind', ''),
-            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
-            status: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            compliant: _.isEmpty(vioArray.filter((vio) => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            status: _.isEmpty(vioArray.filter((vio) => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
@@ -844,8 +843,8 @@ export default class ComplianceModel {
             lastTransition: _.get(res, statusLastTransTimeStr, ''),
             complianceType: _.get(res, 'complianceType', ''),
             apiVersion: _.get(res, 'apiVersion', ''),
-            compliant: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
-            status: _.isEmpty(vioArray.filter(vio => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            compliant: _.isEmpty(vioArray.filter((vio) => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
+            status: _.isEmpty(vioArray.filter((vio) => _.get(vio, 'name', '') === name)) ? 'Compliant' : 'NonCompliant',
             validity: _.get(res, statusValidityValidStr) || _.get(res, statusValidityStr, ''),
             raw: res,
           });
@@ -859,7 +858,7 @@ export default class ComplianceModel {
     const violationArray = [];
     let details = _.get(parent, statusDetails, []);
     if (displayVioOnly) {
-      details = details.filter(detail => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
+      details = details.filter((detail) => _.get(detail, 'compliant', 'unknown') !== 'Compliant');
     }
     const cluster = _.get(parent, 'cluster', '-');
     details.forEach((detail) => {

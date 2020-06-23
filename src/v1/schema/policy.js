@@ -8,9 +8,10 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
+import { gql } from 'apollo-server-express';
 import ComplianceModel from '../models/compliance';
 
-export const typeDef = `
+export const typeDef = gql`
 type Policy implements K8sObject {
   detail: PolicyDetail
   # Possible values are: enforce, inform
@@ -85,31 +86,40 @@ type Violations {
 
 export const resolver = {
   Query: {
-    policies: (root, args, { complianceModel }) =>
-      complianceModel.getPolicies(args.name, args.clusterName),
-    policiesInCluster: (root, args, { complianceModel }) =>
-      complianceModel.getAllPoliciesInCluster(args.cluster),
-    clustersInPolicy: (root, args, { complianceModel }) =>
-      complianceModel.getAllClustersInPolicy(args.policy, args.hubNamespace),
-    policiesInApplication: (root, args, { complianceModel }) =>
-      complianceModel.getAllPoliciesInApplication(args.violatedPolicies),
-    violationsInPolicy: (root, args, { complianceModel }) =>
-      complianceModel.getAllViolationsInPolicy(args.policy, args.namespace),
+    policies: (
+      root, args, { complianceModel },
+    ) => complianceModel.getPolicies(args.name, args.clusterName),
+    policiesInCluster: (
+      root, args, { complianceModel },
+    ) => complianceModel.getAllPoliciesInCluster(args.cluster),
+    clustersInPolicy: (
+      root, args, { complianceModel },
+    ) => complianceModel.getAllClustersInPolicy(args.policy, args.hubNamespace),
+    policiesInApplication: (
+      root, args, { complianceModel },
+    ) => complianceModel.getAllPoliciesInApplication(args.violatedPolicies),
+    violationsInPolicy: (
+      root, args, { complianceModel },
+    ) => complianceModel.getAllViolationsInPolicy(args.policy, args.namespace),
   },
   Policy: {
-    detail: parent => ComplianceModel.resolvePolicyDetails(parent),
-    enforcement: parent => ComplianceModel.resolvePolicyEnforcement(parent),
-    roleTemplates: parent => ComplianceModel.resolvePolicyTemplates(parent, 'role-templates'),
-    roleBindingTemplates: parent => ComplianceModel.resolvePolicyTemplates(parent, 'roleBinding-templates'),
-    objectTemplates: parent => ComplianceModel.resolvePolicyTemplates(parent, 'object-templates'),
-    policyTemplates: parent => ComplianceModel.resolvePolicyTemplates(parent, 'policy-templates'),
-    rules: parent => ComplianceModel.resolvePolicyRules(parent),
-    status: parent => ComplianceModel.resolvePolicyStatus(parent),
-    violations: parent => ComplianceModel.resolvePolicyViolations(parent),
-    message: parent => ComplianceModel.resolvePolicyMessage(parent),
+    detail: (parent) => ComplianceModel.resolvePolicyDetails(parent),
+    enforcement: (parent) => ComplianceModel.resolvePolicyEnforcement(parent),
+    roleTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'role-templates'),
+    roleBindingTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'roleBinding-templates'),
+    objectTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'object-templates'),
+    policyTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'policy-templates'),
+    rules: (parent) => ComplianceModel.resolvePolicyRules(parent),
+    status: (parent) => ComplianceModel.resolvePolicyStatus(parent),
+    violations: (parent) => ComplianceModel.resolvePolicyViolations(parent),
+    message: (parent) => ComplianceModel.resolvePolicyMessage(parent),
   },
   Mutation: {
-    createPolicy: (root, args, { complianceModel }) => complianceModel.createPolicy(args.resources),
-    deletePolicy: (root, args, { complianceModel }) => complianceModel.deletePolicy(args),
+    createPolicy: (
+      root, args, { complianceModel },
+    ) => complianceModel.createPolicy(args.resources),
+    deletePolicy: (
+      root, args, { complianceModel },
+    ) => complianceModel.deletePolicy(args),
   },
 };

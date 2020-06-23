@@ -6,15 +6,13 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
-
-export const typeDef = `
-`;
+/* Copyright (c) 2020 Red Hat, Inc. */
+export const typeDef = '';
 
 export const resolver = {
   Mutation: {
     // patch cluster labels
-    updateResourceLabels: (parent, args, { genericModel }) =>
-      genericModel.patchResource(args),
+    updateResourceLabels: (parent, args, { genericModel }) => genericModel.patchResource(args),
     updateResource: (parent, args, { genericModel }) => {
       if (args.resourcePath) {
         return genericModel.patchResource(args);

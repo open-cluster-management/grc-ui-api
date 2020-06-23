@@ -6,8 +6,7 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
-/* Copyright (c) 2020 Red Hat, Inc.
-*/
+/* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
 import LRU from 'lru-cache';
@@ -15,7 +14,7 @@ import createMockIAMHTTP from '../mocks/iam-http';
 import request from './request';
 
 // Async middleware error handler
-const asyncMiddleware = fn => (req, res, next) => {
+const asyncMiddleware = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next))
     .catch(next);
 };

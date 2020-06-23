@@ -7,11 +7,11 @@
  * Contract with IBM Corp.
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
-
+import { gql } from 'apollo-server-express';
 import ApiGroup from '../lib/ApiGroup';
 import getTypedNS from '../lib/getTypedNS';
 
-export const typeDef = `
+export const typeDef = gql`
 type Discoveries {
   clusterLabels: JSON
   policyNames: JSON
@@ -25,7 +25,6 @@ type Templates {
   spec: JSON
 }
 `;
-
 
 export const resolver = {
   Query: {

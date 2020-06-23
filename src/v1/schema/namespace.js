@@ -7,7 +7,9 @@
  * Contract with IBM Corp.
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
-export const typeDef = `
+import { gql } from 'apollo-server-express';
+
+export const typeDef = gql`
 type Namespace implements K8sObject {
   cluster: String
   metadata: Metadata
@@ -18,7 +20,6 @@ type Namespace implements K8sObject {
 // to-do how to deal with this after removing all resource view
 export const resolver = {
   Query: {
-    namespaces: (root, args, { resourceViewModel }) =>
-      resourceViewModel.fetchResources({ type: 'namespaces' }),
+    namespaces: (root, args, { resourceViewModel }) => resourceViewModel.fetchResources({ type: 'namespaces' }),
   },
 };

@@ -5,13 +5,12 @@
  * Note to U.S. Government Users Restricted Rights:
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
- ********************************************************************************
- * Copyright (c) 2020 Red Hat, Inc.
- */
-
+ ******************************************************************************* */
+/* Copyright (c) 2020 Red Hat, Inc. */
+import { gql } from 'apollo-server-express';
 import ComplianceModel from '../models/compliance';
 
-export const typeDef = `
+export const typeDef = gql`
 type Compliance implements K8sObject {
   clusterCompliant: String
   clusterNS: JSON
@@ -104,25 +103,20 @@ type MixedTemplate {
 
 export const resolver = {
   Query: {
-    compliances: (root, args, { complianceModel }) =>
-      complianceModel.getCompliances(args.name, args.namespace),
+    compliances: (root, args, { complianceModel }) => complianceModel.getCompliances(args.name, args.namespace),
   },
   Compliance: {
-    compliancePolicies: parent => ComplianceModel.resolveCompliancePolicies(parent),
-    compliancePolicy: parent => ComplianceModel.resolveCompliancePolicy(parent),
-    complianceStatus: parent => ComplianceModel.resolveComplianceStatus(parent),
-    policyCompliant: parent => ComplianceModel.resolvePolicyCompliant(parent),
-    clusterCompliant: parent => ComplianceModel.resolveClusterCompliant(parent),
-    annotations: parent => ComplianceModel.resolveAnnotations(parent),
-    placementPolicies: (parent, args, { complianceModel }) =>
-      complianceModel.getPlacementRules(parent),
-    placementBindings: (parent, args, { complianceModel }) =>
-      complianceModel.getPlacementBindings(parent),
+    compliancePolicies: (parent) => ComplianceModel.resolveCompliancePolicies(parent),
+    compliancePolicy: (parent) => ComplianceModel.resolveCompliancePolicy(parent),
+    complianceStatus: (parent) => ComplianceModel.resolveComplianceStatus(parent),
+    policyCompliant: (parent) => ComplianceModel.resolvePolicyCompliant(parent),
+    clusterCompliant: (parent) => ComplianceModel.resolveClusterCompliant(parent),
+    annotations: (parent) => ComplianceModel.resolveAnnotations(parent),
+    placementPolicies: (parent, args, { complianceModel }) => complianceModel.getPlacementRules(parent),
+    placementBindings: (parent, args, { complianceModel }) => complianceModel.getPlacementBindings(parent),
   },
   Mutation: {
-    createCompliance: (root, args, { complianceModel }) =>
-      complianceModel.createCompliance(args.resources),
-    deleteCompliance: (root, args, { complianceModel }) =>
-      complianceModel.deleteCompliance(args),
+    createCompliance: (root, args, { complianceModel }) => complianceModel.createCompliance(args.resources),
+    deleteCompliance: (root, args, { complianceModel }) => complianceModel.deleteCompliance(args),
   },
 };

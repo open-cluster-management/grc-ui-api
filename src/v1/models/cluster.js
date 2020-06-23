@@ -36,11 +36,11 @@ function formatClusterInfo(clustersInfos) {
 export default class ClusterModel extends KubeModel {
   async getAllClusters(args = {}) {
     const [clustersInfos] = await Promise.all([
-      this.kubeConnector.getResources(ns => `${clusterAPIPrefix}/${ns}/managedclusterinfos`),
+      this.kubeConnector.getResources((ns) => `${clusterAPIPrefix}/${ns}/managedclusterinfos`),
     ]);
     const results = formatClusterInfo(clustersInfos);
     if (args.name) {
-      return results.filter(cluster => cluster.metadata.name === args.name)[0];
+      return results.filter((cluster) => cluster.metadata.name === args.name)[0];
     }
     return results;
   }

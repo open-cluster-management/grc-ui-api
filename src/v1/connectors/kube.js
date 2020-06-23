@@ -16,7 +16,7 @@ import config from '../../../config';
 import requestLib from '../lib/request';
 
 function selectNamespace(namespaces) {
-  return namespaces.find(ns => ns === 'default') || namespaces[0];
+  return namespaces.find((ns) => ns === 'default') || namespaces[0];
 }
 
 export default class KubeConnector {
@@ -24,7 +24,8 @@ export default class KubeConnector {
     cache = new LRU(),
     token = 'Bearer localdev',
     httpLib = requestLib,
-    kubeApiEndpoint = process.env.API_SERVER_URL || 'https://kubernetes.default.svc',
+    kubeApiEndpoint = process.env.API_SERVER_URL
+          || 'https://kubernetes.default.svc',
     namespaces = isRequired('namespaces'),
     pollTimeout = config.get('hcmPollTimeout'),
     pollInterval = config.get('hcmPollInterval'),
@@ -67,7 +68,7 @@ export default class KubeConnector {
       return cachedRequest;
     }
 
-    const newRequest = this.http(options).then(res => res.body);
+    const newRequest = this.http(options).then((res) => res.body);
 
     if (noCache === undefined || noCache === false) {
       this.cache.set(cacheKey, newRequest);
@@ -113,14 +114,17 @@ export default class KubeConnector {
         }
       });
       if (strs.length > 0) {
-        logger.error(`ACM RESPONSE ERROR, Expected Objects but Returned this: ${strs.join(', ')}`);
+        logger.error(
+          `ACM RESPONSE ERROR, Expected Objects but Returned this: ${strs.join(', ')}`,
+        );
         return [];
       }
 
-      return items.map(item => (kind ? Object.assign({
+      return items.map((item) => (kind ? ({
         apiVersion: response.apiVersion,
         kind,
-      }, item) : item));
+        ...item,
+      }) : item));
     });
 
     return _.flatten(await Promise.all(requests));
@@ -135,7 +139,7 @@ export default class KubeConnector {
       },
       json: jsonBody,
     };
-    return this.http(_.merge(defaults, opts)).then(res => res.body);
+    return this.http(_.merge(defaults, opts)).then((res) => res.body);
   }
 
   delete(path, jsonBody, opts = {}) {
@@ -147,7 +151,7 @@ export default class KubeConnector {
       },
       json: jsonBody,
     };
-    return this.http(_.merge(defaults, opts)).then(res => res.body);
+    return this.http(_.merge(defaults, opts)).then((res) => res.body);
   }
 
   patch(path = '', opts = {}) {
@@ -159,7 +163,7 @@ export default class KubeConnector {
         'Content-Type': 'application/json-patch+json',
       },
     };
-    return this.http(_.merge(defaults, opts)).then(res => res.body);
+    return this.http(_.merge(defaults, opts)).then((res) => res.body);
   }
 
   put(path = '', opts = {}) {
@@ -171,6 +175,6 @@ export default class KubeConnector {
         'Content-Type': 'application/json',
       },
     };
-    return this.http(_.merge(defaults, opts)).then(res => res.body);
+    return this.http(_.merge(defaults, opts)).then((res) => res.body);
   }
 }

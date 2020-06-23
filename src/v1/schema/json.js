@@ -6,10 +6,11 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
-
+/* Copyright (c) 2020 Red Hat, Inc. */
+import { gql } from 'apollo-server-express';
 import GraphQLJSON from 'graphql-type-json';
 
-export const typeDef = `
+export const typeDef = gql`
 scalar JSON
 `;
 

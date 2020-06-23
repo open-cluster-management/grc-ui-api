@@ -13,7 +13,6 @@ import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import { mockOccurrences, mockDiffIdOccurrences } from '../mocks/OccurrenceList';
 
-
 describe('Occurrences Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 import _ from 'lodash';
-import ApiGroup from '../lib/ApiGroup';
+import ApiGroup from './ApiGroup';
 
 const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
 // nsType === 'allNonClusteNS' then get the list of all non-clusters namespaces
@@ -34,15 +34,15 @@ export default async function getTypedNS(kubeConnector, nsType) {
   });
 
   let nsResults = await Promise.all(nsPromises);
-  nsResults = nsResults.filter(ns => ns !== null);
+  nsResults = nsResults.filter((ns) => ns !== null);
 
-  return typeFlag ?
-    {
+  return typeFlag
+    ? {
       clusterNSTemp,
       clusterConsoleURLTemp,
       allNonClusterNS: nsResults,
-    } :
-    {
+    }
+    : {
       clusterNSTemp,
       clusterConsoleURLTemp,
       allClusterNS: nsResults,

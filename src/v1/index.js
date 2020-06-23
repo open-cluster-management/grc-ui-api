@@ -9,27 +9,23 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 
 import express from 'express';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import { isInstance as isApolloErrorInstance, formatError as formatApolloError } from 'apollo-errors';
-import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import inspect from 'security-middleware';
+import noCache from 'nocache';
 import authMiddleware from './lib/auth-middleware';
-
 import logger from './lib/logger';
-
 import KubeConnector from './connectors/kube';
-
 import ClusterModel from './models/cluster';
 import PlacementModel from './models/placement';
 import GenericModel from './models/generic';
 import ComplianceModel from './models/compliance';
 import SAModel from './models/sa';
-
-import schema from './schema/';
+import schema from './schema';
 import config from '../../config';
 
 export const GRAPHQL_PATH = `${config.get('contextPath')}/graphql`;
@@ -46,21 +42,48 @@ const formatError = (error) => {
   return formatApolloError(error);
 };
 
+const apolloServer = new ApolloServer({
+  ...schema,
+  formatError,
+  playground: {
+    endpoint: GRAPHQL_PATH,
+  },
+  context: ({ req }) => {
+    const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
+    const kubeConnector = new KubeConnector({
+      token: req.kubeToken,
+      namespaces,
+    });
+    if (isTest) {
+      kubeConnector.kubeApiEndpoint = 'http://0.0.0.0/kubernetes';
+    }
+
+    return {
+      req,
+      clusterModel: new ClusterModel({ kubeConnector }),
+      PlacementModel: new PlacementModel({ kubeConnector }),
+      genericModel: new GenericModel({ kubeConnector }),
+      complianceModel: new ComplianceModel({ kubeConnector }),
+      saModel: new SAModel({ kubeConnector, req }),
+    };
+  },
+});
+
 const graphQLServer = express();
 graphQLServer.use(compression());
 
-const requestLogger = isProd ?
-  morgan('combined', {
+const requestLogger = isProd
+  ? morgan('combined', {
     skip: (req, res) => res.statusCode < 400,
   })
   : morgan('dev');
 
-graphQLServer.use('*', helmet({ // These headers are dealt with in icp-management-ingress
+// These headers are dealt with in icp-management-ingress
+graphQLServer.use('*', helmet({
   frameguard: false,
   noSniff: false,
   xssFilter: false,
-  noCache: true,
-}), requestLogger, cookieParser());
+}), noCache(), requestLogger, cookieParser());
 
 graphQLServer.get('/livenessProbe', (req, res) => {
   res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);
@@ -77,7 +100,6 @@ if (isProd) {
   auth.push(inspect.app, authMiddleware());
 } else {
   auth.push(authMiddleware({ shouldLocalAuth: true }));
-  graphQLServer.use(GRAPHIQL_PATH, graphiqlExpress({ endpointURL: GRAPHQL_PATH }));
 }
 
 if (isTest) {
@@ -85,26 +107,6 @@ if (isTest) {
 }
 
 graphQLServer.use(...auth);
-graphQLServer.use(GRAPHQL_PATH, bodyParser.json(), graphqlExpress(async (req) => {
-  const namespaces = req.user.namespaces.items.map(ns => ns.metadata.name);
-  const kubeConnector = new KubeConnector({
-    token: req.kubeToken,
-    namespaces,
-  });
-  if (isTest) {
-    kubeConnector.kubeApiEndpoint = 'http://0.0.0.0/kubernetes';
-  }
-
-  const context = {
-    req,
-    clusterModel: new ClusterModel({ kubeConnector }),
-    PlacementModel: new PlacementModel({ kubeConnector }),
-    genericModel: new GenericModel({ kubeConnector }),
-    complianceModel: new ComplianceModel({ kubeConnector }),
-    saModel: new SAModel({ kubeConnector, req }),
-  };
-
-  return { formatError, schema, context };
-}));
+apolloServer.applyMiddleware({ app: graphQLServer, path: GRAPHQL_PATH });
 
 export default graphQLServer;

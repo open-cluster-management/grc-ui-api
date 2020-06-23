@@ -7,27 +7,25 @@
  * Contract with IBM Corp.
  ********************************************************************************
 /* Copyright (c) 2020 Red Hat, Inc. */
-
 import ApiGroup from '../lib/ApiGroup';
 import KubeModel from './kube';
 
 const policyAPIPrefix = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces`;
 const appAPIPrefix = `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces`;
 
-const filterByName = (names, items) =>
-  items.filter(item => names.find(name => name === item.metadata.name));
+const filterByName = (names, items) => items.filter((item) => names.find((name) => name === item.metadata.name));
 
 export default class PlacementModel extends KubeModel {
   async getPlacementBindings(selector = {}) {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `${policyAPIPrefix}/${ns}/placementbindings`,
+      (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
     );
     const placementBindings = matchNames ? filterByName(matchNames, response) : response;
 
-    return placementBindings.map(pb => ({
+    return placementBindings.map((pb) => ({
       metadata: pb.metadata,
       raw: pb,
       placementRef: pb.placementRef,
@@ -39,11 +37,11 @@ export default class PlacementModel extends KubeModel {
     const { matchNames } = selector;
 
     const response = await this.kubeConnector.getResources(
-      ns => `${appAPIPrefix}/${ns}/placementrules`,
+      (ns) => `${appAPIPrefix}/${ns}/placementrules`,
       { kind: 'PlacementRule' },
     );
     const placementPolicies = matchNames ? filterByName(matchNames, response) : response;
-    return placementPolicies.map(pp => ({
+    return placementPolicies.map((pp) => ({
       clusterLabels: pp.spec.clusterSelector,
       metadata: pp.metadata,
       raw: pp,

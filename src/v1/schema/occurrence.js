@@ -6,8 +6,10 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
+/* Copyright (c) 2020 Red Hat, Inc. */
+import { gql } from 'apollo-server-express';
 
-export const typeDef = `
+export const typeDef = gql`
 type Occurrence {
   name: String
   noteName: String
@@ -27,11 +29,13 @@ type Occurrence {
 
 export const resolver = {
   Query: {
-    occurrences: (root, args, { saModel, req }) =>
-      saModel.getOccurrences(args.userAccountID, req),
+    occurrences: (
+      root, args, { saModel, req },
+    ) => saModel.getOccurrences(args.userAccountID, req),
   },
   Mutation: {
-    deleteOccurrences: (root, args, { saModel, req }) =>
-      saModel.deleteOccurrences(args.selfLink, req),
+    deleteOccurrences: (
+      root, args, { saModel, req },
+    ) => saModel.deleteOccurrences(args.selfLink, req),
   },
 };

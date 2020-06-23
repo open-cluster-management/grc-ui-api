@@ -8,10 +8,12 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 module.exports = {
-  "parser": "babel-eslint",
-  "plugins": ["jest"],
-  "extends": ["plugin:jest/recommended", "airbnb-base"],
-  "rules": {
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accum", "req"] }]
-  }
+  plugins: ['jest'],
+  extends: ['plugin:jest/recommended', 'airbnb-base'],
+  rules: {
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['accum', 'req'] }],
+    // turn off here for airbnb-base v14, which set limit to 100, sonar stil check this at limit 180
+    'max-len': 'off',
+    'no-underscore-dangle': 'off',
+  },
 };

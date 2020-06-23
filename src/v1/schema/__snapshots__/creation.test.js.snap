@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Creation Resolver Correctly Resolves Creation Query 1`] = `
+Object {
+  "data": Object {
+    "discoveries": Object {
+      "annotations": Object {
+        "categories": Object {},
+        "controls": Object {},
+        "standards": Object {},
+      },
+      "clusterLabels": Array [
+        Object {
+          "key": "environment",
+          "value": "Dev",
+        },
+        Object {
+          "key": "name",
+          "value": "cluster1",
+        },
+        Object {
+          "key": "region",
+          "value": "US",
+        },
+        Object {
+          "key": "name",
+          "value": "clusterhub",
+        },
+      ],
+      "namespaces": Array [
+        "default",
+        "kube-system",
+        "mcm",
+      ],
+      "policyNames": Array [
+        "policy-certificatepolicy",
+        "policy-iampolicy",
+        "policy-image",
+        "policy-limitrange",
+        "policy-namespace",
+        "policy-pod",
+        "policy-rolebinding-1",
+        "policy-vulnerabilitypolicy",
+      ],
+      "templates": Array [],
+    },
+  },
+}
+`;

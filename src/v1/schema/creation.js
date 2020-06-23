@@ -8,6 +8,7 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 import { gql } from 'apollo-server-express';
+import _ from 'lodash';
 import ApiGroup from '../lib/ApiGroup';
 import getTypedNS from '../lib/getTypedNS';
 
@@ -37,10 +38,12 @@ export const resolver = {
       clusters.forEach(({
         metadata,
       }) => {
-        const { labels } = metadata;
-        Object.entries(labels).forEach(([key, value]) => {
-          labelMap[`${key}=${value}`] = { key, value };
-        });
+        if (!_.isEmpty(metadata)) {
+          const { labels } = metadata;
+          Object.entries(labels).forEach(([key, value]) => {
+            labelMap[`${key}=${value}`] = { key, value };
+          });
+        }
       });
       const clusterLabels = Object.values(labelMap);
 
@@ -51,17 +54,19 @@ export const resolver = {
       compliances.forEach(({
         name, metadata = {},
       }) => {
-        const { annotations } = metadata;
-        policyNames.push(name);
-        Object.keys(collection).forEach((key) => {
-          const types = annotations[`${ApiGroup.policiesGroup}/${key}`] || '';
-          types.split(',').forEach((type) => {
-            const ttype = type.trim();
-            if (ttype) {
-              collection[key].add(ttype);
-            }
+        if (!_.isEmpty(metadata)) {
+          const { annotations } = metadata;
+          policyNames.push(name);
+          Object.keys(collection).forEach((key) => {
+            const types = annotations[`${ApiGroup.policiesGroup}/${key}`] || '';
+            types.split(',').forEach((type) => {
+              const ttype = type.trim();
+              if (ttype) {
+                collection[key].add(ttype);
+              }
+            });
           });
-        });
+        }
       });
 
       // PolicyTemplates

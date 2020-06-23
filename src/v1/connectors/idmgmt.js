@@ -6,7 +6,7 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  ****************************************************************************** */
-
+/* Copyright (c) 2020 Red Hat, Inc. */
 import _ from 'lodash';
 import config from '../../../config';
 import requestLib from '../lib/request';

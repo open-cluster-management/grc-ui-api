@@ -44,8 +44,12 @@ jobs:
         - set -e
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         - make copyright-check TRAVIS_BRANCH=${TRAVIS_BRANCH}
+        - echo '"start grc-ui-api building..."' && echo -en 'travis_fold:start:script.build\\r'
         - make component/build
+        - echo '"finished grc-ui-api build"' && echo -en 'travis_fold:end:script.build\\r'
+        - echo '"start image pushing..."' && echo -en 'travis_fold:start:script.build\\r'
         - make component/push
+        - echo '"finished image push"' && echo -en 'travis_fold:end:script.build\\r'
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then 
             export COMPONENT_NEWTAG="latest-dev";
@@ -60,7 +64,9 @@ jobs:
         - set -e
         - make sonar/js/jest-init
         - make component/test/unit
+        - echo '"start sonar checking..."' && echo -en 'travis_fold:start:script.build\\r'
         - make sonar/js
+        - echo '"finished sonar check"' && echo -en 'travis_fold:end:script.build\\r'
     - stage: test-e2e
       name: "Run e2e tests"
       if: type = pull_request

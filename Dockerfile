@@ -1,4 +1,9 @@
-FROM registry.access.redhat.com/ubi8/nodejs-10:1
+FROM registry.access.redhat.com/ubi8/nodejs-12:1
+
+# Root needed for yum update, gets reset to 1001 below.
+USER root
+RUN yum -y remove nodejs-nodemon
+RUN yum -y update
 
 ARG VCS_REF
 ARG VCS_URL

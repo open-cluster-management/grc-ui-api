@@ -390,7 +390,7 @@ describe('Policy Resolver', () => {
               uid
               selfLink
             }
-            spec
+            status
           }
         }
       `,

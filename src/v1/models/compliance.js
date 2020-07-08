@@ -694,10 +694,9 @@ export default class ComplianceModel {
     if (policyName === null) {
       return resultsWithPolicyName;
     }
-    const clusterConsoleURL = {};
     // nsType === 'allClusterNS', get the list of all clusters namespaces
-    const { allClusterNS } = await getTypedNS(this.kubeConnector, 'allClusterNS');
-
+    const { allClusterNS, clusterConsoleURLTemp } = await getTypedNS(this.kubeConnector, 'allClusterNS');
+    const clusterConsoleURL = clusterConsoleURLTemp;
     const promises = allClusterNS.map(async (ns) => {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);

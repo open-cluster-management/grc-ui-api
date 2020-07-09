@@ -101,6 +101,12 @@ export const resolver = {
     violationsInPolicy: (
       root, args, { complianceModel },
     ) => complianceModel.getAllViolationsInPolicy(args.policy, args.namespace),
+    placementRules: (
+      root, args, { complianceModel },
+    ) => complianceModel.getPlacementRules(args.parent),
+    placementBindings: (
+      root, args, { complianceModel },
+    ) => complianceModel.getPlacementBindings(args.parent),
   },
   Policy: {
     detail: (parent) => ComplianceModel.resolvePolicyDetails(parent),

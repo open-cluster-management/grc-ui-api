@@ -46,7 +46,7 @@ type ClusterInfo implements K8sObject {
   violated: String
   policyListStatuses: JSON
   metadata: Metadata
-  spec: JSON
+  status: JSON
 }
 
 type PolicyDetail {

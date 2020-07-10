@@ -167,7 +167,6 @@ export default class KubeConnector {
   }
 
   put(path = '', opts = {}) {
-    console.log('PUT REQ!!!!')
     const defaults = {
       url: `${this.kubeApiEndpoint}${path}`,
       method: 'PUT',

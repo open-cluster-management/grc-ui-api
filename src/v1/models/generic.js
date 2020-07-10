@@ -146,7 +146,6 @@ export default class GenericModel extends KubeModel {
       // will use selfLink by default
       response = await this.kubeConnector.put(`${selfLink}`, requestBody);
     }
-    console.log(response)
     if (response && (response.code || response.message)) {
       throw new Error(`${response.code} - ${response.message}`);
     }

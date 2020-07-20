@@ -20,5 +20,6 @@ export const resolver = {
       return genericModel.putResource(args);
     },
     createResources: (parent, args, { genericModel }) => genericModel.createResources(args),
+    createAndUpdateResources: (parent, args, { genericModel }) => genericModel.createAndUpdateResources(args),
   },
 };

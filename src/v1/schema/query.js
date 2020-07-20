@@ -21,8 +21,8 @@ type Query {
   clustersInPolicy(policy: String, hubNamespace: String): [ClusterInfo]
   policiesInApplication(violatedPolicies: JSON): [Policy]
   violationsInPolicy(policy: String, namespace: String): [Violations]
-  placementRules(parent: JSON): [PlacementPolicy]
-  placementBindings(parent: JSON): [PlacementBinding]
+  placementRules(prs: JSON): [PlacementPolicy]
+  placementBindings(pbs: JSON): [PlacementBinding]
   compliances(name: String, namespace: String): [Compliance]
   placementPolicies (selector: JSON): [PlacementPolicy]
 
@@ -53,6 +53,9 @@ type Mutation {
 
   # Creates Kubernetes Resources
   createResources(resources: [JSON]): JSON
+
+  # Creates Kubernetes Resources that do not exist and updates those that do exist
+  createAndUpdateResources(toCreate: [JSON], toUpdate: [JSON]): JSON
 
   # Update Kubernetes resources
   updateResource(resourceType: String!, namespace: String!, name: String!, body: JSON, selfLink: String, resourcePath: String): JSON

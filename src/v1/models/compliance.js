@@ -460,8 +460,9 @@ export default class ComplianceModel {
     };
   }
 
-  async getPlacementRules(parent = {}) {
-    const placements = _.get(parent, 'status.placement', []);
+  async getPlacementRules(prs = []) {
+    console.log('--- GET PRS');
+    console.log(prs);
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,
       { kind: 'PlacementRule' },
@@ -472,8 +473,7 @@ export default class ComplianceModel {
     }
     const placementPolicies = [];
 
-    placements.forEach((placement) => {
-      const rule = _.get(placement, 'placementRule', '');
+    prs.forEach((rule) => {
       const pp = map.get(rule);
       if (pp) {
         const spec = pp.spec || {};
@@ -490,8 +490,9 @@ export default class ComplianceModel {
     return placementPolicies;
   }
 
-  async getPlacementBindings(parent = {}) {
-    const placements = _.get(parent, 'status.placement', []);
+  async getPlacementBindings(pbs = []) {
+    console.log('---- get pbs');
+    console.log(pbs);
     const response = await this.kubeConnector.getResources(
       (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },
@@ -502,8 +503,7 @@ export default class ComplianceModel {
     }
     const placementBindings = [];
 
-    placements.forEach((placement) => {
-      const binding = _.get(placement, 'placementBinding', '');
+    pbs.forEach((binding) => {
       const pb = map.get(binding);
       if (pb) {
         placementBindings.push({

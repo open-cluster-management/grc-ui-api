@@ -112,8 +112,8 @@ export const resolver = {
     policyCompliant: (parent) => ComplianceModel.resolvePolicyCompliant(parent),
     clusterCompliant: (parent) => ComplianceModel.resolveClusterCompliant(parent),
     annotations: (parent) => ComplianceModel.resolveAnnotations(parent),
-    placementPolicies: (parent, args, { complianceModel }) => complianceModel.getPlacementRules(parent),
-    placementBindings: (parent, args, { complianceModel }) => complianceModel.getPlacementBindings(parent),
+    placementPolicies: (prs, args, { complianceModel }) => complianceModel.getPlacementRules(prs),
+    placementBindings: (pbs, args, { complianceModel }) => complianceModel.getPlacementBindings(pbs),
   },
   Mutation: {
     createCompliance: (root, args, { complianceModel }) => complianceModel.createCompliance(args.resources),

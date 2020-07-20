@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /** *****************************************************************************
  * Licensed Materials - Property of IBM
  * (c) Copyright IBM Corporation 2018. All Rights Reserved.
@@ -40,7 +41,23 @@ export default class GenericModel extends KubeModel {
     return undefined;
   }
 
+  async createAndUpdateResources(args) {
+    console.log('---- createANDupdate --------');
+    const { toCreate, toUpdate } = args;
+    const createRes = this.createResources(toCreate);
+    const updateRes = [];
+    toUpdate.forEach((json) => {
+      updateRes.push(this.putResource(json));
+    });
+    return {
+      create: createRes,
+      update: updateRes,
+    };
+  }
+
   async createResources(args) {
+    console.log('----- generic createresources -------');
+    console.log(args);
     const { resources } = args;
     const k8sPaths = await this.kubeConnector.get('/');
     // get resource end point for each resource
@@ -134,6 +151,8 @@ export default class GenericModel extends KubeModel {
   }
 
   async putResource(args) {
+    console.log('--- put res ----');
+    console.log(args);
     let response;
     const { body, selfLink } = args;
     const requestBody = {

@@ -727,7 +727,7 @@ export default class ComplianceModel {
           cluster,
           name: _.get(detail, templateMetaNameStr, '-'),
           message: _.get(detail, historyLatestMessageStr, '-'),
-          timestamp: _.get(detail, historyLatestTimestampStr, '-'),
+          timestamp: _.get(detail, historyLatestTimestampStr),
           consoleURL: clusterConsoleURL[cluster],
         });
       });
@@ -865,7 +865,7 @@ export default class ComplianceModel {
         name: _.get(detail, templateMetaNameStr, '-'),
         cluster,
         message: _.get(detail, historyLatestMessageStr, '-'),
-        timestamp: _.get(detail, historyLatestTimestampStr, '-'),
+        timestamp: _.get(detail, historyLatestTimestampStr),
       });
     });
     return violationArray;

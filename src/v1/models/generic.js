@@ -151,4 +151,24 @@ export default class GenericModel extends KubeModel {
     }
     return response;
   }
+
+  async userAccess(resource, action, namespace = '', group = '') {
+    const body = {
+      apiVersion: 'authorization.k8s.io/v1',
+      kind: 'SelfSubjectAccessReview',
+      spec: {
+        resourceAttributes: {
+          verb: action,
+          resource,
+          namespace,
+          group,
+        },
+      },
+    };
+    const response = await this.kubeConnector.post('/apis/authorization.k8s.io/v1/selfsubjectaccessreviews', body);
+    if (response.status === 'Failure' || response.code >= 400) {
+      throw new Error(`Get User Access Failed [${response.code}] - ${response.message}`);
+    }
+    return response.status;
+  }
 }

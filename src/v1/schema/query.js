@@ -28,6 +28,9 @@ type Query {
 
   # sa
   occurrences(userAccountID: String): [Occurrence]
+
+  # Resolves if the current user is authorized to access a given resource.
+  userAccess(resource: String!, action: String!, namespace: String, apiGroup: String): JSON
 }
 
 type Mutation {

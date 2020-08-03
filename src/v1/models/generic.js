@@ -153,7 +153,7 @@ export default class GenericModel extends KubeModel {
   }
 
   async userAccess(resource, action, namespace = '', group = '') {
-    const body = {
+    const accessViewBody = {
       apiVersion: 'authorization.k8s.io/v1',
       kind: 'SelfSubjectAccessReview',
       spec: {
@@ -165,10 +165,28 @@ export default class GenericModel extends KubeModel {
         },
       },
     };
-    const response = await this.kubeConnector.post('/apis/authorization.k8s.io/v1/selfsubjectaccessreviews', body);
-    if (response.status === 'Failure' || response.code >= 400) {
-      throw new Error(`Get User Access Failed [${response.code}] - ${response.message}`);
+    const accessViewResponse = await this.kubeConnector.post('/apis/authorization.k8s.io/v1/selfsubjectaccessreviews', accessViewBody);
+    if (accessViewResponse.status === 'Failure' || accessViewResponse.code >= 400) {
+      throw new Error(`Get User Access Failed [${accessViewResponse.code}] - ${accessViewResponse.message}`);
     }
-    return response.status;
+
+    const nonEmptyNS = namespace || 'default';
+    const rulesViewBody = {
+      apiVersion: 'authorization.k8s.io/v1',
+      kind: 'SelfSubjectRulesReview',
+      spec: {
+        namespace: nonEmptyNS,
+      },
+    };
+    const rulesViewResponse = await this.kubeConnector.post('/apis/authorization.k8s.io/v1/selfsubjectrulesreviews', rulesViewBody);
+    if (rulesViewResponse.status === 'Failure' || rulesViewResponse.code >= 400) {
+      throw new Error(`Get User Access Failed [${rulesViewResponse.code}] - ${rulesViewResponse.message}`);
+    }
+
+    const combineResult = {
+      accessViewResponse: accessViewResponse.status,
+      rulesViewResponse: rulesViewResponse.status,
+    };
+    return combineResult;
   }
 }

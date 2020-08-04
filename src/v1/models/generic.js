@@ -11,6 +11,7 @@
 import _ from 'lodash';
 import KubeModel from './kube';
 import ApiGroup from '../lib/ApiGroup';
+import logger from '../lib/logger';
 
 const noResourcetypeStr = '##cannot find resourcetype##';
 
@@ -153,6 +154,7 @@ export default class GenericModel extends KubeModel {
   }
 
   async userAccess(resource, action, namespace = '', group = '') {
+    logger.info(`resource : ${resource} + action : ${action} + namespace : ${namespace} + group : ${group}`);
     const accessViewBody = {
       apiVersion: 'authorization.k8s.io/v1',
       kind: 'SelfSubjectAccessReview',

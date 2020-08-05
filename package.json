@@ -1,5 +1,5 @@
 {
-  "name": "grc-ui-api",
+  "name": "@open-cluster-management/grc-ui-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

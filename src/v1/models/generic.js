@@ -43,15 +43,67 @@ export default class GenericModel extends KubeModel {
 
   async createAndUpdateResources(args) {
     console.log('---- createANDupdate --------');
+    console.log(args);
     const { toCreate, toUpdate } = args;
-    const createRes = this.createResources(toCreate);
-    const updateRes = [];
-    toUpdate.forEach((json) => {
-      updateRes.push(this.putResource(json));
+    const createRes = [];
+    const createErr = [];
+    const cr = await Promise.all(toCreate.map((json) => this.createResources({ resources: [json] })
+      .then((res) => {
+        if (res.errors.length > 0) {
+          return {
+            status: 'Failure',
+            message: res.errors[0],
+            kind: json.kind,
+          };
+        }
+        return {
+          response: res.result[0],
+          kind: json.kind,
+        };
+      })));
+    cr.forEach((item) => {
+      if (item.status === 'Failure' || item.message) {
+        createErr.push({
+          message: item.message,
+          kind: item.kind,
+        });
+      } else {
+        createRes.push({
+          response: item.response,
+          kind: item.kind,
+        });
+      }
     });
+    const updateRes = [];
+    const updateErr = [];
+    const ur = await Promise.all(toUpdate.map((json) => this.putResource({ body: json, selfLink: json.metadata.selfLink })
+      .then((res) => ({ response: res, kind: json.kind }))
+      .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+    console.log('=============');
+    console.log(ur);
+    ur.forEach((item) => {
+      if (item.status === 'Failure' || item.message) {
+        updateErr.push({
+          message: item.message,
+          kind: item.kind,
+        });
+      } else {
+        updateRes.push({
+          response: item.response,
+          kind: item.kind,
+        });
+      }
+    });
+    console.log('RETURNING........');
     return {
-      create: createRes,
-      update: updateRes,
+      create: {
+        errors: createErr,
+        result: createRes,
+      },
+      update: {
+        errors: updateErr,
+        result: updateRes,
+      },
     };
   }
 
@@ -151,8 +203,6 @@ export default class GenericModel extends KubeModel {
   }
 
   async putResource(args) {
-    console.log('--- put res ----');
-    console.log(args);
     let response;
     const { body, selfLink } = args;
     const requestBody = {

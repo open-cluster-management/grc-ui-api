@@ -461,8 +461,6 @@ export default class ComplianceModel {
   }
 
   async getPlacementRules(prs = []) {
-    console.log('--- GET PRS');
-    console.log(prs);
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,
       { kind: 'PlacementRule' },
@@ -491,8 +489,6 @@ export default class ComplianceModel {
   }
 
   async getPlacementBindings(pbs = []) {
-    console.log('---- get pbs');
-    console.log(pbs);
     const response = await this.kubeConnector.getResources(
       (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
       { kind: 'PlacementBinding' },

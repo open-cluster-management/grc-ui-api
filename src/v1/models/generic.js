@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /** *****************************************************************************
  * Licensed Materials - Property of IBM
  * (c) Copyright IBM Corporation 2018. All Rights Reserved.
@@ -42,8 +41,6 @@ export default class GenericModel extends KubeModel {
   }
 
   async createAndUpdateResources(args) {
-    console.log('---- createANDupdate --------');
-    console.log(args);
     const { toCreate, toUpdate } = args;
     const createRes = [];
     const createErr = [];
@@ -79,8 +76,6 @@ export default class GenericModel extends KubeModel {
     const ur = await Promise.all(toUpdate.map((json) => this.putResource({ body: json, selfLink: json.metadata.selfLink })
       .then((res) => ({ response: res, kind: json.kind }))
       .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
-    console.log('=============');
-    console.log(ur);
     ur.forEach((item) => {
       if (item.status === 'Failure' || item.message) {
         updateErr.push({
@@ -94,7 +89,6 @@ export default class GenericModel extends KubeModel {
         });
       }
     });
-    console.log('RETURNING........');
     return {
       create: {
         errors: createErr,
@@ -108,8 +102,6 @@ export default class GenericModel extends KubeModel {
   }
 
   async createResources(args) {
-    console.log('----- generic createresources -------');
-    console.log(args);
     const { resources } = args;
     const k8sPaths = await this.kubeConnector.get('/');
     // get resource end point for each resource

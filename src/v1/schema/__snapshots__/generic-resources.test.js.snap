@@ -46,6 +46,128 @@ Object {
 }
 `;
 
+exports[`Generic Resources Resolver Correctly Resolves Create and Update Resources Mutation 1`] = `
+Object {
+  "data": Object {
+    "createAndUpdateResources": Object {
+      "create": Object {
+        "errors": Array [],
+        "result": Array [
+          Object {
+            "kind": "Policy",
+            "response": Object {
+              "data": Object {
+                "createResources": Object {
+                  "errors": Array [],
+                  "result": Array [
+                    Object {
+                      "apiVersion": "policy.open-cluster-management.io/v1",
+                      "kind": "Policy",
+                      "metadata": Object {
+                        "creationTimestamp": "2019-07-24T16:13:38Z",
+                        "generation": 1,
+                        "name": "test-policy",
+                        "namespace": "mcm",
+                        "resourceVersion": "1688805",
+                        "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                        "uid": "fec7f06c-ae2d-11e9-8a41-005056a061f1",
+                      },
+                      "spec": Object {
+                        "complianceType": "musthave",
+                        "namespaces": Object {
+                          "exclude": Array [
+                            "kube-*",
+                          ],
+                          "include": Array [
+                            "default",
+                          ],
+                        },
+                        "remediationAction": "inform",
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        ],
+      },
+      "update": Object {
+        "errors": Array [],
+        "result": Array [
+          Object {
+            "kind": "Policy",
+            "response": Object {
+              "data": Object {
+                "updateResource": Object {
+                  "apiVersion": "policy.open-cluster-management.io/v1",
+                  "kind": "Policy",
+                  "metadata": Object {
+                    "annotations": Object {
+                      "policy.open-cluster-management.io/categories": "hello",
+                      "policy.open-cluster-management.io/controls": "",
+                      "policy.open-cluster-management.io/standards": "",
+                      "seed-generation": "1",
+                    },
+                    "creationTimestamp": "2019-07-24T13:27:59Z",
+                    "finalizers": Array [
+                      "propagator.finalizer.mcm.ibm.com",
+                    ],
+                    "generation": 6,
+                    "name": "test-policy",
+                    "namespace": "mcm",
+                    "resourceVersion": "1673886",
+                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                    "uid": "da8f9553-ae16-11e9-8a41-005056a061f1",
+                  },
+                  "spec": Object {
+                    "complianceType": "musthave",
+                    "namespaces": Object {
+                      "exclude": Array [
+                        "kube-*",
+                      ],
+                      "include": Array [
+                        "default",
+                      ],
+                    },
+                    "object-templates": Array [
+                      Object {
+                        "complianceType": "musthave",
+                        "objectDefinition": Object {
+                          "apiVersion": "v1",
+                          "kind": "LimitRange",
+                          "metadata": Object {
+                            "name": "mem-limit-range",
+                          },
+                          "spec": Object {
+                            "limits": Array [
+                              Object {
+                                "default": Object {
+                                  "memory": "512Mi",
+                                },
+                                "defaultRequest": Object {
+                                  "memory": "256Mi",
+                                },
+                                "type": "Container",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                    "remediationAction": "inform",
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+}
+`;
+
 exports[`Generic Resources Resolver Correctly Resolves Update Resource Labels Mutation 1`] = `
 Object {
   "data": Object {

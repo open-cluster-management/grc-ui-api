@@ -23,11 +23,11 @@ describe('Generic Resources Resolver', () => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
 
     // define the method to be intercepted
-    APIServer.get('/').reply(200, kubeGetMock);
-    APIServer.get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`).reply(200, mockAPIResourceList);
-    APIServer.post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
+    APIServer.persist().get('/').reply(200, kubeGetMock);
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`).reply(200, mockAPIResourceList);
+    APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
-    APIServer.put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy`)
+    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
   });
 
@@ -62,6 +62,51 @@ describe('Generic Resources Resolver', () => {
                 },
               }
             ]
+          )
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Create and Update Resources Mutation', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        mutation {
+          createAndUpdateResources(
+            toCreate: [{
+              apiVersion: "policy.open-cluster-management.io/v1", 
+              kind: "Policy", 
+              metadata: {
+                name: "test-policy-cau",
+                finalizers: [
+                  "propagator.finalizer.mcm.ibm.com"
+                ],
+                generation: 7,
+                namespace: "mcm",
+                resourceVersion: "1234567"
+              },
+            }],
+            toUpdate: [{
+              apiVersion: "policy.open-cluster-management.io/v1", 
+              kind: "Policy", 
+              metadata: {
+                name: "test-policy",
+                finalizers: [
+                  "propagator.finalizer.mcm.ibm.com",
+                  "new.finalizer.test.com"
+                ],
+                generation: 7,
+                namespace: "mcm",
+                resourceVersion: "1234567",
+                selfLink: "/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy"
+              },
+            }],
           )
         }
       `,

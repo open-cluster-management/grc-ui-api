@@ -460,6 +460,63 @@ export default class ComplianceModel {
     };
   }
 
+  async getPlacementRulesFromParent(parent = {}) {
+    const placements = _.get(parent, 'status.placement', []);
+    const response = await this.kubeConnector.getResources(
+      (ns) => `${appAPIPrefix}/${ns}/placementrules`,
+      { kind: 'PlacementRule' },
+    );
+    const map = new Map();
+    if (response) {
+      response.forEach((item) => map.set(item.metadata.name, item));
+    }
+    const placementPolicies = [];
+
+    placements.forEach((placement) => {
+      const rule = _.get(placement, 'placementRule', '');
+      const pp = map.get(rule);
+      if (pp) {
+        const spec = pp.spec || {};
+        placementPolicies.push({
+          clusterLabels: spec.clusterSelector,
+          metadata: pp.metadata,
+          raw: pp,
+          clusterReplicas: spec.clusterReplicas,
+          resourceSelector: spec.resourceHint,
+          status: pp.status,
+        });
+      }
+    });
+    return placementPolicies;
+  }
+
+  async getPlacementBindingsFromParent(parent = {}) {
+    const placements = _.get(parent, 'status.placement', []);
+    const response = await this.kubeConnector.getResources(
+      (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
+      { kind: 'PlacementBinding' },
+    );
+    const map = new Map();
+    if (response) {
+      response.forEach((item) => map.set(item.metadata.name, item));
+    }
+    const placementBindings = [];
+
+    placements.forEach((placement) => {
+      const binding = _.get(placement, 'placementBinding', '');
+      const pb = map.get(binding);
+      if (pb) {
+        placementBindings.push({
+          metadata: pb.metadata,
+          raw: pb,
+          placementRef: pb.placementRef,
+          subjects: pb.subjects,
+        });
+      }
+    });
+    return placementBindings;
+  }
+
   async getPlacementRules(prs = []) {
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,

@@ -55,7 +55,7 @@
     "nconf": "^0.10.0",
     "nocache": "^2.1.0",
     "requestretry": "^4.1.1",
-    "security-middleware": "github:open-cluster-management/security-middleware"
+    "security-middleware": "github:open-cluster-management/security-middleware#1.0.0"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.10.4",

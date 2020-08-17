@@ -233,3 +233,290 @@ export const mockUpdateResourcesResponse = {
     },
   },
 };
+
+export const mockGetResourceLocallyResponse = {
+  apiVersion: 'v1',
+  kind: 'Pod',
+  metadata: {
+    annotations: {
+      'k8s.v1.cni.cncf.io/networks-status': '[{\n    "name": "openshift-sdn",\n    "interface": "eth0",\n    "ips": [\n        "10.128.2.73"\n    ],\n    "dns": {},\n    "default-route": [\n        "10.128.2.1"\n    ]\n}]',
+      'openshift.io/scc': 'restricted',
+    },
+    creationTimestamp: '2020-07-23T18:13:32Z',
+    generateName: 'grc-f2e12-grcui-6b756dfc76-',
+    labels: {
+      app: 'grc',
+      'app.kubernetes.io/instance': 'grc-f2e12',
+      'app.kubernetes.io/managed-by': 'Helm',
+      'app.kubernetes.io/name': 'grc',
+      chart: 'grc-2.0.0',
+      component: 'ocm-grcui',
+      'helm.sh/chart': 'grc-2.0.0',
+      heritage: 'Helm',
+      'pod-template-hash': '6b756dfc76',
+      release: 'grc-f2e12',
+    },
+    name: 'grc-f2e12-grcui-6b756dfc76-4fk7c',
+    namespace: 'open-cluster-management',
+    ownerReferences: [
+      {
+        apiVersion: 'apps/v1',
+        blockOwnerDeletion: true,
+        controller: true,
+        kind: 'ReplicaSet',
+        name: 'grc-f2e12-grcui-6b756dfc76',
+        uid: 'b402f0fc-a75f-4b18-8241-6def0abf3c90',
+      },
+    ],
+    resourceVersion: '9895924',
+    selfLink: '/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c',
+    uid: '0a25f3bc-993b-4079-954b-e50cd5027bf5',
+  },
+  spec: {
+    affinity: {
+      nodeAffinity: {
+        requiredDuringSchedulingIgnoredDuringExecution: {
+          nodeSelectorTerms: [
+            {
+              matchExpressions: [
+                {
+                  key: 'beta.kubernetes.io/arch',
+                  operator: 'In',
+                  values: [
+                    'amd64',
+                    'ppc64le',
+                    's390x',
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      podAntiAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: [
+          {
+            podAffinityTerm: {
+              labelSelector: {
+                matchExpressions: [
+                  {
+                    key: 'app',
+                    operator: 'In',
+                    values: [
+                      'grc-ui',
+                    ],
+                  },
+                ],
+              },
+              topologyKey: 'failure-domain.beta.kubernetes.io/zone',
+            },
+            weight: 70,
+          },
+          {
+            podAffinityTerm: {
+              labelSelector: {
+                matchExpressions: [
+                  {
+                    key: 'app',
+                    operator: 'In',
+                    values: [
+                      'grc-ui',
+                    ],
+                  },
+                ],
+              },
+              topologyKey: 'kubernetes.io/hostname',
+            },
+            weight: 35,
+          },
+        ],
+      },
+    },
+    containers: [
+      {
+        env: [
+          {
+            name: 'grcUiApiUrl',
+            value: 'https://grc-f2e12-grcuiapi:4000/grcuiapi',
+          },
+          {
+            name: 'searchApiUrl',
+            value: 'https://search-search-api:4010/searchapi',
+          },
+        ],
+        image: 'quay.io/open-cluster-management/grc-ui@sha256:f0db7b0409c694f92f024cd16026172071804bf33ab58f789fd0506bc4b974fb',
+        imagePullPolicy: 'Always',
+        livenessProbe: {
+          failureThreshold: 3,
+          httpGet: {
+            path: '/livenessProbe',
+            port: 3000,
+            scheme: 'HTTP',
+          },
+          initialDelaySeconds: 30,
+          periodSeconds: 30,
+          successThreshold: 1,
+          timeoutSeconds: 1,
+        },
+        name: 'grc-ui',
+        ports: [
+          {
+            containerPort: 3000,
+            protocol: 'TCP',
+          },
+        ],
+        readinessProbe: {
+          failureThreshold: 3,
+          httpGet: {
+            path: '/readinessProbe',
+            port: 3000,
+            scheme: 'HTTP',
+          },
+          initialDelaySeconds: 5,
+          periodSeconds: 10,
+          successThreshold: 1,
+          timeoutSeconds: 1,
+        },
+        resources: {
+          requests: {
+            cpu: '200m',
+            memory: '256Mi',
+          },
+        },
+        securityContext: {
+          allowPrivilegeEscalation: false,
+          capabilities: {
+            drop: [
+              'ALL',
+              'KILL',
+              'MKNOD',
+              'SETGID',
+              'SETUID',
+            ],
+          },
+          privileged: false,
+          readOnlyRootFilesystem: true,
+          runAsUser: 1000640000,
+        },
+        terminationMessagePath: '/dev/termination-log',
+        terminationMessagePolicy: 'File',
+        volumeMounts: [
+          {
+            mountPath: '/var/run/secrets/kubernetes.io/serviceaccount',
+            name: 'grc-sa-token-588p4',
+            readOnly: true,
+          },
+        ],
+      },
+    ],
+    dnsPolicy: 'ClusterFirst',
+    enableServiceLinks: true,
+    imagePullSecrets: [
+      {
+        name: 'multiclusterhub-operator-pull-secret',
+      },
+    ],
+    nodeName: 'ip-10-0-156-232.us-west-1.compute.internal',
+    priority: 0,
+    restartPolicy: 'Always',
+    schedulerName: 'default-scheduler',
+    securityContext: {
+      fsGroup: 1000640000,
+      runAsNonRoot: true,
+      seLinuxOptions: {
+        level: 's0:c25,c20',
+      },
+    },
+    serviceAccount: 'grc-sa',
+    serviceAccountName: 'grc-sa',
+    terminationGracePeriodSeconds: 30,
+    tolerations: [
+      {
+        effect: 'NoSchedule',
+        key: 'dedicated',
+        operator: 'Exists',
+      },
+      {
+        effect: 'NoExecute',
+        key: 'node.kubernetes.io/not-ready',
+        operator: 'Exists',
+        tolerationSeconds: 300,
+      },
+      {
+        effect: 'NoExecute',
+        key: 'node.kubernetes.io/unreachable',
+        operator: 'Exists',
+        tolerationSeconds: 300,
+      },
+      {
+        effect: 'NoSchedule',
+        key: 'node.kubernetes.io/memory-pressure',
+        operator: 'Exists',
+      },
+    ],
+    volumes: [
+      {
+        name: 'grc-sa-token-588p4',
+        secret: {
+          defaultMode: 420,
+          secretName: 'grc-sa-token-588p4',
+        },
+      },
+    ],
+  },
+  status: {
+    conditions: [
+      {
+        lastProbeTime: null,
+        lastTransitionTime: '2020-07-23T18:13:32Z',
+        status: 'True',
+        type: 'Initialized',
+      },
+      {
+        lastProbeTime: null,
+        lastTransitionTime: '2020-07-23T18:14:17Z',
+        status: 'True',
+        type: 'Ready',
+      },
+      {
+        lastProbeTime: null,
+        lastTransitionTime: '2020-07-23T18:14:17Z',
+        status: 'True',
+        type: 'ContainersReady',
+      },
+      {
+        lastProbeTime: null,
+        lastTransitionTime: '2020-07-23T18:13:32Z',
+        status: 'True',
+        type: 'PodScheduled',
+      },
+    ],
+    containerStatuses: [
+      {
+        containerID: 'cri-o://baabe151ec104ea82dccd3613c6c9e25c008cd5998cbd77e6e63d8b887a53620',
+        image: 'quay.io/open-cluster-management/grc-ui@sha256:f0db7b0409c694f92f024cd16026172071804bf33ab58f789fd0506bc4b974fb',
+        imageID: 'quay.io/open-cluster-management/grc-ui@sha256:f0db7b0409c694f92f024cd16026172071804bf33ab58f789fd0506bc4b974fb',
+        lastState: {},
+        name: 'grc-ui',
+        ready: true,
+        restartCount: 0,
+        started: true,
+        state: {
+          running: {
+            startedAt: '2020-07-23T18:14:09Z',
+          },
+        },
+      },
+    ],
+    hostIP: '10.0.156.232',
+    phase: 'Running',
+    podIP: '10.128.2.73',
+    podIPs: [
+      {
+        ip: '10.128.2.73',
+      },
+    ],
+    qosClass: 'Burstable',
+    startTime: '2020-07-23T18:13:32Z',
+  },
+};

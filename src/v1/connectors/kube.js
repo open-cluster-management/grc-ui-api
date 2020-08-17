@@ -10,6 +10,7 @@
 
 import _ from 'lodash';
 import LRU from 'lru-cache';
+import crypto from 'crypto';
 import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';
@@ -176,5 +177,113 @@ export default class KubeConnector {
       },
     };
     return this.http(_.merge(defaults, opts)).then((res) => res.body);
+  }
+
+  timeout() {
+    return new Promise((r, reject) => setTimeout(reject, this.pollTimeout, new Error('Manager request timed out')));
+  }
+
+  pollView(viewLink) {
+    let cancel;
+
+    const promise = new Promise((resolve, reject) => {
+      let pendingRequest = false;
+      const intervalID = setInterval(async () => {
+        if (!pendingRequest) {
+          pendingRequest = true;
+          try {
+            const links = viewLink.split('/');
+            const viewName = links.pop();
+            const link = `${links.join('/')}?fieldSelector=metadata.name=${viewName}`;
+
+            logger.debug('start polling: ', new Date(), link);
+            const response = await this.get(link, {}, true);
+            pendingRequest = false;
+            if (response.code || response.message) {
+              clearInterval(intervalID);
+              return reject(response);
+            }
+            // We are looking for the type to be Processing for ManagedClusterView resources
+            // TODO remove the 'Completed' logic when resource view is removed
+            const isComplete = _.get(response, 'items[0].status.conditions[0].type') || _.get(response, 'items[0].status.status') || _.get(response, 'items[0].status.type') || _.get(response, 'items[0].status.conditions[0].type', 'NO');
+            if (isComplete === 'Processing' || isComplete === 'Completed') {
+              clearInterval(intervalID);
+              logger.debug('start to get resource: ', new Date(), viewLink);
+              const result = await this.get(viewLink, {}, true);
+              if (result.code || result.message) {
+                return reject(result);
+              }
+              resolve(result);
+            }
+          } catch (err) {
+            clearInterval(intervalID);
+            reject(err);
+          }
+        }
+        return null;
+      }, this.pollInterval);
+
+      cancel = () => {
+        clearInterval(intervalID);
+        // reject or resolve?
+        reject();
+      };
+    });
+
+    return { cancel, promise };
+  }
+
+  async managedClusterViewQuery(managedClusterNamespace, apiGroup, kind, resourceName, namespace, updateInterval, deleteAfterUse) {
+    // name cannot be long than 63 chars in length
+    const name = crypto.createHash('sha1').update(`${managedClusterNamespace}-${resourceName}-${kind}`).digest('hex').substr(0, 63);
+
+    // scope.name is required, and either GKV (scope.apiGroup+kind+version) or scope.resource
+    const body = {
+      apiVersion: 'view.open-cluster-management.io/v1beta1',
+      kind: 'ManagedClusterView',
+      metadata: {
+        labels: {
+          name,
+        },
+        name,
+        namespace: managedClusterNamespace,
+      },
+      spec: {
+        scope: {
+          name: resourceName,
+          resource: `${kind}${apiGroup && `.${apiGroup}`}`,
+        },
+      },
+    };
+      // Only set namespace if not null
+    if (namespace) {
+      body.spec.scope.namespace = namespace;
+    }
+    if (updateInterval) {
+      body.spec.scope.updateIntervalSeconds = updateInterval; // default is 30 secs
+    }
+    // Create ManagedClusterView
+    const managedClusterViewResponse = await this.post(`/apis/view.open-cluster-management.io/v1beta1/namespaces/${managedClusterNamespace}/managedclusterviews`, body);
+    if (_.get(managedClusterViewResponse, 'status.conditions[0].status') === 'False' || managedClusterViewResponse.code >= 400) {
+      throw new Error(`Create ManagedClusterView Failed [${managedClusterViewResponse.code}] - ${managedClusterViewResponse.message}`);
+    }
+    // Poll ManagedClusterView until success or failure
+    const { cancel, promise: pollPromise } = this.pollView(_.get(managedClusterViewResponse, 'metadata.selfLink'));
+    try {
+      const result = await Promise.race([pollPromise, this.timeout()]);
+      if (result && deleteAfterUse) {
+        this.deleteManagedClusterView(managedClusterNamespace, managedClusterViewResponse.metadata.name);
+      }
+      return result;
+    } catch (e) {
+      logger.error(`ManagedClusterView Query Error for ${kind}`, e.message);
+      cancel();
+      throw e;
+    }
+  }
+
+  async deleteManagedClusterView(managedClusterNamespace, managedClusterViewName) {
+    this.delete(`/apis/view.open-cluster-management.io/v1beta1/namespaces/${managedClusterNamespace}/managedclusterviews/${managedClusterViewName}`)
+      .catch((e) => logger.error(`Error deleting managed cluster view ${managedClusterViewName}`, e.message));
   }
 }

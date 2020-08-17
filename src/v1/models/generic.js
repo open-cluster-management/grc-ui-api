@@ -17,10 +17,11 @@ import logger from '../lib/logger';
 const noResourcetypeStr = '##cannot find resourcetype##';
 
 function getApiGroupFromSelfLink(selfLink, kind) {
-  // TODO - need to pass apigroup from backend to this function so we dont need this hack
   let apiGroup = ''; // api group to differentiate between duplicate resources (ie. endpoints & subscriptions)
   const selfLinkData = selfLink.split('/');
-  // When splitting the selfLink, the item at selfLinkData[3] is either the api version (if the resource has an apiGroup namespaced or not), resource kind (if the resource is non-namespaced AND doesn’t have an apiGroup) or namespaces (if the resource is namespaced AND doesn’t have an apiGroup).
+  // When splitting the selfLink, the item at selfLinkData[3] is either the api version (if the resource has an apiGroup namespaced or not),
+  // resource kind (if the resource is non-namespaced AND doesn’t have an apiGroup) or
+  // namespaces (if the resource is namespaced AND doesn’t have an apiGroup).
   // knowing this we grab the apiGroup if selfLinkData[3] is not the kind or 'namespaces'
   if (selfLinkData[3] !== kind && selfLinkData[3] !== 'namespaces') {
     // eslint-disable-next-line prefer-destructuring
@@ -78,7 +79,7 @@ export default class GenericModel extends KubeModel {
         return resourceResult;
       }
 
-      return [{ message: 'Unable to load resource data - Check to make sure the cluster hosting this resource is online' }];
+      throw new Error('Unable to load resource data - Check to make sure the cluster hosting this resource is online');
     }
     return _.get(resourceResponse, 'status.result');
   }

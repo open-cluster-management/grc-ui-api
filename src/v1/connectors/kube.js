@@ -204,8 +204,8 @@ export default class KubeConnector {
               return reject(response);
             }
             // We are looking for the type to be Processing for ManagedClusterView resources
-            // TODO remove the 'Completed' logic when resource view is removed
-            const isComplete = _.get(response, 'items[0].status.conditions[0].type') || _.get(response, 'items[0].status.status') || _.get(response, 'items[0].status.type') || _.get(response, 'items[0].status.conditions[0].type', 'NO');
+            const isComplete = _.get(response, 'items[0].status.conditions[0].type') || _.get(response, 'items[0].status.status')
+              || _.get(response, 'items[0].status.type') || _.get(response, 'items[0].status.conditions[0].type', 'NO');
             if (isComplete === 'Processing' || isComplete === 'Completed') {
               clearInterval(intervalID);
               logger.debug('start to get resource: ', new Date(), viewLink);
@@ -251,7 +251,7 @@ export default class KubeConnector {
       spec: {
         scope: {
           name: resourceName,
-          resource: `${kind}${apiGroup && `.${apiGroup}`}`,
+          resource: apiGroup ? `${kind}.${apiGroup}` : kind,
         },
       },
     };

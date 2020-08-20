@@ -776,12 +776,18 @@ export default class ComplianceModel {
       let details = _.get(policyResponse, statusDetails, []);
       details = details.filter((detail) => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
       details.forEach((detail) => {
+        const templates = _.get(policyResponse, 'spec.policy-templates', []);
+        const template = templates.find((t) => _.get(t, 'objectDefinition.metadata.name', 'a') === _.get(detail, templateMetaNameStr), 'b');
         violations.push({
           cluster,
+          apiVersion: _.get(template, 'objectDefinition.apiVersion', '-'),
+          kind: _.get(template, 'objectDefinition.kind', '-'),
           name: _.get(detail, templateMetaNameStr, '-'),
           message: _.get(detail, historyLatestMessageStr, '-'),
           timestamp: _.get(detail, historyLatestTimestampStr),
           consoleURL: clusterConsoleURL[cluster],
+          policyName,
+          policyNamespace: hubNamespace,
         });
       });
     });

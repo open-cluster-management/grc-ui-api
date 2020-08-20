@@ -79,8 +79,12 @@ type Violations {
   cluster: String
   message: String
   name: String
+  apiVersion: String
+  kind: String
   timestamp: String
   consoleURL: String
+  policyName: String
+  policyNamespace: String
 }
 `;
 

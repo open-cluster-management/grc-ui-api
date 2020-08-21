@@ -51,12 +51,12 @@ export default class GenericModel extends KubeModel {
     }
 
     // Check if the ManagedClusterView already exists if not create it
-    const managedClusterViewName = crypto.createHash('sha1').update(`${cluster}-${name}-${kind}-${new Date().toString()}`).digest('hex').substr(0, 63);
+    const managedClusterViewName = crypto.createHash('sha1').update(`${cluster}-${name}-${kind}`).digest('hex').substr(0, 63);
+
     const resourceResponse = await this.kubeConnector.get(
       `/apis/view.open-cluster-management.io/v1beta1/namespaces/${cluster}/managedclusterviews/${managedClusterViewName}`,
     ).catch((err) => {
       logger.error(err);
-      throw err;
     });
     if (resourceResponse.status === 'Failure' || resourceResponse.code >= 400) {
       const apiGroup = getApiGroupFromSelfLink(selfLink);

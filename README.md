@@ -5,7 +5,7 @@
 1. The folloing environment variables need to be set.
 ```
 API_SERVER_URL
-SERVICEACCT_TOKEN - the token that you can get from the top right corner of console-header page - configure client - the value of kubectl config set-credentials admin --token, it's a long string, starts with "ey...". Please note that this value is updated every 24 hrs.
+SERVICEACCT_TOKEN - the token that you can get from the top right corner of RHACM page - configure client - the value of oc config set-credentials admin --token, it's a long string, starts with "ey...". Please note that this is a temporary token and it expires.
 ```
 2. Start the dev server
 ```

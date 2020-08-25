@@ -148,7 +148,7 @@ export default class ComplianceModel {
     const URL = `${policyAPIPrefix}/${urlNS}/policies/${name}`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
-      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+      // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
     } else {
       policies.push(policyResponse);
     }
@@ -161,7 +161,7 @@ export default class ComplianceModel {
       const URL = `${policyAPIPrefix}/${ns || config.get('complianceNamespace') || 'acm'}/policies/${name}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
-        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
         return null;// 404 or not found
       }
       return policyResponse;// found policy
@@ -177,7 +177,7 @@ export default class ComplianceModel {
     const URL = `${policyAPIPrefix}/${urlNS}/policies`;
     const policyResponse = await this.kubeConnector.get(URL);
     if (policyResponse.code || policyResponse.message) {
-      logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+      // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
     }
     return policyResponse.items || [];
   }
@@ -188,7 +188,7 @@ export default class ComplianceModel {
       const URL = `${policyAPIPrefix}/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
-        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
         if (policyResponse.code === 403) {
           throw new ApolloError('PermissionError', {
             message: policyResponse.message,
@@ -576,7 +576,7 @@ export default class ComplianceModel {
       const URL = `${policyAPIPrefix}/${clusterName}/policies/${name}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
-        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
         return null;// 404 or not found
       }
       policyResult.push({
@@ -754,7 +754,7 @@ export default class ComplianceModel {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);
       if (policyResponse.code || policyResponse.message) {
-        logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+        // logger.error(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
         return null;// 404 or not found
       }
       return policyResponse;// found policy

@@ -481,7 +481,7 @@ Object {
       "extensions": Object {
         "code": "INTERNAL_SERVER_ERROR",
         "exception": Object {
-          "attempts": 1,
+          "attempts": 5,
           "status": 404,
           "statusCode": 404,
         },

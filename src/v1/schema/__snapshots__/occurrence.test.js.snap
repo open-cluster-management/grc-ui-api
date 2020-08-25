@@ -3,41 +3,52 @@
 exports[`Occurrences Resolver Correctly Resolves Occurrences Query with empty userAccountID 1`] = `
 Object {
   "data": Object {
-    "occurrences": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 1,
-          "status": 404,
-          "statusCode": 404,
+    "occurrences": Array [
+      Object {
+        "context": Object {
+          "accountId": "id-mycluster-account",
+          "region": "location",
+          "resourceCrn": null,
+          "resourceId": "pluginId",
+          "resourceName": "www.myapp.com",
+          "resourceType": "worker",
+          "serviceCrn": null,
+          "serviceName": "application",
         },
+        "createTime": "2019-07-10T14:07:46.596357Z",
+        "finding": Object {
+          "certainty": "HIGH",
+          "dataTransferred": null,
+          "networkConnection": null,
+          "nextSteps": Array [
+            Object {
+              "title": "title here",
+              "url": "Details URL",
+            },
+          ],
+          "severity": "HIGH",
+        },
+        "longDescription": "ACM Policy that is not compliant",
+        "name": "id-mycluster-account/providers/securityAdvisorNewProviderId/occurrences/securityAdvisorOccurrenceId",
+        "noteName": "id-mycluster-account/providers/securityAdvisorNewProviderId/notes/securityAdvisorNoteID",
+        "providerId": "security-advisor",
+        "providerName": "id-mycluster-account/providers/security-advisor",
+        "remediation": "NonCompliant; Non-compliant certificatepolicies (expires in less than 50h0m0s) in kube-system[1]: [test-policy-cert, test-policy-cert-secret]",
+        "reportedBy": Object {
+          "id": "securityAdvisorNewProviderId",
+          "title": "Title for Note",
+          "url": null,
+        },
+        "securityClassification": Object {
+          "securityCategories": Array [
+            "System and communications protections",
+          ],
+        },
+        "shortDescription": "Registered services1",
+        "updateTime": "2019-07-10T14:07:46.596382Z",
       },
-      "locations": Array [
-        Object {
-          "column": 11,
-          "line": 3,
-        },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"POST\\",
-  \\"url\\": \\"http://0.0.0.0/findings/v1/id-mycluster-account/graph\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\",
-    \\"content-type\\": \\"application/json\\",
-    \\"content-length\\": 1386
+    ],
   },
-  \\"body\\": \\"{\\\\\\"query\\\\\\":\\\\\\"\\\\\\\\n      {\\\\\\\\n        occurrences(kind: \\\\\\\\\\\\\\"FINDING\\\\\\\\\\\\\\") {\\\\\\\\n          name\\\\\\\\n          noteName\\\\\\\\n          updateTime\\\\\\\\n          createTime\\\\\\\\n          shortDescription\\\\\\\\n          longDescription\\\\\\\\n          providerId\\\\\\\\n          providerName\\\\\\\\n          remediation\\\\\\\\n          context {\\\\\\\\n            accountId\\\\\\\\n            region\\\\\\\\n            resourceType\\\\\\\\n            resourceName\\\\\\\\n            resourceId\\\\\\\\n            resourceCrn\\\\\\\\n            serviceName\\\\\\\\n            serviceCrn\\\\\\\\n            clusterName\\\\\\\\n            namespaceName\\\\\\\\n          }\\\\\\\\n          reportedBy {\\\\\\\\n            id\\\\\\\\n            title\\\\\\\\n            url\\\\\\\\n          }\\\\\\\\n          finding {\\\\\\\\n            severity\\\\\\\\n            certainty\\\\\\\\n            networkConnection {\\\\\\\\n              client {\\\\\\\\n                address\\\\\\\\n                port\\\\\\\\n              }\\\\\\\\n              server {\\\\\\\\n                address\\\\\\\\n                port\\\\\\\\n              }\\\\\\\\n              direction\\\\\\\\n              protocol\\\\\\\\n            }\\\\\\\\n            nextSteps {\\\\\\\\n              title\\\\\\\\n              url\\\\\\\\n            }\\\\\\\\n            dataTransferred {\\\\\\\\n              clientBytes\\\\\\\\n              clientPackets\\\\\\\\n              serverBytes\\\\\\\\n              serverPackets\\\\\\\\n            }\\\\\\\\n          }\\\\\\\\n          securityClassification {\\\\\\\\n            securityStandards\\\\\\\\n            securityCategories\\\\\\\\n            securityControl\\\\\\\\n          }\\\\\\\\n        }\\\\\\\\n      }\\\\\\"}\\"
-}",
-      "path": Array [
-        "occurrences",
-      ],
-    },
-  ],
 }
 `;
 

@@ -13,12 +13,13 @@ const requestretry = require('requestretry');
 
 const myRetryStrategy = (err, response) => {
   if (process.env.NODE_ENV === 'development' || process.env.DISABLE_CANARY_TEST) {
-    console.log(response);
-    console.log(err);
-    // console.log(body);
+    if (err) {
+      console.log(err);
+      console.log(response);
+    }
   }
 
-  return !!err || response.statusCode === 502;
+  return !!err || requestretry.RetryStrategies.HTTPError(err, response) || requestretry.RetryStrategies.NetworkError(err, response);
 };
 
 const request = requestretry.defaults({

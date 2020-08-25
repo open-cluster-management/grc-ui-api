@@ -26,6 +26,7 @@ const request = requestretry.defaults({
   json: true,
   maxAttempts: 5,
   retryDelay: 500,
+  timeout: 15 * 1000,
   strictSSL: false,
   retryStrategy: myRetryStrategy,
 });

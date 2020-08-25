@@ -14,7 +14,7 @@ const log4js = require('log4js');
 const logger = log4js.getLogger('server');
 
 const myRetryStrategy = (err, response) => {
-  if ((process.env.NODE_ENV === 'development' || process.env.DISABLE_CANARY_TEST) && err) {
+  if (process.env.NODE_ENV === 'development' && err) {
     logger.error(err);
     logger.error(response);
   }

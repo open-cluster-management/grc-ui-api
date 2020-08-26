@@ -14,9 +14,9 @@ const log4js = require('log4js');
 const logger = log4js.getLogger('server');
 
 const myRetryStrategy = (err, response) => {
-  if (process.env.NODE_ENV === 'development' && err) {
+  if (err) {
     logger.error(err);
-    logger.error(response);
+    logger.debug(response);
   }
 
   return !!err || requestretry.RetryStrategies.HTTPError(err, response) || requestretry.RetryStrategies.NetworkError(err, response);

@@ -43,12 +43,6 @@ export default class GenericModel extends KubeModel {
       updateInterval,
       deleteAfterUse = true,
     } = args;
-    if (cluster === 'local-cluster' && selfLink && selfLink !== '') {
-      return this.kubeConnector.get(selfLink).catch((err) => {
-        logger.error(err);
-        throw err;
-      });
-    }
 
     // Check if the ManagedClusterView already exists if not create it
     const managedClusterViewName = crypto.createHash('sha1').update(`${cluster}-${name}-${kind}`).digest('hex').substr(0, 63);

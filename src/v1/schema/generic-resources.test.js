@@ -34,21 +34,6 @@ describe('Generic Resources Resolver', () => {
       .reply(200, mockGetResourceLocallyResponse);
   });
 
-  test('Correctly Resolves Get Resource Locally', () => new Promise((done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        {
-          getResource(selfLink:"/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c", namespace:null, kind:null, name:null, cluster:"local-cluster")
-        }`,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  }));
-
   test('Correctly Resolves Create Resources Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)

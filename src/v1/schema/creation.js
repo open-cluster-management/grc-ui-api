@@ -51,7 +51,7 @@ export const resolver = {
 
       // existing policies
       const policyNames = [];
-      const collection = { standards: new Set(), categories: new Set(), controls: new Set() };
+      const collection = { standards: [], categories: [], controls: [] };
       const compliances = await complianceModel.getCompliances();
       compliances.forEach(({
         name, metadata = {},
@@ -64,7 +64,7 @@ export const resolver = {
             types.split(',').forEach((type) => {
               const ttype = type.trim();
               if (ttype) {
-                collection[key].add(ttype);
+                collection[key].push(ttype);
               }
             });
           });

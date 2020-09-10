@@ -86,6 +86,11 @@ type Violations {
   policyName: String
   policyNamespace: String
 }
+
+type History {
+  message: String
+  timestamp: String
+}
 `;
 
 export const resolver = {
@@ -111,6 +116,9 @@ export const resolver = {
     placementBindings: (
       root, args, { complianceModel },
     ) => complianceModel.getPlacementBindings(args.pbs),
+    violationHistory: (
+      root, args, { complianceModel },
+    ) => complianceModel.getViolationHistory(args.policy, args.hubNamespace, args.cluster, args.template),
   },
   Policy: {
     detail: (parent) => ComplianceModel.resolvePolicyDetails(parent),

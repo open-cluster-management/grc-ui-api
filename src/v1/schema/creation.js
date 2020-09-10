@@ -67,6 +67,7 @@ export const resolver = {
                 collection[key].push(ttype);
               }
             });
+            collection[key] = _.uniq(collection[key], true);
           });
         }
       });

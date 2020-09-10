@@ -5,9 +5,22 @@ Object {
   "data": Object {
     "discoveries": Object {
       "annotations": Object {
-        "categories": Object {},
-        "controls": Object {},
-        "standards": Object {},
+        "categories": Array [
+          "SystemAndCommunicationsProtections",
+          "SystemAndInformationIntegrity",
+        ],
+        "controls": Array [
+          "MutationAdvisor",
+          "VA",
+          "CertManager",
+          "policy",
+        ],
+        "standards": Array [
+          "FISMA",
+          "TEST",
+          "HIPAA",
+          "PCI",
+        ],
       },
       "clusterLabels": Array [
         Object {

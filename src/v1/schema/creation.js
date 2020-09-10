@@ -60,7 +60,7 @@ export const resolver = {
           const { annotations } = metadata;
           policyNames.push(name);
           Object.keys(collection).forEach((key) => {
-            const types = annotations[`${ApiGroup.policiesGroup}/${key}`] || '';
+            const types = _.get(annotations, `${ApiGroup.policiesGroup}/${key}`, '');
             types.split(',').forEach((type) => {
               const ttype = type.trim();
               if (ttype) {

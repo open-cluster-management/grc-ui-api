@@ -118,7 +118,7 @@ export const resolver = {
     ) => complianceModel.getPlacementBindings(args.pbs),
     violationHistory: (
       root, args, { complianceModel },
-    ) => complianceModel.getViolationHistory(args.policy, args.hubNamespace, args.cluster, args.template),
+    ) => complianceModel.getViolationHistory(args.policyName, args.hubNamespace, args.cluster, args.template),
   },
   Policy: {
     detail: (parent) => ComplianceModel.resolvePolicyDetails(parent),

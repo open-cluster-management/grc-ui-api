@@ -16,11 +16,15 @@ export const typeDef = gql`
 type Discoveries {
   clusterLabels: JSON
   policyNames: JSON
-  annotations: JSON
+  annotations: Annotations
   templates: [Templates]
   namespaces: JSON
 }
-
+type Annotations {
+  standards: [String]
+  categories: [String]
+  controls: [String]
+}
 type Templates {
   name: String
   spec: JSON

@@ -774,7 +774,7 @@ export default class ComplianceModel {
     policyResponses.forEach((policyResponse) => {
       let details = _.get(policyResponse, statusDetails, []);
       details = details.filter((detail) => {
-        if (_.get(detail, 'compliant', 'unknown') === 'NonCompliant' && _.get(detail, templateMetaNameStr, 'unknown') === templateName) {
+        if (_.get(detail, templateMetaNameStr, 'unknown') === templateName) {
           return true;
         }
         return false;

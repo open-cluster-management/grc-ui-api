@@ -5,7 +5,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "0/0/0",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -16,7 +16,7 @@ Object {
         "remediation": "",
       },
       Object {
-        "clusterCompliant": "0/2",
+        "clusterCompliant": "0/2/0",
         "metadata": Object {
           "annotations": null,
           "name": "policy-certificatepolicy",
@@ -118,7 +118,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "3/3",
+        "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -233,7 +233,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "3/3",
+        "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -340,7 +340,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -453,7 +453,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -553,7 +553,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -665,7 +665,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -777,7 +777,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "1/2",
+        "clusterCompliant": "1/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
@@ -901,7 +901,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "0/0/0",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -921,7 +921,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "1/1",
+        "clusterCompliant": "0/1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
@@ -1169,7 +1169,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "1/1",
+        "clusterCompliant": "0/1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
@@ -1410,7 +1410,7 @@ Object {
         },
       },
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "0/0/0",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {

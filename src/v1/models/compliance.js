@@ -451,7 +451,7 @@ export default class ComplianceModel {
       const pendingClusters = totalClusters - noncompliantClusters.length - compliantClusters.length;
       return `${noncompliantClusters.length}/${totalClusters}/${pendingClusters}`;
     }
-    return '0/0/0';
+    return '-';
   }
 
   static resolveAnnotations(parent) {

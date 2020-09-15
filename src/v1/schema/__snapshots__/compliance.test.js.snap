@@ -5,7 +5,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0/0",
+        "clusterCompliant": "-",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -901,7 +901,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0/0",
+        "clusterCompliant": "-",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -1410,7 +1410,7 @@ Object {
         },
       },
       Object {
-        "clusterCompliant": "0/0/0",
+        "clusterCompliant": "-",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {

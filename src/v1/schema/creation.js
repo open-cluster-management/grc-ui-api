@@ -16,11 +16,15 @@ export const typeDef = gql`
 type Discoveries {
   clusterLabels: JSON
   policyNames: JSON
-  annotations: JSON
+  annotations: Annotations
   templates: [Templates]
   namespaces: JSON
 }
-
+type Annotations {
+  standards: [String]
+  categories: [String]
+  controls: [String]
+}
 type Templates {
   name: String
   spec: JSON
@@ -51,7 +55,7 @@ export const resolver = {
 
       // existing policies
       const policyNames = [];
-      const collection = { standards: new Set(), categories: new Set(), controls: new Set() };
+      const collection = { standards: [], categories: [], controls: [] };
       const compliances = await complianceModel.getCompliances();
       compliances.forEach(({
         name, metadata = {},
@@ -60,13 +64,14 @@ export const resolver = {
           const { annotations } = metadata;
           policyNames.push(name);
           Object.keys(collection).forEach((key) => {
-            const types = annotations[`${ApiGroup.policiesGroup}/${key}`] || '';
+            const types = _.get(annotations, `${ApiGroup.policiesGroup}/${key}`, '');
             types.split(',').forEach((type) => {
               const ttype = type.trim();
               if (ttype) {
-                collection[key].add(ttype);
+                collection[key].push(ttype);
               }
             });
+            collection[key] = _.uniq(collection[key], true);
           });
         }
       });

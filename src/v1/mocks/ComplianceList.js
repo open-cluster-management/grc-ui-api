@@ -45,12 +45,6 @@ export const mockComplianceListMCMResponse = {
       apiVersion: 'policy.open-cluster-management.io/v1',
       kind: 'Policy',
       metadata: {
-        annotations: {
-          'policy.open-cluster-management.io/categories': 'SystemAndInformationIntegrity',
-          'policy.open-cluster-management.io/controls': 'CertManager',
-          'policy.open-cluster-management.io/standards': 'FISMA, PCI',
-          'seed-generation': '1',
-        },
         creationTimestamp: '2019-09-03T18:34:05Z',
         finalizers: [
           'finalizer.policies.ibm.com',
@@ -241,7 +235,7 @@ export const mockComplianceListMCMResponse = {
         annotations: {
           'policy.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
           'policy.open-cluster-management.io/controls': 'VA',
-          'policy.open-cluster-management.io/standards': 'FISMA',
+          'policy.open-cluster-management.io/standards': 'FISMA, TEST',
           'seed-generation': '4',
         },
         creationTimestamp: '2019-08-30T13:46:19Z',

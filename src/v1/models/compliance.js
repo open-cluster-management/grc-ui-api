@@ -444,11 +444,14 @@ export default class ComplianceModel {
   static resolveClusterCompliant({ status = {} }) {
     if (status && status.status) {
       const totalClusters = Object.keys(status.status).length;
+      const noncompliantClusters = Object.values(status.status || [])
+        .filter((cluster) => (_.get(cluster, 'compliant', '').toLowerCase() === 'noncompliant'));
       const compliantClusters = Object.values(status.status || [])
         .filter((cluster) => (_.get(cluster, 'compliant', '').toLowerCase() === 'compliant'));
-      return `${totalClusters - compliantClusters.length}/${totalClusters}`;
+      const pendingClusters = totalClusters - noncompliantClusters.length - compliantClusters.length;
+      return `${noncompliantClusters.length}/${totalClusters}/${pendingClusters}`;
     }
-    return '0/0';
+    return '-';
   }
 
   static resolveAnnotations(parent) {
@@ -633,8 +636,10 @@ export default class ComplianceModel {
           if (typeof cluster.compliant === 'string') {
             if (cluster.compliant.trim().toLowerCase() === 'compliant') {
               temp.push({ name: cluster.clustername, status: 'compliant' });
-            } else {
+            } else if (cluster.compliant.trim().toLowerCase() === 'noncompliant') {
               temp.push({ name: cluster.clustername, status: 'violated' });
+            } else {
+              temp.push({ name: cluster.clustername, status: 'pending' });
             }
           }
         });

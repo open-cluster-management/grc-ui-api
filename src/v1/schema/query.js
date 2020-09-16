@@ -25,7 +25,7 @@ type Query {
   placementBindings(pbs: JSON): [PlacementBinding]
   compliances(name: String, namespace: String): [Compliance]
   placementPolicies (selector: JSON): [PlacementPolicy]
-  violationHistory(policyName: String, hubNamespace: String, cluster: String, template: String): [History]
+  statusHistory(policyName: String!, hubNamespace: String!, cluster: String!, template: String!): [History]
 
   # sa
   occurrences(userAccountID: String): [Occurrence]

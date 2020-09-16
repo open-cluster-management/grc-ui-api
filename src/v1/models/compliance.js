@@ -742,7 +742,7 @@ export default class ComplianceModel {
     return filterViolatedPolicies;
   }
 
-  async getViolationHistory(policyName, hubNamespace, cluster, templateName) {
+  async getStatusHistory(policyName, hubNamespace, cluster, templateName) {
     const resultsWithPolicyName = [];
     if (policyName === null) {
       return resultsWithPolicyName;
@@ -770,7 +770,7 @@ export default class ComplianceModel {
     });
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
-    const violations = [];
+    const statuses = [];
     policyResponses.forEach((policyResponse) => {
       let details = _.get(policyResponse, statusDetails, []);
       details = details.filter((detail) => {
@@ -781,15 +781,15 @@ export default class ComplianceModel {
       });
       details.forEach((detail) => {
         const history = _.get(detail, 'history', []);
-        history.forEach((violation) => {
-          violations.push({
-            message: _.get(violation, 'message', '-'),
-            timestamp: _.get(violation, 'lastTimestamp', '-'),
+        history.forEach((status) => {
+          statuses.push({
+            message: _.get(status, 'message', '-'),
+            timestamp: _.get(status, 'lastTimestamp', '-'),
           });
         });
       });
     });
-    return violations;
+    return statuses;
   }
 
   async getAllViolationsInPolicy(policyName, hubNamespace) {

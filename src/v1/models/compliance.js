@@ -747,14 +747,7 @@ export default class ComplianceModel {
     return filterViolatedPolicies;
   }
 
-  async getStatusHistory(policyName, hubNamespace, cluster, templateName) {
-    const resultsWithPolicyName = [];
-    if (policyName === null) {
-      return resultsWithPolicyName;
-    }
-    // nsType === 'allClusterNS', get the list of all clusters namespaces
-    const allClusterNS = [cluster];
-    // const clusterConsoleURL = clusterConsoleURLTemp;
+  async getPolicyFromClusterNS(allClusterNS, hubNamespace, policyName) {
     const promises = allClusterNS.map(async (ns) => {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
       const policyResponse = await this.kubeConnector.get(URL);
@@ -773,6 +766,16 @@ export default class ComplianceModel {
       }
       return true;
     });
+    return policyResponses;
+  }
+
+  async getStatusHistory(policyName, hubNamespace, cluster, templateName) {
+    const resultsWithPolicyName = [];
+    if (policyName === null) {
+      return resultsWithPolicyName;
+    }
+    const allClusterNS = [cluster];
+    const policyResponses = await this.getPolicyFromClusterNS(allClusterNS, hubNamespace, policyName);
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
     const statuses = [];
@@ -805,24 +808,7 @@ export default class ComplianceModel {
     // nsType === 'allClusterNS', get the list of all clusters namespaces
     const { allClusterNS, clusterConsoleURLTemp } = await getTypedNS(this.kubeConnector, 'allClusterNS');
     const clusterConsoleURL = clusterConsoleURLTemp;
-    const promises = allClusterNS.map(async (ns) => {
-      const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
-      const policyResponse = await this.kubeConnector.get(URL);
-      if (policyResponse.code || policyResponse.message) {
-        logger.debug(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-        return null;// 404 or not found
-      }
-      return policyResponse;// found policy
-    });
-    // here need to await all async calls completed then combine their results together
-    const policyResponses = await Promise.all(promises);
-    // remove no found and comliant policies
-    policyResponses.filter((policyResponse) => {
-      if (policyResponse === null || policyResponse === undefined) {
-        return false;
-      }
-      return true;
-    });
+    const policyResponses = await this.getPolicyFromClusterNS(allClusterNS, hubNamespace, policyName);
     // Policy history are to be generated from all violated policies get above.
     // Current violation status are to be get from histroy[most-recent]
     const violations = [];

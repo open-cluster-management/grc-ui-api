@@ -50,7 +50,11 @@ describe('Creation Resolver', () => {
           discoveries {
             clusterLabels
             policyNames
-            annotations
+            annotations {
+              standards
+              categories
+              controls
+            }
             templates { 
               name
               spec

@@ -5,7 +5,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "-",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -16,14 +16,9 @@ Object {
         "remediation": "",
       },
       Object {
-        "clusterCompliant": "0/2",
+        "clusterCompliant": "0/2/0",
         "metadata": Object {
-          "annotations": Object {
-            "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-            "policy.open-cluster-management.io/controls": "CertManager",
-            "policy.open-cluster-management.io/standards": "FISMA, PCI",
-            "seed-generation": "1",
-          },
+          "annotations": null,
           "name": "policy-certificatepolicy",
           "namespace": "mcm",
           "resourceVersion": "3666045",
@@ -38,12 +33,6 @@ Object {
           "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
-            "annotations": Object {
-              "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
-              "policy.open-cluster-management.io/controls": "CertManager",
-              "policy.open-cluster-management.io/standards": "FISMA, PCI",
-              "seed-generation": "1",
-            },
             "creationTimestamp": "2019-09-03T18:34:05Z",
             "finalizers": Array [
               "finalizer.policies.ibm.com",
@@ -129,7 +118,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "3/3",
+        "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -244,12 +233,12 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "3/3",
+        "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
             "policy.open-cluster-management.io/controls": "VA",
-            "policy.open-cluster-management.io/standards": "FISMA",
+            "policy.open-cluster-management.io/standards": "FISMA, TEST",
             "seed-generation": "4",
           },
           "name": "policy-image",
@@ -269,7 +258,7 @@ Object {
             "annotations": Object {
               "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
               "policy.open-cluster-management.io/controls": "VA",
-              "policy.open-cluster-management.io/standards": "FISMA",
+              "policy.open-cluster-management.io/standards": "FISMA, TEST",
               "seed-generation": "4",
             },
             "creationTimestamp": "2019-08-30T13:46:19Z",
@@ -351,7 +340,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -464,7 +453,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -564,7 +553,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -676,7 +665,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "2/2",
+        "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -788,7 +777,7 @@ Object {
         "remediation": "inform",
       },
       Object {
-        "clusterCompliant": "1/2",
+        "clusterCompliant": "1/2/0",
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
@@ -912,7 +901,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "-",
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -932,7 +921,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "1/1",
+        "clusterCompliant": "0/1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
@@ -1180,7 +1169,7 @@ Object {
   "data": Object {
     "compliances": Array [
       Object {
-        "clusterCompliant": "1/1",
+        "clusterCompliant": "0/1/1",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
@@ -1421,7 +1410,7 @@ Object {
         },
       },
       Object {
-        "clusterCompliant": "0/0",
+        "clusterCompliant": "-",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {

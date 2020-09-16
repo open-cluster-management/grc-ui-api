@@ -747,7 +747,7 @@ export default class ComplianceModel {
     return filterViolatedPolicies;
   }
 
-  async getAllViolationsInPolicy(policyName, hubNamespace) {
+  async getAllStatusInPolicy(policyName, hubNamespace) {
     const resultsWithPolicyName = [];
     if (policyName === null) {
       return resultsWithPolicyName;
@@ -766,28 +766,28 @@ export default class ComplianceModel {
     });
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
-    // remove no found and comliant policies
+    // remove no found policies
     policyResponses.filter((policyResponse) => {
       if (policyResponse === null || policyResponse === undefined) {
         return false;
       }
       return true;
     });
-    // Policy history are to be generated from all violated policies get above.
+    // Policy history are to be generated from all policies get above ().
     // Current violation status are to be get from histroy[most-recent]
-    const violations = [];
+    const status = [];
     policyResponses.forEach((policyResponse) => {
       const cluster = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-name"]', '-');
-      let details = _.get(policyResponse, statusDetails, []);
-      details = details.filter((detail) => _.get(detail, 'compliant', 'unknown') === 'NonCompliant');
+      const details = _.get(policyResponse, statusDetails, []);
       details.forEach((detail) => {
         const templates = _.get(policyResponse, 'spec.policy-templates', []);
         const template = templates.find((t) => _.get(t, 'objectDefinition.metadata.name', 'a') === _.get(detail, templateMetaNameStr), 'b');
-        violations.push({
+        status.push({
+          templateName: _.get(detail, templateMetaNameStr, '-'),
           cluster,
+          status: _.get(detail, 'compliant', 'no-status'),
           apiVersion: _.get(template, 'objectDefinition.apiVersion', '-'),
           kind: _.get(template, 'objectDefinition.kind', '-'),
-          name: _.get(detail, templateMetaNameStr, '-'),
           message: _.get(detail, historyLatestMessageStr, '-'),
           timestamp: _.get(detail, historyLatestTimestampStr),
           consoleURL: clusterConsoleURL[cluster],
@@ -796,7 +796,7 @@ export default class ComplianceModel {
         });
       });
     });
-    return violations;
+    return status;
   }
 
   static resolvePolicyDetails(parent) {

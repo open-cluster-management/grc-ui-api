@@ -20,7 +20,7 @@ type Query {
   policiesInCluster(cluster: String): [PolicyInfo]
   clustersInPolicy(policy: String, hubNamespace: String): [ClusterInfo]
   policiesInApplication(violatedPolicies: JSON): [Policy]
-  violationsInPolicy(policy: String, namespace: String): [Violations]
+  statusInPolicy(policyName: String, hubNamespace: String): [Status]
   placementRules(prs: JSON): [PlacementPolicy]
   placementBindings(pbs: JSON): [PlacementBinding]
   compliances(name: String, namespace: String): [Compliance]

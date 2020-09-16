@@ -773,7 +773,7 @@ export default class ComplianceModel {
       }
       return true;
     });
-    // Policy history are to be generated from all policies get above ().
+    // Policy history are to be generated from all compliant/non-compliant policies get above.
     // Current violation status are to be get from histroy[most-recent]
     const status = [];
     policyResponses.forEach((policyResponse) => {

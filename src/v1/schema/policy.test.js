@@ -16,7 +16,7 @@ import {
   mockPolicyListResponse, mockSinglePolicyResponse, mockCreatePolicy, mockDeleteResponse,
   mockClusterListResponse, mockCluster1ListResponse, mockClusterHubListResponse,
   mockDefaultListResponse, mockKubeSystemListResponse, mockViolationListResponse,
-  mockNewAPISinglePolicyResponse,
+  mockNewAPISinglePolicyResponse, mockStatusHistoryResponse,
 } from '../mocks/PolicyList';
 import {
   mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse,
@@ -99,6 +99,9 @@ describe('Policy Resolver', () => {
 
     APIServer.get('/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy')
       .reply(200, mockNewAPISinglePolicyResponse);
+
+    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod')
+      .reply(200, mockStatusHistoryResponse);
   });
 
   test('Correctly Resolves All Policies per Cluster List Query', () => new Promise((done) => {
@@ -408,6 +411,25 @@ describe('Policy Resolver', () => {
         query: `
         mutation {
           deletePolicy(name:"test-policy",namespace:"default")
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Violation History Query', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          statusHistory(policyName: "policy-pod", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+            message
+            timestamp
+          }
         }
       `,
       })

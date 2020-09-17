@@ -270,3 +270,16 @@ Object {
   },
 }
 `;
+
+exports[`Policy Resolver Correctly Resolves Violation History Query 1`] = `
+Object {
+  "data": Object {
+    "statusHistory": Array [
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-16T19:05:03Z",
+      },
+    ],
+  },
+}
+`;

@@ -99,6 +99,11 @@ type Status {
   policyName: String
   policyNamespace: String
 }
+
+type History {
+  message: String
+  timestamp: String
+}
 `;
 
 export const resolver = {

@@ -2101,3 +2101,258 @@ export const mockStatusHistoryResponse = {
     ],
   },
 };
+
+export const mockStatusHistoryResponseNoHistory = {
+  apiVersion: 'policy.open-cluster-management.io/v1',
+  kind: 'Policy',
+  metadata: {
+    annotations: {
+      'policy.open-cluster-management.io/categories': 'PR.PT Protective Technology',
+      'policy.open-cluster-management.io/controls': 'PR.PT-3 Least Functionality',
+      'policy.open-cluster-management.io/standards': 'NIST-CSF',
+    },
+    creationTimestamp: '2020-09-16T19:04:46Z',
+    generation: 1,
+    labels: {
+      'policy.open-cluster-management.io/cluster-name': 'ironman',
+      'policy.open-cluster-management.io/cluster-namespace': 'ironman',
+      'policy.open-cluster-management.io/root-policy': 'default.policy-pod',
+    },
+    name: 'default.policy-pod',
+    namespace: 'ironman',
+    ownerReferences: [
+      {
+        apiVersion: 'policy.open-cluster-management.io/v1',
+        blockOwnerDeletion: true,
+        controller: true,
+        kind: 'Policy',
+        name: 'policy-pod',
+        uid: 'f48b3f56-f13a-4fe3-a0bd-50bb2911b42c',
+      },
+    ],
+    resourceVersion: '57233305',
+    selfLink: '/apis/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod',
+    uid: 'ebde3a7a-3e0e-4e97-8f34-aa0149b8c2bc',
+  },
+  spec: {
+    disabled: false,
+    'policy-templates': [
+      {
+        objectDefinition: {
+          apiVersion: 'policy.open-cluster-management.io/v1',
+          kind: 'ConfigurationPolicy',
+          metadata: {
+            name: 'policy-pod-sample-nginx-pod',
+          },
+          spec: {
+            namespaceSelector: {
+              exclude: [
+                'kube-*',
+              ],
+              include: [
+                'default',
+              ],
+            },
+            'object-templates': [
+              {
+                complianceType: 'musthave',
+                objectDefinition: {
+                  apiVersion: 'v1',
+                  kind: 'Pod',
+                  metadata: {
+                    name: 'sample-nginx-pod',
+                  },
+                  spec: {
+                    containers: [
+                      {
+                        image: 'nginx:1.7.9',
+                        name: 'nginx',
+                        ports: [
+                          {
+                            containerPort: 80,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+            remediationAction: 'inform',
+            severity: 'low',
+          },
+        },
+      },
+    ],
+    remediationAction: 'inform',
+  },
+  status: {
+    compliant: 'Compliant',
+    details: [
+      {
+        compliant: 'Compliant',
+        history: [
+        ],
+        templateMeta: {
+          creationTimestamp: null,
+          name: 'policy-pod-sample-nginx-pod',
+        },
+      },
+    ],
+  },
+};
+
+export const mockStatusHistoryResponseLong = {
+  apiVersion: 'policy.open-cluster-management.io/v1',
+  kind: 'Policy',
+  metadata: {
+    annotations: {
+      'policy.open-cluster-management.io/categories': 'PR.PT Protective Technology',
+      'policy.open-cluster-management.io/controls': 'PR.PT-3 Least Functionality',
+      'policy.open-cluster-management.io/standards': 'NIST-CSF',
+    },
+    creationTimestamp: '2020-09-16T19:04:46Z',
+    generation: 1,
+    labels: {
+      'policy.open-cluster-management.io/cluster-name': 'ironman',
+      'policy.open-cluster-management.io/cluster-namespace': 'ironman',
+      'policy.open-cluster-management.io/root-policy': 'default.policy-pod',
+    },
+    name: 'default.policy-pod',
+    namespace: 'ironman',
+    ownerReferences: [
+      {
+        apiVersion: 'policy.open-cluster-management.io/v1',
+        blockOwnerDeletion: true,
+        controller: true,
+        kind: 'Policy',
+        name: 'policy-pod',
+        uid: 'f48b3f56-f13a-4fe3-a0bd-50bb2911b42c',
+      },
+    ],
+    resourceVersion: '57233305',
+    selfLink: '/apis/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod',
+    uid: 'ebde3a7a-3e0e-4e97-8f34-aa0149b8c2bc',
+  },
+  spec: {
+    disabled: false,
+    'policy-templates': [
+      {
+        objectDefinition: {
+          apiVersion: 'policy.open-cluster-management.io/v1',
+          kind: 'ConfigurationPolicy',
+          metadata: {
+            name: 'policy-pod-sample-nginx-pod',
+          },
+          spec: {
+            namespaceSelector: {
+              exclude: [
+                'kube-*',
+              ],
+              include: [
+                'default',
+              ],
+            },
+            'object-templates': [
+              {
+                complianceType: 'musthave',
+                objectDefinition: {
+                  apiVersion: 'v1',
+                  kind: 'Pod',
+                  metadata: {
+                    name: 'sample-nginx-pod',
+                  },
+                  spec: {
+                    containers: [
+                      {
+                        image: 'nginx:1.7.9',
+                        name: 'nginx',
+                        ports: [
+                          {
+                            containerPort: 80,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+            remediationAction: 'inform',
+            severity: 'low',
+          },
+        },
+      },
+    ],
+    remediationAction: 'inform',
+  },
+  status: {
+    compliant: 'Compliant',
+    details: [
+      {
+        compliant: 'Compliant',
+        history: [
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-16T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-15T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-14T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-13T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-12T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-11T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-10T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-09T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-08T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-07T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+          {
+            eventName: 'default.policy-pod.16355900f2b0bb54',
+            lastTimestamp: '2020-09-06T19:05:03Z',
+            message: 'Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant',
+          },
+        ],
+        templateMeta: {
+          creationTimestamp: null,
+          name: 'policy-pod-sample-nginx-pod',
+        },
+      },
+    ],
+  },
+};

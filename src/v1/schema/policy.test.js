@@ -16,7 +16,8 @@ import {
   mockPolicyListResponse, mockSinglePolicyResponse, mockCreatePolicy, mockDeleteResponse,
   mockClusterListResponse, mockCluster1ListResponse, mockClusterHubListResponse,
   mockDefaultListResponse, mockKubeSystemListResponse, mockViolationListResponse,
-  mockNewAPISinglePolicyResponse, mockStatusHistoryResponse,
+  mockNewAPISinglePolicyResponse, mockStatusHistoryResponse, mockStatusHistoryResponseNoHistory,
+  mockStatusHistoryResponseLong,
 } from '../mocks/PolicyList';
 import {
   mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse,
@@ -102,6 +103,12 @@ describe('Policy Resolver', () => {
 
     APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod')
       .reply(200, mockStatusHistoryResponse);
+
+    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod-1')
+      .reply(200, mockStatusHistoryResponseNoHistory);
+
+    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod-2')
+      .reply(200, mockStatusHistoryResponseLong);
   });
 
   test('Correctly Resolves All Policies per Cluster List Query', () => new Promise((done) => {
@@ -427,6 +434,44 @@ describe('Policy Resolver', () => {
         query: `
         {
           statusHistory(policyName: "policy-pod", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+            message
+            timestamp
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Violation History Query (no data)', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          statusHistory(policyName: "policy-pod-1", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+            message
+            timestamp
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Violation History Query (longer history response)', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          statusHistory(policyName: "policy-pod-2", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
             message
             timestamp
           }

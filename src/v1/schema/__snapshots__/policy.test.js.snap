@@ -271,6 +271,67 @@ Object {
 }
 `;
 
+exports[`Policy Resolver Correctly Resolves Violation History Query (longer history response) 1`] = `
+Object {
+  "data": Object {
+    "statusHistory": Array [
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-16T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-15T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-14T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-13T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-12T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-11T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-10T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-09T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-08T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-07T19:05:03Z",
+      },
+      Object {
+        "message": "Compliant; notification - pods [sample-nginx-pod] in namespace default exist as specified, therefore this Object template is compliant",
+        "timestamp": "2020-09-06T19:05:03Z",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Violation History Query (no data) 1`] = `
+Object {
+  "data": Object {
+    "statusHistory": Array [],
+  },
+}
+`;
+
 exports[`Policy Resolver Correctly Resolves Violation History Query 1`] = `
 Object {
   "data": Object {

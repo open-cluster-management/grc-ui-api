@@ -120,7 +120,7 @@ export const resolver = {
     policiesInApplication: (
       root, args, { complianceModel },
     ) => complianceModel.getAllPoliciesInApplication(args.violatedPolicies),
-    statusInPolicy: (
+    policyStatus: (
       root, args, { complianceModel },
     ) => complianceModel.getAllStatusInPolicy(args.policyName, args.hubNamespace),
     placementRules: (

@@ -90,6 +90,7 @@ type Violations {
 type Status {
   templateName: String
   cluster: String
+  clusterNamespace: String
   status: String
   apiVersion: String
   kind: String

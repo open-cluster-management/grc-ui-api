@@ -834,6 +834,7 @@ export default class ComplianceModel {
     const status = [];
     policyResponses.forEach((policyResponse) => {
       const cluster = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-name"]', '-');
+      const clusterNamespace = _.get(policyResponse, 'metadata.labels["policy.open-cluster-management.io/cluster-namespace"]', '-');
       const details = _.get(policyResponse, statusDetails, []);
       details.forEach((detail) => {
         const templates = _.get(policyResponse, 'spec.policy-templates', []);
@@ -841,6 +842,7 @@ export default class ComplianceModel {
         status.push({
           templateName: _.get(detail, templateMetaNameStr, '-'),
           cluster,
+          clusterNamespace,
           status: _.get(detail, 'compliant', 'no-status'),
           apiVersion: _.get(template, 'objectDefinition.apiVersion', '-'),
           kind: _.get(template, 'objectDefinition.kind', '-'),

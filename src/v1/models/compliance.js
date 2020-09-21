@@ -750,8 +750,6 @@ export default class ComplianceModel {
   async getPolicyFromClusterNS(allClusterNS, hubNamespace, policyName) {
     const promises = allClusterNS.map(async (ns) => {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
-      // eslint-disable-next-line no-console
-      console.log(URL);
       const policyResponse = await this.kubeConnector.get(URL);
 
       if (policyResponse.code || policyResponse.message) {
@@ -769,8 +767,6 @@ export default class ComplianceModel {
       }
       return true;
     });
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(policyResponses));
     return policyResponses;
   }
 
@@ -815,8 +811,6 @@ export default class ComplianceModel {
     const clusterConsoleURL = clusterConsoleURLTemp;
     const promises = allClusterNS.map(async (ns) => {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;
-      // eslint-disable-next-line no-console
-      console.log(URL);
       const policyResponse = await this.kubeConnector.get(URL);
 
       if (policyResponse.code || policyResponse.message) {

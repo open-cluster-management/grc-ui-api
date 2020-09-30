@@ -11,7 +11,7 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { isInstance as isApolloErrorInstance, formatError as formatApolloError } from 'apollo-errors';
-import morgan from 'morgan';
+import morganBody from 'morgan-body';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -72,16 +72,14 @@ const apolloServer = new ApolloServer({
 const graphQLServer = express();
 graphQLServer.use(compression());
 
-const requestLogger = isProd
-  ? morgan('combined')
-  : morgan('dev');
-
 // These headers are dealt with in icp-management-ingress
 graphQLServer.use('*', helmet({
   frameguard: false,
   noSniff: false,
   xssFilter: false,
-}), noCache(), requestLogger, cookieParser());
+}), noCache(), cookieParser());
+
+morganBody(graphQLServer);
 
 graphQLServer.get('/livenessProbe', (req, res) => {
   res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);

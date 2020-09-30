@@ -93,7 +93,11 @@ morganBody(graphQLServer, {
   logResponseBody: !isProd,
   stream: {
     write: (message) => {
-      logger.debug(message);
+      if (isProd) {
+        logger.info(message);
+      } else {
+        logger.debug(message);
+      }
     },
   },
 });

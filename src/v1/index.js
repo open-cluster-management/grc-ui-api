@@ -79,14 +79,16 @@ graphQLServer.use('*', helmet({
   xssFilter: false,
 }), noCache(), cookieParser());
 
-morganBody(graphQLServer);
-
 graphQLServer.get('/livenessProbe', (req, res) => {
   res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);
 });
 
 graphQLServer.get('/readinessProbe', (req, res) => {
   res.send(`Testing readinessProbe --> ${new Date().toLocaleString()}`);
+});
+
+morganBody(graphQLServer, {
+  noColors: true,
 });
 
 const auth = [];

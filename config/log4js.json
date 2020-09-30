@@ -10,6 +10,6 @@
 	},
 	"categories": {
 		"default": { "appenders": ["console"], "level": "info", "enableCallStack": false },
-		"server": { "appenders": ["console"], "level": "error", "enableCallStack": false }
+		"server": { "appenders": ["console"], "level": "info", "enableCallStack": false }
 	}
 }

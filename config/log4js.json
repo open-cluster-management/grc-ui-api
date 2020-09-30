@@ -10,7 +10,6 @@
 	},
 	"categories": {
 		"default": { "appenders": ["console"], "level": "info", "enableCallStack": false },
-		"request": { "appenders": ["console"], "level": "error", "enableCallStack": false },
-		"hcm-client": { "appenders": ["console"], "level": "debug", "enableCallStack": false  }
+		"server": { "appenders": ["console"], "level": "error", "enableCallStack": false }
 	}
 }

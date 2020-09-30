@@ -9,7 +9,7 @@
 		}
 	},
 	"categories": {
-		"default": { "appenders": ["console"], "level": "info", "enableCallStack": false },
-		"server": { "appenders": ["console"], "level": "info", "enableCallStack": false }
+		"default": { "appenders": ["console"], "level": "info" },
+		"server": { "appenders": ["console"], "level": "info" }
 	}
 }

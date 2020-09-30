@@ -89,15 +89,11 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 
 morganBody(graphQLServer, {
   noColors: true,
-  logRequestBody: !isProd,
-  logResponseBody: !isProd,
+  logRequestBody: config.get('requestLogger') === 'true',
+  logResponseBody: config.get('requestLogger') === 'true',
   stream: {
     write: (message) => {
-      if (isProd) {
-        logger.info(message);
-      } else {
-        logger.debug(message);
-      }
+      logger.info(message);
     },
   },
 });

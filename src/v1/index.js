@@ -73,9 +73,7 @@ const graphQLServer = express();
 graphQLServer.use(compression());
 
 const requestLogger = isProd
-  ? morgan('combined', {
-    skip: (req, res) => res.statusCode < 400,
-  })
+  ? morgan('combined')
   : morgan('dev');
 
 // These headers are dealt with in icp-management-ingress

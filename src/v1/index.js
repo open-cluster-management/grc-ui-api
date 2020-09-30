@@ -89,6 +89,13 @@ graphQLServer.get('/readinessProbe', (req, res) => {
 
 morganBody(graphQLServer, {
   noColors: true,
+  logRequestBody: !isProd,
+  logResponseBody: !isProd,
+  stream: {
+    write: (message) => {
+      logger.debug(message);
+    },
+  },
 });
 
 const auth = [];

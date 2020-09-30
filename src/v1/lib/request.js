@@ -15,7 +15,7 @@ const requestretry = require('requestretry');
 const myRetryStrategy = (err, response) => {
   if (err) {
     logger.error(err);
-    logger.debug(response);
+    logger.error(response);
   }
 
   return !!err || requestretry.RetryStrategies.HTTPError(err, response) || requestretry.RetryStrategies.NetworkError(err, response);

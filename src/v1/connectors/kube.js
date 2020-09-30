@@ -9,7 +9,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 
 import _ from 'lodash';
-import LRU from 'lru-cache';
 import crypto from 'crypto';
 import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
@@ -22,7 +21,6 @@ function selectNamespace(namespaces) {
 
 export default class KubeConnector {
   constructor({
-    cache = new LRU(),
     token = 'Bearer localdev',
     httpLib = requestLib,
     kubeApiEndpoint = process.env.API_SERVER_URL
@@ -33,7 +31,6 @@ export default class KubeConnector {
     uid = Date.now,
   } = {}) {
     // Caches requests for a single query.
-    this.cache = cache;
     this.http = httpLib;
     this.kubeApiEndpoint = kubeApiEndpoint;
     this.namespaces = namespaces;
@@ -50,9 +47,8 @@ export default class KubeConnector {
    *
    * @param {*} path - API path
    * @param {*} opts - HTTP request options
-   * @param {*} noCache - Don't use a previously cached request.
    */
-  get(path = '', opts = {}, noCache) {
+  get(path = '', opts = {}) {
     const options = _.merge({
       url: `${this.kubeApiEndpoint}${path}`,
       method: 'GET',
@@ -60,21 +56,7 @@ export default class KubeConnector {
         Authorization: this.token,
       },
     }, opts);
-
-    const cacheKey = `${path}/${JSON.stringify(options.body)}`;
-
-    const cachedRequest = this.cache.get(cacheKey);
-    if ((noCache === undefined || noCache === false) && cachedRequest) {
-      logger.debug('Kubeconnector: Using cached GET request.');
-      return cachedRequest;
-    }
-
     const newRequest = this.http(options).then((res) => res.body);
-
-    if (noCache === undefined || noCache === false) {
-      this.cache.set(cacheKey, newRequest);
-    }
-
     return newRequest;
   }
 

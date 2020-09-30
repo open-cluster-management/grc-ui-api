@@ -8,10 +8,9 @@
  ****************************************************************************** */
 /* Copyright (c) 2020 Red Hat, Inc. */
 
-const requestretry = require('requestretry');
-const log4js = require('log4js');
+import logger from './logger';
 
-const logger = log4js.getLogger('server');
+const requestretry = require('requestretry');
 
 const myRetryStrategy = (err, response) => {
   if (err) {

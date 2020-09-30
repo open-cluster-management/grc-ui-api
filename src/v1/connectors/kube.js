@@ -56,8 +56,7 @@ export default class KubeConnector {
         Authorization: this.token,
       },
     }, opts);
-    const newRequest = this.http(options).then((res) => res.body);
-    return newRequest;
+    return this.http(options).then((res) => res.body);
   }
 
   /**

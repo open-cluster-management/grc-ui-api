@@ -93,7 +93,7 @@ morganBody(graphQLServer, {
   logResponseBody: config.get('requestLogger') === 'true',
   stream: {
     write: (message) => {
-      logger.info(message);
+      logger.info(message.trimEnd());
     },
   },
 });

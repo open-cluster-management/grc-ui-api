@@ -200,9 +200,10 @@ export default class ComplianceModel {
     // here need to await all async calls completed then combine their results together
     const policyResponses = await Promise.all(promises);
     // remove empty policies namespaces
-    const policies = policyResponses.filter((policyResponse) => policyResponse.length > 0);
     // flatten 'array of array of object' to 'array of object'
-    return _.flatten(policies);
+    const policies = _.flatten(policyResponses.filter((policyResponse) => policyResponse.length > 0));
+    const rootPolicies = policies.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
+    return rootPolicies;
   }
 
   async getCompliances(name, namespace) {

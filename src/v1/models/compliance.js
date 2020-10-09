@@ -202,8 +202,8 @@ export default class ComplianceModel {
     // remove empty policies namespaces
     // flatten 'array of array of object' to 'array of object'
     const policies = _.flatten(policyResponses.filter((policyResponse) => policyResponse.length > 0));
-    const rootPolicies = policies.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
-    return rootPolicies;
+    // filter out policies with policy.open-cluster-management.io/root-policy label
+    return policies.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
   }
 
   async getCompliances(name, namespace) {

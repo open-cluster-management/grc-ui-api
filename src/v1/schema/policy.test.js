@@ -143,48 +143,6 @@ describe('Policy Resolver', () => {
       });
   }));
 
-  test('Correctly Resolves All Policies per Application List Query', () => new Promise((done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        {
-        policiesInApplication(
-          violatedPolicies:
-          [
-            {
-            name:"policies-policy-mcm-ibm-com-1563995392802",
-            namespace:"default",
-            clusters:[{name:"cluster1"}]},
-            {name:"policy-namespace",namespace:"default",clusters:[{name:"cluster1"}]}
-          ]) {
-            cluster
-            metadata {
-              name
-              namespace
-              selfLink
-              creationTimestamp
-              annotations
-              resourceVersion
-              uid
-            }
-            status
-            enforcement
-            detail {
-              exclude_namespace
-              include_namespace
-            }
-            raw
-          }
-        }
-      `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  }));
-
   test('Correctly Resolves Single Policy Query', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)

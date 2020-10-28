@@ -24,7 +24,6 @@ import ClusterModel from './models/cluster';
 import PlacementModel from './models/placement';
 import GenericModel from './models/generic';
 import ComplianceModel from './models/compliance';
-import SAModel from './models/sa';
 import schema from './schema';
 import config from '../../config';
 
@@ -64,7 +63,6 @@ const apolloServer = new ApolloServer({
       PlacementModel: new PlacementModel({ kubeConnector }),
       genericModel: new GenericModel({ kubeConnector }),
       complianceModel: new ComplianceModel({ kubeConnector }),
-      saModel: new SAModel({ kubeConnector, req }),
     };
   },
 });

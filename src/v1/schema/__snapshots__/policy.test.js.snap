@@ -1,43 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Policy Resolver Correctly Resolves All Policies per Application List Query 1`] = `
-Object {
-  "data": Object {
-    "policiesInApplication": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 5,
-          "status": 404,
-          "statusCode": 404,
-        },
-      },
-      "locations": Array [
-        Object {
-          "column": 9,
-          "line": 3,
-        },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\"
-  }
-}",
-      "path": Array [
-        "policiesInApplication",
-      ],
-    },
-  ],
-}
-`;
-
 exports[`Policy Resolver Correctly Resolves All Policies per Cluster List Query 1`] = `
 Object {
   "data": Object {

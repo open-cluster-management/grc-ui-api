@@ -11,6 +11,9 @@ import { gql } from 'apollo-server-express';
 
 export const typeDef = gql`
 type Query {
+  namespaces: [Namespace]
+  discoveries: Discoveries
+
   # Policies and Compliances
   policies(name: String, clusterName: String): [Policy]
   policiesInCluster(cluster: String): [PolicyInfo]

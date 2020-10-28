@@ -11,15 +11,10 @@ import { gql } from 'apollo-server-express';
 
 export const typeDef = gql`
 type Query {
-  #applications(name: String, namespace: String): [Application]
-  namespaces: [Namespace]
-  discoveries: Discoveries
-
   # Policies and Compliances
   policies(name: String, clusterName: String): [Policy]
   policiesInCluster(cluster: String): [PolicyInfo]
   clustersInPolicy(policy: String, hubNamespace: String): [ClusterInfo]
-  policiesInApplication(violatedPolicies: JSON): [Policy]
   policyStatus(policyName: String!, hubNamespace: String!): [Status]
   placementRules(prs: JSON): [PlacementPolicy]
   placementBindings(pbs: JSON): [PlacementBinding]
@@ -27,19 +22,11 @@ type Query {
   placementPolicies (selector: JSON): [PlacementPolicy]
   statusHistory(policyName: String!, hubNamespace: String!, cluster: String!, template: String!): [History]
 
-  # sa
-  occurrences(userAccountID: String): [Occurrence]
-
   # Get any kubernetes resource from any managed cluster.
   getResource(kind: String, name: String, namespace: String, cluster: String, selfLink: String, updateInterval: Int, deleteAfterUse: Boolean): JSON
 }
 
 type Mutation {
-  # Creates an Application.
-  # Requires a resource of kind "Application".
-  # Other supported kinds are: ConfigMap, Deployable, DeployableOverride, and PlacementPolicy
-  #createApplication(resources: [JSON]): JSON
-
   # Creates a Kubernetes Policy
   createPolicy(resources: [JSON]): JSON
 
@@ -69,10 +56,6 @@ type Mutation {
 
   # Delete Kubernetes Compliance
   deleteCompliance(selfLink: String!, resources: JSON): String
-
-  # sa
-  # Delete Kubernetes Application
-  deleteOccurrences(selfLink: String!): String
 }
 
 # Common fields for all Kubernetes objects

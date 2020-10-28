@@ -702,52 +702,6 @@ export default class ComplianceModel {
     return allClustersInPolicyResult;
   }
 
-  // input is a list of policies name with each clusterName specified
-  async getAllPoliciesInApplication(violatedPolicies) {
-    const filterViolatedPolicies = [];
-    if (Array.isArray(violatedPolicies) && violatedPolicies.length > 0) {
-      const clusterSet = new Set();
-      // use policy name + cluster name as combination set value
-      const violatedPoliciesSet = new Set();
-      violatedPolicies.forEach((policy) => {
-        if (policy.name && Array.isArray(policy.clusters) && policy.clusters.length > 0) {
-          policy.clusters.forEach((cluster) => {
-            if (cluster.name) {
-              const clusterKey = cluster.name;
-              if (!clusterSet.has(clusterKey)) {
-                clusterSet.add(clusterKey);
-              }
-              const violatedPoliciesKey = `${policy.name}+${cluster.name}`;
-              if (!violatedPoliciesSet.has(violatedPoliciesKey)) {
-                violatedPoliciesSet.add(violatedPoliciesKey);
-              }
-            }
-          });
-        }
-      });
-
-      const outerPromises = Array.from(clusterSet).map(async (clusterName) => {
-        const allPoliciesInCluster = await this.getAllPoliciesInCluster(clusterName);
-        const innerPromises = allPoliciesInCluster.map(async (policy) => {
-          if (policy.metadata) {
-            const policiesKey = `${_.get(policy, 'metadata.labels.parent-policy', '')}+${clusterName}`;
-            const realNameKey = `${_.get(policy, metadataNameStr, '')}+${clusterName}`;
-            if (violatedPoliciesSet.has(policiesKey) || violatedPoliciesSet.has(realNameKey)) {
-              const filterViolatedPolicy = policy;
-              filterViolatedPolicy.cluster = clusterName;
-              await filterViolatedPolicies.push(filterViolatedPolicy);
-            }
-          }
-        });
-        // here need to await all inner loop async calls completed
-        await Promise.all(innerPromises);
-      });
-      // here need to await all outer loop async calls completed
-      await Promise.all(outerPromises);
-    }
-    return filterViolatedPolicies;
-  }
-
   async getPolicyFromClusterNS(allClusterNS, hubNamespace, policyName) {
     const promises = allClusterNS.map(async (ns) => {
       const URL = `${policyAPIPrefix}/${ns}/policies/${hubNamespace}.${policyName}`;

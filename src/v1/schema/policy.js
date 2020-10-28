@@ -118,9 +118,6 @@ export const resolver = {
     clustersInPolicy: (
       root, args, { complianceModel },
     ) => complianceModel.getAllClustersInPolicy(args.policy, args.hubNamespace),
-    policiesInApplication: (
-      root, args, { complianceModel },
-    ) => complianceModel.getAllPoliciesInApplication(args.violatedPolicies),
     policyStatus: (
       root, args, { complianceModel },
     ) => complianceModel.getAllStatusInPolicy(args.policyName, args.hubNamespace),

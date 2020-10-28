@@ -17,7 +17,6 @@ import * as namespace from './namespace';
 import * as policy from './policy';
 import * as genericResources from './generic-resources';
 import * as query from './query';
-import * as occurrence from './occurrence';
 
 const modules = [
   creation,
@@ -28,7 +27,6 @@ const modules = [
   policy,
   query,
   genericResources,
-  occurrence,
 ];
 
 const mainDefs = [gql`

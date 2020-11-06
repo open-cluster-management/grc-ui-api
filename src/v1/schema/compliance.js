@@ -116,7 +116,6 @@ export const resolver = {
     placementBindings: (parent, args, { complianceModel }) => complianceModel.getPlacementBindingsFromParent(parent),
   },
   Mutation: {
-    createCompliance: (root, args, { complianceModel }) => complianceModel.createCompliance(args.resources),
     deleteCompliance: (root, args, { complianceModel }) => complianceModel.deleteCompliance(args),
   },
 };

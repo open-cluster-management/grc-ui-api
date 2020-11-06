@@ -485,8 +485,6 @@ export default class ComplianceModel {
           clusterLabels: spec.clusterSelector,
           metadata: pp.metadata,
           raw: pp,
-          clusterReplicas: spec.clusterReplicas,
-          resourceSelector: spec.resourceHint,
           status: pp.status,
         });
       }
@@ -540,8 +538,6 @@ export default class ComplianceModel {
           clusterLabels: spec.clusterSelector,
           metadata: pp.metadata,
           raw: pp,
-          clusterReplicas: spec.clusterReplicas,
-          resourceSelector: spec.resourceHint,
           status: pp.status,
         });
       }

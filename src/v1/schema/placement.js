@@ -11,22 +11,11 @@ import { gql } from 'apollo-server-express';
 
 export const typeDef = gql`
 # ACM Placement
-type Placement implements K8sObject {
-  metadata: Metadata
-  placementBindings: [PlacementBinding]
-  placementPolicies: [PlacementPolicy]
-  # The object's yaml definition in JSON format.
-  raw: JSON
-  selector: JSON
-}
-
 type PlacementPolicy implements K8sObject {
   clusterLabels: JSON
   metadata: Metadata
   # The object's yaml definition in JSON format.
   raw: JSON
-  clusterReplicas: Int
-  resourceSelector: JSON
   status: JSON
 }
 
@@ -45,12 +34,4 @@ type Subject {
 }
 `;
 
-export const resolver = {
-  Query: {
-    placementPolicies: (root, args, { PlacementModel }) => PlacementModel.getPlacementRules(args.selector),
-  },
-  Placement: {
-    placementBindings: (parent, args, { PlacementModel }) => PlacementModel.getPlacementBindings({ matchNames: parent.placementBindingNames }),
-    placementPolicies: (parent, args, { PlacementModel }) => PlacementModel.getPlacementRules({ matchNames: parent.placementPolicyNames }),
-  },
-};
+export const resolver = {};

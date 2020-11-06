@@ -10,71 +10,9 @@
 
 import ApiGroup from '../lib/ApiGroup';
 
-export const mockCluster1Response = {
-  kind: 'ClusterList',
-  apiVersion: 'clusterregistry.k8s.io/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/cluster1/clusters/`,
-    resourceVersion: '219916',
-  },
-  items: [
-    {
-      kind: 'Cluster',
-      apiVersion: 'clusterregistry.k8s.io/v1alpha1',
-      metadata: {
-        name: 'cluster1',
-        namespace: 'cluster1',
-        selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/cluster1/clusters/cluster1`,
-        uid: '6120d6bb-e482-11e9-aa00-96bb9600cc18',
-        resourceVersion: '219786',
-        creationTimestamp: '2019-10-01T19:33:43Z',
-        labels: {
-          environment: 'Dev',
-          name: 'cluster1',
-          region: 'US',
-        },
-        annotations: {
-          'mcm.ibm.com/hub': 'hub0',
-          'mcm.ibm.com/user-group': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50cyxzeXN0ZW06c2VydmljZWFjY291bnRzOmt1YmUtc3lzdGVtLHN5c3RlbTphdXRoZW50aWNhdGVk',
-          'mcm.ibm.com/user-identity': 'c3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlZmF1bHQ=',
-          'seed-generation': '2',
-        },
-        finalizers: [
-          'platform-api.cluster',
-          'propagator.finalizer.mcm.ibm.com',
-        ],
-      },
-      spec: {
-        kubernetesApiEndpoints: {
-          serverEndpoints: [
-            {
-              clientCIDR: '0.0.0.0/0',
-              serverAddress: '9.42.82.160:8001',
-            },
-          ],
-        },
-        authInfo: {
-
-        },
-      },
-      status: {
-        conditions: [
-          {
-            type: '',
-            status: '',
-            lastHeartbeatTime: '2019-10-31T17:10:33Z',
-            lastTransitionTime: '2019-10-31T17:11:34Z',
-            reason: 'Klusterlet failed to update cluster status on time',
-          },
-        ],
-      },
-    },
-  ],
-};
-
 export const mockClusterIronmanResponse = [
   {
-    apiVersion: 'internal.open-cluster-management.io/v1beta1',
+    apiVersion: `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`,
     kind: 'ManagedClusterInfo',
     metadata: {
       creationTimestamp: '2020-06-16T13:58:50Z',
@@ -88,7 +26,7 @@ export const mockClusterIronmanResponse = [
       name: 'ironman',
       namespace: 'ironman',
       resourceVersion: '5002550',
-      selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/ironman/managedclusterinfos/ironman',
+      selfLink: `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/ironman/managedclusterinfos/ironman`,
       uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
     },
     spec: {
@@ -117,183 +55,183 @@ export const mockClusterIronmanResponse = [
   },
 ];
 
-export const mockClusterDefaultResponse = [
-  {
-    apiVersion: 'internal.open-cluster-management.io/v1beta1',
-    kind: 'ManagedClusterInfo',
-    metadata: {
-      creationTimestamp: '2020-06-16T13:58:50Z',
-      generation: 2,
-      labels: {
-        cloud: 'auto-detect',
-        environment: '',
-        name: 'default',
-        vendor: 'auto-detect',
-      },
-      name: 'default',
-      namespace: 'default',
-      resourceVersion: '5002550',
-      selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/default/managedclusterinfos/default',
-      uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
-    },
-    spec: {
-      masterEndpoint: 'api.default.dev08.red-chesterfield.com:6443',
-    },
-    status: {
-      conditions: [
-        {
-          lastTransitionTime: '2020-06-19T13:13:59Z',
-          message: 'cluster is posting ready status',
-          reason: 'ClusterReady',
-          status: 'True',
-          type: 'ManagedClusterJoined',
-        },
-      ],
-      distributionInfo: {
-        ocp: {},
-      },
-      loggingEndpoint: {
-        ip: '',
-      },
-      loggingPort: {
-        port: 0,
-      },
-    },
-  },
-];
-
-export const mockClusterKubeSystemResponse = [
-  {
-    apiVersion: 'internal.open-cluster-management.io/v1beta1',
-    kind: 'ManagedClusterInfo',
-    metadata: {
-      creationTimestamp: '2020-06-16T13:58:50Z',
-      generation: 2,
-      labels: {
-        cloud: 'auto-detect',
-        environment: '',
-        name: 'kube-system',
-        vendor: 'auto-detect',
-      },
-      name: 'kube-system',
-      namespace: 'kube-system',
-      resourceVersion: '5002550',
-      selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/kube-system/managedclusterinfos/kube-system',
-      uid: '23b04acb-6d80-40c5-9db8-4a53782cbfb8',
-    },
-    spec: {
-      masterEndpoint: 'api.kube-system.dev08.red-chesterfield.com:6443',
-    },
-    status: {
-      conditions: [
-        {
-          lastTransitionTime: '2020-06-19T13:13:59Z',
-          message: 'cluster is posting ready status',
-          reason: 'ClusterReady',
-          status: 'True',
-          type: 'ManagedClusterJoined',
-        },
-      ],
-      distributionInfo: {
-        ocp: {},
-      },
-      loggingEndpoint: {
-        ip: '',
-      },
-      loggingPort: {
-        port: 0,
-      },
-    },
-  },
-];
-
-export const mockClusterHubResponse = {
-  kind: 'ClusterList',
-  apiVersion: 'clusterregistry.k8s.io/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/clusterhub/clusters/`,
-    resourceVersion: '219917',
-  },
+export const mockClusterCluster1Response = {
+  apiVersion: 'internal.open-cluster-management.io/v1beta1',
   items: [
     {
-      kind: 'Cluster',
-      apiVersion: 'clusterregistry.k8s.io/v1alpha1',
+      apiVersion: 'internal.open-cluster-management.io/v1beta1',
+      kind: 'ManagedClusterInfo',
       metadata: {
-        name: '',
-        namespace: '',
-        selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/clusterhub/clusters/clusterhub`,
-        uid: '24466f0f-e482-11e9-aa00-96bb9600cc18',
-        resourceVersion: '219917',
-        creationTimestamp: '2019-10-01T19:32:01Z',
+        creationTimestamp: '2020-10-26T19:36:24Z',
+        generation: 1,
         labels: {
-          environment: 'Dev',
-          name: 'clusterhub',
-          region: 'US',
+          cloud: 'Amazon',
+          environment: 'dev',
+          name: 'cluster1',
+          vendor: 'OpenShift',
         },
-        annotations: {
-          'mcm.ibm.com/hub': 'hub0',
-          'mcm.ibm.com/user-group': 'aGNtOmNsdXN0ZXJzLHN5c3RlbTphdXRoZW50aWNhdGVk',
-          'mcm.ibm.com/user-identity': 'aGNtOmNsdXN0ZXJzOmNsdXN0ZXJodWI6Y2x1c3Rlcmh1Yg==',
-          'seed-generation': '2',
-        },
-        finalizers: [
-          'platform-api.cluster',
-          'propagator.finalizer.mcm.ibm.com',
-        ],
+        name: 'cluster1',
+        namespace: 'cluster1',
+        resourceVersion: '28604210',
+        selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos/cluster1',
+        uid: 'e3031b12-fff1-4f2b-bfef-cb27f4804895',
       },
       spec: {
-        kubernetesApiEndpoints: {
-          serverEndpoints: [
-            {
-              clientCIDR: '0.0.0.0/0',
-              serverAddress: '9.42.82.240:8001',
-            },
-          ],
-        },
-        authInfo: {
-
-        },
+        loggingCA: '12345',
       },
       status: {
+        cloudVendor: 'Amazon',
         conditions: [
           {
-            type: 'OK',
-            status: '',
-            lastHeartbeatTime: '2019-10-31T18:02:41Z',
-            lastTransitionTime: '2019-10-19T21:47:19Z',
+            lastTransitionTime: '2020-10-26T19:36:23Z',
+            message: 'Accepted by hub cluster admin',
+            reason: 'HubClusterAdminAccepted',
+            status: 'True',
+            type: 'HubAcceptedManagedCluster',
+          },
+          {
+            lastTransitionTime: '2020-10-26T19:36:58Z',
+            message: 'Managed cluster joined',
+            reason: 'ManagedClusterJoined',
+            status: 'True',
+            type: 'ManagedClusterJoined',
+          },
+          {
+            lastTransitionTime: '2020-10-28T15:13:59Z',
+            message: 'Managed cluster is available',
+            reason: 'ManagedClusterAvailable',
+            status: 'True',
+            type: 'ManagedClusterConditionAvailable',
+          },
+          {
+            lastTransitionTime: '2020-10-26T19:39:12Z',
+            message: 'Managed cluster info is synced',
+            reason: 'ManagedClusterInfoSynced',
+            status: 'True',
+            type: 'ManagedClusterInfoSynced',
           },
         ],
+        consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
+        distributionInfo: {
+          ocp: {},
+          type: 'OCP',
+        },
+        kubeVendor: 'OpenShift',
+        loggingEndpoint: {
+          hostname: 'klusterlet-addon-workmgr-open-cluster-management-agent-addon.apps.cluster1.dev08.red-chesterfield.com',
+          ip: '',
+        },
+        loggingPort: {
+          name: 'https',
+          port: 0,
+          protocol: 'TCP',
+        },
+        nodeList: [],
+        version: 'v1.18.3+3107688',
       },
     },
   ],
+  kind: 'ManagedClusterInfoList',
+  metadata: {
+    continue: '',
+    resourceVersion: '28605725',
+    selfLink: '/apis/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos/',
+  },
 };
 
-export const mockMCMResponse = {
-  kind: 'ClusterList',
-  apiVersion: 'clusterregistry.k8s.io/v1alpha1',
+export const mockClusterHubResponse = {
+  apiVersion: `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`,
+  items: [
+    {
+      apiVersion: `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`,
+      kind: 'ManagedClusterInfo',
+      metadata: {
+        creationTimestamp: '2020-10-26T18:41:50Z',
+        generation: 1,
+        labels: {
+          cloud: 'Amazon',
+          'installer.name': 'multiclusterhub',
+          'installer.namespace': 'open-cluster-management',
+          'local-cluster': 'true',
+          name: 'local-cluster',
+          vendor: 'OpenShift',
+        },
+        name: 'local-cluster',
+        namespace: 'local-cluster',
+        resourceVersion: '28571169',
+        selfLink: `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/local-cluster/managedclusterinfos/local-cluster`,
+        uid: '22ef5d6b-2bed-409b-b9cc-791397662d1f',
+      },
+      spec: {
+        loggingCA: '12345',
+      },
+      status: {
+        cloudVendor: 'Amazon',
+        conditions: [
+          {
+            lastTransitionTime: '2020-10-26T18:41:50Z',
+            message: 'Accepted by hub cluster admin',
+            reason: 'HubClusterAdminAccepted',
+            status: 'True',
+            type: 'HubAcceptedManagedCluster',
+          },
+          {
+            lastTransitionTime: '2020-10-26T18:42:06Z',
+            message: 'Managed cluster is available',
+            reason: 'ManagedClusterAvailable',
+            status: 'True',
+            type: 'ManagedClusterConditionAvailable',
+          },
+          {
+            lastTransitionTime: '2020-10-26T18:42:06Z',
+            message: 'Managed cluster joined',
+            reason: 'ManagedClusterJoined',
+            status: 'True',
+            type: 'ManagedClusterJoined',
+          },
+          {
+            lastTransitionTime: '2020-10-26T18:44:12Z',
+            message: 'Managed cluster info is synced',
+            reason: 'ManagedClusterInfoSynced',
+            status: 'True',
+            type: 'ManagedClusterInfoSynced',
+          },
+        ],
+        consoleURL: 'https://console-openshift-console.apps.hub.dev08.red-chesterfield.com',
+        distributionInfo: {
+          ocp: {},
+          type: 'OCP',
+        },
+        kubeVendor: 'OpenShift',
+        loggingEndpoint: {
+          hostname: 'klusterlet-addon-workmgr.open-cluster-management-agent-addon.svc',
+          ip: '',
+        },
+        loggingPort: {
+          name: 'https',
+          port: 443,
+          protocol: 'TCP',
+        },
+        nodeList: [],
+        version: 'v1.18.3+3107688',
+      },
+    },
+  ],
+  kind: 'ManagedClusterInfoList',
   metadata: {
-    selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/mcm/clusters/`,
-    resourceVersion: '219919',
+    continue: '',
+    resourceVersion: '28572465',
+    selfLink: `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/local-cluster/managedclusterinfos/`,
   },
-  items: [],
 };
 
-export const mockDefaultResponse = {
-  kind: 'ClusterList',
-  apiVersion: 'clusterregistry.k8s.io/v1alpha1',
-  metadata: {
-    selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/default/clusters/`,
-    resourceVersion: '219920',
-  },
+export const mockClusterNonclusterNs = {
+  apiVersion: `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`,
   items: [],
-};
-
-export const mockKubeSystemResponse = {
-  kind: 'ClusterList',
-  apiVersion: 'clusterregistry.k8s.io/v1alpha1',
+  kind: 'ManagedClusterInfoList',
   metadata: {
-    selfLink: `/apis/${ApiGroup.clusterRegistryGroup}/${ApiGroup.mcmVersion}/namespaces/kube-system/clusters/`,
-    resourceVersion: '219921',
+    continue: '',
+    resourceVersion: '28559610',
+    selfLink: `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/default/managedclusterinfos`,
   },
-  items: [],
 };

@@ -24,14 +24,24 @@ describe('Generic Resources Resolver', () => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
 
     // define the method to be intercepted
-    APIServer.persist().get('/').reply(200, kubeGetMock);
-    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`).reply(200, mockAPIResourceList);
+    APIServer.persist().get('/')
+      .reply(200, kubeGetMock);
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`)
+      .reply(200, mockAPIResourceList);
     APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
       .reply(200, mockCreateResourcesResponse);
     APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
     APIServer.persist().get('/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c')
       .reply(200, mockGetResourceLocallyResponse);
+
+    // PATCH managedclusterinfos
+    APIServer.patch(`/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/cluster1/managedclusterinfos/cluster1`)
+      .reply(200, {
+        cloud: 'IBM',
+        datacenter: 'toronto',
+        environment: 'Dev',
+      });
   });
 
   test('Correctly Resolves Create Resources Mutation', () => new Promise((done) => {

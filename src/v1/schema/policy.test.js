@@ -13,102 +13,89 @@ import nock from 'nock';
 import server, { GRAPHQL_PATH } from '../index';
 import ApiGroup from '../lib/ApiGroup';
 import {
-  mockPolicyListResponse, mockSinglePolicyResponse, mockCreatePolicy, mockDeleteResponse,
-  mockClusterListResponse, mockCluster1ListResponse, mockClusterHubListResponse,
-  mockDefaultListResponse, mockKubeSystemListResponse, mockViolationListResponse,
+  mockPolicyListResponse, mockPolicyListResponseLocalCluster, mockCreatePolicy, mockDeletePolicyResponse,
   mockNewAPISinglePolicyResponse, mockStatusHistoryResponse, mockStatusHistoryResponseNoHistory,
-  mockStatusHistoryResponseLong,
+  mockStatusHistoryResponseLong, mockSinglePolicyResponse, mockSinglePolicyCluster1Response,
+  mockSinglePolicyHubResponse,
 } from '../mocks/PolicyList';
 import {
-  mockCluster1Response, mockClusterHubResponse, mockMCMResponse, mockDefaultResponse, mockKubeSystemResponse,
+  mockClusterCluster1Response, mockClusterHubResponse, mockClusterNonclusterNs,
 } from '../mocks/ClusterList';
+import {
+  mockPlacementRuleListResponse, mockPlacementRuleListNoResponse,
+  mockPlacementBindingListResponse, mockPlacementBindingListNoResponse,
+} from '../mocks/PlacementList';
 
 describe('Policy Resolver', () => {
   beforeAll(() => {
     // specify the url to be intercepted
     const APIServer = nock(ApiGroup.hostUrl);
-
-    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
-      .reply(200, mockPolicyListResponse);
-
-    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies`)
-      .reply(200, mockPolicyListResponse);
-
-    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-all`)
+    // GET policy list from cluster ns
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/`)
+      .reply(200, mockPolicyListResponse)
+      .persist();
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/local-cluster/policies/`)
+      .reply(200, mockPolicyListResponseLocalCluster);
+    // GET policy
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies/test-policy`)
       .reply(200, mockSinglePolicyResponse);
-
-    APIServer.post(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
+    // POST create policy
+    APIServer.post(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies`)
       .reply(200, mockCreatePolicy);
-
-    APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/mcm/clusterstatuses')
-      .reply(200, mockClusterListResponse);
-
-    APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/cluster1/clusterstatuses')
-      .reply(200, mockCluster1ListResponse);
-
-    APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/default/clusterstatuses')
-      .reply(200, mockDefaultListResponse);
-
-    APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/kube-system/clusterstatuses')
-      .reply(200, mockKubeSystemListResponse);
-
-    APIServer.get('/mcm.ibm.com/v1alpha1/namespaces/clusterhub/clusterstatuses')
-      .reply(200, mockClusterHubListResponse);
-
-    APIServer.post('/policies.policy.open-cluster-management.io')
-      .reply(200, mockViolationListResponse);
-
+    // DELETE policy
     APIServer.delete(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies/test-policy`)
-      .reply(200, mockDeleteResponse);
+      .reply(200, mockDeletePolicyResponse);
 
-    APIServer.delete('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters')
-      .reply(200, mockDefaultResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters/cluster1')
-      .reply(200, mockDefaultResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/default/clusters')
-      .reply(200, mockDefaultResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/kube-system/clusters/cluster1')
-      .reply(200, mockKubeSystemResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/kube-system/clusters')
-      .reply(200, mockKubeSystemResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/mcm/clusters/cluster1')
-      .reply(200, mockMCMResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/mcm/clusters')
-      .reply(200, mockMCMResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/cluster1')
-      .reply(200, mockDefaultResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters')
-      .reply(200, mockDefaultResponse);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters')
-      .reply(200, mockDefaultResponse);
-
-    // Single cluster
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/cluster1/clusters/cluster1')
-      .reply(200, mockCluster1Response);
-
-    APIServer.get('/clusterregistry.k8s.io/v1alpha1/namespaces/clusterhub/clusters/clusterhub')
-      .reply(200, mockClusterHubResponse);
-
-    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy')
-      .reply(200, mockNewAPISinglePolicyResponse);
-
-    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod')
+    // GET single policy from clsuter ns
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/default.test-policy`)
+      .reply(200, mockSinglePolicyCluster1Response);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/local-cluster/policies/default.test-policy`)
+      .reply(200, mockSinglePolicyHubResponse);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/default.case1-test-policy`)
+      .reply(200, mockNewAPISinglePolicyResponse)
+      .persist();
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/default.policy-pod`)
       .reply(200, mockStatusHistoryResponse);
-
-    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod-1')
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/default.policy-pod-1`)
       .reply(200, mockStatusHistoryResponseNoHistory);
-
-    APIServer.get('/policy.open-cluster-management.io/v1/namespaces/ironman/policies/default.policy-pod-2')
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/policies/default.policy-pod-2`)
       .reply(200, mockStatusHistoryResponseLong);
+
+    // GET managedclusterinfos per namespace
+    APIServer.get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/cluster1/managedclusterinfos`)
+      .reply(200, mockClusterCluster1Response);
+    APIServer.get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/local-cluster/managedclusterinfos`)
+      .reply(200, mockClusterHubResponse);
+    APIServer.get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/default/managedclusterinfos`)
+      .reply(200, mockClusterNonclusterNs);
+    APIServer.get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/kube-system/managedclusterinfos`)
+      .reply(200, mockClusterNonclusterNs);
+    APIServer.get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/policy-namespace/managedclusterinfos`)
+      .reply(200, mockClusterNonclusterNs);
+
+    // GET placementrules per namespace
+    APIServer.get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/policy-namespace/placementrules`)
+      .reply(200, mockPlacementRuleListResponse);
+    APIServer.get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/default/placementrules`)
+      .reply(200, mockPlacementRuleListNoResponse);
+    APIServer.get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/cluster1/placementrules`)
+      .reply(200, mockPlacementRuleListNoResponse);
+    APIServer.get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/local-cluster/placementrules`)
+      .reply(200, mockPlacementRuleListNoResponse);
+    APIServer.get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/kube-system/placementrules`)
+      .reply(200, mockPlacementRuleListNoResponse);
+
+    // GET placement bindings per namespace
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/placementbindings`)
+      .reply(200, mockPlacementBindingListResponse);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/placementbindings`)
+      .reply(200, mockPlacementBindingListNoResponse);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/cluster1/placementbindings`)
+      .reply(200, mockPlacementBindingListNoResponse);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/local-cluster/placementbindings`)
+      .reply(200, mockPlacementBindingListNoResponse);
+    APIServer.get(`/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/kube-system/placementbindings`)
+      .reply(200, mockPlacementBindingListNoResponse);
   });
 
   test('Correctly Resolves All Policies per Cluster List Query', () => new Promise((done) => {
@@ -127,6 +114,7 @@ describe('Policy Resolver', () => {
               selfLink
               creationTimestamp
               annotations
+              labels
               resourceVersion
               uid
             }
@@ -149,7 +137,7 @@ describe('Policy Resolver', () => {
       .send({
         query: `
         {
-          policies(name:"default.case1-test-policy", clusterName:"calamari") {
+          policies(name:"default.case1-test-policy", clusterName:"cluster1") {
             cluster
             message
             metadata {
@@ -234,6 +222,108 @@ describe('Policy Resolver', () => {
       });
   }));
 
+  test('Correctly Resolves Cluster List Query', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          clustersInPolicy(policy: "test-policy", hubNamespace: "default") {
+            name
+            total
+            violated
+            policyListStatuses
+            metadata {
+              labels
+              name
+              namespace
+              annotations
+              uid
+              selfLink
+            }
+            status
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Policy Status Query', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          policyStatus(policyName: "test-policy", hubNamespace: "default") {
+            templateName
+            cluster
+            clusterNamespace
+            status
+            apiVersion
+            kind
+            message
+            timestamp
+            consoleURL
+            policyName
+            policyNamespace
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Placement Rule Query', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          placementRules(prs: [ "placement-test-policy" ]) {
+            metadata {
+              name
+              resourceVersion
+              selfLink
+            }
+          }
+        }
+        `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Placement Binding Query', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `
+        {
+          placementBindings(pbs: [ "binding-test-policy" ]) {
+            metadata {
+              name
+              resourceVersion
+              selfLink
+            }
+          }
+        }
+        `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
   test('Correctly Resolves Create Policy Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
@@ -245,6 +335,7 @@ describe('Policy Resolver', () => {
             kind: "Policy",
             metadata: {
               name: "test-policy",
+              namespace: "default",
               description: "Instance descriptor for policy resource",
             },
             spec: {
@@ -339,36 +430,6 @@ describe('Policy Resolver', () => {
       });
   }));
 
-  test('Correctly Resolves Cluster List Query', () => new Promise((done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        {
-          clustersInPolicy(policy: "policy-namespace", hubNamespace: "mcm") {
-            name
-            total
-            violated
-            policyListStatuses
-            metadata {
-              labels
-              name
-              namespace
-              annotations
-              uid
-              selfLink
-            }
-            status
-          }
-        }
-      `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  }));
-
   test('Correctly Resolves Delete Policy Mutation', () => new Promise((done) => {
     supertest(server)
       .post(GRAPHQL_PATH)
@@ -391,7 +452,7 @@ describe('Policy Resolver', () => {
       .send({
         query: `
         {
-          statusHistory(policyName: "policy-pod", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+          statusHistory(policyName: "policy-pod", hubNamespace: "default", cluster: "cluster1", template: "policy-pod-sample-nginx-pod") {
             message
             timestamp
           }
@@ -410,7 +471,7 @@ describe('Policy Resolver', () => {
       .send({
         query: `
         {
-          statusHistory(policyName: "policy-pod-1", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+          statusHistory(policyName: "policy-pod-1", hubNamespace: "default", cluster: "cluster1", template: "policy-pod-sample-nginx-pod") {
             message
             timestamp
           }
@@ -429,7 +490,7 @@ describe('Policy Resolver', () => {
       .send({
         query: `
         {
-          statusHistory(policyName: "policy-pod-2", hubNamespace: "default", cluster: "ironman", template: "policy-pod-sample-nginx-pod") {
+          statusHistory(policyName: "policy-pod-2", hubNamespace: "default", cluster: "cluster1", template: "policy-pod-sample-nginx-pod") {
             message
             timestamp
           }

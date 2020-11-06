@@ -112,6 +112,13 @@ const mockManagedClusterViewResults = {
 };
 
 describe('KubeConnector', () => {
+  describe('Constructor', () => {
+    test('KubeConnector constructor throws error with no namespaces', async () => {
+      expect(() => {
+        KubeConnector({});
+      }).toThrow(new Error('namespaces is required'));
+    });
+  });
   describe('Get', () => {
     test('calls httpLib with correct arguments', async () => {
       const mockHttp = jest.fn(() => asyncReturn({ body: { test: 'value' } }, 200));

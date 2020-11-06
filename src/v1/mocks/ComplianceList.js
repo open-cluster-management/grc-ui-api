@@ -19,30 +19,24 @@ export const mockComplianceListDefaultResponse = {
     resourceVersion: '10793978',
     selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/default/policies`,
   },
-  status: {
-    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
-  },
 };
 
-export const mockComplianceListKubeSystemResponse = {
-  apiVersion: 'policy.open-cluster-management.io/v1',
+export const mockComplianceListNoResponse = {
+  apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
   items: [],
   kind: 'PolicyList',
   metadata: {
     continue: '',
-    resourceVersion: '10794564',
-    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/kube-system/policies`,
-  },
-  status: {
-    consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
+    resourceVersion: '10793978',
+    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/namespace/policies`,
   },
 };
 
 export const mockComplianceListMCMResponse = {
-  apiVersion: 'policy.open-cluster-management.io/v1',
+  apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
   items: [
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         creationTimestamp: '2019-09-03T18:34:05Z',
@@ -54,7 +48,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-certificatepolicy',
         namespace: 'mcm',
         resourceVersion: '3666045',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-certificatepolicy`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-certificatepolicy`,
         uid: '68d772b1-ce79-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -132,7 +126,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -149,7 +143,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-iampolicy',
         namespace: 'mcm',
         resourceVersion: '3664798',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-iampolicy`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-iampolicy`,
         uid: 'a18d825a-cb36-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -229,7 +223,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -247,7 +241,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-image',
         namespace: 'mcm',
         resourceVersion: '3459900',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-image`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-image`,
         uid: '8be1a627-cb2c-11e9-a1eb-005056a0b88e',
       },
       spec: {
@@ -317,7 +311,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -335,7 +329,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-limitrange',
         namespace: 'mcm',
         resourceVersion: '3489357',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-limitrange`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-limitrange`,
         uid: 'd358638d-cf30-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -411,7 +405,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -429,7 +423,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-namespace',
         namespace: 'mcm',
         resourceVersion: '3665885',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-namespace`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-namespace`,
         uid: '4e21e5e7-ce78-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -492,7 +486,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -510,7 +504,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-pod',
         namespace: 'mcm',
         resourceVersion: '3729666',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-pod`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-pod`,
         uid: '48316272-d009-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -585,7 +579,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -603,7 +597,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-rolebinding-1',
         namespace: 'mcm',
         resourceVersion: '3665889',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-rolebinding-1`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-rolebinding-1`,
         uid: '22ac9660-cf15-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -678,7 +672,7 @@ export const mockComplianceListMCMResponse = {
       },
     },
     {
-      apiVersion: 'policy.open-cluster-management.io/v1',
+      apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
       kind: 'Policy',
       metadata: {
         annotations: {
@@ -696,7 +690,7 @@ export const mockComplianceListMCMResponse = {
         name: 'policy-vulnerabilitypolicy',
         namespace: 'mcm',
         resourceVersion: '3459668',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/policy-vulnerabilitypolicy`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-vulnerabilitypolicy`,
         uid: '2767ac02-ce7a-11e9-a1ed-005056a0b88e',
       },
       spec: {
@@ -778,12 +772,12 @@ export const mockComplianceListMCMResponse = {
   metadata: {
     continue: '',
     resourceVersion: '3960466',
-    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`,
+    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies`,
   },
 };
 
 export const mockRootPolicyResponse = {
-  apiVersion: 'policy.open-cluster-management.io/v1',
+  apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
   kind: 'Policy',
   metadata: {
     annotations: {
@@ -822,7 +816,7 @@ export const mockRootPolicyResponse = {
 };
 
 export const mockRootPoliciesListResponse = [[{
-  apiVersion: 'policy.open-cluster-management.io/v1',
+  apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
   kind: 'Policy',
   metadata: {
     annotations: {
@@ -856,7 +850,7 @@ export const mockRootPoliciesListResponse = [[{
     consoleURL: 'https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com',
   },
 }, {
-  apiVersion: 'policy.open-cluster-management.io/v1',
+  apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
   kind: 'Policy',
   metadata: {
     annotations: { 'kubectl.kubernetes.io/last-applied-configuration': '{"apiVersion":"policy.open-cluster-management.io/v1","kind":"Policy","metadata":{"annotations":{},"name":"test-policy","namespace":"default"},"spec":{"disabled":false,"policy-templates":[{"objectDefinition":{"apiVersion":"policies.ibm.com/v1alpha1","kind":"TrustedContainerPolicy","metadata":{"name":"test-policy-trustedcontainerpolicy"},"spec":{"imageRegistry":"quay.io","namespaceSelector":{"exclude":["kube-system"],"include":["default"]},"remediationAction":"inform","severity":"low"}}}],"remediationAction":"inform"}}\n' }, creationTimestamp: '2020-05-13T09:07:42Z', generation: 1, name: 'test-policy', namespace: 'default', resourceVersion: '23259418', selfLink: '/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy', uid: 'a10c7723-cad8-4669-b18f-931df3e28044',

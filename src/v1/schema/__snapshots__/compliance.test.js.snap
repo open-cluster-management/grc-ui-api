@@ -1,10 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Compliance Resolver Correctly Resolves Compliance List Query 1`] = `
+exports[`Compliance Resolver Mutation Correctly Resolves Delete Compliance Mutation 1`] = `
+Object {
+  "data": Object {
+    "deleteCompliance": "deleted-resource",
+  },
+}
+`;
+
+exports[`Compliance Resolver Mutation Correctly Resolves Delete Compliance Mutation with no resources 1`] = `
+Object {
+  "data": Object {
+    "deleteCompliance": "deleted-resource",
+  },
+}
+`;
+
+exports[`Compliance Resolver Mutation Error on Delete Compliance Mutation with invalid resource selfLink 1`] = `
+Object {
+  "data": Object {
+    "deleteCompliance": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+      },
+      "locations": Array [
+        Object {
+          "column": 15,
+          "line": 3,
+        },
+      ],
+      "message": "GRC ERROR: Unable to delete application resource(s) - [{\\"message\\":\\"There was an error.\\"}]",
+      "path": Array [
+        "deleteCompliance",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Compliance Resolver Mutation Error on Delete Compliance Mutation with invalid selfLink argument 1`] = `
+Object {
+  "data": Object {
+    "deleteCompliance": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+      },
+      "locations": Array [
+        Object {
+          "column": 15,
+          "line": 3,
+        },
+      ],
+      "message": "GRC ERROR 400 - There was an error.",
+      "path": Array [
+        "deleteCompliance",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Compliance Resolver Query Correctly Resolves Compliance List Query 1`] = `
 Object {
   "data": Object {
     "compliances": Array [
       Object {
+        "annotations": Object {
+          "categories": "-",
+          "controls": "-",
+          "standards": "-",
+        },
         "clusterCompliant": "-",
         "metadata": null,
         "name": "",
@@ -16,13 +87,18 @@ Object {
         "remediation": "",
       },
       Object {
+        "annotations": Object {
+          "categories": "-",
+          "controls": "-",
+          "standards": "-",
+        },
         "clusterCompliant": "0/2/0",
         "metadata": Object {
           "annotations": null,
           "name": "policy-certificatepolicy",
           "namespace": "mcm",
           "resourceVersion": "3666045",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-certificatepolicy",
         },
         "name": "policy-certificatepolicy",
         "namespace": "mcm",
@@ -42,7 +118,7 @@ Object {
             "name": "policy-certificatepolicy",
             "namespace": "mcm",
             "resourceVersion": "3666045",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-certificatepolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-certificatepolicy",
             "uid": "68d772b1-ce79-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -118,6 +194,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "MutationAdvisor",
+          "standards": "FISMA",
+        },
         "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
@@ -128,7 +209,7 @@ Object {
           "name": "policy-iampolicy",
           "namespace": "mcm",
           "resourceVersion": "3664798",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-iampolicy",
         },
         "name": "policy-iampolicy",
         "namespace": "mcm",
@@ -153,7 +234,7 @@ Object {
             "name": "policy-iampolicy",
             "namespace": "mcm",
             "resourceVersion": "3664798",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-iampolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-iampolicy",
             "uid": "a18d825a-cb36-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -233,6 +314,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "VA",
+          "standards": "FISMA, TEST",
+        },
         "clusterCompliant": "2/3/1",
         "metadata": Object {
           "annotations": Object {
@@ -244,7 +330,7 @@ Object {
           "name": "policy-image",
           "namespace": "mcm",
           "resourceVersion": "3459900",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-image",
         },
         "name": "policy-image",
         "namespace": "mcm",
@@ -270,7 +356,7 @@ Object {
             "name": "policy-image",
             "namespace": "mcm",
             "resourceVersion": "3459900",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-image",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-image",
             "uid": "8be1a627-cb2c-11e9-a1eb-005056a0b88e",
           },
           "spec": Object {
@@ -340,6 +426,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "CertManager",
+          "standards": "HIPAA",
+        },
         "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
@@ -351,7 +442,7 @@ Object {
           "name": "policy-limitrange",
           "namespace": "mcm",
           "resourceVersion": "3489357",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-limitrange",
         },
         "name": "policy-limitrange",
         "namespace": "mcm",
@@ -377,7 +468,7 @@ Object {
             "name": "policy-limitrange",
             "namespace": "mcm",
             "resourceVersion": "3489357",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-limitrange",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-limitrange",
             "uid": "d358638d-cf30-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -453,6 +544,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "policy",
+          "standards": "FISMA",
+        },
         "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
@@ -464,7 +560,7 @@ Object {
           "name": "policy-namespace",
           "namespace": "mcm",
           "resourceVersion": "3665885",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-namespace",
         },
         "name": "policy-namespace",
         "namespace": "mcm",
@@ -490,7 +586,7 @@ Object {
             "name": "policy-namespace",
             "namespace": "mcm",
             "resourceVersion": "3665885",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-namespace",
             "uid": "4e21e5e7-ce78-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -553,6 +649,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "MutationAdvisor",
+          "standards": "FISMA",
+        },
         "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
@@ -564,7 +665,7 @@ Object {
           "name": "policy-pod",
           "namespace": "mcm",
           "resourceVersion": "3729666",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-pod",
         },
         "name": "policy-pod",
         "namespace": "mcm",
@@ -590,7 +691,7 @@ Object {
             "name": "policy-pod",
             "namespace": "mcm",
             "resourceVersion": "3729666",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-pod",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-pod",
             "uid": "48316272-d009-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -665,6 +766,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndCommunicationsProtections",
+          "controls": "MutationAdvisor",
+          "standards": "FISMA",
+        },
         "clusterCompliant": "2/2/0",
         "metadata": Object {
           "annotations": Object {
@@ -676,7 +782,7 @@ Object {
           "name": "policy-rolebinding-1",
           "namespace": "mcm",
           "resourceVersion": "3665889",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-rolebinding-1",
         },
         "name": "policy-rolebinding-1",
         "namespace": "mcm",
@@ -702,7 +808,7 @@ Object {
             "name": "policy-rolebinding-1",
             "namespace": "mcm",
             "resourceVersion": "3665889",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-rolebinding-1",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-rolebinding-1",
             "uid": "22ac9660-cf15-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -777,6 +883,11 @@ Object {
         "remediation": "inform",
       },
       Object {
+        "annotations": Object {
+          "categories": "SystemAndInformationIntegrity",
+          "controls": "VA",
+          "standards": "PCI",
+        },
         "clusterCompliant": "1/2/0",
         "metadata": Object {
           "annotations": Object {
@@ -788,7 +899,7 @@ Object {
           "name": "policy-vulnerabilitypolicy",
           "namespace": "mcm",
           "resourceVersion": "3459668",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-vulnerabilitypolicy",
         },
         "name": "policy-vulnerabilitypolicy",
         "namespace": "mcm",
@@ -814,7 +925,7 @@ Object {
             "name": "policy-vulnerabilitypolicy",
             "namespace": "mcm",
             "resourceVersion": "3459668",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-vulnerabilitypolicy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/policy-vulnerabilitypolicy",
             "uid": "2767ac02-ce7a-11e9-a1ed-005056a0b88e",
           },
           "spec": Object {
@@ -896,7 +1007,7 @@ Object {
 }
 `;
 
-exports[`Compliance Resolver Correctly Resolves Compliance List Query with specific namespace 1`] = `
+exports[`Compliance Resolver Query Correctly Resolves Compliance List Query with specific namespace 1`] = `
 Object {
   "data": Object {
     "compliances": Array [
@@ -916,7 +1027,7 @@ Object {
 }
 `;
 
-exports[`Compliance Resolver Correctly Resolves Single Compliance Query 1`] = `
+exports[`Compliance Resolver Query Correctly Resolves Single Compliance Query 1`] = `
 Object {
   "data": Object {
     "compliances": Array [
@@ -1164,7 +1275,7 @@ Object {
 }
 `;
 
-exports[`Compliance Resolver Correctly Resolves Single Compliance Query without namespace 1`] = `
+exports[`Compliance Resolver Query Correctly Resolves Single Compliance Query without namespace 1`] = `
 Object {
   "data": Object {
     "compliances": Array [
@@ -1188,9 +1299,13 @@ Object {
             "objectTemplates": Array [],
             "raw": Object {
               "apiVersion": "policy.open-cluster-management.io/v1",
-              "clusterConsoleURL": Object {},
+              "clusterConsoleURL": Object {
+                "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
+                "local-cluster": "https://console-openshift-console.apps.hub.dev08.red-chesterfield.com",
+              },
               "clusterNS": Object {
                 "cluster1": "cluster1",
+                "local-cluster": "local-cluster",
               },
               "clusters": Array [
                 "0",
@@ -1410,302 +1525,330 @@ Object {
         },
       },
       Object {
-        "clusterCompliant": "-",
+        "clusterCompliant": "2/2/0",
         "compliancePolicies": Array [],
         "compliancePolicy": Array [
           Object {
-            "complianceName": "policy-xz-1",
-            "complianceNamespace": "mycluster",
-            "complianceSelfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
+            "complianceName": "test-policy",
+            "complianceNamespace": "default",
+            "complianceSelfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
             "detail": Object {
               "exclude_namespace": Array [
-                "kube*",
+                "*",
               ],
               "include_namespace": Array [
-                "default",
+                "*",
               ],
             },
-            "name": "policy-xz-1",
+            "name": "test-policy",
             "objectTemplates": Array [],
             "raw": Object {
               "apiVersion": "policy.open-cluster-management.io/v1",
-              "clusterConsoleURL": Object {},
+              "clusterConsoleURL": Object {
+                "cluster1": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
+                "local-cluster": "https://console-openshift-console.apps.hub.dev08.red-chesterfield.com",
+              },
               "clusterNS": Object {
                 "cluster1": "cluster1",
+                "local-cluster": "local-cluster",
               },
-              "clusters": Array [],
+              "clusters": Array [
+                "0",
+                "1",
+              ],
               "kind": "Policy",
               "metadata": Object {
-                "creationTimestamp": "2018-09-04T16:13:50Z",
-                "finalizers": Array [
-                  "finalizer.mcm.ibm.com",
-                ],
-                "generation": 1,
-                "labels": Object {
-                  "compliance": "compliance-xz",
+                "annotations": Object {
+                  "policy.open-cluster-management.io/categories": "PR.AC Identity Management Authentication and Access Control",
+                  "policy.open-cluster-management.io/controls": "PR.AC-4 Access Control",
+                  "policy.open-cluster-management.io/standards": "NIST-CSF",
                 },
-                "name": "policy-xz-1",
-                "namespace": "mycluster",
-                "ownerReferences": Array [
+                "creationTimestamp": "2020-11-03T19:21:39Z",
+                "generation": 3,
+                "managedFields": Array [
                   Object {
-                    "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                    "blockOwnerDeletion": true,
-                    "controller": true,
-                    "kind": "Compliance",
-                    "name": "compliance-xz",
-                    "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
+                    "apiVersion": "policy.open-cluster-management.io/v1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": Object {
+                      "f:status": Object {
+                        ".": Object {},
+                        "f:placement": Object {},
+                        "f:status": Object {},
+                      },
+                    },
+                    "manager": "governance-policy-propagator",
+                    "operation": "Update",
+                    "time": "2020-11-03T22:03:49Z",
+                  },
+                  Object {
+                    "apiVersion": "policy.open-cluster-management.io/v1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": Object {
+                      "f:metadata": Object {
+                        "f:annotations": Object {
+                          ".": Object {},
+                          "f:policy.open-cluster-management.io/categories": Object {},
+                          "f:policy.open-cluster-management.io/controls": Object {},
+                          "f:policy.open-cluster-management.io/standards": Object {},
+                        },
+                      },
+                      "f:spec": Object {
+                        ".": Object {},
+                        "f:disabled": Object {},
+                        "f:policy-templates": Object {},
+                        "f:remediationAction": Object {},
+                      },
+                    },
+                    "manager": "unknown",
+                    "operation": "Update",
+                    "time": "2020-11-03T22:03:49Z",
                   },
                 ],
-                "resourceVersion": "4349995",
-                "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
-                "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                "name": "test-policy",
+                "namespace": "default",
+                "resourceVersion": "27822459",
+                "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
+                "uid": "0799c99e-de36-4899-9733-818e23e2cab3",
               },
-              "name": "policy-xz-1",
-              "namespace": "mycluster",
+              "name": "test-policy",
+              "namespace": "default",
               "raw": Object {
                 "apiVersion": "policy.open-cluster-management.io/v1",
                 "kind": "Policy",
                 "metadata": Object {
-                  "creationTimestamp": "2018-09-04T16:13:50Z",
-                  "finalizers": Array [
-                    "finalizer.mcm.ibm.com",
-                  ],
-                  "generation": 1,
-                  "labels": Object {
-                    "compliance": "compliance-xz",
+                  "annotations": Object {
+                    "policy.open-cluster-management.io/categories": "PR.AC Identity Management Authentication and Access Control",
+                    "policy.open-cluster-management.io/controls": "PR.AC-4 Access Control",
+                    "policy.open-cluster-management.io/standards": "NIST-CSF",
                   },
-                  "name": "policy-xz-1",
-                  "namespace": "mycluster",
-                  "ownerReferences": Array [
+                  "creationTimestamp": "2020-11-03T19:21:39Z",
+                  "generation": 3,
+                  "managedFields": Array [
                     Object {
-                      "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                      "blockOwnerDeletion": true,
-                      "controller": true,
-                      "kind": "Compliance",
-                      "name": "compliance-xz",
-                      "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
+                      "apiVersion": "policy.open-cluster-management.io/v1",
+                      "fieldsType": "FieldsV1",
+                      "fieldsV1": Object {
+                        "f:status": Object {
+                          ".": Object {},
+                          "f:placement": Object {},
+                          "f:status": Object {},
+                        },
+                      },
+                      "manager": "governance-policy-propagator",
+                      "operation": "Update",
+                      "time": "2020-11-03T22:03:49Z",
+                    },
+                    Object {
+                      "apiVersion": "policy.open-cluster-management.io/v1",
+                      "fieldsType": "FieldsV1",
+                      "fieldsV1": Object {
+                        "f:metadata": Object {
+                          "f:annotations": Object {
+                            ".": Object {},
+                            "f:policy.open-cluster-management.io/categories": Object {},
+                            "f:policy.open-cluster-management.io/controls": Object {},
+                            "f:policy.open-cluster-management.io/standards": Object {},
+                          },
+                        },
+                        "f:spec": Object {
+                          ".": Object {},
+                          "f:disabled": Object {},
+                          "f:policy-templates": Object {},
+                          "f:remediationAction": Object {},
+                        },
+                      },
+                      "manager": "unknown",
+                      "operation": "Update",
+                      "time": "2020-11-03T22:03:49Z",
                     },
                   ],
-                  "resourceVersion": "4349995",
-                  "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
-                  "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+                  "name": "test-policy",
+                  "namespace": "default",
+                  "resourceVersion": "27822459",
+                  "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
+                  "uid": "0799c99e-de36-4899-9733-818e23e2cab3",
                 },
                 "spec": Object {
-                  "complianceType": "",
-                  "namespaces": Object {
-                    "exclude": Array [
-                      "kube*",
-                    ],
-                    "include": Array [
-                      "default",
-                    ],
-                  },
-                  "remediationAction": "inform",
-                  "role-templates": Array [
+                  "disabled": false,
+                  "policy-templates": Array [
                     Object {
-                      "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                      "complianceType": "musthave",
-                      "kind": "RoleTemplate",
-                      "metadata": Object {
-                        "creationTimestamp": null,
-                        "name": "role-xz-1",
-                      },
-                      "rules": Array [
-                        Object {
-                          "complianceType": "musthave",
-                          "policyRule": Object {
-                            "apiGroups": Array [
-                              "extensions",
-                              "apps",
+                      "objectDefinition": Object {
+                        "apiVersion": "policy.open-cluster-management.io/v1",
+                        "kind": "ConfigurationPolicy",
+                        "metadata": Object {
+                          "name": "test-policy-sample-role",
+                        },
+                        "spec": Object {
+                          "namespaceSelector": Object {
+                            "exclude": Array [
+                              "kube-*",
                             ],
-                            "resources": Array [
-                              "deployments",
-                            ],
-                            "verbs": Array [
-                              "get",
-                              "list",
-                              "watch",
-                              "create",
-                              "delete",
-                              "patch",
+                            "include": Array [
+                              "default",
                             ],
                           },
+                          "object-templates": Array [
+                            Object {
+                              "complianceType": "mustonlyhave",
+                              "objectDefinition": Object {
+                                "apiVersion": "rbac.authorization.k8s.io/v1",
+                                "kind": "Role",
+                                "metadata": Object {
+                                  "name": "sample-role",
+                                },
+                                "rules": Array [
+                                  Object {
+                                    "apiGroups": Array [
+                                      "extensions",
+                                      "apps",
+                                    ],
+                                    "resources": Array [
+                                      "deployments",
+                                    ],
+                                    "verbs": Array [
+                                      "get",
+                                      "list",
+                                      "watch",
+                                      "delete",
+                                      "patch",
+                                    ],
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "remediationAction": "inform",
+                          "severity": "high",
                         },
-                      ],
-                      "selector": Object {
-                        "matchLabels": Object {
-                          "cloud": "IBM",
-                        },
-                      },
-                      "status": Object {
-                        "Compliant": "NonCompliant",
-                        "Validity": Object {
-                          "valid": true,
-                        },
-                        "conditions": Array [
-                          Object {
-                            "lastTransitionTime": "2018-09-06T15:14:44Z",
-                            "message": "k8s RBAC role is missing: role-xz-1",
-                            "reason": "K8s RBAC role is missing",
-                            "status": "True",
-                            "type": "completed",
-                          },
-                        ],
                       },
                     },
                   ],
+                  "remediationAction": "inform",
                 },
                 "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Valid": true,
+                  "placement": Array [
+                    Object {
+                      "placementBinding": "binding-test-policy",
+                      "placementRule": "placement-test-policy",
+                    },
+                  ],
+                  "status": Array [
+                    Object {
+                      "clustername": "local-cluster",
+                      "clusternamespace": "local-cluster",
+                      "compliant": "NonCompliant",
+                    },
+                    Object {
+                      "clustername": "cluster1",
+                      "clusternamespace": "cluster1",
+                      "compliant": "NonCompliant",
+                    },
+                  ],
                 },
               },
               "remediation": "inform",
               "spec": Object {
-                "complianceType": "",
-                "namespaces": Object {
-                  "exclude": Array [
-                    "kube*",
-                  ],
-                  "include": Array [
-                    "default",
-                  ],
-                },
-                "remediationAction": "inform",
-                "role-templates": Array [
+                "disabled": false,
+                "policy-templates": Array [
                   Object {
-                    "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                    "complianceType": "musthave",
-                    "kind": "RoleTemplate",
-                    "metadata": Object {
-                      "creationTimestamp": null,
-                      "name": "role-xz-1",
-                    },
-                    "rules": Array [
-                      Object {
-                        "complianceType": "musthave",
-                        "policyRule": Object {
-                          "apiGroups": Array [
-                            "extensions",
-                            "apps",
+                    "objectDefinition": Object {
+                      "apiVersion": "policy.open-cluster-management.io/v1",
+                      "kind": "ConfigurationPolicy",
+                      "metadata": Object {
+                        "name": "test-policy-sample-role",
+                      },
+                      "spec": Object {
+                        "namespaceSelector": Object {
+                          "exclude": Array [
+                            "kube-*",
                           ],
-                          "resources": Array [
-                            "deployments",
-                          ],
-                          "verbs": Array [
-                            "get",
-                            "list",
-                            "watch",
-                            "create",
-                            "delete",
-                            "patch",
+                          "include": Array [
+                            "default",
                           ],
                         },
+                        "object-templates": Array [
+                          Object {
+                            "complianceType": "mustonlyhave",
+                            "objectDefinition": Object {
+                              "apiVersion": "rbac.authorization.k8s.io/v1",
+                              "kind": "Role",
+                              "metadata": Object {
+                                "name": "sample-role",
+                              },
+                              "rules": Array [
+                                Object {
+                                  "apiGroups": Array [
+                                    "extensions",
+                                    "apps",
+                                  ],
+                                  "resources": Array [
+                                    "deployments",
+                                  ],
+                                  "verbs": Array [
+                                    "get",
+                                    "list",
+                                    "watch",
+                                    "delete",
+                                    "patch",
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "remediationAction": "inform",
+                        "severity": "high",
                       },
-                    ],
-                    "selector": Object {
-                      "matchLabels": Object {
-                        "cloud": "IBM",
-                      },
-                    },
-                    "status": Object {
-                      "Compliant": "NonCompliant",
-                      "Validity": Object {
-                        "valid": true,
-                      },
-                      "conditions": Array [
-                        Object {
-                          "lastTransitionTime": "2018-09-06T15:14:44Z",
-                          "message": "k8s RBAC role is missing: role-xz-1",
-                          "reason": "K8s RBAC role is missing",
-                          "status": "True",
-                          "type": "completed",
-                        },
-                      ],
                     },
                   },
                 ],
+                "remediationAction": "inform",
               },
               "status": Object {
-                "Compliant": "NonCompliant",
-                "Valid": true,
+                "placement": Array [
+                  Object {
+                    "placementBinding": "binding-test-policy",
+                    "placementRule": "placement-test-policy",
+                  },
+                ],
+                "status": Array [
+                  Object {
+                    "clustername": "local-cluster",
+                    "clusternamespace": "local-cluster",
+                    "compliant": "NonCompliant",
+                  },
+                  Object {
+                    "clustername": "cluster1",
+                    "clusternamespace": "cluster1",
+                    "compliant": "NonCompliant",
+                  },
+                ],
               },
             },
             "roleBindingTemplates": Array [],
-            "roleTemplates": Array [
-              Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "compliant": "Compliant",
-                "kind": null,
-                "lastTransition": "2018-09-06T15:14:44Z",
-                "name": "role-xz-1",
-                "raw": Object {
-                  "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                  "complianceType": "musthave",
-                  "kind": "RoleTemplate",
-                  "metadata": Object {
-                    "creationTimestamp": null,
-                    "name": "role-xz-1",
-                  },
-                  "rules": Array [
-                    Object {
-                      "complianceType": "musthave",
-                      "policyRule": Object {
-                        "apiGroups": Array [
-                          "extensions",
-                          "apps",
-                        ],
-                        "resources": Array [
-                          "deployments",
-                        ],
-                        "verbs": Array [
-                          "get",
-                          "list",
-                          "watch",
-                          "create",
-                          "delete",
-                          "patch",
-                        ],
-                      },
-                    },
-                  ],
-                  "selector": Object {
-                    "matchLabels": Object {
-                      "cloud": "IBM",
-                    },
-                  },
-                  "status": Object {
-                    "Compliant": "NonCompliant",
-                    "Validity": Object {
-                      "valid": true,
-                    },
-                    "conditions": Array [
-                      Object {
-                        "lastTransitionTime": "2018-09-06T15:14:44Z",
-                        "message": "k8s RBAC role is missing: role-xz-1",
-                        "reason": "K8s RBAC role is missing",
-                        "status": "True",
-                        "type": "completed",
-                      },
-                    ],
-                  },
-                  "templateType": "role-templates",
-                },
-                "validity": "true",
-              },
-            ],
+            "roleTemplates": Array [],
             "status": null,
           },
         ],
-        "complianceStatus": Array [],
+        "complianceStatus": Array [
+          Object {
+            "clusterNamespace": "0",
+            "localCompliantStatus": "0/0",
+            "localValidStatus": "0/0",
+          },
+          Object {
+            "clusterNamespace": "1",
+            "localCompliantStatus": "0/0",
+            "localValidStatus": "0/0",
+          },
+        ],
         "metadata": Object {
-          "creationTimestamp": "2018-09-04T16:13:50Z",
-          "name": "policy-xz-1",
-          "namespace": "mycluster",
-          "resourceVersion": "4349995",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
-          "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+          "creationTimestamp": "2020-11-03T19:21:39Z",
+          "name": "test-policy",
+          "namespace": "default",
+          "resourceVersion": "27822459",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
+          "uid": "0799c99e-de36-4899-9733-818e23e2cab3",
         },
         "placementBindings": Array [],
         "placementPolicies": Array [],
@@ -1714,98 +1857,134 @@ Object {
           "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
-            "creationTimestamp": "2018-09-04T16:13:50Z",
-            "finalizers": Array [
-              "finalizer.mcm.ibm.com",
-            ],
-            "generation": 1,
-            "labels": Object {
-              "compliance": "compliance-xz",
+            "annotations": Object {
+              "policy.open-cluster-management.io/categories": "PR.AC Identity Management Authentication and Access Control",
+              "policy.open-cluster-management.io/controls": "PR.AC-4 Access Control",
+              "policy.open-cluster-management.io/standards": "NIST-CSF",
             },
-            "name": "policy-xz-1",
-            "namespace": "mycluster",
-            "ownerReferences": Array [
+            "creationTimestamp": "2020-11-03T19:21:39Z",
+            "generation": 3,
+            "managedFields": Array [
               Object {
-                "apiVersion": "compliance.mcm.ibm.com/v1alpha1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "Compliance",
-                "name": "compliance-xz",
-                "uid": "82de70e7-b05d-11e8-9a12-005056a0d11b",
+                "apiVersion": "policy.open-cluster-management.io/v1",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": Object {
+                  "f:status": Object {
+                    ".": Object {},
+                    "f:placement": Object {},
+                    "f:status": Object {},
+                  },
+                },
+                "manager": "governance-policy-propagator",
+                "operation": "Update",
+                "time": "2020-11-03T22:03:49Z",
+              },
+              Object {
+                "apiVersion": "policy.open-cluster-management.io/v1",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": Object {
+                  "f:metadata": Object {
+                    "f:annotations": Object {
+                      ".": Object {},
+                      "f:policy.open-cluster-management.io/categories": Object {},
+                      "f:policy.open-cluster-management.io/controls": Object {},
+                      "f:policy.open-cluster-management.io/standards": Object {},
+                    },
+                  },
+                  "f:spec": Object {
+                    ".": Object {},
+                    "f:disabled": Object {},
+                    "f:policy-templates": Object {},
+                    "f:remediationAction": Object {},
+                  },
+                },
+                "manager": "unknown",
+                "operation": "Update",
+                "time": "2020-11-03T22:03:49Z",
               },
             ],
-            "resourceVersion": "4349995",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mycluster/policies/policy-xz-1",
-            "uid": "82e00acc-b05d-11e8-9a12-005056a0d11b",
+            "name": "test-policy",
+            "namespace": "default",
+            "resourceVersion": "27822459",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
+            "uid": "0799c99e-de36-4899-9733-818e23e2cab3",
           },
           "spec": Object {
-            "complianceType": "",
-            "namespaces": Object {
-              "exclude": Array [
-                "kube*",
-              ],
-              "include": Array [
-                "default",
-              ],
-            },
-            "remediationAction": "inform",
-            "role-templates": Array [
+            "disabled": false,
+            "policy-templates": Array [
               Object {
-                "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
-                "complianceType": "musthave",
-                "kind": "RoleTemplate",
-                "metadata": Object {
-                  "creationTimestamp": null,
-                  "name": "role-xz-1",
-                },
-                "rules": Array [
-                  Object {
-                    "complianceType": "musthave",
-                    "policyRule": Object {
-                      "apiGroups": Array [
-                        "extensions",
-                        "apps",
+                "objectDefinition": Object {
+                  "apiVersion": "policy.open-cluster-management.io/v1",
+                  "kind": "ConfigurationPolicy",
+                  "metadata": Object {
+                    "name": "test-policy-sample-role",
+                  },
+                  "spec": Object {
+                    "namespaceSelector": Object {
+                      "exclude": Array [
+                        "kube-*",
                       ],
-                      "resources": Array [
-                        "deployments",
-                      ],
-                      "verbs": Array [
-                        "get",
-                        "list",
-                        "watch",
-                        "create",
-                        "delete",
-                        "patch",
+                      "include": Array [
+                        "default",
                       ],
                     },
+                    "object-templates": Array [
+                      Object {
+                        "complianceType": "mustonlyhave",
+                        "objectDefinition": Object {
+                          "apiVersion": "rbac.authorization.k8s.io/v1",
+                          "kind": "Role",
+                          "metadata": Object {
+                            "name": "sample-role",
+                          },
+                          "rules": Array [
+                            Object {
+                              "apiGroups": Array [
+                                "extensions",
+                                "apps",
+                              ],
+                              "resources": Array [
+                                "deployments",
+                              ],
+                              "verbs": Array [
+                                "get",
+                                "list",
+                                "watch",
+                                "delete",
+                                "patch",
+                              ],
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                    "remediationAction": "inform",
+                    "severity": "high",
                   },
-                ],
-                "selector": Object {
-                  "matchLabels": Object {
-                    "cloud": "IBM",
-                  },
-                },
-                "status": Object {
-                  "Compliant": "NonCompliant",
-                  "Validity": Object {
-                    "valid": true,
-                  },
-                  "conditions": Array [
-                    Object {
-                      "lastTransitionTime": "2018-09-06T15:14:44Z",
-                      "message": "k8s RBAC role is missing: role-xz-1",
-                      "reason": "K8s RBAC role is missing",
-                      "status": "True",
-                      "type": "completed",
-                    },
-                  ],
                 },
               },
             ],
+            "remediationAction": "inform",
           },
           "status": Object {
-            "Compliant": "NonCompliant",
-            "Valid": true,
+            "placement": Array [
+              Object {
+                "placementBinding": "binding-test-policy",
+                "placementRule": "placement-test-policy",
+              },
+            ],
+            "status": Array [
+              Object {
+                "clustername": "local-cluster",
+                "clusternamespace": "local-cluster",
+                "compliant": "NonCompliant",
+              },
+              Object {
+                "clustername": "cluster1",
+                "clusternamespace": "cluster1",
+                "compliant": "NonCompliant",
+              },
+            ],
           },
         },
       },

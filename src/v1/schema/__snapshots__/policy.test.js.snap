@@ -3,76 +3,190 @@
 exports[`Policy Resolver Correctly Resolves All Policies per Cluster List Query 1`] = `
 Object {
   "data": Object {
-    "policiesInCluster": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 5,
-          "status": 404,
-          "statusCode": 404,
+    "policiesInCluster": Array [
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1",
+        "cluster": "cluster1",
+        "kind": "Policy",
+        "metadata": Object {
+          "annotations": Object {
+            "policy.open-cluster-management.io/categories": "PR.AC Identity Management Authentication and Access Control",
+            "policy.open-cluster-management.io/controls": "PR.AC-4 Access Control",
+            "policy.open-cluster-management.io/standards": "NIST-CSF",
+          },
+          "creationTimestamp": "2020-11-03T22:03:49Z",
+          "labels": Object {
+            "policy.open-cluster-management.io/cluster-name": "cluster1",
+            "policy.open-cluster-management.io/cluster-namespace": "cluster1",
+            "policy.open-cluster-management.io/root-policy": "default.test-policy",
+          },
+          "name": "default.test-policy",
+          "namespace": "cluster1",
+          "resourceVersion": "27822692",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/default.test-policy",
+          "uid": "4bf41f90-3dc4-4e87-84ae-4bede862c9b8",
+        },
+        "policiesStatusDetails": Array [
+          Object {
+            "compliant": "NonCompliant",
+            "lastTimestamp": "2020-11-03T22:04:06Z",
+            "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+            "name": "test-policy-sample-role",
+          },
+        ],
+        "spec": Object {
+          "disabled": false,
+          "policy-templates": Array [
+            Object {
+              "objectDefinition": Object {
+                "apiVersion": "policy.open-cluster-management.io/v1",
+                "kind": "ConfigurationPolicy",
+                "metadata": Object {
+                  "name": "test-policy-sample-role",
+                },
+                "spec": Object {
+                  "namespaceSelector": Object {
+                    "exclude": Array [
+                      "kube-*",
+                    ],
+                    "include": Array [
+                      "default",
+                    ],
+                  },
+                  "object-templates": Array [
+                    Object {
+                      "complianceType": "mustonlyhave",
+                      "objectDefinition": Object {
+                        "apiVersion": "rbac.authorization.k8s.io/v1",
+                        "kind": "Role",
+                        "metadata": Object {
+                          "name": "sample-role",
+                        },
+                        "rules": Array [
+                          Object {
+                            "apiGroups": Array [
+                              "extensions",
+                              "apps",
+                            ],
+                            "resources": Array [
+                              "deployments",
+                            ],
+                            "verbs": Array [
+                              "get",
+                              "list",
+                              "watch",
+                              "delete",
+                              "patch",
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  "remediationAction": "inform",
+                  "severity": "high",
+                },
+              },
+            },
+          ],
+          "remediationAction": "inform",
+        },
+        "status": Object {
+          "compliant": "NonCompliant",
+          "details": Array [
+            Object {
+              "compliant": "NonCompliant",
+              "history": Array [
+                Object {
+                  "eventName": "default.test-policy.16441ea19722fbf8",
+                  "lastTimestamp": "2020-11-03T22:04:06Z",
+                  "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+                },
+                Object {
+                  "eventName": "default.test-policy.164415c7210a573c",
+                  "lastTimestamp": "2020-11-03T19:21:52Z",
+                  "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+                },
+              ],
+              "templateMeta": Object {
+                "creationTimestamp": null,
+                "name": "test-policy-sample-role",
+              },
+            },
+          ],
         },
       },
-      "locations": Array [
-        Object {
-          "column": 11,
-          "line": 3,
-        },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\"
-  }
-}",
-      "path": Array [
-        "policiesInCluster",
-      ],
-    },
-  ],
+    ],
+  },
 }
 `;
 
 exports[`Policy Resolver Correctly Resolves Cluster List Query 1`] = `
 Object {
   "data": Object {
-    "clustersInPolicy": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 5,
-          "status": 404,
-          "statusCode": 404,
+    "clustersInPolicy": Array [
+      Object {
+        "metadata": Object {
+          "annotations": null,
+          "labels": Object {
+            "cloud": "Amazon",
+            "installer.name": "multiclusterhub",
+            "installer.namespace": "open-cluster-management",
+            "local-cluster": "true",
+            "name": "local-cluster",
+            "vendor": "OpenShift",
+          },
+          "name": "local-cluster",
+          "namespace": "local-cluster",
+          "selfLink": "/apis/internal.open-cluster-management.io/v1beta1/namespaces/local-cluster/managedclusterinfos/local-cluster",
+          "uid": "22ef5d6b-2bed-409b-b9cc-791397662d1f",
         },
+        "name": "local-cluster",
+        "policyListStatuses": Array [
+          Object {
+            "compliant": "NonCompliant",
+            "lastTimestamp": "2020-11-03T22:04:10Z",
+            "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+            "name": "test-policy-sample-role",
+          },
+        ],
+        "status": Object {
+          "consoleURL": "https://console-openshift-console.apps.hub.dev08.red-chesterfield.com",
+        },
+        "total": "1",
+        "violated": "1",
       },
-      "locations": Array [
-        Object {
-          "column": 11,
-          "line": 3,
+      Object {
+        "metadata": Object {
+          "annotations": null,
+          "labels": Object {
+            "cloud": "Amazon",
+            "environment": "dev",
+            "name": "cluster1",
+            "vendor": "OpenShift",
+          },
+          "name": "cluster1",
+          "namespace": "cluster1",
+          "selfLink": "/apis/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos/cluster1",
+          "uid": "e3031b12-fff1-4f2b-bfef-cb27f4804895",
         },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"GET\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/policy-namespace\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\"
-  }
-}",
-      "path": Array [
-        "clustersInPolicy",
-      ],
-    },
-  ],
+        "name": "cluster1",
+        "policyListStatuses": Array [
+          Object {
+            "compliant": "NonCompliant",
+            "lastTimestamp": "2020-11-03T22:04:06Z",
+            "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+            "name": "test-policy-sample-role",
+          },
+        ],
+        "status": Object {
+          "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
+        },
+        "total": "1",
+        "violated": "1",
+      },
+    ],
+  },
 }
 `;
 
@@ -80,7 +194,101 @@ exports[`Policy Resolver Correctly Resolves Create Policy Mutation 1`] = `
 Object {
   "data": Object {
     "createPolicy": Array [
-      Object {},
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1",
+        "kind": "Policy",
+        "metadata": Object {
+          "creationTimestamp": "2018-09-06T17:12:34Z",
+          "generation": 1,
+          "name": "test-policy",
+          "namespace": "default",
+          "resourceVersion": "4385854",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-policy",
+          "uid": "0c388331-b1f8-11e8-9a12-005056a0d11b",
+        },
+        "spec": Object {
+          "namespaces": Object {
+            "exclude": Array [
+              "kube*",
+            ],
+            "include": Array [
+              "default",
+            ],
+          },
+          "remediationAction": "enforce",
+          "role-templates": Array [
+            Object {
+              "apiVersion": "roletemplate.mcm.ibm.com/v1alpha1",
+              "complianceType": "musthave",
+              "kind": "RoleTemplate",
+              "metadata": Object {
+                "name": "test-role",
+                "namespace": "default",
+              },
+              "rules": Array [
+                Object {
+                  "PolicyRule": Object {
+                    "apiGroups": Array [
+                      "extensions",
+                      "apps",
+                    ],
+                    "resources": Array [
+                      "deployments",
+                    ],
+                    "verbs": Array [
+                      "get",
+                      "list",
+                      "watch",
+                      "delete",
+                    ],
+                  },
+                  "complianceType": "musthave",
+                },
+                Object {
+                  "PolicyRule": Object {
+                    "apiGroups": Array [
+                      "core",
+                    ],
+                    "resources": Array [
+                      "pods",
+                    ],
+                    "verbs": Array [
+                      "create",
+                      "update",
+                      "patch",
+                    ],
+                  },
+                  "complianceType": "mustnothave",
+                },
+                Object {
+                  "PolicyRule": Object {
+                    "apiGroups": Array [
+                      "core",
+                    ],
+                    "resources": Array [
+                      "secrets",
+                    ],
+                    "verbs": Array [
+                      "get",
+                      "watch",
+                      "list",
+                      "create",
+                      "delete",
+                      "update",
+                      "patch",
+                    ],
+                  },
+                },
+              ],
+              "selector": Object {
+                "matchLabels": Object {
+                  "cloud": "IBM",
+                },
+              },
+            },
+          ],
+        },
+      },
     ],
   },
 }
@@ -94,12 +302,79 @@ Object {
 }
 `;
 
+exports[`Policy Resolver Correctly Resolves Placement Binding Query 1`] = `
+Object {
+  "data": Object {
+    "placementBindings": Array [
+      Object {
+        "metadata": Object {
+          "name": "binding-test-policy",
+          "resourceVersion": "27707535",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/policy-namespace/placementbindings/binding-test-policy",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Placement Rule Query 1`] = `
+Object {
+  "data": Object {
+    "placementRules": Array [
+      Object {
+        "metadata": Object {
+          "name": "placement-test-policy",
+          "resourceVersion": "60",
+          "selfLink": "/apis/apps.open-cluster-management.io/v1/namespaces/policy-namespace/placementrules/placement-test-policy",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Policy Resolver Correctly Resolves Policy Status Query 1`] = `
+Object {
+  "data": Object {
+    "policyStatus": Array [
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1",
+        "cluster": "cluster1",
+        "clusterNamespace": "cluster1",
+        "consoleURL": "https://console-openshift-console.apps.cluster1.dev08.red-chesterfield.com",
+        "kind": "ConfigurationPolicy",
+        "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+        "policyName": "test-policy",
+        "policyNamespace": "default",
+        "status": "NonCompliant",
+        "templateName": "test-policy-sample-role",
+        "timestamp": "2020-11-03T22:04:06Z",
+      },
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1",
+        "cluster": "local-cluster",
+        "clusterNamespace": "local-cluster",
+        "consoleURL": "https://console-openshift-console.apps.hub.dev08.red-chesterfield.com",
+        "kind": "ConfigurationPolicy",
+        "message": "NonCompliant; violation - roles \`sample-role\` does not exist as specified",
+        "policyName": "test-policy",
+        "policyNamespace": "default",
+        "status": "NonCompliant",
+        "templateName": "test-policy-sample-role",
+        "timestamp": "2020-11-03T22:04:10Z",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Policy Resolver Correctly Resolves Single Policy Query 1`] = `
 Object {
   "data": Object {
     "policies": Array [
       Object {
-        "cluster": "calamari",
+        "cluster": "cluster1",
         "detail": Object {
           "exclude_namespace": Array [
             "*",
@@ -120,9 +395,9 @@ Object {
           },
           "creationTimestamp": "2020-05-17T22:56:03Z",
           "name": "default.case1-test-policy",
-          "namespace": "calamari",
+          "namespace": "cluster1",
           "resourceVersion": "27550274",
-          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+          "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/default.case1-test-policy",
           "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
         },
         "objectTemplates": Array [],
@@ -173,12 +448,12 @@ Object {
             "creationTimestamp": "2020-05-17T22:56:03Z",
             "generation": 1,
             "labels": Object {
-              "cluster-name": "calamari",
-              "cluster-namespace": "calamari",
+              "cluster-name": "cluster1",
+              "cluster-namespace": "cluster1",
               "root-policy": "default.case1-test-policy",
             },
             "name": "default.case1-test-policy",
-            "namespace": "calamari",
+            "namespace": "cluster1",
             "ownerReferences": Array [
               Object {
                 "apiVersion": "policy.open-cluster-management.io/v1",
@@ -190,7 +465,7 @@ Object {
               },
             ],
             "resourceVersion": "27550274",
-            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/calamari/policies/default.case1-test-policy",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/cluster1/policies/default.case1-test-policy",
             "uid": "fcaf4465-0530-47e5-bbd6-b19c3b28699a",
           },
           "spec": Object {

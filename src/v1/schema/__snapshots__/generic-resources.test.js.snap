@@ -171,41 +171,12 @@ Object {
 exports[`Generic Resources Resolver Correctly Resolves Update Resource Labels Mutation 1`] = `
 Object {
   "data": Object {
-    "updateResourceLabels": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 5,
-          "status": 404,
-          "statusCode": 404,
-        },
-      },
-      "locations": Array [
-        Object {
-          "column": 11,
-          "line": 3,
-        },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"PATCH\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/internal.open-cluster-management.io/v1beta1/namespaces/cluster1/managedclusterinfos/cluster1\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"content-type\\": \\"application/json-patch+json\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\",
-    \\"content-length\\": 138
-  },
-  \\"body\\": \\"[{\\\\\\"op\\\\\\":\\\\\\"replace\\\\\\",\\\\\\"value\\\\\\":[{\\\\\\"op\\\\\\":\\\\\\"replace\\\\\\",\\\\\\"path\\\\\\":\\\\\\"/metadata/labels\\\\\\",\\\\\\"value\\\\\\":{\\\\\\"cloud\\\\\\":\\\\\\"IBM\\\\\\",\\\\\\"datacenter\\\\\\":\\\\\\"toronto\\\\\\",\\\\\\"environment\\\\\\":\\\\\\"Dev\\\\\\"}}]}]\\"
-}",
-      "path": Array [
-        "updateResourceLabels",
-      ],
+    "updateResourceLabels": Object {
+      "cloud": "IBM",
+      "datacenter": "toronto",
+      "environment": "Dev",
     },
-  ],
+  },
 }
 `;
 

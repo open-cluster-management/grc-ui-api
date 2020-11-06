@@ -24,26 +24,42 @@ Object {
       },
       "clusterLabels": Array [
         Object {
+          "key": "cloud",
+          "value": "Amazon",
+        },
+        Object {
           "key": "environment",
-          "value": "Dev",
+          "value": "dev",
         },
         Object {
           "key": "name",
           "value": "cluster1",
         },
         Object {
-          "key": "region",
-          "value": "US",
+          "key": "vendor",
+          "value": "OpenShift",
+        },
+        Object {
+          "key": "installer.name",
+          "value": "multiclusterhub",
+        },
+        Object {
+          "key": "installer.namespace",
+          "value": "open-cluster-management",
+        },
+        Object {
+          "key": "local-cluster",
+          "value": "true",
         },
         Object {
           "key": "name",
-          "value": "clusterhub",
+          "value": "local-cluster",
         },
       ],
       "namespaces": Array [
         "default",
         "kube-system",
-        "mcm",
+        "policy-namespace",
       ],
       "policyNames": Array [
         "policy-certificatepolicy",

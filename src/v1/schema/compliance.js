@@ -31,6 +31,29 @@ type Compliance implements K8sObject {
   allTemplates: [MixedTemplate]
 }
 
+# Placement Schemas
+type PlacementPolicy implements K8sObject {
+  clusterLabels: JSON
+  metadata: Metadata
+  # The object's yaml definition in JSON format.
+  raw: JSON
+  status: JSON
+}
+
+type PlacementBinding implements K8sObject {
+  metadata: Metadata
+  # The object's yaml definition in JSON format.
+  raw: JSON
+  placementRef: Subject
+  subjects: [Subject]
+}
+
+type Subject {
+  apiGroup: String
+  kind: String
+  name: String
+}
+
 type CompliantStatus {
   clusterNamespace: String
   localCompliantStatus: String

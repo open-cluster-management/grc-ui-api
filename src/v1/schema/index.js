@@ -10,7 +10,6 @@
 import _ from 'lodash';
 import { gql } from 'apollo-server-express';
 import * as creation from './creation';
-import * as placements from './placement';
 import * as compliance from './compliance';
 import * as json from './json';
 import * as namespace from './namespace';
@@ -20,7 +19,6 @@ import * as query from './query';
 
 const modules = [
   creation,
-  placements,
   compliance,
   json,
   namespace,

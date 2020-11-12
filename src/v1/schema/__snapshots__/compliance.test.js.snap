@@ -83,7 +83,7 @@ Object {
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
-        "raw": "Just default it!",
+        "raw": Object {},
         "remediation": "",
       },
       Object {
@@ -1019,7 +1019,7 @@ Object {
         "placementBindings": Array [],
         "placementPolicies": Array [],
         "policyCompliant": "0/0",
-        "raw": "Just default it!",
+        "raw": Object {},
         "remediation": "",
       },
     ],

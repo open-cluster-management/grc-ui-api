@@ -12,7 +12,7 @@ import ApiGroup from '../lib/ApiGroup';
 
 export const mockComplianceListDefaultResponse = {
   apiVersion: 'policy.open-cluster-management.io/v1',
-  items: ['Just default it!'],
+  items: [{}],
   kind: 'PolicyList',
   metadata: {
     continue: '',

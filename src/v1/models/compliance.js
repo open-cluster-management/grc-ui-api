@@ -466,16 +466,19 @@ export default class ComplianceModel {
 
   async getPlacementRulesFromParent(parent = {}) {
     const placements = _.get(parent, 'status.placement', []);
-    const response = await this.kubeConnector.getResources(
-      (ns) => `${appAPIPrefix}/${ns}/placementrules`,
-      { kind: 'PlacementRule', namespaces: [parent.namespace] },
-    );
     const map = new Map();
-    if (response) {
-      response.forEach((item) => map.set(item.metadata.name, item));
-    }
     const placementPolicies = [];
-
+    if (parent.namespace) {
+      const response = await this.kubeConnector.getResources(
+        (ns) => `${appAPIPrefix}/${ns}/placementrules`,
+        { kind: 'PlacementRule', namespaces: [parent.namespace] },
+      );
+      if (response) {
+        response.forEach((item) => map.set(item.metadata.name, item));
+      }
+    } else {
+      logger.debug('Parent policy does not contain a namespace to get placementRules from:', parent);
+    }
     placements.forEach((placement) => {
       const rule = _.get(placement, 'placementRule', '');
       const pp = map.get(rule);
@@ -494,15 +497,19 @@ export default class ComplianceModel {
 
   async getPlacementBindingsFromParent(parent = {}) {
     const placements = _.get(parent, 'status.placement', []);
-    const response = await this.kubeConnector.getResources(
-      (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
-      { kind: 'PlacementBinding', namespaces: [parent.namespace] },
-    );
     const map = new Map();
-    if (response) {
-      response.forEach((item) => map.set(item.metadata.name, item));
-    }
     const placementBindings = [];
+    if (parent.namespace) {
+      const response = await this.kubeConnector.getResources(
+        (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
+        { kind: 'PlacementBinding', namespaces: [parent.namespace] },
+      );
+      if (response) {
+        response.forEach((item) => map.set(item.metadata.name, item));
+      }
+    } else {
+      logger.debug('Parent policy does not contain a namespace to get placementBindings from:', parent);
+    }
 
     placements.forEach((placement) => {
       const binding = _.get(placement, 'placementBinding', '');

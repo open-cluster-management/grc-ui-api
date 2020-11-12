@@ -15,7 +15,8 @@ import config from '../../../config';
 import ApiGroup from '../lib/ApiGroup';
 import getTypedNS from '../lib/getTypedNS';
 
-const policyAPIPrefix = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces`;
+const policyAPIPrefixBase = `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`;
+const policyAPIPrefix = `${policyAPIPrefixBase}/namespaces`;
 const appAPIPrefix = `/apis/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces`;
 const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
 const POLICY_FAILURE_STATUS = 'Failure';
@@ -182,28 +183,28 @@ export default class ComplianceModel {
     return policyResponse.items || [];
   }
 
+  // Get the entire policy list for all namespaces
+  async getPolicyListEntireCluster() {
+    const URL = `${policyAPIPrefixBase}/policies`;
+    const policyResponse = await this.kubeConnector.get(URL);
+    if (policyResponse.code || policyResponse.message) {
+      logger.debug(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
+      if (policyResponse.code === 403) {
+        throw new ApolloError('PermissionError', {
+          message: policyResponse.message,
+        });
+      }
+    }
+    return policyResponse.items;
+  }
+
   // general case for all policies, get the policy list on all non-clusters namespaces
   async getPolicyListAllNS(allNonClusterNS) {
-    const promises = allNonClusterNS.map(async (ns) => {
-      const URL = `${policyAPIPrefix}/${ns || config.get('complianceNamespace') || 'acm'}/policies`;
-      const policyResponse = await this.kubeConnector.get(URL);
-      if (policyResponse.code || policyResponse.message) {
-        logger.debug(`GRC ERROR ${policyResponse.code} - ${policyResponse.message} - URL : ${URL}`);
-        if (policyResponse.code === 403) {
-          throw new ApolloError('PermissionError', {
-            message: policyResponse.message,
-          });
-        }
-      }
-      return policyResponse.items;
-    });
-    // here need to await all async calls completed then combine their results together
-    const policyResponses = await Promise.all(promises);
-    // remove empty policies namespaces
-    // flatten 'array of array of object' to 'array of object'
-    const policies = _.flatten(policyResponses.filter((policyResponse) => policyResponse.length > 0));
-    // filter out policies with policy.open-cluster-management.io/root-policy label
-    return policies.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
+    // Get all policies in cluster
+    const allPolicies = await this.getPolicyListEntireCluster();
+    // Filter out policies in cluster namespaces
+    const policyResponses = allPolicies.filter((policy) => allNonClusterNS.includes(policy.metadata.namespace));
+    return policyResponses.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
   }
 
   async getCompliances(name, namespace) {
@@ -468,7 +469,7 @@ export default class ComplianceModel {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,
-      { kind: 'PlacementRule' },
+      { kind: 'PlacementRule', namespaces: [parent.namespace] },
     );
     const map = new Map();
     if (response) {
@@ -498,7 +499,7 @@ export default class ComplianceModel {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
-      { kind: 'PlacementBinding' },
+      { kind: 'PlacementBinding', namespaces: [parent.namespace] },
     );
     const map = new Map();
     if (response) {

@@ -2,49 +2,44 @@
 import _ from 'lodash';
 import ApiGroup from './ApiGroup';
 
-const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces`;
+const clusterAPIPrefix = `/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`;
 // nsType === 'allNonClusteNS' then get the list of all non-clusters namespaces
 // nsType === 'allClusterNS' then get the list of all clusters namespaces
 // here kubeConnector is passed as parameter so getTypedNS function can be reused anywhere
 export default async function getTypedNS(kubeConnector, nsType) {
+  const clusterNS = [];
   const clusterNSTemp = {};
   const clusterConsoleURLTemp = {};
-  const typeFlag = (nsType === 'allNonClusterNS');
+  const nonClusterFlag = (nsType === 'allNonClusterNS');
   // all possible namespaces
   const allNameSpace = kubeConnector.namespaces;
-  const nsPromises = allNameSpace.map(async (ns) => {
-    const checkClustersInfoURL = `${clusterAPIPrefix}/${ns}/managedclusterinfos`;
-    const [clustersInfos] = await Promise.all([kubeConnector.get(checkClustersInfoURL)]);
-    const clustersItems = _.get(clustersInfos, 'items');
-    if (Array.isArray(clustersItems) && clustersItems.length > 0) {
-      clustersItems.forEach((item) => {
-        if (item.metadata && item.metadata.name
-            && !Object.prototype.hasOwnProperty.call(clusterNSTemp, item.metadata.name)
-            && item.metadata.namespace) {
-          // current each cluster only have one namespace
-          clusterNSTemp[item.metadata.name] = item.metadata.namespace;
-          if (item.status && item.status.consoleURL) {
-            clusterConsoleURLTemp[item.metadata.name] = item.status.consoleURL;
-          }
-        }
-      });// if nsType === 'allClusterNS', put cluster namespaces into final result
-      return typeFlag ? null : ns;
-    }// if nsType === 'allNonClusteNS', put non cluster namespaces into final result
-    return typeFlag ? ns : null;
+  // Get all cluster information resources
+  const getClustersURL = `${clusterAPIPrefix}/managedclusterinfos`;
+  const allClusterInfo = await kubeConnector.get(getClustersURL);
+  // Collect cluster information
+  allClusterInfo.items.forEach((item) => {
+    if (item.metadata && item.metadata.name
+      && !Object.prototype.hasOwnProperty.call(clusterNSTemp, item.metadata.name)
+      && item.metadata.namespace) {
+      // currently each cluster only has one namespace
+      clusterNS.push(item.metadata.namespace);
+      clusterNSTemp[item.metadata.name] = item.metadata.namespace;
+      if (item.status && item.status.consoleURL) {
+        clusterConsoleURLTemp[item.metadata.name] = item.status.consoleURL;
+      }
+    }
   });
 
-  let nsResults = await Promise.all(nsPromises);
-  nsResults = nsResults.filter((ns) => ns !== null);
-
-  return typeFlag
+  // Return cluster information and list of requested set of namespaces
+  return nonClusterFlag
     ? {
       clusterNSTemp,
       clusterConsoleURLTemp,
-      allNonClusterNS: nsResults,
+      allNonClusterNS: _.difference(allNameSpace, clusterNS),
     }
     : {
       clusterNSTemp,
       clusterConsoleURLTemp,
-      allClusterNS: nsResults,
+      allClusterNS: clusterNS,
     };
 }

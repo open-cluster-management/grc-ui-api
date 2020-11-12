@@ -468,7 +468,7 @@ export default class ComplianceModel {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,
-      { kind: 'PlacementRule' },
+      { kind: 'PlacementRule', namespaces: [parent.namespace] },
     );
     const map = new Map();
     if (response) {
@@ -496,7 +496,7 @@ export default class ComplianceModel {
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       (ns) => `${policyAPIPrefix}/${ns}/placementbindings`,
-      { kind: 'PlacementBinding' },
+      { kind: 'PlacementBinding', namespaces: [parent.namespace] },
     );
     const map = new Map();
     if (response) {

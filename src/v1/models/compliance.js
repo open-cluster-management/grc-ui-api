@@ -465,7 +465,6 @@ export default class ComplianceModel {
   }
 
   async getPlacementRulesFromParent(parent = {}) {
-    console.log('#####', parent);
     const placements = _.get(parent, 'status.placement', []);
     const response = await this.kubeConnector.getResources(
       (ns) => `${appAPIPrefix}/${ns}/placementrules`,

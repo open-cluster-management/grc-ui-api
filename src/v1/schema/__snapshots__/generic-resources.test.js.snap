@@ -20,7 +20,7 @@ Object {
                     "name": "test-policy",
                     "namespace": "policy-namespace",
                     "resourceVersion": "1688805",
-                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
                     "uid": "fec7f06c-ae2d-11e9-8a41-005056a061f1",
                   },
                   "spec": Object {
@@ -69,7 +69,7 @@ Object {
                         "name": "test-policy",
                         "namespace": "policy-namespace",
                         "resourceVersion": "1688805",
-                        "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                        "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
                         "uid": "fec7f06c-ae2d-11e9-8a41-005056a061f1",
                       },
                       "spec": Object {
@@ -117,7 +117,7 @@ Object {
                     "name": "test-policy",
                     "namespace": "policy-namespace",
                     "resourceVersion": "1673886",
-                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+                    "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
                     "uid": "da8f9553-ae16-11e9-8a41-005056a061f1",
                   },
                   "spec": Object {
@@ -171,40 +171,69 @@ Object {
 exports[`Generic Resources Resolver Correctly Resolves Update Resource Mutation 1`] = `
 Object {
   "data": Object {
-    "updateResource": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-        "exception": Object {
-          "attempts": 5,
-          "status": 404,
-          "statusCode": 404,
+    "updateResource": Object {
+      "data": Object {
+        "updateResource": Object {
+          "apiVersion": "policy.open-cluster-management.io/v1",
+          "kind": "Policy",
+          "metadata": Object {
+            "annotations": Object {
+              "policy.open-cluster-management.io/categories": "hello",
+              "policy.open-cluster-management.io/controls": "",
+              "policy.open-cluster-management.io/standards": "",
+              "seed-generation": "1",
+            },
+            "creationTimestamp": "2019-07-24T13:27:59Z",
+            "finalizers": Array [
+              "propagator.finalizer.mcm.ibm.com",
+            ],
+            "generation": 6,
+            "name": "test-policy",
+            "namespace": "policy-namespace",
+            "resourceVersion": "1673886",
+            "selfLink": "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
+            "uid": "da8f9553-ae16-11e9-8a41-005056a061f1",
+          },
+          "spec": Object {
+            "complianceType": "musthave",
+            "namespaces": Object {
+              "exclude": Array [
+                "kube-*",
+              ],
+              "include": Array [
+                "default",
+              ],
+            },
+            "object-templates": Array [
+              Object {
+                "complianceType": "musthave",
+                "objectDefinition": Object {
+                  "apiVersion": "v1",
+                  "kind": "LimitRange",
+                  "metadata": Object {
+                    "name": "mem-limit-range",
+                  },
+                  "spec": Object {
+                    "limits": Array [
+                      Object {
+                        "default": Object {
+                          "memory": "512Mi",
+                        },
+                        "defaultRequest": Object {
+                          "memory": "256Mi",
+                        },
+                        "type": "Container",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+            "remediationAction": "inform",
+          },
         },
       },
-      "locations": Array [
-        Object {
-          "column": 11,
-          "line": 3,
-        },
-      ],
-      "message": "Nock: No match for request {
-  \\"method\\": \\"PUT\\",
-  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy\\",
-  \\"headers\\": {
-    \\"authorization\\": \\"localdev\\",
-    \\"content-type\\": \\"application/json\\",
-    \\"host\\": \\"0.0.0.0\\",
-    \\"accept\\": \\"application/json\\",
-    \\"content-length\\": 216
-  },
-  \\"body\\": \\"[{\\\\\\"apiVersion\\\\\\":\\\\\\"policy.open-cluster-management.io/v1\\\\\\",\\\\\\"kind\\\\\\":\\\\\\"Policy\\\\\\",\\\\\\"metadata\\\\\\":{\\\\\\"name\\\\\\":\\\\\\"test-policy\\\\\\",\\\\\\"finalizers\\\\\\":[\\\\\\"propagator.finalizer.mcm.ibm.com\\\\\\"],\\\\\\"generation\\\\\\":7,\\\\\\"namespace\\\\\\":\\\\\\"mcm\\\\\\",\\\\\\"resourceVersion\\\\\\":\\\\\\"1234567\\\\\\"}}]\\"
-}",
-      "path": Array [
-        "updateResource",
-      ],
     },
-  ],
+  },
 }
 `;

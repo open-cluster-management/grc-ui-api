@@ -14,7 +14,7 @@ import server, { GRAPHQL_PATH } from '../index';
 import {
   kubeGetMock, mockAPIResourceList,
   mockCreateResourcesResponse, mockUpdateResourcesResponse,
-  mockGetResourceLocallyResponse,
+  mockGetResourceLocallyResponse, mockGetResourceResponse,
 } from '../mocks/GenericResources';
 import ApiGroup from '../lib/ApiGroup';
 
@@ -28,9 +28,13 @@ describe('Generic Resources Resolver', () => {
       .reply(200, kubeGetMock);
     APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}`)
       .reply(200, mockAPIResourceList);
-    APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies`)
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`)
+      .reply(200, mockGetResourceResponse);
+    APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies`)
       .reply(200, mockCreateResourcesResponse);
-    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy`)
+    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`)
+      .reply(200, mockUpdateResourcesResponse);
+    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/policy-namespace/compliances/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
     APIServer.persist().get('/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c')
       .reply(200, mockGetResourceLocallyResponse);
@@ -57,7 +61,7 @@ describe('Generic Resources Resolver', () => {
                 kind: "Policy",
                 metadata: {
                   name: "test-policy",
-                  namespace: "mcm",
+                  namespace: "policy-namespace",
                   annotations: {
                   }
                 },
@@ -101,7 +105,7 @@ describe('Generic Resources Resolver', () => {
                   "propagator.finalizer.mcm.ibm.com"
                 ],
                 generation: 7,
-                namespace: "mcm",
+                namespace: "policy-namespace",
                 resourceVersion: "1234567"
               },
             }],
@@ -115,9 +119,9 @@ describe('Generic Resources Resolver', () => {
                   "new.finalizer.test.com"
                 ],
                 generation: 7,
-                namespace: "mcm",
+                namespace: "policy-namespace",
                 resourceVersion: "1234567",
-                selfLink: "/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/mcm/compliances/test-policy"
+                selfLink: "/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/policy-namespace/compliances/test-policy"
               },
             }],
           )
@@ -138,8 +142,8 @@ describe('Generic Resources Resolver', () => {
         mutation {
           updateResource(
             name: "test-policy", 
-            namespace: "mcm", 
-            selfLink: "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
+            namespace: "policy-namespace", 
+            selfLink: "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
             body: [{
               apiVersion: "policy.open-cluster-management.io/v1", 
               kind: "Policy", 
@@ -149,7 +153,7 @@ describe('Generic Resources Resolver', () => {
                   "propagator.finalizer.mcm.ibm.com"
                 ],
                 generation: 7,
-                namespace: "mcm",
+                namespace: "policy-namespace",
                 resourceVersion: "1234567"
               },
             }]

@@ -135,6 +135,66 @@ export const kubeGetMock = {
   ],
 };
 
+export const mockGetResourceResponse = {
+  apiVersion: 'policy.open-cluster-management.io/v1',
+  kind: 'Policy',
+  metadata: {
+    annotations: {
+      'policy.open-cluster-management.io/categories': 'hello',
+      'policy.open-cluster-management.io/controls': '',
+      'policy.open-cluster-management.io/standards': '',
+      'seed-generation': '1',
+    },
+    creationTimestamp: '2019-07-24T13:27:59Z',
+    finalizers: [
+      'propagator.finalizer.mcm.ibm.com',
+    ],
+    generation: 6,
+    name: 'test-policy',
+    namespace: 'policy-namespace',
+    resourceVersion: '1673886',
+    selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`,
+    uid: 'da8f9553-ae16-11e9-8a41-005056a061f1',
+  },
+  spec: {
+    complianceType: 'musthave',
+    namespaces: {
+      exclude: [
+        'kube-*',
+      ],
+      include: [
+        'default',
+      ],
+    },
+    'object-templates': [
+      {
+        complianceType: 'musthave',
+        objectDefinition: {
+          apiVersion: 'v1',
+          kind: 'LimitRange',
+          metadata: {
+            name: 'mem-limit-range',
+          },
+          spec: {
+            limits: [
+              {
+                default: {
+                  memory: '512Mi',
+                },
+                defaultRequest: {
+                  memory: '256Mi',
+                },
+                type: 'Container',
+              },
+            ],
+          },
+        },
+      },
+    ],
+    remediationAction: 'inform',
+  },
+};
+
 export const mockCreateResourcesResponse = {
   data: {
     createResources: {
@@ -149,7 +209,7 @@ export const mockCreateResourcesResponse = {
             name: 'test-policy',
             namespace: 'policy-namespace',
             resourceVersion: '1688805',
-            selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/test-policy`,
+            selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`,
             uid: 'fec7f06c-ae2d-11e9-8a41-005056a061f1',
           },
           spec: {
@@ -190,7 +250,7 @@ export const mockUpdateResourcesResponse = {
         name: 'test-policy',
         namespace: 'policy-namespace',
         resourceVersion: '1673886',
-        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/mcm/policies/test-policy`,
+        selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`,
         uid: 'da8f9553-ae16-11e9-8a41-005056a061f1',
       },
       spec: {

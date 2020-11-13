@@ -177,18 +177,6 @@ Object {
       },
       "locations": Array [
         Object {
-          "column": 13,
-          "line": 6,
-        },
-      ],
-      "message": "Unknown argument \\"resourceType\\" on field \\"Mutation.updateResource\\". Did you mean \\"resourcePath\\"?",
-    },
-    Object {
-      "extensions": Object {
-        "code": "GRAPHQL_VALIDATION_FAILED",
-      },
-      "locations": Array [
-        Object {
           "column": 11,
           "line": 3,
         },

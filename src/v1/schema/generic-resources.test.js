@@ -139,7 +139,6 @@ describe('Generic Resources Resolver', () => {
           updateResource(
             name: "test-policy", 
             namespace: "mcm", 
-            resourceType: "HCMCompliance", 
             body: [{
               apiVersion: "policy.open-cluster-management.io/v1", 
               kind: "Policy", 

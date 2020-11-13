@@ -162,33 +162,4 @@ describe('Generic Resources Resolver', () => {
         done();
       });
   }));
-
-  test('Correctly Resolves Update Resource Labels Mutation', () => new Promise((done) => {
-    supertest(server)
-      .post(GRAPHQL_PATH)
-      .send({
-        query: `
-        mutation {
-          updateResourceLabels(
-            name: "cluster1", 
-            namespace: "cluster1", 
-            resourceType: "HCMCluster", 
-            body: [{
-              op: "replace", 
-              path: "/metadata/labels",
-              value: {
-                  cloud: "IBM",
-                  datacenter: "toronto",
-                  environment: "Dev"
-                }
-              }]
-            )
-          }
-       `,
-      })
-      .end((err, res) => {
-        expect(JSON.parse(res.text)).toMatchSnapshot();
-        done();
-      });
-  }));
 });

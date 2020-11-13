@@ -52,10 +52,7 @@ type Mutation {
   createAndUpdateResources(toCreate: [JSON], toUpdate: [JSON]): JSON
 
   # Update Kubernetes resources
-  updateResource(resourceType: String!, namespace: String!, name: String!, body: JSON, selfLink: String, resourcePath: String): JSON
-
-  # Update Kubernetes resources labels
-  updateResourceLabels(resourceType: String!, namespace: String!, name: String!, body: JSON, selfLink: String, resourcePath: String): JSON
+  updateResource(namespace: String!, name: String!, body: JSON, selfLink: String!, resourcePath: String): JSON
 
   # Delete Kubernetes Compliance
   deleteCompliance(selfLink: String!, resources: JSON): String

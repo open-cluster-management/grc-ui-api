@@ -11,7 +11,6 @@
 import _ from 'lodash';
 import crypto from 'crypto';
 import KubeModel from './kube';
-import ApiGroup from '../lib/ApiGroup';
 import logger from '../lib/logger';
 
 const noResourcetypeStr = '##cannot find resourcetype##';
@@ -222,11 +221,8 @@ export default class GenericModel extends KubeModel {
         }
      }]
     */
-    let endpointURL = '';
-    let resourceName = '';
-    let response;
     const {
-      namespace, name, resourceType, body, resourcePath, selfLink,
+      body, resourcePath, selfLink,
     } = args;
     const requestBody = {
       body: [
@@ -237,20 +233,7 @@ export default class GenericModel extends KubeModel {
         },
       ],
     };
-    if (!selfLink) {
-      switch (resourceType) {
-        case 'HCMCluster':
-          endpointURL = `${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}`;
-          resourceName = 'managedclusterinfos';
-          break;
-        default:
-          throw new Error('ACM ERROR cannot find matched resource type');
-      }
-      response = await this.kubeConnector.patch(`/apis/${endpointURL}/namespaces/${namespace}/${resourceName}/${name}`, requestBody);
-    } else {
-      // will use selfLink by default
-      response = await this.kubeConnector.patch(`${selfLink}`, requestBody);
-    }
+    const response = await this.kubeConnector.patch(`${selfLink}`, requestBody);
     if (response && (response.code || response.message)) {
       throw new Error(`${response.code} - ${response.message}`);
     }
@@ -258,18 +241,11 @@ export default class GenericModel extends KubeModel {
   }
 
   async putResource(args) {
-    let response;
     const { body, selfLink } = args;
     const requestBody = {
       body,
     };
-
-    if (!selfLink) {
-      throw new Error('ACM ERROR cannot find matched resource type');
-    } else {
-      // will use selfLink by default
-      response = await this.kubeConnector.put(`${selfLink}`, requestBody);
-    }
+    const response = await this.kubeConnector.put(`${selfLink}`, requestBody);
     if (response && (response.code || response.message)) {
       throw new Error(`${response.code} - ${response.message}`);
     }

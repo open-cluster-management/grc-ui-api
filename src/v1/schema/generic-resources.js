@@ -14,8 +14,6 @@ export const resolver = {
     getResource: (parent, args, { genericModel }) => genericModel.getResource(args),
   },
   Mutation: {
-    // patch cluster labels
-    updateResourceLabels: (parent, args, { genericModel }) => genericModel.patchResource(args),
     updateResource: (parent, args, { genericModel }) => {
       if (args.resourcePath) {
         return genericModel.patchResource(args);

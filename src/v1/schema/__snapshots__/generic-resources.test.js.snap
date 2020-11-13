@@ -168,18 +168,6 @@ Object {
 }
 `;
 
-exports[`Generic Resources Resolver Correctly Resolves Update Resource Labels Mutation 1`] = `
-Object {
-  "data": Object {
-    "updateResourceLabels": Object {
-      "cloud": "IBM",
-      "datacenter": "toronto",
-      "environment": "Dev",
-    },
-  },
-}
-`;
-
 exports[`Generic Resources Resolver Correctly Resolves Update Resource Mutation 1`] = `
 Object {
   "data": Object {
@@ -189,6 +177,11 @@ Object {
     Object {
       "extensions": Object {
         "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "attempts": 5,
+          "status": 404,
+          "statusCode": 404,
+        },
       },
       "locations": Array [
         Object {
@@ -196,7 +189,18 @@ Object {
           "line": 3,
         },
       ],
-      "message": "ACM ERROR cannot find matched resource type",
+      "message": "Nock: No match for request {
+  \\"method\\": \\"PUT\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy\\",
+  \\"headers\\": {
+    \\"authorization\\": \\"localdev\\",
+    \\"content-type\\": \\"application/json\\",
+    \\"host\\": \\"0.0.0.0\\",
+    \\"accept\\": \\"application/json\\",
+    \\"content-length\\": 216
+  },
+  \\"body\\": \\"[{\\\\\\"apiVersion\\\\\\":\\\\\\"policy.open-cluster-management.io/v1\\\\\\",\\\\\\"kind\\\\\\":\\\\\\"Policy\\\\\\",\\\\\\"metadata\\\\\\":{\\\\\\"name\\\\\\":\\\\\\"test-policy\\\\\\",\\\\\\"finalizers\\\\\\":[\\\\\\"propagator.finalizer.mcm.ibm.com\\\\\\"],\\\\\\"generation\\\\\\":7,\\\\\\"namespace\\\\\\":\\\\\\"mcm\\\\\\",\\\\\\"resourceVersion\\\\\\":\\\\\\"1234567\\\\\\"}}]\\"
+}",
       "path": Array [
         "updateResource",
       ],

@@ -170,10 +170,18 @@ Object {
 
 exports[`Generic Resources Resolver Correctly Resolves Update Resource Mutation 1`] = `
 Object {
+  "data": Object {
+    "updateResource": null,
+  },
   "errors": Array [
     Object {
       "extensions": Object {
-        "code": "GRAPHQL_VALIDATION_FAILED",
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "attempts": 5,
+          "status": 404,
+          "statusCode": 404,
+        },
       },
       "locations": Array [
         Object {
@@ -181,7 +189,21 @@ Object {
           "line": 3,
         },
       ],
-      "message": "Field \\"updateResource\\" argument \\"selfLink\\" of type \\"String!\\" is required, but it was not provided.",
+      "message": "Nock: No match for request {
+  \\"method\\": \\"PUT\\",
+  \\"url\\": \\"http://0.0.0.0/kubernetes/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy\\",
+  \\"headers\\": {
+    \\"authorization\\": \\"localdev\\",
+    \\"content-type\\": \\"application/json\\",
+    \\"host\\": \\"0.0.0.0\\",
+    \\"accept\\": \\"application/json\\",
+    \\"content-length\\": 216
+  },
+  \\"body\\": \\"[{\\\\\\"apiVersion\\\\\\":\\\\\\"policy.open-cluster-management.io/v1\\\\\\",\\\\\\"kind\\\\\\":\\\\\\"Policy\\\\\\",\\\\\\"metadata\\\\\\":{\\\\\\"name\\\\\\":\\\\\\"test-policy\\\\\\",\\\\\\"finalizers\\\\\\":[\\\\\\"propagator.finalizer.mcm.ibm.com\\\\\\"],\\\\\\"generation\\\\\\":7,\\\\\\"namespace\\\\\\":\\\\\\"mcm\\\\\\",\\\\\\"resourceVersion\\\\\\":\\\\\\"1234567\\\\\\"}}]\\"
+}",
+      "path": Array [
+        "updateResource",
+      ],
     },
   ],
 }

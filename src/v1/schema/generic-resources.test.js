@@ -139,6 +139,7 @@ describe('Generic Resources Resolver', () => {
           updateResource(
             name: "test-policy", 
             namespace: "mcm", 
+            selfLink: "/apis/policy.open-cluster-management.io/v1/namespaces/mcm/policies/test-policy",
             body: [{
               apiVersion: "policy.open-cluster-management.io/v1", 
               kind: "Policy", 

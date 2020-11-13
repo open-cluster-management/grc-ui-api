@@ -9,6 +9,7 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 
 import KubeConnector from './kube';
+import logger from '../lib/logger';
 
 const asyncReturn = (
   value,
@@ -148,6 +149,94 @@ describe('KubeConnector', () => {
 
       expect(mockHttp.mock.calls[0]).toHaveLength(1);
       expect(mockHttp.mock.calls[0]).toMatchSnapshot();
+    });
+  });
+
+  describe('getResources', () => {
+    test('logs error on request error', async () => {
+      const mockHttp = jest.fn(() => {
+        throw new Error('HTTP request error.');
+      });
+      // Mock the log so we can check the output
+      const consoleOutput = [];
+      const errorLogSpy = jest.fn().mockImplementation((input) => consoleOutput.push(input));
+      logger.error = errorLogSpy;
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      const result = connector.getResources(() => ['/api/test']);
+      // A promise is returned, so we need to get the data out of it
+      return result.then((data) => {
+        expect(consoleOutput[0]).toEqual('ACM REQUEST ERROR - HTTP request error.');
+        expect(data).toEqual([]);
+      });
+    });
+
+    test('logs info on 404', async () => {
+      const mockHttp = jest.fn(() => asyncReturn({ body: { code: 404, message: 'Was not found.' } }, 404));
+      // Mock the log so we can check the output
+      const consoleOutput = [];
+      const infoLogSpy = jest.fn().mockImplementation((input) => consoleOutput.push(input));
+      logger.info = infoLogSpy;
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      const result = connector.getResources(() => ['/api/test']);
+      // A promise is returned, so we need to get the data out of it
+      return result.then((data) => {
+        expect(consoleOutput[0]).toEqual('ACM INFO 404 - Was not found.');
+        expect(data).toEqual([]);
+      });
+    });
+
+    test('logs error on non-404', async () => {
+      const mockHttp = jest.fn(() => asyncReturn({ body: { code: 403, message: 'There was an error.' } }, 403));
+      // Mock the log so we can check the output
+      const consoleOutput = [];
+      const errorLogSpy = jest.fn().mockImplementation((input) => consoleOutput.push(input));
+      logger.error = errorLogSpy;
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      const result = connector.getResources(() => ['/api/test']);
+      // A promise is returned, so we need to get the data out of it
+      return result.then((data) => {
+        expect(consoleOutput[0]).toEqual('ACM ERROR 403 - There was an error.');
+        expect(data).toEqual([]);
+      });
+    });
+
+    test('logs error if strings are returned', async () => {
+      const mockHttp = jest.fn(() => asyncReturn({ body: { items: ['This is a string.'] } }, 200));
+      // Mock the log so we can check the output
+      const consoleOutput = [];
+      const errorLogSpy = jest.fn().mockImplementation((input) => consoleOutput.push(input));
+      logger.error = errorLogSpy;
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      const result = connector.getResources(() => ['/api/test']);
+      // A promise is returned, so we need to get the data out of it
+      return result.then((data) => {
+        expect(consoleOutput[0]).toEqual('ACM RESPONSE ERROR, Expected Objects but Returned this: This is a string.');
+        expect(data).toEqual([]);
+      });
     });
   });
 

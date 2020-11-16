@@ -34,8 +34,6 @@ describe('Generic Resources Resolver', () => {
       .reply(200, mockCreateResourcesResponse);
     APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy`)
       .reply(200, mockUpdateResourcesResponse);
-    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/policy-namespace/compliances/test-policy`)
-      .reply(200, mockUpdateResourcesResponse);
     APIServer.persist().get('/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c')
       .reply(200, mockGetResourceLocallyResponse);
 
@@ -121,7 +119,7 @@ describe('Generic Resources Resolver', () => {
                 generation: 7,
                 namespace: "policy-namespace",
                 resourceVersion: "1234567",
-                selfLink: "/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/policy-namespace/compliances/test-policy"
+                selfLink: "/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/test-policy"
               },
             }],
           )

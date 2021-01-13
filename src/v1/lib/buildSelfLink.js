@@ -1,4 +1,4 @@
-/* Copyright (c) 201 Red Hat, Inc. */
+/* Copyright (c) 2021 Red Hat, Inc. */
 import _ from 'lodash';
 import logger from './logger';
 

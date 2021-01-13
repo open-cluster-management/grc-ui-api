@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BuildSelfLink should correctly build self link for PlacementBinding 1`] = `"/apis/apps.open-cluster-management.io/v1/namespaces/default/placementbindings/test-iam-policy-1610374358"`;
+
+exports[`BuildSelfLink should correctly build self link for PlacementRule 1`] = `"/apis/policy.open-cluster-management.io/v1/namespaces/default/placementrules/test-iam-policy-1610374358"`;
+
+exports[`BuildSelfLink should correctly build self link for policy 1`] = `"/apis/policy.open-cluster-management.io/v1/namespaces/default/policies/test-iam-policy-1610374358"`;
+
+exports[`BuildSelfLink should correctly get empty SelfLink 1`] = `""`;
+
+exports[`BuildSelfLink should correctly get testingSelfLink 1`] = `"testingSelfLink"`;

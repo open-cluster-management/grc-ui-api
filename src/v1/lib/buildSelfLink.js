@@ -2,15 +2,17 @@
 import _ from 'lodash';
 import logger from './logger';
 
-export default function buildSelfLinK(json) {
-  // logger.info(`json : ${JSON.stringify(json)}`);
-  const apiGroupVersion = _.get(json, 'apiVersion', 'raw.apiVersion');
-  const resourceKind = _.get(json, 'kind');
-  const namespace = _.get(json, 'metadata.namespace');
-  const name = _.get(json, 'metadata.name');
+export default function buildSelfLinK(data) {
+  // logger.info(`data : ${JSON.stringify(data)}`);
+  const apiGroupVersion = _.get(data, 'raw.apiVersion')
+    ? _.get(data, 'raw.apiVersion')
+    : _.get(data, 'apiVersion');
+  const resourceKind = _.get(data, 'kind', 'policy');
+  const namespace = _.get(data, 'metadata.namespace');
+  const name = _.get(data, 'metadata.name');
   let kind;
   let selfLink = '';
-  if (apiGroupVersion && namespace && resourceKind && name) {
+  if (apiGroupVersion && namespace && name) {
     switch (resourceKind.trim().toLowerCase()) {
       case 'placementrule':
         kind = 'placementrules';
@@ -18,13 +20,14 @@ export default function buildSelfLinK(json) {
       case 'placementbinding':
         kind = 'placementbindings';
         break;
+      case 'policy':
       default:
         kind = 'policies';
         break;
     }
     selfLink = `/apis/${apiGroupVersion}/namespaces/${namespace}/${kind}/${name}`;
-  } else if (_.get(json, 'metadata.selfLink')) {
-    selfLink = _.get(json, 'metadata.selfLink');
+  } else if (_.get(data, 'metadata.selfLink')) {
+    selfLink = _.get(data, 'metadata.selfLink');
   }
   logger.info(`buildSelfLinK : ${selfLink}`);
   return selfLink;

@@ -136,7 +136,7 @@ export default class GenericModel extends KubeModel {
     });
     const updateRes = [];
     const updateErr = [];
-    const ur = await Promise.all(toUpdate.map((json) => this.putResource({ body: json, selfLink: buildSelfLinK(json) })
+    const ur = await Promise.all(toUpdate.map((json) => this.putResource({ body: json })
       .then((res) => ({ response: res, kind: json.kind }))
       .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
     ur.forEach((item) => {
@@ -242,10 +242,11 @@ export default class GenericModel extends KubeModel {
   }
 
   async putResource(args) {
-    const { body, selfLink } = args;
+    const { body } = args;
     const requestBody = {
       body,
     };
+    const selfLink = buildSelfLinK(body);
     const response = await this.kubeConnector.put(`${selfLink}`, requestBody);
     if (response && (response.code || response.message)) {
       throw new Error(`${response.code} - ${response.message}`);

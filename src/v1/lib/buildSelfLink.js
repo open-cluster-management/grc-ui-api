@@ -2,8 +2,8 @@
 import _ from 'lodash';
 import logger from './logger';
 
-export default async function buildSelfLinK(json) {
-  logger.info(`json : ${JSON.stringify(json)}`);
+export default function buildSelfLinK(json) {
+  // logger.info(`json : ${JSON.stringify(json)}`);
   const apiGroupVersion = _.get(json, 'apiVersion', 'raw.apiVersion');
   const resourceKind = _.get(json, 'kind');
   const namespace = _.get(json, 'metadata.namespace');

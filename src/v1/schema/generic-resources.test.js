@@ -142,7 +142,7 @@ describe('Generic Resources Resolver', () => {
             name: "test-policy", 
             namespace: "policy-namespace", 
             selfLink: "/apis/policy.open-cluster-management.io/v1/namespaces/policy-namespace/policies/test-policy",
-            body: [{
+            body: {
               apiVersion: "policy.open-cluster-management.io/v1", 
               kind: "Policy", 
               metadata: {
@@ -154,7 +154,7 @@ describe('Generic Resources Resolver', () => {
                 namespace: "policy-namespace",
                 resourceVersion: "1234567"
               },
-            }]
+            }
           )
         }
       `,

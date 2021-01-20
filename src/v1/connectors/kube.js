@@ -23,8 +23,7 @@ export default class KubeConnector {
   constructor({
     token = 'Bearer localdev',
     httpLib = requestLib,
-    kubeApiEndpoint = process.env.API_SERVER_URL
-          || 'https://kubernetes.default.svc',
+    kubeApiEndpoint = process.env.API_SERVER_URL || 'https://kubernetes.default.svc',
     namespaces = isRequired('namespaces'),
     pollTimeout = config.get('hcmPollTimeout'),
     pollInterval = config.get('hcmPollInterval'),
@@ -43,20 +42,57 @@ export default class KubeConnector {
   }
 
   /**
+   * Helper to check the request is against kubeApiEndpoint
+   *
+   * @param {*} url - Request url
+   */
+  checkUrl(url) {
+    if (!url.startsWith(`${this.kubeApiEndpoint}/`)) {
+      throw new Error(`ACM ERROR: invalid url: ${url}`);
+    }
+    return url;
+  }
+
+  /**
+   * Helper to construct defaults for API request
+   *
+   * @param {*} method - the HTTP method
+   * @param {*} path - the request path
+   * @param {*} extra - an object with extra properties to be included
+   * @param {*} headers - an object with additional headers
+   */
+  getDefaults(method, path, extra = {}, headers = {}) {
+    return {
+      url: `${this.kubeApiEndpoint}${path}`,
+      method,
+      headers: {
+        Authorization: this.token,
+        ...headers,
+      },
+      ...extra,
+    };
+  }
+
+  /**
+   * Execute Kube API HTTP requests.
+   *
+   * @param {*} defaults
+   * @param {*} opts
+   */
+  doRequest(defaults, opts) {
+    const options = _.merge(defaults, opts);
+    this.checkUrl(options.url);
+    return this.http(options).then((res) => res.body);
+  }
+
+  /**
    * Excecute Kube API GET requests.
    *
    * @param {*} path - API path
    * @param {*} opts - HTTP request options
    */
   get(path = '', opts = {}) {
-    const options = _.merge({
-      url: `${this.kubeApiEndpoint}${path}`,
-      method: 'GET',
-      headers: {
-        Authorization: this.token,
-      },
-    }, opts);
-    return this.http(options).then((res) => res.body);
+    return this.doRequest(this.getDefaults('GET', path), opts);
   }
 
   /**
@@ -113,51 +149,25 @@ export default class KubeConnector {
   }
 
   post(path, jsonBody, opts = {}) {
-    const defaults = {
-      url: `${this.kubeApiEndpoint}${path}`,
-      method: 'POST',
-      headers: {
-        Authorization: this.token,
-      },
-      json: jsonBody,
-    };
-    return this.http(_.merge(defaults, opts)).then((res) => res.body);
+    return this.doRequest(this.getDefaults('POST', path, { json: jsonBody }), opts);
   }
 
   delete(path, jsonBody, opts = {}) {
-    const defaults = {
-      url: `${this.kubeApiEndpoint}${path}`,
-      method: 'DELETE',
-      headers: {
-        Authorization: this.token,
-      },
-      json: jsonBody,
-    };
-    return this.http(_.merge(defaults, opts)).then((res) => res.body);
+    return this.doRequest(this.getDefaults('DELETE', path, { json: jsonBody }), opts);
   }
 
   patch(path = '', opts = {}) {
-    const defaults = {
-      url: `${this.kubeApiEndpoint}${path}`,
-      method: 'PATCH',
-      headers: {
-        Authorization: this.token,
-        'Content-Type': 'application/json-patch+json',
-      },
+    const headers = {
+      'Content-Type': 'application/json-patch+json',
     };
-    return this.http(_.merge(defaults, opts)).then((res) => res.body);
+    return this.doRequest(this.getDefaults('PATCH', path, {}, headers), opts);
   }
 
   put(path = '', opts = {}) {
-    const defaults = {
-      url: `${this.kubeApiEndpoint}${path}`,
-      method: 'PUT',
-      headers: {
-        Authorization: this.token,
-        'Content-Type': 'application/json',
-      },
+    const headers = {
+      'Content-Type': 'application/json',
     };
-    return this.http(_.merge(defaults, opts)).then((res) => res.body);
+    return this.doRequest(this.getDefaults('PUT', path, {}, headers), opts);
   }
 
   timeout() {

@@ -150,6 +150,18 @@ describe('KubeConnector', () => {
       expect(mockHttp.mock.calls[0]).toHaveLength(1);
       expect(mockHttp.mock.calls[0]).toMatchSnapshot();
     });
+
+    test('handles malicious url', async () => {
+      const mockHttp = jest.fn(() => new Promise((res) => setTimeout(res, 200, { body: { test: 'value' } })));
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      return expect(() => connector.get('/api/test', { url: 'bad-site' })).toThrow('ACM ERROR: invalid url: bad-site');
+    });
   });
 
   describe('getResources', () => {
@@ -254,6 +266,18 @@ describe('KubeConnector', () => {
 
       expect(mockHttp.mock.calls[0]).toHaveLength(1);
       expect(mockHttp.mock.calls[0]).toMatchSnapshot();
+    });
+
+    test('handles malicious url', async () => {
+      const mockHttp = jest.fn(() => asyncReturn({ body: { test: 'value' } }, 200));
+
+      const connector = new KubeConnector({
+        kubeApiEndpoint: 'kubernetes',
+        httpLib: mockHttp,
+        namespaces: ['default'],
+      });
+
+      return expect(() => connector.post('/api/test', { body: 'test-value' }, { url: 'bad-site' })).toThrow('ACM ERROR: invalid url: bad-site');
     });
   });
 

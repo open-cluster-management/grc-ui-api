@@ -85,8 +85,6 @@ export const resolver = {
       // Namespaces
       const { allNonClusterNS } = await getTypedNS(complianceModel.kubeConnector, 'allNonClusterNS');
 
-      console.log('returning discovery!!!');
-      console.log(policiesByNamespace);
       return {
         clusterLabels,
         policyNames,

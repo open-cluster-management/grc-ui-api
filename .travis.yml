@@ -51,7 +51,7 @@ jobs:
         - make component/push
         - echo '"finished image push"' && echo -en 'travis_fold:end:script.build\\r'
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
-        - if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "master" ]; then 
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "main" ]; then 
             export COMPONENT_NEWTAG="latest-dev";
             make component/tag;
             export COMPONENT_VERSION="latest";

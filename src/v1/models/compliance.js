@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  ******************************************************************************* */
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 
 import { ApolloError } from 'apollo-errors';
 import _ from 'lodash';

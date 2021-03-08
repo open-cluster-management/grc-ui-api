@@ -32,7 +32,7 @@ stages:
   - unit-test
   - test-e2e
   - publish
- 
+
 before_script:
   - make init
 

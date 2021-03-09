@@ -9,7 +9,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
-
 import log4js from 'log4js';
 
 const logger = log4js.getLogger('server');

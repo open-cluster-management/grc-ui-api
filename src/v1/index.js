@@ -9,7 +9,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
-
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { isInstance as isApolloErrorInstance, formatError as formatApolloError } from 'apollo-errors';

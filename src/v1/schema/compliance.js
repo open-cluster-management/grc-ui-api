@@ -63,7 +63,6 @@ type CompliantStatus {
   compliant: String
 }
 
-
 type CompliancePolicies {
   name: String
   complianceName: String

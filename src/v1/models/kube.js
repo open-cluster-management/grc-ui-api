@@ -9,7 +9,6 @@
 /* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
-
 import { isRequired } from '../lib/utils';
 
 // Abstract class for models that communicate with the kubernetes api

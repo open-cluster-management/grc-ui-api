@@ -455,7 +455,7 @@ describe('Compliance Resolver', () => {
                   complianceName
                   complianceNamespace
                   valid
-                 remediation
+                  remediation
                   status
                   raw
                   metadata {

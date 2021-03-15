@@ -81,7 +81,7 @@ type CompliancePolicyDetail {
   message: String
   detail: JSON
   status: String
-  enforcement: String
+  remediation: String
   rules: [PolicyRules]
   roleTemplates: [PolicyTemplate]
   roleBindingTemplates: [PolicyTemplate]
@@ -96,7 +96,7 @@ type CompliancePolicy implements K8sObject {
   complianceNamespace: String
   compliant: String
   # Possible values are: enforce, inform
-  enforcement: String
+  remediation: String
   metadata: Metadata
   name: String @deprecated(reason: "Use metadata.name field.")
   rules: [PolicyRules]

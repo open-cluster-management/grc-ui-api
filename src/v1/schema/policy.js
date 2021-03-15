@@ -16,7 +16,7 @@ export const typeDef = gql`
 type Policy implements K8sObject {
   detail: PolicyDetail
   # Possible values are: enforce, inform
-  enforcement: String
+  remediation: String
   metadata: Metadata
   rules: [PolicyRules]
   # Possible values are: compliant, notcompliant, invalid
@@ -134,7 +134,7 @@ export const resolver = {
   },
   Policy: {
     detail: (parent) => ComplianceModel.resolvePolicyDetails(parent),
-    enforcement: (parent) => ComplianceModel.resolvePolicyEnforcement(parent),
+    remediation: (parent) => ComplianceModel.resolvePolicyRemediation(parent),
     roleTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'role-templates'),
     roleBindingTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'roleBinding-templates'),
     objectTemplates: (parent) => ComplianceModel.resolvePolicyTemplates(parent, 'object-templates'),

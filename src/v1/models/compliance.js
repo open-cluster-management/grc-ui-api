@@ -292,7 +292,7 @@ export default class ComplianceModel {
           }
           const policyObject = {
             compliant: this.resolveStatus(value),
-            enforcement: _.get(policy, specReActionStr, 'unknown'),
+            remediation: _.get(policy, specReActionStr, 'unknown'),
             message: _.get(value, 'message', '-'),
             rules: this.resolvePolicyRules(policy), // TODO: Use resolver.
             status: this.resolveStatus(value),
@@ -324,7 +324,7 @@ export default class ComplianceModel {
           complianceName: parent.metadata.name,
           complianceNamespace: parent.metadata.namespace,
           compliant: this.resolveStatus(value),
-          enforcement: _.get(policy, specReActionStr, 'unknown'),
+         remediation: _.get(policy, specReActionStr, 'unknown'),
           message: _.get(value, 'message', '-'),
           name: key,
           rules: this.resolvePolicyRules(policy), // TODO: Use resolver.
@@ -802,7 +802,7 @@ export default class ComplianceModel {
     };
   }
 
-  static resolvePolicyEnforcement(parent) {
+  static resolvePolicyRemediation(parent) {
     return _.get(parent, specReActionStr, 'unknown');
   }
 

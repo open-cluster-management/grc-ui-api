@@ -383,7 +383,7 @@ Object {
             "*",
           ],
         },
-        "enforcement": "inform",
+        "remediation": "inform",
         "message": "-",
         "metadata": Object {
           "annotations": Object {

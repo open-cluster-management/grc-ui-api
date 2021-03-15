@@ -151,7 +151,7 @@ describe('Policy Resolver', () => {
               uid
             }
             status
-            enforcement
+            remediation
             detail {
               exclude_namespace
               include_namespace

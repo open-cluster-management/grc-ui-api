@@ -31,6 +31,27 @@ function getApiGroupFromSelfLink(selfLink, kind) {
   return apiGroup;
 }
 
+function formatApi(api, resourceRule, trgtAPIGroups, singleNSAccess) {
+  // no matter if user want *, always return these special cases
+  if (Array.isArray(resourceRule.resources) && (trgtAPIGroups.has(api) || api === '*')) {
+    const resources = _.compact(resourceRule.resources);
+    const verbs = _.compact(resourceRule.verbs);
+    if (resourceRule.resources.length > 0) {
+      resources.forEach((resource) => {
+        // use the combined api + resource as the unique key
+        const mapKey = `${api}/${resource}`;
+        if (Object.prototype.hasOwnProperty.call(singleNSAccess.rules, mapKey)) {
+          // eslint-disable-next-line no-param-reassign
+          singleNSAccess.rules[mapKey] = _.union(singleNSAccess.rules[mapKey], verbs);
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          singleNSAccess.rules[mapKey] = verbs;
+        }
+      });
+    }
+  }
+}
+
 function userAccessFormatter(accessInfo, apiGrps, singleNS, rawDataFlag) {
   const trgtAPIGroups = new Set(apiGrps);
   const singleNSAccess = {
@@ -48,22 +69,7 @@ function userAccessFormatter(accessInfo, apiGrps, singleNS, rawDataFlag) {
         const apiGroups = _.compact(resourceRule.apiGroups);
         if (resourceRule.apiGroups.length > 0) {
           apiGroups.forEach((api) => {
-            // no matter if user want *, always return these special cases
-            if (Array.isArray(resourceRule.resources) && (trgtAPIGroups.has(api) || api === '*')) {
-              const resources = _.compact(resourceRule.resources);
-              const verbs = _.compact(resourceRule.verbs);
-              if (resourceRule.resources.length > 0) {
-                resources.forEach((resource) => {
-                  // use the combined api + resource as the unique key
-                  const mapKey = `${api}/${resource}`;
-                  if (Object.prototype.hasOwnProperty.call(singleNSAccess.rules, mapKey)) {
-                    singleNSAccess.rules[mapKey] = _.union(singleNSAccess.rules[mapKey], verbs);
-                  } else {
-                    singleNSAccess.rules[mapKey] = verbs;
-                  }
-                });
-              }
-            }
+            formatApi(api, resourceRule, trgtAPIGroups, singleNSAccess);
           });
         }
       }
@@ -338,7 +344,6 @@ export default class GenericModel extends KubeModel {
     ];
 
     const { namespaces } = this.kubeConnector;
-    const uaInfo = await getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, namespaces);
-    return uaInfo;
+    return getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, namespaces);
   }
 }

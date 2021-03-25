@@ -12,6 +12,7 @@ export const typeDef = '';
 export const resolver = {
   Query: {
     getResource: (parent, args, { genericModel }) => genericModel.getResource(args),
+    getUserAccessCredentials: (parent, args, { genericModel }) => genericModel.getUserAccessCredentials(args),
   },
   Mutation: {
     updateResource: (parent, args, { genericModel }) => {

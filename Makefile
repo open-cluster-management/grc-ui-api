@@ -6,6 +6,9 @@
 # Contributors:
 #  IBM Corporation - initial API and implementation
 ###############################################################################
+# Copyright (c) 2021 Red Hat, Inc.
+# Copyright Contributors to the Open Cluster Management project
+
 
 include build/Configfile
 

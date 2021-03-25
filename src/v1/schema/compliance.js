@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  ******************************************************************************* */
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 import { gql } from 'apollo-server-express';
 import ComplianceModel from '../models/compliance';
 
@@ -61,7 +63,6 @@ type CompliantStatus {
   compliant: String
 }
 
-
 type CompliancePolicies {
   name: String
   complianceName: String
@@ -80,7 +81,7 @@ type CompliancePolicyDetail {
   message: String
   detail: JSON
   status: String
-  enforcement: String
+  remediation: String
   rules: [PolicyRules]
   roleTemplates: [PolicyTemplate]
   roleBindingTemplates: [PolicyTemplate]
@@ -95,7 +96,7 @@ type CompliancePolicy implements K8sObject {
   complianceNamespace: String
   compliant: String
   # Possible values are: enforce, inform
-  enforcement: String
+  remediation: String
   metadata: Metadata
   name: String @deprecated(reason: "Use metadata.name field.")
   rules: [PolicyRules]

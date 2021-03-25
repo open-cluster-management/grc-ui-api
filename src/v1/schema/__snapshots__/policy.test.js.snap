@@ -383,7 +383,6 @@ Object {
             "*",
           ],
         },
-        "enforcement": "inform",
         "message": "-",
         "metadata": Object {
           "annotations": Object {
@@ -497,6 +496,7 @@ Object {
             "remediationAction": "inform",
           },
         },
+        "remediation": "inform",
         "roleBindingTemplates": Array [],
         "roleTemplates": Array [],
         "rules": Array [],

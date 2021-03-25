@@ -71,13 +71,11 @@ function userAccessFormatter(accessInfo, apiGrps, singleNS, rawDataFlag) {
   return singleNSAccess;
 }
 
-async function getUserAccess(kubeconnect, authorizationToken, singleNS, apiGroups, rawDataFlag, resolve, reject) {
-  console.log('----- getting user access ------');
+async function getUserAccess(kubeconnect, singleNS, apiGroups, rawDataFlag, resolve, reject) {
   const k8sAPI = '/apis/authorization.k8s.io/v1';
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: authorizationToken,
   };
   const options = {
     json: true,
@@ -90,23 +88,18 @@ async function getUserAccess(kubeconnect, authorizationToken, singleNS, apiGroup
     },
   };
   const response = await kubeconnect.doRequest(kubeconnect.getDefaults('POST', `${k8sAPI}/selfsubjectrulesreviews`, headers), options).catch((err) => reject(err));
-  console.log('---- got ua response -----');
-  console.log(response);
   const userAccess = userAccessFormatter(response, apiGroups, singleNS, rawDataFlag);
   return resolve(userAccess);
 }
 
-async function getUserAccessInfo(kubeconnect, authorizationToken, trgtAPIGroups, rawDataFlag, namespaces) {
-  console.log('----- in GET UA INFO ------');
+async function getUserAccessInfo(kubeconnect, trgtAPIGroups, rawDataFlag, namespaces) {
   const userAccessReq = [];
   namespaces.forEach((singleNS) => { // each element binds with one NS then parallelly call whole array
     userAccessReq.push(
-      new Promise((resolve, reject) => getUserAccess(kubeconnect, authorizationToken, singleNS, trgtAPIGroups, rawDataFlag, resolve, reject)),
+      new Promise((resolve, reject) => getUserAccess(kubeconnect, singleNS, trgtAPIGroups, rawDataFlag, resolve, reject)),
     );
   });
   const userAccessResult = await Promise.all(userAccessReq);
-  console.log('--- full ua result -----');
-  console.log(userAccessResult);
   if (userAccessResult) {
     return userAccessResult;
   }
@@ -337,18 +330,14 @@ export default class GenericModel extends KubeModel {
     return response;
   }
 
-  async getUserAccessCredentials(args) {
-    console.log('----- REACHED QUERY -------');
-    const { authorizationToken } = args;
+  async getUserAccessCredentials() {
     const targetAPIGroups = [
       'policy.open-cluster-management.io',
       'apps.open-cluster-management.io',
     ];
 
     const { namespaces } = this.kubeConnector;
-    const uaInfo = await getUserAccessInfo(this.kubeConnector, authorizationToken, targetAPIGroups, null, namespaces);
-    console.log('----- returning ua info -----');
-    console.log(uaInfo);
+    const uaInfo = await getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, namespaces);
     return uaInfo;
   }
 }

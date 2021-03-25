@@ -581,3 +581,414 @@ export const mockGetResourceLocallyResponse = {
     startTime: '2020-07-23T18:13:32Z',
   },
 };
+
+export const mockSSRRResponse = {
+  kind: 'SelfSubjectRulesReview',
+  apiVersion: 'authorization.k8s.io/v1',
+  metadata: {
+    creationTimestamp: null,
+  },
+  spec: {},
+  status: {
+    resourceRules: [
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          'authorization.k8s.io',
+        ],
+        resources: [
+          'selfsubjectaccessreviews',
+          'selfsubjectrulesreviews',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          '',
+          'build.openshift.io',
+        ],
+        resources: [
+          'builds/jenkinspipeline',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          'hive.openshift.io',
+        ],
+        resources: [
+          'clusterimagesets',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          '',
+          'build.openshift.io',
+        ],
+        resources: [
+          'builds/source',
+        ],
+      },
+      {
+        verbs: [
+          'impersonate',
+        ],
+        apiGroups: [
+          'authentication.k8s.io',
+        ],
+        resources: [
+          'userextras/scopes.authorization.openshift.io',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          'console.openshift.io',
+        ],
+        resources: [
+          'consolelinks',
+          'consolenotifications',
+          'consoleexternalloglinks',
+          'consoleclidownloads',
+          'consoleyamlsamples',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+        ],
+        apiGroups: [
+          'helm.openshift.io',
+        ],
+        resources: [
+          'helmchartrepositories',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          '',
+          'authorization.openshift.io',
+        ],
+        resources: [
+          'selfsubjectrulesreviews',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          'authorization.k8s.io',
+        ],
+        resources: [
+          'selfsubjectaccessreviews',
+        ],
+      },
+      {
+        verbs: [
+          '*',
+        ],
+        apiGroups: [
+          '*',
+        ],
+        resources: [
+          '*',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          '',
+          'build.openshift.io',
+        ],
+        resources: [
+          'builds/docker',
+          'builds/optimizeddocker',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          'snapshot.storage.k8s.io',
+        ],
+        resources: [
+          'volumesnapshotclasses',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        apiGroups: [
+          '',
+          'user.openshift.io',
+        ],
+        resources: [
+          'users',
+        ],
+        resourceNames: [
+          '~',
+        ],
+      },
+      {
+        verbs: [
+          'list',
+        ],
+        apiGroups: [
+          '',
+          'project.openshift.io',
+        ],
+        resources: [
+          'projectrequests',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+        ],
+        apiGroups: [
+          '',
+          'authorization.openshift.io',
+        ],
+        resources: [
+          'clusterroles',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          'rbac.authorization.k8s.io',
+        ],
+        resources: [
+          'clusterroles',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+        ],
+        apiGroups: [
+          'storage.k8s.io',
+        ],
+        resources: [
+          'storageclasses',
+        ],
+      },
+      {
+        verbs: [
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          '',
+          'project.openshift.io',
+        ],
+        resources: [
+          'projects',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          '',
+          'authorization.openshift.io',
+        ],
+        resources: [
+          'selfsubjectrulesreviews',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+        ],
+        apiGroups: [
+          'authorization.k8s.io',
+        ],
+        resources: [
+          'selfsubjectaccessreviews',
+        ],
+      },
+      {
+        verbs: [
+          'delete',
+        ],
+        apiGroups: [
+          '',
+          'oauth.openshift.io',
+        ],
+        resources: [
+          'oauthaccesstokens',
+          'oauthauthorizetokens',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+          'list',
+          'watch',
+        ],
+        apiGroups: [
+          'addon.open-cluster-management.io',
+        ],
+        resources: [
+          'clustermanagementaddons',
+        ],
+      },
+      {
+        verbs: [
+          'create',
+          'get',
+        ],
+        apiGroups: [
+          '',
+          'build.openshift.io',
+        ],
+        resources: [
+          'buildconfigs/webhooks',
+        ],
+      },
+    ],
+    nonResourceRules: [
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/healthz',
+          '/livez',
+          '/readyz',
+          '/version',
+          '/version/',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/api',
+          '/api/*',
+          '/apis',
+          '/apis/*',
+          '/healthz',
+          '/livez',
+          '/openapi',
+          '/openapi/*',
+          '/readyz',
+          '/version',
+          '/version/',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/version',
+          '/version/*',
+          '/api',
+          '/api/*',
+          '/apis',
+          '/apis/*',
+          '/oapi',
+          '/oapi/*',
+          '/openapi/v2',
+          '/swaggerapi',
+          '/swaggerapi/*',
+          '/swagger.json',
+          '/swagger-2.0.0.pb-v1',
+          '/osapi',
+          '/osapi/',
+          '/.well-known',
+          '/.well-known/*',
+          '/',
+        ],
+      },
+      {
+        verbs: [
+          '*',
+        ],
+        nonResourceURLs: [
+          '*',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/healthz',
+          '/healthz/',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/version',
+          '/version/*',
+          '/api',
+          '/api/*',
+          '/apis',
+          '/apis/*',
+          '/oapi',
+          '/oapi/*',
+          '/openapi/v2',
+          '/swaggerapi',
+          '/swaggerapi/*',
+          '/swagger.json',
+          '/swagger-2.0.0.pb-v1',
+          '/osapi',
+          '/osapi/',
+          '/.well-known',
+          '/.well-known/*',
+          '/',
+        ],
+      },
+      {
+        verbs: [
+          'get',
+        ],
+        nonResourceURLs: [
+          '/.well-known',
+          '/.well-known/*',
+        ],
+      },
+    ],
+    incomplete: false,
+  },
+};

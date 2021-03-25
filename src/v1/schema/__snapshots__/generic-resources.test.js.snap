@@ -237,3 +237,52 @@ Object {
   },
 }
 `;
+
+exports[`Generic Resources Resolver Correctly Resolves User Access 1`] = `
+Object {
+  "data": Object {
+    "getUserAccessCredentials": Array [
+      Object {
+        "namespace": "default",
+        "rules": Object {
+          "*/*": Array [
+            "*",
+          ],
+        },
+      },
+      Object {
+        "namespace": "kube-system",
+        "rules": Object {
+          "*/*": Array [
+            "*",
+          ],
+        },
+      },
+      Object {
+        "namespace": "policy-namespace",
+        "rules": Object {
+          "*/*": Array [
+            "*",
+          ],
+        },
+      },
+      Object {
+        "namespace": "cluster1",
+        "rules": Object {
+          "*/*": Array [
+            "*",
+          ],
+        },
+      },
+      Object {
+        "namespace": "local-cluster",
+        "rules": Object {
+          "*/*": Array [
+            "*",
+          ],
+        },
+      },
+    ],
+  },
+}
+`;

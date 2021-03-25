@@ -16,6 +16,7 @@ import {
   kubeGetMock, mockAPIResourceList,
   mockCreateResourcesResponse, mockUpdateResourcesResponse,
   mockGetResourceLocallyResponse, mockGetResourceResponse,
+  mockSSRRResponse,
 } from '../mocks/GenericResources';
 import ApiGroup from '../lib/ApiGroup';
 
@@ -37,6 +38,8 @@ describe('Generic Resources Resolver', () => {
       .reply(200, mockUpdateResourcesResponse);
     APIServer.persist().get('/api/v1/namespaces/open-cluster-management/pods/grc-f2e12-grcui-6b756dfc76-4fk7c')
       .reply(200, mockGetResourceLocallyResponse);
+    APIServer.persist().post('/apis/authorization.k8s.io/v1/selfsubjectrulesreviews')
+      .reply(200, mockSSRRResponse);
 
     // PATCH managedclusterinfos
     APIServer.patch(`/apis/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/cluster1/managedclusterinfos/cluster1`)
@@ -157,6 +160,21 @@ describe('Generic Resources Resolver', () => {
               },
             }
           )
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves User Access', () => new Promise((done) => {
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+          getUserAccessCredentials
         }
       `,
       })

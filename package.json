@@ -27,8 +27,8 @@
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
-    "node": "10.15.3",
-    "npm": "6.4.1"
+    "node": ">=10.15.3",
+    "npm": ">=6.4.1"
   },
   "dependencies": {
     "@babel/cli": "^7.11.6",
@@ -51,7 +51,7 @@
     "log4js": "^6.3.0",
     "lru-cache": "^5.1.1",
     "morgan-body": "^2.5.2",
-    "nconf": "^0.10.0",
+    "nconf": "^0.11.2",
     "nocache": "^2.1.0",
     "requestretry": "^4.1.1",
     "security-middleware": "github:open-cluster-management/security-middleware#1.0.0"

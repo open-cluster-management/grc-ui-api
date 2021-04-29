@@ -16,7 +16,7 @@ import {
   kubeGetMock, mockAPIResourceList,
   mockCreateResourcesResponse, mockUpdateResourcesResponse,
   mockGetResourceLocallyResponse, mockGetResourceResponse,
-  mockSSRRResponse,
+  mockSSRRResponse, mockAnsibleJobTemplatesResponse,
 } from '../mocks/GenericResources';
 import ApiGroup from '../lib/ApiGroup';
 
@@ -175,6 +175,27 @@ describe('Generic Resources Resolver', () => {
       .send({
         query: `{
           getUserAccessCredentials
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly Resolves Ansible Job Templates', () => new Promise((done) => {
+    nock('https://ansible-tower.com').persist().get('/api/v2/job_templates')
+      .reply(200, mockAnsibleJobTemplatesResponse);
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+          ansibleJobTemplates(towerURL:"https://ansible-tower.com", token:"mocktoken"){
+            name
+            description
+            extra_vars
+          }
         }
       `,
       })

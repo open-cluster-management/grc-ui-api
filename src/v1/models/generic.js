@@ -346,4 +346,29 @@ export default class GenericModel extends KubeModel {
     const { namespaces } = this.kubeConnector;
     return getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, namespaces);
   }
+
+  async getAnsibleJobTemplates(args) {
+    const options = {
+      url: `${args.towerURL}/api/v2/job_templates`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${args.token}`,
+      },
+    };
+
+    const response = await this.kubeConnector.http(options)
+      .then((res) => res.body)
+      .catch((err) => {
+        logger.error(err);
+        throw err;
+      });
+    if (!response.results) {
+      throw new Error('Failed to retrieve ansible job');
+    }
+    return response.results.map((result) => ({
+      name: result.name,
+      description: result.description,
+      extra_vars: result.extra_vars,
+    }));
+  }
 }

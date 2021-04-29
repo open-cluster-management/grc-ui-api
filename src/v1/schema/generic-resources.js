@@ -15,6 +15,7 @@ export const resolver = {
   Query: {
     getResource: (parent, args, { genericModel }) => genericModel.getResource(args),
     getUserAccessCredentials: (parent, args, { genericModel }) => genericModel.getUserAccessCredentials(args),
+    ansibleJobTemplates: (parent, args, { genericModel }) => genericModel.getAnsibleJobTemplates(args),
   },
   Mutation: {
     updateResource: (parent, args, { genericModel }) => {

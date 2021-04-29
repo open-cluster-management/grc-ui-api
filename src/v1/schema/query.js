@@ -30,6 +30,9 @@ type Query {
   # Get any kubernetes resource from any managed cluster.
   getResource(kind: String, name: String, namespace: String, cluster: String, selfLink: String, updateInterval: Int, deleteAfterUse: Boolean): JSON
   getUserAccessCredentials: JSON
+
+  # Get Ansible Tower Job Templates
+  ansibleJobTemplates(towerURL: String!, token: String!): [AnsibleJobTemplate]
 }
 
 type Mutation {
@@ -77,6 +80,13 @@ type Metadata {
   selfLink: String
   status: String
   uid: String
+}
+
+# define ansible job template
+type AnsibleJobTemplate {
+  name: String
+  description: String
+  extra_vars: String
 }
 `;
 

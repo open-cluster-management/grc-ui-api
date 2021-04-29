@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Generic Resources Resolver Correctly Resolves Ansible Job Templates 1`] = `
+Object {
+  "data": Object {
+    "ansibleJobTemplates": Array [
+      Object {
+        "description": "",
+        "extra_vars": "",
+        "name": "Demo Job Template",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Generic Resources Resolver Correctly Resolves Create Resources Mutation 1`] = `
 Object {
   "data": Object {

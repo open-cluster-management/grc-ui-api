@@ -18,6 +18,7 @@ import * as namespace from './namespace';
 import * as policy from './policy';
 import * as genericResources from './generic-resources';
 import * as query from './query';
+import * as ansible from './ansible';
 
 const modules = [
   creation,
@@ -27,6 +28,7 @@ const modules = [
   policy,
   query,
   genericResources,
+  ansible,
 ];
 
 const mainDefs = [gql`

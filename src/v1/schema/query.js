@@ -81,13 +81,6 @@ type Metadata {
   status: String
   uid: String
 }
-
-# define ansible job template
-type AnsibleJobTemplate {
-  name: String
-  description: String
-  extra_vars: String
-}
 `;
 
 export const resolver = {

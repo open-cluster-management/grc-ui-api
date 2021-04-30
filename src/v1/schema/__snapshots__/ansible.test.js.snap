@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ansible Automation Resolver Correctly Resolves Ansible Job Templates 1`] = `
+Object {
+  "data": Object {
+    "ansibleJobTemplates": Array [
+      Object {
+        "description": "",
+        "extra_vars": "",
+        "name": "Demo Job Template",
+      },
+    ],
+  },
+}
+`;

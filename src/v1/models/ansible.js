@@ -1,4 +1,4 @@
-/* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
 import KubeModel from './kube';
@@ -53,7 +53,7 @@ export default class AnsibleModel extends KubeModel {
         throw new Error(`Failed to retrieve copied secrets from ${targetNamespace}`);
       } else {
         if (secret.items.length === 0) {
-          // no secret need to copy and return
+          // no secret in targetNamespace, need to copy rootSecret and return the name
           const rootSecret = await this.kubeConnector.get(`/api/v1/namespaces/${namespace}/secrets/${name}`);
           rootSecret.metadata.labels = {
             'cluster.open-cluster-management.io/copiedFromNamespace': namespace,

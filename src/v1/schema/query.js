@@ -32,7 +32,9 @@ type Query {
   getUserAccessCredentials: JSON
 
   # Get Ansible Tower Job Templates
-  ansibleJobTemplates(towerURL: String!, token: String!): [AnsibleJobTemplate]
+  ansibleJobTemplates(host: String!, token: String!): [AnsibleJobTemplate]
+  # Get Ansible Credentials
+  ansibleCredentials: [AnsibleCredential]
 }
 
 type Mutation {

@@ -13,3 +13,42 @@ Object {
   },
 }
 `;
+
+exports[`Ansible Automation Resolver Correctly resoves ansible credentials 1`] = `
+Object {
+  "data": Object {
+    "ansibleCredentials": Array [
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "default",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "kube-system",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "policy-namespace",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "cluster1",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "local-cluster",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+    ],
+  },
+}
+`;

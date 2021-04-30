@@ -1,9 +1,26 @@
 /* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
-export const mockAnsibleSecretsResponse = {
-
-};
+export const mockAnsibleSecretsResponse = (ns) => ({
+  metadata: {
+    name: 'toweraccess',
+    namespace: ns,
+    selfLink: `/api/v1/namespaces/${ns}/secrets/toweraccess`,
+    uid: 'e4488d2b-cc28-4b81-bbd5-71472966dbcd',
+    resourceVersion: '157909',
+    creationTimestamp: '2021-04-30T14:41:02Z',
+    labels: {
+      'cluster.open-cluster-management.io/cloudconnection': '',
+      'cluster.open-cluster-management.io/provider': 'ans',
+    },
+  },
+  data: {
+    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
+    host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+    token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+  },
+  type: 'Opaque',
+});
 
 export const mockAnsibleJobTemplatesResponse = {
   count: 1,

@@ -10,10 +10,17 @@ type AnsibleJobTemplate {
   description: String
   extra_vars: String
 }
+type AnsibleCredential {
+  name: String
+  namespace: String
+  host: String
+  token: String
+}
 `;
 
 export const resolver = {
   Query: {
-    ansibleJobTemplates: (parent, args, { genericModel }) => genericModel.getAnsibleJobTemplates(args),
+    ansibleJobTemplates: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleJobTemplates(args),
+    ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
   },
 };

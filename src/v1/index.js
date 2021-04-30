@@ -24,6 +24,7 @@ import KubeConnector from './connectors/kube';
 import ClusterModel from './models/cluster';
 import GenericModel from './models/generic';
 import ComplianceModel from './models/compliance';
+import AnsibleModel from './models/ansible';
 import schema from './schema';
 import config from '../../config';
 
@@ -62,6 +63,7 @@ const apolloServer = new ApolloServer({
       clusterModel: new ClusterModel({ kubeConnector }),
       genericModel: new GenericModel({ kubeConnector }),
       complianceModel: new ComplianceModel({ kubeConnector }),
+      ansibleModel: new AnsibleModel({ kubeConnector }),
     };
   },
 });

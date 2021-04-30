@@ -32,7 +32,7 @@ export default class AnsibleModel extends KubeModel {
 
   async getAnsibleCredentials() {
     const [ansibleCredentials] = await Promise.all([
-      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io%2Fprovider%3Dans`),
+      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/provider=ans`),
     ]);
     return ansibleCredentials.map((ans) => ({
       name: ans.metadata.name,
@@ -40,5 +40,41 @@ export default class AnsibleModel extends KubeModel {
       host: Buffer.from(ans.data.host || '', 'base64').toString('ascii'),
       token: ans.data.token,
     }));
+  }
+
+  async copyAnsibleSecret(args) {
+    const { name, namespace, targetNamespace } = args;
+    if (namespace !== targetNamespace) {
+      // check if credentianl has been already created
+      const secret = await this.kubeConnector.get(
+        `/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
+      );
+      if (!secret.items) {
+        throw new Error(`Failed to retrieve copied secrets from ${targetNamespace}`);
+      } else {
+        if (secret.items.length === 0) {
+          // no secret need to copy and return
+          const rootSecret = await this.kubeConnector.get(`/api/v1/namespaces/${namespace}/secrets/${name}`);
+          rootSecret.metadata.labels = {
+            'cluster.open-cluster-management.io/copiedFromNamespace': namespace,
+            'cluster.open-cluster-management.io/copiedFromSecretName': name,
+          };
+          rootSecret.metadata.namespace = targetNamespace;
+          rootSecret.metadata.name = `${namespace}.${name}`;
+          delete rootSecret.metadata.resourceVersion;
+          const result = await this.kubeConnector.post(`/api/v1/namespaces/${targetNamespace}/secrets`, rootSecret);
+          if (!result.metadata.name) {
+            logger.error(result);
+            throw new Error(`Failed to copy secret to ${targetNamespace}`);
+          }
+          return { name: result.metadata.name };
+        }
+        // there is a secret, return it
+        return { name: secret.items[0].metadata.name };
+      }
+    } else {
+      // Ansible credential already exists in the same namespace, use it directly
+      return { name };
+    }
   }
 }

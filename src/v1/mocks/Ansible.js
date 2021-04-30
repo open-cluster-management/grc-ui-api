@@ -181,3 +181,80 @@ export const mockAnsibleJobTemplatesResponse = {
     },
   ],
 };
+
+export const mockSecretExistsInTargetNamespaceResponse = {
+  items: [
+    {
+      kind: 'Secret',
+      apiVersion: 'v1',
+      metadata: {
+        name: 'existing_toweraccess',
+        namespace: 'kube-system',
+        selfLink: '/api/v1/namespaces/kube-system/secrets/existing_toweraccess',
+        uid: 'e573a6c0-d15d-4774-a65e-0c04afaf8e34',
+        resourceVersion: '352981',
+        creationTimestamp: '2021-04-30T17:57:44Z',
+        labels: {
+          'cluster.open-cluster-management.io/copiedFromNamespace': 'default',
+          'cluster.open-cluster-management.io/copiedFromSecretName': 'toweraccess',
+        },
+      },
+      data: {
+        'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
+        host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+        token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+      },
+      type: 'Opaque',
+    },
+  ],
+};
+
+export const mockSecretNotExistsInTargetNamespaceResponse = {
+  items: [],
+};
+
+export const mockRootAnsibleSecetResponse = {
+  kind: 'Secret',
+  apiVersion: 'v1',
+  metadata: {
+    name: 'toweraccess',
+    namespace: 'default',
+    selfLink: '/api/v1/namespaces/default/secrets/toweraccess',
+    uid: 'e573a6c0-d15d-4774-a65e-0c04afaf8e34',
+    resourceVersion: '352981',
+    creationTimestamp: '2021-04-30T17:57:44Z',
+    labels: {
+      'cluster.open-cluster-management.io/cloudconnection': '',
+      'cluster.open-cluster-management.io/provider': 'ans',
+    },
+  },
+  data: {
+    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
+    host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+    token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+  },
+  type: 'Opaque',
+};
+
+export const mockCopiedSecetResponse = {
+  kind: 'Secret',
+  apiVersion: 'v1',
+  metadata: {
+    name: 'default.toweraccess',
+    namespace: 'default',
+    selfLink: '/api/v1/namespaces/kube-system/secrets/default.toweraccess',
+    uid: 'e573a6c0-d15d-4774-a65e-0c04afaf8e34',
+    resourceVersion: '352981',
+    creationTimestamp: '2021-04-30T17:57:44Z',
+    labels: {
+      'cluster.open-cluster-management.io/cloudconnection': '',
+      'cluster.open-cluster-management.io/provider': 'ans',
+    },
+  },
+  data: {
+    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
+    host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+    token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+  },
+  type: 'Opaque',
+};

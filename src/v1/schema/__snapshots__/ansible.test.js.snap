@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Ansible Automation Resolver Correctly Resolves Ansible Job Templates 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves Ansible Job Templates 1`] = `
 Object {
   "data": Object {
     "ansibleJobTemplates": Array [
@@ -49,6 +49,36 @@ Object {
         "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
       },
     ],
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Should copy and return secret name as credential needs to be copied 1`] = `
+Object {
+  "data": Object {
+    "copyAnsibleSecret": Object {
+      "name": "default.toweraccess",
+    },
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Should return existing secret name as the copied secret already exists 1`] = `
+Object {
+  "data": Object {
+    "copyAnsibleSecret": Object {
+      "name": "existing_toweraccess",
+    },
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Should return root ansible credential name as the targeNamespace is same as credential namespace 1`] = `
+Object {
+  "data": Object {
+    "copyAnsibleSecret": Object {
+      "name": "toweraccess",
+    },
   },
 }
 `;

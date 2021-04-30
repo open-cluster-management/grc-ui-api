@@ -35,6 +35,8 @@ type Query {
   ansibleJobTemplates(host: String!, token: String!): [AnsibleJobTemplate]
   # Get Ansible Credentials
   ansibleCredentials: [AnsibleCredential]
+  # Copy and return secret name for given Ansible credential
+  copyAnsibleSecret(name: String!, namespace: String!, targetNamespace: String!): AnsibleSecretName
 }
 
 type Mutation {

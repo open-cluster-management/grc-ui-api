@@ -16,11 +16,16 @@ type AnsibleCredential {
   host: String
   token: String
 }
+
+type AnsibleSecretName {
+  name: String
+}
 `;
 
 export const resolver = {
   Query: {
     ansibleJobTemplates: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleJobTemplates(args),
     ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
+    copyAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.copyAnsibleSecret(args),
   },
 };

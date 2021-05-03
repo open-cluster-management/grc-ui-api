@@ -48,7 +48,8 @@ export default class AnsibleModel extends KubeModel {
     if (namespace !== targetNamespace) {
       // check if credentianl has been already created
       const secret = await this.kubeConnector.get(
-        `/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
+        `/api/v1/namespaces/${targetNamespace}/secrets?`
+        + `labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
       );
       if (!secret.items) {
         throw new Error(`Failed to retrieve copied secrets from ${targetNamespace}`);

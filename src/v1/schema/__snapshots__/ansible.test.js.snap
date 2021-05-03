@@ -63,6 +63,23 @@ Object {
 }
 `;
 
+exports[`Ansible Automation Resolver Should correctly resolve ansible automation history 1`] = `
+Object {
+  "data": Object {
+    "ansibleAutomationHistories": Array [
+      Object {
+        "finished": "2021-05-03T17:32:06.357295Z",
+        "job": "default/policy-role-once-7fg9p",
+        "name": "policy-role-once-7fg9p",
+        "namespace": "default",
+        "started": "2021-05-03T17:31:59.779211Z",
+        "status": "successful",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Ansible Automation Resolver Should return existing secret name as the copied secret already exists 1`] = `
 Object {
   "data": Object {

@@ -1,6 +1,7 @@
 /* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 
+import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
 
@@ -76,5 +77,31 @@ export default class AnsibleModel extends KubeModel {
       // Ansible credential already exists in the same namespace, use it directly
       return { name };
     }
+  }
+
+  async ansibleAutomationHistories(args) {
+    const { name, namespace } = args;
+    const ansibleJobs = await this.kubeConnector.get(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`);
+    if (!ansibleJobs.items) {
+      throw new Error('Failed to retrieve ansiblejobs');
+    }
+    const automation = ansibleJobs.items.filter((ans) => {
+      const { metadata: { ownerReferences } } = ans;
+      if (!ownerReferences) {
+        return false;
+      }
+      const matched = ownerReferences.find(
+        (or) => or.apiVersion === 'policy.open-cluster-management.io/v1beta1' && or.kind === 'PolicyAutomation' && or.name === name,
+      );
+      return matched !== undefined;
+    });
+    return automation.map((au) => ({
+      name: au.metadata.name,
+      namespace: au.metadata.namespace,
+      status: _.get(au, 'status.ansibleJobResult.status'),
+      started: _.get(au, 'status.ansibleJobResult.started'),
+      finished: _.get(au, 'status.ansibleJobResult.finished'),
+      job: _.get(au, 'status.k8sJob.namespacedName'),
+    }));
   }
 }

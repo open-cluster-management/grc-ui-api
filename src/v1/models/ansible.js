@@ -11,10 +11,9 @@ export default class AnsibleModel extends KubeModel {
       url: `${args.host}/api/v2/job_templates`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${args.token}`,
+        Authorization: `Bearer ${Buffer.from(args.token, 'base64').toString('ascii')}`,
       },
     };
-
     const response = await this.kubeConnector.http(options)
       .then((res) => res.body)
       .catch((err) => {
@@ -22,6 +21,7 @@ export default class AnsibleModel extends KubeModel {
         throw err;
       });
     if (!response.results) {
+      logger.error(response);
       throw new Error('Failed to retrieve ansible job');
     }
     return response.results.map((result) => ({
@@ -52,6 +52,7 @@ export default class AnsibleModel extends KubeModel {
         + `labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
       );
       if (!secret.items) {
+        logger.error(secret);
         throw new Error(`Failed to retrieve copied secrets from ${targetNamespace}`);
       } else {
         if (secret.items.length === 0) {
@@ -84,6 +85,7 @@ export default class AnsibleModel extends KubeModel {
     const { name, namespace } = args;
     const ansibleJobs = await this.kubeConnector.get(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`);
     if (!ansibleJobs.items) {
+      logger.error(ansibleJobs);
       throw new Error('Failed to retrieve ansiblejobs');
     }
     const automation = ansibleJobs.items.filter((ans) => {

@@ -46,7 +46,7 @@ describe('Ansible Automation Resolver', () => {
       .post(GRAPHQL_PATH)
       .send({
         query: `{
-          ansibleJobTemplates(host:"https://ansible-tower.com", token:"mocktoken"){
+          ansibleJobTemplates(host:"https://ansible-tower.com", token:"bW9ja3Rva2Vu"){
             name
             description
             extra_vars

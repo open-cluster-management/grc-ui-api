@@ -260,7 +260,8 @@ export default class KubeConnector {
       throw new Error(`Create ManagedClusterView Failed [${managedClusterViewResponse.code}] - ${managedClusterViewResponse.message}`);
     }
     // Poll ManagedClusterView until success or failure
-    const { cancel, promise: pollPromise } = this.pollView(_.get(managedClusterViewResponse, 'metadata.selfLink'));
+    const managedClusterViewSelfLink = `/apis/view.open-cluster-management.io/v1beta1/namespaces/${managedClusterNamespace}/managedclusterviews/${_.get(managedClusterViewResponse, 'metadata.name')}`;
+    const { cancel, promise: pollPromise } = this.pollView(managedClusterViewSelfLink);
     try {
       const result = await Promise.race([pollPromise, this.timeout()]);
       if (result && deleteAfterUse) {

@@ -71,7 +71,7 @@ describe('Ansible Automation Resolver', () => {
       .post(GRAPHQL_PATH)
       .send({
         query: `{
-          ansibleJobTemplates(host:"https://ansible-tower.com", token:"mocktoken"){
+          ansibleJobTemplates(host:"https://ansible-tower.com", token:"bW9ja3Rva2Vu"){
             name
             description
             extra_vars
@@ -139,6 +139,31 @@ describe('Ansible Automation Resolver', () => {
         query: `{
           copyAnsibleSecret(name: "toweraccess", namespace: "default", targetNamespace: "kube-system"){
             name
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Should correctly resolve ansible automation history', () => new Promise((done) => {
+    const namespace = 'default';
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    APIServer.persist().get(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`).reply(200, mockAnsibleJobListResponse);
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+          ansibleAutomationHistories(name: "policy-role", namespace:"default") {
+            name
+            namespace
+            status
+            started
+            finished
+            job
           }
         }
       `,

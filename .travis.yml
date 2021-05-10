@@ -67,14 +67,6 @@ jobs:
         - echo '"start sonar checking..."' && echo -en 'travis_fold:start:script.build\\r'
         - make sonar/js
         - echo '"finished sonar check"' && echo -en 'travis_fold:end:script.build\\r'
-    - stage: test-e2e
-      name: "Run e2e tests"
-      if: type = pull_request
-      script:
-        - set -e
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
-        - make component/pull
-        - make component/test/e2e
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
       if: type = push AND branch =~ /^release-[0-9]+\..*$/

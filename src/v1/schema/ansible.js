@@ -25,6 +25,15 @@ type AnsibleCredential {
 type AnsibleSecretName {
   name: String
 }
+
+type AnsibleAutomationHistory {
+  name: String
+  namespace: String
+  status: String
+  started: String
+  finished: String
+  job: String
+}
 `;
 
 export const resolver = {
@@ -33,5 +42,6 @@ export const resolver = {
     ansibleJobTemplates: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleJobTemplates(args),
     ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
     copyAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.copyAnsibleSecret(args),
+    ansibleAutomationHistories: (parent, args, { ansibleModel }) => ansibleModel.ansibleAutomationHistories(args),
   },
 };

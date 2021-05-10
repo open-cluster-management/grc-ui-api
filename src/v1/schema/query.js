@@ -39,6 +39,8 @@ type Query {
   ansibleCredentials: [AnsibleCredential]
   # Copy and return secret name for given Ansible credential
   copyAnsibleSecret(name: String!, namespace: String!, targetNamespace: String!): AnsibleSecretName
+  # Ansible Automation History
+  ansibleAutomationHistories(name: String!, namespace: String!): [AnsibleAutomationHistory]
 }
 
 type Mutation {

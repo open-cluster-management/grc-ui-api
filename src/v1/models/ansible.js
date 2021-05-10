@@ -65,6 +65,7 @@ export default class AnsibleModel extends KubeModel {
           rootSecret.metadata.namespace = targetNamespace;
           rootSecret.metadata.name = `${namespace}.${name}`;
           delete rootSecret.metadata.resourceVersion;
+          delete rootSecret.data['credential-hash'];
           const result = await this.kubeConnector.post(`/api/v1/namespaces/${targetNamespace}/secrets`, rootSecret);
           if (!result.metadata.name) {
             logger.error(result);

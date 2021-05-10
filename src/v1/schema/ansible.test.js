@@ -12,6 +12,7 @@ import {
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
   mockAnsibleAutomationsResponse,
+  mockAnsibleJobListResponse,
 } from '../mocks/Ansible';
 import ApiGroup from '../lib/ApiGroup';
 

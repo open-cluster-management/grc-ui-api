@@ -22,6 +22,28 @@ export const mockAnsibleSecretsResponse = (ns) => ({
   type: 'Opaque',
 });
 
+export const mockAnsibleAutomationsResponse = (ns) => ({
+  kind: 'PolicyAutomation',
+  apiVersion: 'policy.open-cluster-management.io/v1alpha1',
+  metadata: {
+    name: `policy-grc-${ns}-AnsibleJob`,
+    namespace: ns,
+  },
+  spec: {
+    policyRef: 'policy-grc-111',
+    eventHook: 'non-compliance',
+    mode: 'once',
+    automation: {
+      type: 'AnsibleJob',
+      name: 'Demo Job Template',
+      secret: 'grc-testing',
+      extra_vars: {
+        selector: 'target-cluster',
+      },
+    },
+  },
+});
+
 export const mockAnsibleJobTemplatesResponse = {
   count: 1,
   next: null,

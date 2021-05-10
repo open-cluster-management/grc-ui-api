@@ -10,23 +10,25 @@ export default class AnsibleModel extends KubeModel {
     const [ansibleAutomation] = await Promise.all([
       this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),
     ]);
-    return ansibleAutomation.map((ans) => ({
-      kind: _.get(ans, 'ans.kind', ''),
-      apiVersion: _.get(ans, 'ans.apiVersion', ''),
-      name: _.get(ans, 'ans.metadata.name', ''),
-      namespace: _.get(ans, 'ans.metadata.namespace', ''),
+    return ansibleAutomation.length > 0 ? ansibleAutomation.map((ans) => ({
+      kind: _.get(ans, 'kind', ''),
+      apiVersion: _.get(ans, 'apiVersion', ''),
+      metadata: {
+        name: _.get(ans, 'metadata.name', ''),
+        namespace: _.get(ans, 'metadata.namespace', ''),
+      },
       spec: {
-        policyRef: _.get(ans, 'ans.spec.policyRef', ''),
-        eventHook: _.get(ans, 'ans.spec.eventHook', ''),
-        mode: _.get(ans, 'ans.spec.mode', ''),
+        policyRef: _.get(ans, 'spec.policyRef', ''),
+        eventHook: _.get(ans, 'spec.eventHook', ''),
+        mode: _.get(ans, 'spec.mode', ''),
         automation: {
-          type: _.get(ans, 'ans.spec.automation.type', ''),
-          name: _.get(ans, 'ans.spec.automation.name', ''),
-          secret: _.get(ans, 'ans.spec.automation.secret', ''),
-          extra_vars: _.get(ans, 'ans.spec.automation.extra_vars', ''),
+          type: _.get(ans, 'spec.automation.type', ''),
+          name: _.get(ans, 'spec.automation.name', ''),
+          secret: _.get(ans, 'spec.automation.secret', ''),
+          extra_vars: _.get(ans, 'spec.automation.extra_vars', {}),
         },
       },
-    }));
+    })) : [];
   }
 
   async getAnsibleJobTemplates(args) {

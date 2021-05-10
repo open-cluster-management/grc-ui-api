@@ -11,10 +11,12 @@ import {
   mockSecretNotExistsInTargetNamespaceResponse,
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
+  mockAnsibleAutomationsResponse,
 } from '../mocks/Ansible';
+import ApiGroup from '../lib/ApiGroup';
 
 describe('Ansible Automation Resolver', () => {
-  test('Correctly resoves ansible credentials', () => new Promise((done) => {
+  test('Correctly resolves ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
       APIServer.persist().get(`/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/provider=ans`).reply(200, mockAnsibleSecretsResponse(ns));
@@ -28,6 +30,30 @@ describe('Ansible Automation Resolver', () => {
             namespace
             host
             token
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Correctly resolves ansible automations', () => new Promise((done) => {
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
+      APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockAnsibleAutomationsResponse(ns));
+    });
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+          ansibleAutomations{
+            kind
+            apiVersion
+            metadata
+            spec
           }
         }
       `,

@@ -14,7 +14,121 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resoves ansible credentials 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves ansible automations 1`] = `
+Object {
+  "data": Object {
+    "ansibleAutomations": Array [
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-default-AnsibleJob",
+          "namespace": "default",
+        },
+        "spec": Object {
+          "automation": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-kube-system-AnsibleJob",
+          "namespace": "kube-system",
+        },
+        "spec": Object {
+          "automation": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-policy-namespace-AnsibleJob",
+          "namespace": "policy-namespace",
+        },
+        "spec": Object {
+          "automation": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-cluster1-AnsibleJob",
+          "namespace": "cluster1",
+        },
+        "spec": Object {
+          "automation": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-local-cluster-AnsibleJob",
+          "namespace": "local-cluster",
+        },
+        "spec": Object {
+          "automation": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Correctly resolves ansible credentials 1`] = `
 Object {
   "data": Object {
     "ansibleCredentials": Array [

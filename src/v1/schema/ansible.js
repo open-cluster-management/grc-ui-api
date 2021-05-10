@@ -8,20 +8,8 @@ export const typeDef = gql`
 type AnsibleAutomation {
   kind: String
   apiVersion: String
-  metadata: {
-    name: String
-    namespace: String
-  }
-  sepc: {
-    policyRef: String
-    eventHook: String
-    mode: String
-    automation: 
-      type: String
-      name: String
-      secret: String
-      extra_vars: JSON
-  }
+  metadata: JSON
+  spec: JSON
 }
 type AnsibleJobTemplate {
   name: String

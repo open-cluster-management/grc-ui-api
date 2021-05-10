@@ -6,6 +6,14 @@ import KubeModel from './kube';
 import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
+function getErrorMessage(item, errorMessage) {
+  let updatedErrorMessage = errorMessage;
+  if (item.code >= 400 || item.status === 'Failure') {
+    updatedErrorMessage += `${item.message}\n`;
+  }
+
+  return updatedErrorMessage;
+}
 export default class AnsibleModel extends KubeModel {
   async getAnsibleAutomations(namespace) {
     let ansibleAutomation;
@@ -120,5 +128,32 @@ export default class AnsibleModel extends KubeModel {
       finished: _.get(au, 'status.ansibleJobResult.finished'),
       job: _.get(au, 'status.k8sJob.namespacedName'),
     }));
+  }
+
+  async createAndUpdateAnsibleJobs(toCreateJSONS, toUpdateJSONS) {
+    let errorMessage = '';
+    let result = [];
+    if (Array.isArray(toCreateJSONS) && toCreateJSONS.length > 0) {
+      result = await Promise.all(toCreateJSONS.map((json) => {
+        const namespace = _.get(json, 'metadata.namespace');
+        return this.kubeConnector.post(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
+          .catch((err) => Error(err));
+      }));
+    } else if (Array.isArray(toUpdateJSONS) && toUpdateJSONS.length > 0) {
+      result = await Promise.all(toCreateJSONS.map((json) => {
+        const namespace = _.get(json, 'metadata.namespace');
+        return this.kubeConnector.put(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
+          .catch((err) => Error(err));
+      }));
+    }
+    result.forEach((item) => {
+      errorMessage = getErrorMessage(item, errorMessage);
+    });
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    } else {
+      // TODO: add partical errors
+      return result;
+    }
   }
 }

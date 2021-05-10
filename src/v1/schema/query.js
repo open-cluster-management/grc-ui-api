@@ -31,6 +31,8 @@ type Query {
   getResource(kind: String, name: String, namespace: String, cluster: String, selfLink: String, updateInterval: Int, deleteAfterUse: Boolean): JSON
   getUserAccessCredentials: JSON
 
+  # Get Ansible Automation list
+  ansibleAutomations: [AnsibleAutomation]
   # Get Ansible Tower Job Templates
   ansibleJobTemplates(host: String!, token: String!): [AnsibleJobTemplate]
   # Get Ansible Credentials

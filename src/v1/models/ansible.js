@@ -1,10 +1,34 @@
 /* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
-
+import _ from 'lodash';
 import KubeModel from './kube';
 import logger from '../lib/logger';
+import ApiGroup from '../lib/ApiGroup';
 
 export default class AnsibleModel extends KubeModel {
+  async getAnsibleAutomations() {
+    const [ansibleAutomation] = await Promise.all([
+      this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),
+    ]);
+    return ansibleAutomation.map((ans) => ({
+      kind: _.get(ans, 'ans.kind', ''),
+      apiVersion: _.get(ans, 'ans.apiVersion', ''),
+      name: _.get(ans, 'ans.metadata.name', ''),
+      namespace: _.get(ans, 'ans.metadata.namespace', ''),
+      spec: {
+        policyRef: _.get(ans, 'ans.spec.policyRef', ''),
+        eventHook: _.get(ans, 'ans.spec.eventHook', ''),
+        mode: _.get(ans, 'ans.spec.mode', ''),
+        automation: {
+          type: _.get(ans, 'ans.spec.automation.type', ''),
+          name: _.get(ans, 'ans.spec.automation.name', ''),
+          secret: _.get(ans, 'ans.spec.automation.secret', ''),
+          extra_vars: _.get(ans, 'ans.spec.automation.extra_vars', ''),
+        },
+      },
+    }));
+  }
+
   async getAnsibleJobTemplates(args) {
     const options = {
       url: `${args.host}/api/v2/job_templates`,

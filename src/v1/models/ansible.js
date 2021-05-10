@@ -7,16 +7,16 @@ import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
 export default class AnsibleModel extends KubeModel {
-  async getAnsibleAutomations(namespace) {
-    let ansibleAutomation;
+  async getPolicyAutomations(namespace) {
+    let policyAutomation;
     if (namespace) {
-      ansibleAutomation = await this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`);
+      policyAutomation = await this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`);
     } else {
-      [ansibleAutomation] = await Promise.all([
+      [policyAutomation] = await Promise.all([
         this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),
       ]);
     }
-    return ansibleAutomation || [];
+    return policyAutomation || [];
   }
 
   async getAnsibleJobTemplates(args) {
@@ -124,7 +124,7 @@ export default class AnsibleModel extends KubeModel {
 
   async createAndUpdatePolicyAutomation(args) {
     const { toCreateJSON, toUpdateJSON } = args;
-    let resPromise;
+    let resPromise = [];
     const resArray = [];
     const errArray = [];
     if (toCreateJSON) {
@@ -136,19 +136,21 @@ export default class AnsibleModel extends KubeModel {
         .then((res) => ({ response: res, kind: json.kind }))
         .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
     }
-    resPromise.forEach((item) => {
-      if (item.status === 'Failure' || item.message) {
-        errArray.push({
-          message: item.message ? item.message : item,
-          kind: item.kind,
-        });
-      } else {
-        resArray.push({
-          response: item.response ? item.response : item,
-          kind: item.kind,
-        });
-      }
-    });
+    if (resPromise.length > 0) {
+      resPromise.forEach((item) => {
+        if (item.status === 'Failure' || item.message) {
+          errArray.push({
+            message: item.message ? item.message : item,
+            kind: item.kind,
+          });
+        } else {
+          resArray.push({
+            response: item.response ? item.response : item,
+            kind: item.kind,
+          });
+        }
+      });
+    }
     return {
       errors: errArray,
       result: resArray,

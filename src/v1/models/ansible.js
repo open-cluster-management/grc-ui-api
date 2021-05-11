@@ -22,7 +22,7 @@ export default class AnsibleModel extends KubeModel {
         policyRef: _.get(ans, 'spec.policyRef', ''),
         eventHook: _.get(ans, 'spec.eventHook', ''),
         mode: _.get(ans, 'spec.mode', ''),
-        automation: {
+        automationDef: {
           type: _.get(ans, 'spec.automation.type', ''),
           name: _.get(ans, 'spec.automation.name', ''),
           secret: _.get(ans, 'spec.automation.secret', ''),

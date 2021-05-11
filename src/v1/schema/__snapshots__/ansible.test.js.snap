@@ -26,7 +26,7 @@ Object {
           "namespace": "default",
         },
         "spec": Object {
-          "automation": Object {
+          "automationDef": Object {
             "extra_vars": Object {
               "selector": "target-cluster",
             },
@@ -47,7 +47,7 @@ Object {
           "namespace": "kube-system",
         },
         "spec": Object {
-          "automation": Object {
+          "automationDef": Object {
             "extra_vars": Object {
               "selector": "target-cluster",
             },
@@ -68,7 +68,7 @@ Object {
           "namespace": "policy-namespace",
         },
         "spec": Object {
-          "automation": Object {
+          "automationDef": Object {
             "extra_vars": Object {
               "selector": "target-cluster",
             },
@@ -89,7 +89,7 @@ Object {
           "namespace": "cluster1",
         },
         "spec": Object {
-          "automation": Object {
+          "automationDef": Object {
             "extra_vars": Object {
               "selector": "target-cluster",
             },
@@ -110,7 +110,7 @@ Object {
           "namespace": "local-cluster",
         },
         "spec": Object {
-          "automation": Object {
+          "automationDef": Object {
             "extra_vars": Object {
               "selector": "target-cluster",
             },

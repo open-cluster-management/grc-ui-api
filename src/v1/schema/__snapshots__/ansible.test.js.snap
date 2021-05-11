@@ -14,7 +14,7 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resolves ansible automations 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves ansible automations in multiply ns 1`] = `
 Object {
   "data": Object {
     "ansibleAutomations": Array [
@@ -108,6 +108,36 @@ Object {
         "metadata": Object {
           "name": "policy-grc-local-cluster-AnsibleJob",
           "namespace": "local-cluster",
+        },
+        "spec": Object {
+          "automationDef": Object {
+            "extra_vars": Object {
+              "selector": "target-cluster",
+            },
+            "name": "Demo Job Template",
+            "secret": "grc-testing",
+            "type": "AnsibleJob",
+          },
+          "eventHook": "non-compliance",
+          "mode": "once",
+          "policyRef": "policy-grc-111",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Correctly resolves ansible automations in singe ns 1`] = `
+Object {
+  "data": Object {
+    "ansibleAutomations": Array [
+      Object {
+        "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+        "kind": "PolicyAutomation",
+        "metadata": Object {
+          "name": "policy-grc-default-AnsibleJob",
+          "namespace": "default",
         },
         "spec": Object {
           "automationDef": Object {

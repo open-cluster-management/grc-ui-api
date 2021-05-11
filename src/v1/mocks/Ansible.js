@@ -33,7 +33,7 @@ export const mockAnsibleAutomationsResponse = (ns) => ({
     policyRef: 'policy-grc-111',
     eventHook: 'non-compliance',
     mode: 'once',
-    automation: {
+    automationDef: {
       type: 'AnsibleJob',
       name: 'Demo Job Template',
       secret: 'grc-testing',

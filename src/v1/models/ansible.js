@@ -7,29 +7,16 @@ import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
 export default class AnsibleModel extends KubeModel {
-  async getAnsibleAutomations() {
-    const [ansibleAutomation] = await Promise.all([
-      this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),
-    ]);
-    return ansibleAutomation.length > 0 ? ansibleAutomation.map((ans) => ({
-      kind: _.get(ans, 'kind', ''),
-      apiVersion: _.get(ans, 'apiVersion', ''),
-      metadata: {
-        name: _.get(ans, 'metadata.name', ''),
-        namespace: _.get(ans, 'metadata.namespace', ''),
-      },
-      spec: {
-        policyRef: _.get(ans, 'spec.policyRef', ''),
-        eventHook: _.get(ans, 'spec.eventHook', ''),
-        mode: _.get(ans, 'spec.mode', ''),
-        automationDef: {
-          type: _.get(ans, 'spec.automation.type', ''),
-          name: _.get(ans, 'spec.automation.name', ''),
-          secret: _.get(ans, 'spec.automation.secret', ''),
-          extra_vars: _.get(ans, 'spec.automation.extra_vars', {}),
-        },
-      },
-    })) : [];
+  async getAnsibleAutomations(namespace) {
+    let ansibleAutomation;
+    if (namespace) {
+      ansibleAutomation = await this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`);
+    } else {
+      [ansibleAutomation] = await Promise.all([
+        this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),
+      ]);
+    }
+    return ansibleAutomation || [];
   }
 
   async getAnsibleJobTemplates(args) {

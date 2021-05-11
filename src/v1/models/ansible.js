@@ -153,7 +153,6 @@ export default class AnsibleModel extends KubeModel {
     if (errorMessage) {
       throw new Error(errorMessage);
     } else {
-      // TODO: add partical errors
       return result;
     }
   }

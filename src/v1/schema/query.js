@@ -31,8 +31,8 @@ type Query {
   getResource(kind: String, name: String, namespace: String, cluster: String, selfLink: String, updateInterval: Int, deleteAfterUse: Boolean): JSON
   getUserAccessCredentials: JSON
 
-  # Get Ansible Automation list
-  ansibleAutomations(namespace: String): [AnsibleAutomation]
+  # Get Policy Automation list
+  policyAutomations(namespace: String): [PolicyAutomation]
   # Get Ansible Tower Job Templates
   ansibleJobTemplates(host: String!, token: String!): [AnsibleJobTemplate]
   # Get Ansible Credentials
@@ -65,7 +65,7 @@ type Mutation {
   # Creates Kubernetes Resources that do not exist and updates those that do exist
   createAndUpdateResources(toCreate: [JSON], toUpdate: [JSON]): JSON
 
-  # Create Ansible Jobs that do not exist and updates those that do exist
+  # Create Policy Automation that do not exist and updates those that do exist
   createAndUpdatePolicyAutomation(toCreateJSON: [JSON], toUpdateJSON: [JSON]): JSON
 
   # Update Kubernetes resources

@@ -8,7 +8,7 @@ export const typeDef = gql`
 type AnsibleAutomation {
   kind: String
   apiVersion: String
-  metadata: JSON
+  metadata: Metadata
   spec: JSON
 }
 type AnsibleJobTemplate {

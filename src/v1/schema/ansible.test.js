@@ -53,7 +53,10 @@ describe('Ansible Automation Resolver', () => {
           ansibleAutomations{
             kind
             apiVersion
-            metadata
+            metadata {
+              name
+              namespace
+            }
             spec
           }
         }

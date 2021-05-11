@@ -130,17 +130,18 @@ export default class AnsibleModel extends KubeModel {
     }));
   }
 
-  async createAndUpdateAnsibleJobs(toCreateJSONS, toUpdateJSONS) {
+  async createAndUpdateAnsibleJobs(args) {
+    const { toCreateJSON, toUpdateJSON } = args;
     let errorMessage = '';
     let result = [];
-    if (Array.isArray(toCreateJSONS) && toCreateJSONS.length > 0) {
-      result = await Promise.all(toCreateJSONS.map((json) => {
+    if (Array.isArray(toCreateJSON) && toCreateJSON.length > 0) {
+      result = await Promise.all(toCreateJSON.map((json) => {
         const namespace = _.get(json, 'metadata.namespace');
         return this.kubeConnector.post(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
           .catch((err) => Error(err));
       }));
-    } else if (Array.isArray(toUpdateJSONS) && toUpdateJSONS.length > 0) {
-      result = await Promise.all(toCreateJSONS.map((json) => {
+    } else if (Array.isArray(toUpdateJSON) && toUpdateJSON.length > 0) {
+      result = await Promise.all(toUpdateJSON.map((json) => {
         const namespace = _.get(json, 'metadata.namespace');
         return this.kubeConnector.put(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
           .catch((err) => Error(err));

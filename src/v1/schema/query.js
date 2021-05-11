@@ -66,7 +66,7 @@ type Mutation {
   createAndUpdateResources(toCreate: [JSON], toUpdate: [JSON]): JSON
 
   # Create Ansible Jobs that do not exist and updates those that do exist
-  createAndUpdateAnsibleJobs(toCreate: [JSON], toUpdate: [JSON]): JSON
+  createAndUpdateAnsibleJobs(toCreateJSON: [JSON], toUpdateJSON: [JSON]): JSON
 
   # Update Kubernetes resources
   updateResource(namespace: String!, name: String!, body: JSON, selfLink: String!, resourcePath: String): JSON

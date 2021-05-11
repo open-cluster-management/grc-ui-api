@@ -14,7 +14,7 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resolves ansible automations in multiply ns 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves ansible automations in multi ns 1`] = `
 Object {
   "data": Object {
     "ansibleAutomations": Array [
@@ -128,7 +128,7 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resolves ansible automations in singe ns 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves ansible automations in single ns 1`] = `
 Object {
   "data": Object {
     "ansibleAutomations": Array [

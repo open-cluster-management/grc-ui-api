@@ -32,7 +32,7 @@ type Query {
   getUserAccessCredentials: JSON
 
   # Get Ansible Automation list
-  ansibleAutomations(namespace: String!): [AnsibleAutomation]
+  ansibleAutomations(namespace: String): [AnsibleAutomation]
   # Get Ansible Tower Job Templates
   ansibleJobTemplates(host: String!, token: String!): [AnsibleJobTemplate]
   # Get Ansible Credentials

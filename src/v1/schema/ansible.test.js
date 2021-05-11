@@ -41,7 +41,7 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
-  test('Correctly resolves ansible automations in singe ns', () => new Promise((done) => {
+  test('Correctly resolves ansible automations in single ns', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     const ns = 'default';
     APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockAnsibleAutomationsResponse(ns));
@@ -67,7 +67,7 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
-  test('Correctly resolves ansible automations in multiply ns', () => new Promise((done) => {
+  test('Correctly resolves ansible automations in multi ns', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
       APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockAnsibleAutomationsResponse(ns));

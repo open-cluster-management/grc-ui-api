@@ -13,8 +13,8 @@ import {
   mockCopiedSecetResponse,
   mockAnsibleAutomationsResponse,
   mockAnsibleJobListResponse,
-  mockCreateAnsibleJobResponse,
-  mockUpdateAnsibleJobResponse,
+  mockCreatePolicyAutomationResponse,
+  mockUpdatePolicyAutomationResponse,
 } from '../mocks/Ansible';
 import ApiGroup from '../lib/ApiGroup';
 
@@ -26,9 +26,9 @@ describe('Generic AnsibleJob Resolver', () => {
     // define the method to be intercepted
     ['default'].forEach((namespace) => {
       APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
-        .reply(200, mockCreateAnsibleJobResponse);
+        .reply(200, mockCreatePolicyAutomationResponse);
       APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
-        .reply(200, mockUpdateAnsibleJobResponse);
+        .reply(200, mockUpdatePolicyAutomationResponse);
     });
   });
 });
@@ -228,7 +228,7 @@ test('Correctly Resolves Create and Update Ansible Jobs Mutation', () => new Pro
     .send({
       query: `
       mutation {
-        createAndUpdateAnsibleAutomation(
+        createAndUpdatePolicyAutomation(
           toCreateJSON: [{
             kind: "PolicyAutomation",
             apiVersion: "policy.open-cluster-management.io/v1alpha1",

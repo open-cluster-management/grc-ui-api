@@ -247,7 +247,7 @@ Object {
 exports[`Correctly Resolves Create and Update Ansible Jobs Mutation 1`] = `
 Object {
   "data": Object {
-    "createAndUpdateAnsibleAutomation": null,
+    "createAndUpdatePolicyAutomation": null,
   },
   "errors": Array [
     Object {
@@ -260,9 +260,9 @@ Object {
           "line": 3,
         },
       ],
-      "message": "_this.ansibleJobsAction is not a function",
+      "message": "_this.policyAutomationAction is not a function",
       "path": Array [
-        "createAndUpdateAnsibleAutomation",
+        "createAndUpdatePolicyAutomation",
       ],
     },
   ],

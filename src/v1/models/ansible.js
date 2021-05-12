@@ -122,7 +122,7 @@ export default class AnsibleModel extends KubeModel {
     }));
   }
 
-  async createAndUpdateAnsibleAutomation(args) {
+  async createAndUpdatePolicyAutomation(args) {
     const { toCreateJSON, toUpdateJSON } = args;
     const create = await this.ansibleAutomationPromise(toCreateJSON, 'post');
     const update = await this.ansibleAutomationPromise(toUpdateJSON, 'put');
@@ -135,7 +135,7 @@ export default class AnsibleModel extends KubeModel {
   async ansibleAutomationPromise(jsons, action) {
     const resArray = [];
     const errArray = [];
-    const result = await Promise.all(jsons.map((json) => this.ansibleJobsAction(json, action)
+    const result = await Promise.all(jsons.map((json) => this.policyAutomationAction(json, action)
       .then((res) => ({ response: res, kind: json.kind }))
       .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
     result.forEach((item) => {

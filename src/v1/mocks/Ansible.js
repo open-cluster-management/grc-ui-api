@@ -445,7 +445,7 @@ export const mockAnsibleJobListResponse = {
   },
 };
 
-export const mockCreateAnsibleJobResponse = {
+export const mockCreatePolicyAutomationResponse = {
   kind: 'PolicyAutomation',
   apiVersion: 'policy.open-cluster-management.io/v1alpha1',
   metadata: {
@@ -467,7 +467,7 @@ export const mockCreateAnsibleJobResponse = {
   },
 };
 
-export const mockUpdateAnsibleJobResponse = {
+export const mockUpdatePolicyAutomationResponse = {
   kind: 'PolicyAutomation',
   apiVersion: 'policy.open-cluster-management.io/v1alpha1',
   metadata: {

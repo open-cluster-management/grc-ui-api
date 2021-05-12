@@ -228,7 +228,7 @@ test('Correctly Resolves Create and Update Ansible Jobs Mutation', () => new Pro
     .send({
       query: `
       mutation {
-        createAndUpdateAnsibleJobs(
+        createAndUpdateAnsibleAutomation(
           toCreateJSON: [{
             kind: "PolicyAutomation",
             apiVersion: "policy.open-cluster-management.io/v1alpha1",

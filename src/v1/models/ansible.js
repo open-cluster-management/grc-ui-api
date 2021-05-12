@@ -122,63 +122,44 @@ export default class AnsibleModel extends KubeModel {
     }));
   }
 
-  async createAndUpdateAnsibleJobs(args) {
+  async createAndUpdateAnsibleAutomation(args) {
     const { toCreateJSON, toUpdateJSON } = args;
-    const createRes = [];
-    const createErr = [];
-    if (Array.isArray(toCreateJSON) && toCreateJSON.length > 0) {
-      const ur = await Promise.all(toCreateJSON.map((json) => this.ansibleJobsAction(json, 'post')
-        .then((res) => ({ response: res, kind: json.kind }))
-        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
-      ur.forEach((item) => {
-        if (item.status === 'Failure' || item.message) {
-          createErr.push({
-            message: item.message,
-            kind: item.kind,
-          });
-        } else {
-          createRes.push({
-            response: item.response ? item.response : item,
-            kind: item.kind,
-          });
-        }
-      });
-    }
-    const updateRes = [];
-    const updateErr = [];
-    if (Array.isArray(toUpdateJSON) && toUpdateJSON.length > 0) {
-      const ur = await Promise.all(toUpdateJSON.map((json) => this.ansibleJobsAction(json, 'put')
-        .then((res) => ({ response: res, kind: json.kind }))
-        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
-      ur.forEach((item) => {
-        if (item.status === 'Failure' || item.message) {
-          updateErr.push({
-            message: item.message,
-            kind: item.kind,
-          });
-        } else {
-          updateRes.push({
-            response: item.response ? item.response : item,
-            kind: item.kind,
-          });
-        }
-      });
-    }
+    const create = await this.ansibleAutomationPromise(toCreateJSON, 'post');
+    const update = await this.ansibleAutomationPromise(toUpdateJSON, 'put');
     return {
-      create: {
-        errors: createErr,
-        result: createRes,
-      },
-      update: {
-        errors: updateErr,
-        result: updateRes,
-      },
+      create,
+      update,
     };
   }
 
-  async ansibleJobsAction(action, json) {
+  async ansibleAutomationPromise(jsons, action) {
+    const resArray = [];
+    const errArray = [];
+    const result = await Promise.all(jsons.map((json) => this.ansibleJobsAction(json, action)
+      .then((res) => ({ response: res, kind: json.kind }))
+      .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+    result.forEach((item) => {
+      if (item.status === 'Failure' || item.message) {
+        errArray.push({
+          message: item.message ? item.message : item,
+          kind: item.kind,
+        });
+      } else {
+        resArray.push({
+          response: item.response ? item.response : item,
+          kind: item.kind,
+        });
+      }
+    });
+    return {
+      errors: resArray,
+      result: errArray,
+    };
+  }
+
+  async ansibleAutomationAction(action, json) {
     const namespace = _.get(json, 'metadata.namespace');
-    const url = `/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`;
+    const url = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
     let response;
     switch (action) {
       case 'post':

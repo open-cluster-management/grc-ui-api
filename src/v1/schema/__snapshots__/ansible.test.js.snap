@@ -14,15 +14,15 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resolves ansible automations in multi ns 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves Policy Automation in multi ns 1`] = `
 Object {
   "data": Object {
-    "ansibleAutomations": Array [
+    "policyAutomations": Array [
       Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-default-AnsibleJob",
+          "name": "policy-grc-default-PolicyAutomation",
           "namespace": "default",
         },
         "spec": Object {
@@ -43,7 +43,7 @@ Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-kube-system-AnsibleJob",
+          "name": "policy-grc-kube-system-PolicyAutomation",
           "namespace": "kube-system",
         },
         "spec": Object {
@@ -64,7 +64,7 @@ Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-policy-namespace-AnsibleJob",
+          "name": "policy-grc-policy-namespace-PolicyAutomation",
           "namespace": "policy-namespace",
         },
         "spec": Object {
@@ -85,7 +85,7 @@ Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-cluster1-AnsibleJob",
+          "name": "policy-grc-cluster1-PolicyAutomation",
           "namespace": "cluster1",
         },
         "spec": Object {
@@ -106,7 +106,7 @@ Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-local-cluster-AnsibleJob",
+          "name": "policy-grc-local-cluster-PolicyAutomation",
           "namespace": "local-cluster",
         },
         "spec": Object {
@@ -128,15 +128,15 @@ Object {
 }
 `;
 
-exports[`Ansible Automation Resolver Correctly resolves ansible automations in single ns 1`] = `
+exports[`Ansible Automation Resolver Correctly resolves Policy Automation in single ns 1`] = `
 Object {
   "data": Object {
-    "ansibleAutomations": Array [
+    "policyAutomations": Array [
       Object {
         "apiVersion": "policy.open-cluster-management.io/v1alpha1",
         "kind": "PolicyAutomation",
         "metadata": Object {
-          "name": "policy-grc-default-AnsibleJob",
+          "name": "policy-grc-default-PolicyAutomation",
           "namespace": "default",
         },
         "spec": Object {
@@ -244,7 +244,7 @@ Object {
 }
 `;
 
-exports[`Correctly Resolves Create Ansible Automation Mutation 1`] = `
+exports[`Correctly Resolves Create Policy Automation Mutation 1`] = `
 Object {
   "data": Object {
     "createAndUpdatePolicyAutomation": Object {
@@ -256,7 +256,7 @@ Object {
             "apiVersion": "policy.open-cluster-management.io/v1alpha1",
             "kind": "PolicyAutomation",
             "metadata": Object {
-              "name": "policy-grc-default-AnsibleJob",
+              "name": "policy-grc-default-PolicyAutomation",
               "namespace": "default",
             },
             "spec": Object {
@@ -280,7 +280,7 @@ Object {
 }
 `;
 
-exports[`Correctly Resolves Update Ansible Automation Mutation 1`] = `
+exports[`Correctly Resolves Update Policy Automation Mutation 1`] = `
 Object {
   "data": Object {
     "createAndUpdatePolicyAutomation": Object {
@@ -292,7 +292,7 @@ Object {
             "apiVersion": "policy.open-cluster-management.io/v1alpha1",
             "kind": "PolicyAutomation",
             "metadata": Object {
-              "name": "policy-grc-default-AnsibleJob",
+              "name": "policy-grc-default-PolicyAutomation",
               "namespace": "default",
             },
             "spec": Object {
@@ -311,6 +311,17 @@ Object {
           },
         },
       ],
+    },
+  },
+}
+`;
+
+exports[`Resolves Policy Automation Mutation Empty Case 1`] = `
+Object {
+  "data": Object {
+    "createAndUpdatePolicyAutomation": Object {
+      "errors": Array [],
+      "result": Array [],
     },
   },
 }

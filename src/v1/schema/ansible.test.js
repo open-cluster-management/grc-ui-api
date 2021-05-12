@@ -11,7 +11,7 @@ import {
   mockSecretNotExistsInTargetNamespaceResponse,
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
-  mockAnsibleAutomationsResponse,
+  mockPolicyAutomationsResponse,
   mockAnsibleJobListResponse,
   mockCreatePolicyAutomationResponse,
   mockUpdatePolicyAutomationResponse,
@@ -43,15 +43,15 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
-  test('Correctly resolves ansible automations in single ns', () => new Promise((done) => {
+  test('Correctly resolves Policy Automation in single ns', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     const ns = 'default';
-    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockAnsibleAutomationsResponse(ns));
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockPolicyAutomationsResponse(ns));
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
         query: `{
-          ansibleAutomations{
+          policyAutomations{
             kind
             apiVersion
             metadata {
@@ -69,16 +69,16 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
-  test('Correctly resolves ansible automations in multi ns', () => new Promise((done) => {
+  test('Correctly resolves Policy Automation in multi ns', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
-      APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockAnsibleAutomationsResponse(ns));
+      APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`).reply(200, mockPolicyAutomationsResponse(ns));
     });
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
         query: `{
-          ansibleAutomations{
+          policyAutomations{
             kind
             apiVersion
             metadata {
@@ -207,7 +207,7 @@ describe('Ansible Automation Resolver', () => {
   }));
 });
 
-test('Correctly Resolves Create Ansible Automation Mutation', () => new Promise((done) => {
+test('Correctly Resolves Create Policy Automation Mutation', () => new Promise((done) => {
   const APIServer = nock('http://0.0.0.0/kubernetes');
   ['default'].forEach((namespace) => {
     APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
@@ -251,7 +251,31 @@ test('Correctly Resolves Create Ansible Automation Mutation', () => new Promise(
     });
 }));
 
-test('Correctly Resolves Update Ansible Automation Mutation', () => new Promise((done) => {
+test('Resolves Policy Automation Mutation Empty Case', () => new Promise((done) => {
+  const APIServer = nock('http://0.0.0.0/kubernetes');
+  ['default'].forEach((namespace) => {
+    APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, mockCreatePolicyAutomationResponse);
+  });
+  supertest(server)
+    .post(GRAPHQL_PATH)
+    .send({
+      query: `
+      mutation {
+        createAndUpdatePolicyAutomation(
+          toCreateJSON: null,
+          toUpdateJSON: null
+        )
+      }
+    `,
+    })
+    .end((err, res) => {
+      expect(JSON.parse(res.text)).toMatchSnapshot();
+      done();
+    });
+}));
+
+test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((done) => {
   const APIServer = nock('http://0.0.0.0/kubernetes');
   ['default'].forEach((namespace) => {
     APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)

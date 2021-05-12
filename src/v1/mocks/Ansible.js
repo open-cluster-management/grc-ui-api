@@ -22,11 +22,11 @@ export const mockAnsibleSecretsResponse = (ns) => ({
   type: 'Opaque',
 });
 
-export const mockAnsibleAutomationsResponse = (ns) => ({
+export const mockPolicyAutomationsResponse = (ns) => ({
   kind: 'PolicyAutomation',
   apiVersion: 'policy.open-cluster-management.io/v1alpha1',
   metadata: {
-    name: `policy-grc-${ns}-AnsibleJob`,
+    name: `policy-grc-${ns}-PolicyAutomation`,
     namespace: ns,
   },
   spec: {
@@ -449,7 +449,7 @@ export const mockCreatePolicyAutomationResponse = {
   kind: 'PolicyAutomation',
   apiVersion: 'policy.open-cluster-management.io/v1alpha1',
   metadata: {
-    name: 'policy-grc-default-AnsibleJob',
+    name: 'policy-grc-default-PolicyAutomation',
     namespace: 'default',
   },
   spec: {
@@ -471,7 +471,7 @@ export const mockUpdatePolicyAutomationResponse = {
   kind: 'PolicyAutomation',
   apiVersion: 'policy.open-cluster-management.io/v1alpha1',
   metadata: {
-    name: 'policy-grc-default-AnsibleJob',
+    name: 'policy-grc-default-PolicyAutomation',
     namespace: 'default',
   },
   spec: {

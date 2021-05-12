@@ -5,7 +5,7 @@ import { gql } from 'apollo-server-express';
 
 export const typeDef = gql`
 # define ansible job template
-type AnsibleAutomation {
+type PolicyAutomation {
   kind: String
   apiVersion: String
   metadata: Metadata
@@ -38,7 +38,7 @@ type AnsibleAutomationHistory {
 
 export const resolver = {
   Query: {
-    ansibleAutomations: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleAutomations(args),
+    policyAutomations: (parent, args, { ansibleModel }) => ansibleModel.getPolicyAutomations(args),
     ansibleJobTemplates: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleJobTemplates(args),
     ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
     copyAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.copyAnsibleSecret(args),

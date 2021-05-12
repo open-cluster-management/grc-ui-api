@@ -247,30 +247,24 @@ Object {
 exports[`Correctly Resolves Create and Update Ansible Jobs Mutation 1`] = `
 Object {
   "data": Object {
-    "createAndUpdateAnsibleJobs": Object {
-      "create": Object {
-        "errors": Array [],
-        "result": Array [
-          Object {
-            "kind": "PolicyAutomation",
-            "response": Object {
-              "kind": "PolicyAutomation",
-            },
-          },
-        ],
-      },
-      "update": Object {
-        "errors": Array [],
-        "result": Array [
-          Object {
-            "kind": "PolicyAutomation",
-            "response": Object {
-              "kind": "PolicyAutomation",
-            },
-          },
-        ],
-      },
-    },
+    "createAndUpdateAnsibleAutomation": null,
   },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+      },
+      "locations": Array [
+        Object {
+          "column": 9,
+          "line": 3,
+        },
+      ],
+      "message": "_this.ansibleJobsAction is not a function",
+      "path": Array [
+        "createAndUpdateAnsibleAutomation",
+      ],
+    },
+  ],
 }
 `;

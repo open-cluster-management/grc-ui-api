@@ -25,9 +25,9 @@ describe('Generic AnsibleJob Resolver', () => {
 
     // define the method to be intercepted
     ['default'].forEach((namespace) => {
-      APIServer.persist().post(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`)
+      APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
         .reply(200, mockCreateAnsibleJobResponse);
-      APIServer.persist().put(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`)
+      APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
         .reply(200, mockUpdateAnsibleJobResponse);
     });
   });

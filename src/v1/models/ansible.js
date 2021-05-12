@@ -124,21 +124,19 @@ export default class AnsibleModel extends KubeModel {
 
   async createAndUpdatePolicyAutomation(args) {
     const { toCreateJSON, toUpdateJSON } = args;
-    const create = await this.ansibleAutomationPromise(toCreateJSON, 'post');
-    const update = await this.ansibleAutomationPromise(toUpdateJSON, 'put');
-    return {
-      create,
-      update,
-    };
-  }
-
-  async ansibleAutomationPromise(jsons, action) {
+    let resPromise;
     const resArray = [];
     const errArray = [];
-    const result = await Promise.all(jsons.map((json) => this.policyAutomationAction(json, action)
-      .then((res) => ({ response: res, kind: json.kind }))
-      .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
-    result.forEach((item) => {
+    if (toCreateJSON) {
+      resPromise = await Promise.all(toCreateJSON.map((json) => this.policyAutomationAction(json, 'post')
+        .then((res) => ({ response: res, kind: json.kind }))
+        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+    } else if (toUpdateJSON) {
+      resPromise = await Promise.all(toUpdateJSON.map((json) => this.policyAutomationAction(json, 'put')
+        .then((res) => ({ response: res, kind: json.kind }))
+        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+    }
+    resPromise.forEach((item) => {
       if (item.status === 'Failure' || item.message) {
         errArray.push({
           message: item.message ? item.message : item,
@@ -152,12 +150,12 @@ export default class AnsibleModel extends KubeModel {
       }
     });
     return {
-      errors: resArray,
-      result: errArray,
+      errors: errArray,
+      result: resArray,
     };
   }
 
-  async ansibleAutomationAction(action, json) {
+  async policyAutomationAction(json, action) {
     const namespace = _.get(json, 'metadata.namespace');
     const url = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
     let response;

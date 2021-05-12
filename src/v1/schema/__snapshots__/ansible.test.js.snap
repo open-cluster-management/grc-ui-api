@@ -244,27 +244,74 @@ Object {
 }
 `;
 
-exports[`Correctly Resolves Create and Update Ansible Jobs Mutation 1`] = `
+exports[`Correctly Resolves Create Ansible Automation Mutation 1`] = `
 Object {
   "data": Object {
-    "createAndUpdatePolicyAutomation": null,
-  },
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
-      },
-      "locations": Array [
+    "createAndUpdatePolicyAutomation": Object {
+      "errors": Array [],
+      "result": Array [
         Object {
-          "column": 9,
-          "line": 3,
+          "kind": "PolicyAutomation",
+          "response": Object {
+            "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+            "kind": "PolicyAutomation",
+            "metadata": Object {
+              "name": "policy-grc-default-AnsibleJob",
+              "namespace": "default",
+            },
+            "spec": Object {
+              "automationDef": Object {
+                "extra_vars": Object {
+                  "selector": "target-cluster",
+                },
+                "name": "Demo Job Template",
+                "secret": "grc-testing",
+                "type": "AnsibleJob",
+              },
+              "eventHook": "non-compliance",
+              "mode": "once",
+              "policyRef": "policy-grc-111",
+            },
+          },
         },
       ],
-      "message": "_this.policyAutomationAction is not a function",
-      "path": Array [
-        "createAndUpdatePolicyAutomation",
+    },
+  },
+}
+`;
+
+exports[`Correctly Resolves Update Ansible Automation Mutation 1`] = `
+Object {
+  "data": Object {
+    "createAndUpdatePolicyAutomation": Object {
+      "errors": Array [],
+      "result": Array [
+        Object {
+          "kind": "PolicyAutomation",
+          "response": Object {
+            "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+            "kind": "PolicyAutomation",
+            "metadata": Object {
+              "name": "policy-grc-default-AnsibleJob",
+              "namespace": "default",
+            },
+            "spec": Object {
+              "automationDef": Object {
+                "extra_vars": Object {
+                  "selector": "new-cluster",
+                },
+                "name": "New job Template",
+                "secret": "grc-testing",
+                "type": "AnsibleJob",
+              },
+              "eventHook": "non-compliance",
+              "mode": "manually",
+              "policyRef": "policy-grc-111",
+            },
+          },
+        },
       ],
     },
-  ],
+  },
 }
 `;

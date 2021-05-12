@@ -18,21 +18,6 @@ import {
 } from '../mocks/Ansible';
 import ApiGroup from '../lib/ApiGroup';
 
-describe('Generic AnsibleJob Resolver', () => {
-  beforeAll(() => {
-    // specify the url to be intercepted
-    const APIServer = nock('http://0.0.0.0/kubernetes');
-
-    // define the method to be intercepted
-    ['default'].forEach((namespace) => {
-      APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
-        .reply(200, mockCreatePolicyAutomationResponse);
-      APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
-        .reply(200, mockUpdatePolicyAutomationResponse);
-    });
-  });
-});
-
 describe('Ansible Automation Resolver', () => {
   test('Correctly resolves ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
@@ -222,7 +207,12 @@ describe('Ansible Automation Resolver', () => {
   }));
 });
 
-test('Correctly Resolves Create and Update Ansible Jobs Mutation', () => new Promise((done) => {
+test('Correctly Resolves Create Ansible Automation Mutation', () => new Promise((done) => {
+  const APIServer = nock('http://0.0.0.0/kubernetes');
+  ['default'].forEach((namespace) => {
+    APIServer.persist().post(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, mockCreatePolicyAutomationResponse);
+  });
   supertest(server)
     .post(GRAPHQL_PATH)
     .send({
@@ -250,6 +240,30 @@ test('Correctly Resolves Create and Update Ansible Jobs Mutation', () => new Pro
               },
             },
           }],
+          toUpdateJSON: null
+        )
+      }
+    `,
+    })
+    .end((err, res) => {
+      expect(JSON.parse(res.text)).toMatchSnapshot();
+      done();
+    });
+}));
+
+test('Correctly Resolves Update Ansible Automation Mutation', () => new Promise((done) => {
+  const APIServer = nock('http://0.0.0.0/kubernetes');
+  ['default'].forEach((namespace) => {
+    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, mockUpdatePolicyAutomationResponse);
+  });
+  supertest(server)
+    .post(GRAPHQL_PATH)
+    .send({
+      query: `
+      mutation {
+        createAndUpdatePolicyAutomation(
+          toCreateJSON: null,
           toUpdateJSON: [{
             kind: "PolicyAutomation",
             apiVersion: "policy.open-cluster-management.io/v1alpha1",

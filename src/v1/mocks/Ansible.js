@@ -444,3 +444,47 @@ export const mockAnsibleJobListResponse = {
     selfLink: '/apis/tower.ansible.com/v1alpha1/namespaces/default/ansiblejobs',
   },
 };
+
+export const mockCreateAnsibleJobResponse = {
+  kind: 'PolicyAutomation',
+  apiVersion: 'policy.open-cluster-management.io/v1alpha1',
+  metadata: {
+    name: 'policy-grc-default-AnsibleJob',
+    namespace: 'default',
+  },
+  spec: {
+    policyRef: 'policy-grc-111',
+    eventHook: 'non-compliance',
+    mode: 'once',
+    automationDef: {
+      type: 'AnsibleJob',
+      name: 'Demo Job Template',
+      secret: 'grc-testing',
+      extra_vars: {
+        selector: 'target-cluster',
+      },
+    },
+  },
+};
+
+export const mockUpdateAnsibleJobResponse = {
+  kind: 'PolicyAutomation',
+  apiVersion: 'policy.open-cluster-management.io/v1alpha1',
+  metadata: {
+    name: 'policy-grc-default-AnsibleJob',
+    namespace: 'default',
+  },
+  spec: {
+    policyRef: 'policy-grc-111',
+    eventHook: 'non-compliance',
+    mode: 'manually',
+    automationDef: {
+      type: 'AnsibleJob',
+      name: 'New job Template',
+      secret: 'grc-testing',
+      extra_vars: {
+        selector: 'new-cluster',
+      },
+    },
+  },
+};

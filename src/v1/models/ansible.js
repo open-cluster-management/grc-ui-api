@@ -6,14 +6,6 @@ import KubeModel from './kube';
 import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
-function getErrorMessage(item, errorMessage) {
-  let updatedErrorMessage = errorMessage;
-  if (item.code >= 400 || item.status === 'Failure') {
-    updatedErrorMessage += `${item.message}\n`;
-  }
-
-  return updatedErrorMessage;
-}
 export default class AnsibleModel extends KubeModel {
   async getAnsibleAutomations(namespace) {
     let ansibleAutomation;
@@ -132,28 +124,75 @@ export default class AnsibleModel extends KubeModel {
 
   async createAndUpdateAnsibleJobs(args) {
     const { toCreateJSON, toUpdateJSON } = args;
-    let errorMessage = '';
-    let result = [];
+    const createRes = [];
+    const createErr = [];
     if (Array.isArray(toCreateJSON) && toCreateJSON.length > 0) {
-      result = await Promise.all(toCreateJSON.map((json) => {
-        const namespace = _.get(json, 'metadata.namespace');
-        return this.kubeConnector.post(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
-          .catch((err) => Error(err));
-      }));
-    } else if (Array.isArray(toUpdateJSON) && toUpdateJSON.length > 0) {
-      result = await Promise.all(toUpdateJSON.map((json) => {
-        const namespace = _.get(json, 'metadata.namespace');
-        return this.kubeConnector.put(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`, json)
-          .catch((err) => Error(err));
-      }));
+      const ur = await Promise.all(toCreateJSON.map((json) => this.ansibleJobsAction(json, 'post')
+        .then((res) => ({ response: res, kind: json.kind }))
+        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+      ur.forEach((item) => {
+        if (item.status === 'Failure' || item.message) {
+          createErr.push({
+            message: item.message,
+            kind: item.kind,
+          });
+        } else {
+          createRes.push({
+            response: item.response ? item.response : item,
+            kind: item.kind,
+          });
+        }
+      });
     }
-    result.forEach((item) => {
-      errorMessage = getErrorMessage(item, errorMessage);
-    });
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    } else {
-      return result;
+    const updateRes = [];
+    const updateErr = [];
+    if (Array.isArray(toUpdateJSON) && toUpdateJSON.length > 0) {
+      const ur = await Promise.all(toUpdateJSON.map((json) => this.ansibleJobsAction(json, 'put')
+        .then((res) => ({ response: res, kind: json.kind }))
+        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
+      ur.forEach((item) => {
+        if (item.status === 'Failure' || item.message) {
+          updateErr.push({
+            message: item.message,
+            kind: item.kind,
+          });
+        } else {
+          updateRes.push({
+            response: item.response ? item.response : item,
+            kind: item.kind,
+          });
+        }
+      });
     }
+    return {
+      create: {
+        errors: createErr,
+        result: createRes,
+      },
+      update: {
+        errors: updateErr,
+        result: updateRes,
+      },
+    };
+  }
+
+  async ansibleJobsAction(action, json) {
+    const namespace = _.get(json, 'metadata.namespace');
+    const url = `/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`;
+    let response;
+    switch (action) {
+      case 'post':
+        response = await this.kubeConnector.post(url, json);
+        break;
+      case 'put':
+        response = await this.kubeConnector.put(url, json);
+        break;
+      default:
+        // do nothing
+    }
+    if (response && (response.code || response.message)) {
+      throw new Error(`${response.code} - ${response.message}`);
+    }
+    return response;
   }
 }

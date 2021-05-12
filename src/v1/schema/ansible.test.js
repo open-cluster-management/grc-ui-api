@@ -13,8 +13,25 @@ import {
   mockCopiedSecetResponse,
   mockAnsibleAutomationsResponse,
   mockAnsibleJobListResponse,
+  mockCreateAnsibleJobResponse,
+  mockUpdateAnsibleJobResponse,
 } from '../mocks/Ansible';
 import ApiGroup from '../lib/ApiGroup';
+
+describe('Generic AnsibleJob Resolver', () => {
+  beforeAll(() => {
+    // specify the url to be intercepted
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+
+    // define the method to be intercepted
+    ['default'].forEach((namespace) => {
+      APIServer.persist().post(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`)
+        .reply(200, mockCreateAnsibleJobResponse);
+      APIServer.persist().put(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`)
+        .reply(200, mockUpdateAnsibleJobResponse);
+    });
+  });
+});
 
 describe('Ansible Automation Resolver', () => {
   test('Correctly resolves ansible credentials', () => new Promise((done) => {
@@ -204,3 +221,62 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 });
+
+test('Correctly Resolves Create and Update Ansible Jobs Mutation', () => new Promise((done) => {
+  supertest(server)
+    .post(GRAPHQL_PATH)
+    .send({
+      query: `
+      mutation {
+        createAndUpdateAnsibleJobs(
+          toCreateJSON: [{
+            kind: "PolicyAutomation",
+            apiVersion: "policy.open-cluster-management.io/v1alpha1",
+            metadata: {
+              name: "policy-grc-default-AnsibleJob",
+              namespace: "default",
+            },
+            spec: {
+              policyRef: "policy-grc-111",
+              eventHook: "non-compliance",
+              mode: "once",
+              automationDef: {
+                type: "AnsibleJob",
+                name: "Demo Job Template",
+                secret: "grc-testing",
+                extra_vars: {
+                  selector: "target-cluster",
+                },
+              },
+            },
+          }],
+          toUpdateJSON: [{
+            kind: "PolicyAutomation",
+            apiVersion: "policy.open-cluster-management.io/v1alpha1",
+            metadata: {
+              name: "policy-grc-default-AnsibleJob",
+              namespace: "default",
+            },
+            spec: {
+              policyRef: "policy-grc-111",
+              eventHook: "non-compliance",
+              mode: "manually",
+              automationDef: {
+                type: "AnsibleJob",
+                name: "New job Template",
+                secret: "grc-testing",
+                extra_vars: {
+                  selector: "new-cluster",
+                },
+              },
+            },
+          }],
+        )
+      }
+    `,
+    })
+    .end((err, res) => {
+      expect(JSON.parse(res.text)).toMatchSnapshot();
+      done();
+    });
+}));

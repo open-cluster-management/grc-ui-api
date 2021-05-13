@@ -1,3 +1,6 @@
 build-harness*
 vbh
 test-output
+.build-harness-bootstrap
+.git
+.gitignore

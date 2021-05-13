@@ -21,7 +21,7 @@ default::
 	@echo "Build Harness Bootstrapped"
 
 install:
-	npm install
+	npm ci
 
 copyright-check:
 	./build/copyright-check.sh $(TRAVIS_BRANCH)

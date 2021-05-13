@@ -16,7 +16,7 @@ import morganBody from 'morgan-body';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import inspect from 'security-middleware';
+import inspect from '@open-cluster-management/security-middleware';
 import noCache from 'nocache';
 import authMiddleware from './lib/auth-middleware';
 import logger from './lib/logger';

@@ -8,7 +8,7 @@ RUN yum install git -y
 WORKDIR /opt/app-root/src/grc-ui-api
 COPY . .
 
-RUN npm ci 
+RUN make install
 RUN make build-prod
 RUN make prune
 

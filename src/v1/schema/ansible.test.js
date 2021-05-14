@@ -218,12 +218,12 @@ test('Correctly Resolves Create Policy Automation Mutation', () => new Promise((
     .send({
       query: `
       mutation {
-        createAndUpdatePolicyAutomation(
-          toCreateJSON: [{
+        modifyPolicyAutomation(
+          poliyAutomationJSON: [{
             kind: "PolicyAutomation",
             apiVersion: "policy.open-cluster-management.io/v1alpha1",
             metadata: {
-              name: "policy-grc-default-AnsibleJob",
+              name: "policy-grc-default-policyAutomation",
               namespace: "default",
             },
             spec: {
@@ -240,7 +240,7 @@ test('Correctly Resolves Create Policy Automation Mutation', () => new Promise((
               },
             },
           }],
-          toUpdateJSON: null
+          action: "post"
         )
       }
     `,
@@ -262,9 +262,9 @@ test('Resolves Policy Automation Mutation Empty Case', () => new Promise((done) 
     .send({
       query: `
       mutation {
-        createAndUpdatePolicyAutomation(
-          toCreateJSON: null,
-          toUpdateJSON: null
+        modifyPolicyAutomation(
+          poliyAutomationJSON: [],
+          action: "post"
         )
       }
     `,
@@ -278,7 +278,7 @@ test('Resolves Policy Automation Mutation Empty Case', () => new Promise((done) 
 test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((done) => {
   const APIServer = nock('http://0.0.0.0/kubernetes');
   ['default'].forEach((namespace) => {
-    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
       .reply(200, mockUpdatePolicyAutomationResponse);
   });
   supertest(server)
@@ -286,29 +286,29 @@ test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((
     .send({
       query: `
       mutation {
-        createAndUpdatePolicyAutomation(
-          toCreateJSON: null,
-          toUpdateJSON: [{
+        modifyPolicyAutomation(
+          poliyAutomationJSON: [{
             kind: "PolicyAutomation",
             apiVersion: "policy.open-cluster-management.io/v1alpha1",
             metadata: {
-              name: "policy-grc-default-AnsibleJob",
+              name: "policy-grc-default-policyAutomation",
               namespace: "default",
             },
             spec: {
               policyRef: "policy-grc-111",
               eventHook: "non-compliance",
-              mode: "manually",
+              mode: "once",
               automationDef: {
                 type: "AnsibleJob",
-                name: "New job Template",
+                name: "Demo Job Template",
                 secret: "grc-testing",
                 extra_vars: {
-                  selector: "new-cluster",
+                  selector: "target-cluster",
                 },
               },
             },
           }],
+          action: "put"
         )
       }
     `,

@@ -66,7 +66,7 @@ type Mutation {
   createAndUpdateResources(toCreate: [JSON], toUpdate: [JSON]): JSON
 
   # Create Policy Automation that do not exist and updates those that do exist
-  createAndUpdatePolicyAutomation(toCreateJSON: [JSON], toUpdateJSON: [JSON]): JSON
+  modifyPolicyAutomation(poliyAutomationJSON: [JSON], action: String!): JSON
 
   # Update Kubernetes resources
   updateResource(namespace: String!, name: String!, body: JSON, selfLink: String!, resourcePath: String): JSON

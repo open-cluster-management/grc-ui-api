@@ -247,7 +247,7 @@ Object {
 exports[`Correctly Resolves Create Policy Automation Mutation 1`] = `
 Object {
   "data": Object {
-    "createAndUpdatePolicyAutomation": Object {
+    "modifyPolicyAutomation": Object {
       "errors": Array [],
       "result": Array [
         Object {
@@ -283,7 +283,7 @@ Object {
 exports[`Correctly Resolves Update Policy Automation Mutation 1`] = `
 Object {
   "data": Object {
-    "createAndUpdatePolicyAutomation": Object {
+    "modifyPolicyAutomation": Object {
       "errors": Array [],
       "result": Array [
         Object {
@@ -319,7 +319,7 @@ Object {
 exports[`Resolves Policy Automation Mutation Empty Case 1`] = `
 Object {
   "data": Object {
-    "createAndUpdatePolicyAutomation": Object {
+    "modifyPolicyAutomation": Object {
       "errors": Array [],
       "result": Array [],
     },

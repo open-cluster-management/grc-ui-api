@@ -45,6 +45,6 @@ export const resolver = {
     ansibleAutomationHistories: (parent, args, { ansibleModel }) => ansibleModel.ansibleAutomationHistories(args),
   },
   Mutation: {
-    createAndUpdatePolicyAutomation: (parent, args, { ansibleModel }) => ansibleModel.createAndUpdatePolicyAutomation(args),
+    modifyPolicyAutomation: (parent, args, { ansibleModel }) => ansibleModel.modifyPolicyAutomation(args),
   },
 };

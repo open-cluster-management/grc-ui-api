@@ -122,17 +122,14 @@ export default class AnsibleModel extends KubeModel {
     }));
   }
 
-  async createAndUpdatePolicyAutomation(args) {
-    const { toCreateJSON, toUpdateJSON } = args;
+  async modifyPolicyAutomation(args) {
+    const { poliyAutomationJSON, action } = args;
     let resPromise = [];
     const resArray = [];
     const errArray = [];
-    if (toCreateJSON) {
-      resPromise = await Promise.all(toCreateJSON.map((json) => this.policyAutomationAction(json, 'post')
-        .then((res) => ({ response: res, kind: json.kind }))
-        .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
-    } else if (toUpdateJSON) {
-      resPromise = await Promise.all(toUpdateJSON.map((json) => this.policyAutomationAction(json, 'put')
+    if (Array.isArray(poliyAutomationJSON) && poliyAutomationJSON.length > 0
+        && action && typeof action === 'string') {
+      resPromise = await Promise.all(poliyAutomationJSON.map((json) => this.policyAutomationAction(json, action)
         .then((res) => ({ response: res, kind: json.kind }))
         .catch((err) => ({ status: 'Failure', message: err.message, kind: json.kind }))));
     }
@@ -158,15 +155,16 @@ export default class AnsibleModel extends KubeModel {
   }
 
   async policyAutomationAction(json, action) {
+    const name = _.get(json, 'metadata.name');
     const namespace = _.get(json, 'metadata.namespace');
     const url = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
     let response;
-    switch (action) {
+    switch (action.trim().toLowerCase()) {
       case 'post':
         response = await this.kubeConnector.post(url, json);
         break;
       case 'put':
-        response = await this.kubeConnector.put(url, json);
+        response = await this.kubeConnector.put(`${url}/${name}`, json);
         break;
       default:
         // do nothing

@@ -9,7 +9,6 @@ WORKDIR /opt/app-root/src/grc-ui-api
 COPY . .
 
 RUN npm ci 
-RUN make lint
 RUN make build-prod
 RUN make prune
 

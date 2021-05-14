@@ -5,6 +5,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-14:1 as builder
 USER root
 RUN yum install git -y
 
+RUN mkdir -p /opt/app-root/src/grc-ui
 WORKDIR /opt/app-root/src/grc-ui-api
 COPY . .
 

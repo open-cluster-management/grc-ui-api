@@ -1,0 +1,45 @@
+sudo: required
+language: node_js
+
+services:
+  - docker
+
+branches:
+  only:
+    - main
+    - /^release-[0-9]+\..*$/
+
+addons:
+  sonarcloud:
+    organization: "open-cluster-management"
+    token:
+      secure: 
+        "cB5QiHDIVLBTHbXzHM27LY4IGfPsngwvE5gQ4UTq0lNeWkhGXb5yosTKAybFH7XznGdGNKS55Ki/iU8vZR0fXPGAP/YkDBbRk5GxK3G4UMhOVYm/AAbasf6HiszaQrHP7VivlgMQqxCIrDAY/udmY77OWGziQYk8UUViHZKqFf+uRqyuzPeuQ7nFVpSbPmYL8xkjIoN5ZiYkDz74xTY8ovKeFeY57KO6hmFa1VvMhaNTwE2OhDazm1TvoMYbx95mBc3L2/NO+yEVuLETwzwClS1wiwyJSr094bSsLEtvaGi0ZnQ05OZ5bzP0FouC9W1sav/HPgO3ZYwLq8SWrw52qsOnbl1CIxCb4a+VWeiBqFGyzsC+ZxiQKZ392ZHgWlBTwLiQtYufpko6n59jptTgirNczorAM2mEtKBk2PcSfdCKukBNcnwKMEcsqb0gSOZjmPqd868iBfI1mRy2SXsIrVl7uvFN6c9peKUH4vWwpGeJfnvFh5ETvxMTDDoIUB8DsLiIHpufUWxf4W9IMXKfnmSy/AcDxlI338Fy7pfiCX0bTWs/4opR8cNsl6nX40R+5fRAjYmtkpcRCjXPSaj6UUrnjtuZkK1ql8RGftrIiNE5IdEZymAuoITfDMiTdMm2YHaRjDIH7jUDODOCqz6siVzjf1CSAoaGhGOVb2A5bnA="
+
+env:
+  global:
+    # Required
+    - OS=linux
+    # Component Specific
+    - COMPONENT_INIT_COMMAND=${TRAVIS_BUILD_DIR}/build/install-dependencies.sh
+    - COMPONENT_BUILD_COMMAND=${TRAVIS_BUILD_DIR}/build/build.sh
+
+stages:
+  - build
+
+before_script:
+  - make init
+
+jobs:
+  include:
+    - stage: build
+      name: "Build the image with latest-dev tag and push it"
+      if: type = push AND branch = main
+      script:
+        - set -e
+        - export COMPONENT_VERSION="latest"
+        - export COMPONENT_TAG_EXTENSION="-dev"
+        - |
+          make
+          make component/build
+          make component/push

@@ -24,6 +24,8 @@ env:
     - COMPONENT_INIT_COMMAND=${TRAVIS_BUILD_DIR}/build/install-dependencies.sh
     - COMPONENT_BUILD_COMMAND=${TRAVIS_BUILD_DIR}/build/build.sh
 
+install: echo skipping install
+
 stages:
   - build
 

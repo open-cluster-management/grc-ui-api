@@ -1,5 +1,5 @@
 build-harness*
-.build-harness-bootstrap
+/.build-harness-bootstrap
 .git*
 vbh
 test-output

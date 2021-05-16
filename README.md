@@ -10,7 +10,7 @@ The UI API microservice, `grc-ui-api`, is the API server for the governance and 
 - Install the modules
 
    ```bash
-   npm install
+   npm ci
    ```
 - Build the project
 

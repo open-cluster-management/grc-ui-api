@@ -278,7 +278,7 @@ test('Resolves Policy Automation Mutation Empty Case', () => new Promise((done) 
 test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((done) => {
   const APIServer = nock('http://0.0.0.0/kubernetes');
   ['default'].forEach((namespace) => {
-    APIServer.persist().put(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
+    APIServer.persist().patch(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
       .reply(200, mockUpdatePolicyAutomationResponse);
   });
   supertest(server)
@@ -308,7 +308,7 @@ test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((
               },
             },
           }],
-          action: "put"
+          action: "patch"
         )
       }
     `,

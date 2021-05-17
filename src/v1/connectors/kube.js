@@ -157,10 +157,16 @@ export default class KubeConnector {
     return this.doRequest(this.getDefaults('DELETE', path, { json: jsonBody }), opts);
   }
 
-  patch(path = '', opts = {}) {
-    const headers = {
-      'Content-Type': 'application/json-patch+json',
-    };
+  // The Kubernetes API server will not recursively create nested objects for a JSON patch input.
+  // We need to use merge-patch here
+  patch(path = '', opts = {}, mergePatch) {
+    const headers = (mergePatch === 'mergePatch')
+      ? {
+        'Content-Type': 'application/merge-patch+json',
+      }
+      : {
+        'Content-Type': 'application/json-patch+json',
+      };
     return this.doRequest(this.getDefaults('PATCH', path, {}, headers), opts);
   }
 

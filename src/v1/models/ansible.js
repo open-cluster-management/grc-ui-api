@@ -163,11 +163,13 @@ export default class AnsibleModel extends KubeModel {
       case 'post':
         response = await this.kubeConnector.post(url, json);
         break;
-      case 'put': {
+      case 'patch': {
         const requestBody = {
           json,
         };
-        response = await this.kubeConnector.put(`${url}/${name}`, requestBody);
+        // The Kubernetes API server will not recursively create nested objects for a JSON patch input.
+        // We need to use merge-patch here
+        response = await this.kubeConnector.patch(`${url}/${name}`, requestBody, 'mergePatch');
         break;
       }
       default:

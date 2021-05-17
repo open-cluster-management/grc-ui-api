@@ -127,38 +127,25 @@ export default class GenericModel extends KubeModel {
       deleteAfterUse = true,
     } = args;
 
-    // Check if the ManagedClusterView already exists if not create it
-    const managedClusterViewName = crypto.createHash('sha1').update(`${cluster}-${name}-${kind}`).digest('hex').substr(0, 63);
-
-    const resourceResponse = await this.kubeConnector.get(
-      `/apis/view.open-cluster-management.io/v1beta1/namespaces/${cluster}/managedclusterviews/${managedClusterViewName}`,
+    const apiGroup = getApiGroupFromSelfLink(selfLink);
+    const response = await this.kubeConnector.managedClusterViewQuery(
+      cluster,
+      apiGroup,
+      kind,
+      name,
+      namespace,
+      updateInterval,
+      deleteAfterUse,
     ).catch((err) => {
       logger.error(err);
       throw err;
     });
-    if (resourceResponse.status === 'Failure' || resourceResponse.code >= 400) {
-      const apiGroup = getApiGroupFromSelfLink(selfLink);
-      const response = await this.kubeConnector.managedClusterViewQuery(
-        cluster,
-        apiGroup,
-        kind,
-        name,
-        namespace,
-        updateInterval,
-        deleteAfterUse,
-      ).catch((err) => {
-        logger.error(err);
-        throw err;
-      });
 
-      const resourceResult = _.get(response, 'status.result');
-      if (resourceResult) {
-        return resourceResult;
-      }
-
+    const resourceResult = _.get(response, 'status.result');
+    if (!resourceResult) {
       throw new Error('Unable to load resource data - Check to make sure the cluster hosting this resource is online');
     }
-    return _.get(resourceResponse, 'status.result');
+    return resourceResult;
   }
 
   async getResourceEndPoint(resource, k8sPaths) {

@@ -163,9 +163,13 @@ export default class AnsibleModel extends KubeModel {
       case 'post':
         response = await this.kubeConnector.post(url, json);
         break;
-      case 'put':
-        response = await this.kubeConnector.put(`${url}/${name}`, json);
+      case 'put': {
+        const requestBody = {
+          json,
+        };
+        response = await this.kubeConnector.put(`${url}/${name}`, requestBody);
         break;
+      }
       default:
         // do nothing
     }

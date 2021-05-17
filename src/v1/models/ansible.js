@@ -164,12 +164,15 @@ export default class AnsibleModel extends KubeModel {
         response = await this.kubeConnector.post(url, json);
         break;
       case 'patch': {
+        // The Kubernetes API server will not recursively create nested objects for a JSON patch input.
+        // We need to override header and use merge-patch here
         const requestBody = {
           json,
+          headers: {
+            'Content-Type': 'application/merge-patch+json',
+          },
         };
-        // The Kubernetes API server will not recursively create nested objects for a JSON patch input.
-        // We need to use merge-patch here
-        response = await this.kubeConnector.patch(`${url}/${name}`, requestBody, 'mergePatch');
+        response = await this.kubeConnector.patch(`${url}/${name}`, requestBody);
         break;
       }
       default:

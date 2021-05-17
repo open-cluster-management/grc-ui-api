@@ -158,11 +158,9 @@ export default class KubeConnector {
   }
 
   patch(path = '', opts = {}) {
-    const headers = opts.headers
-      ? opts.headers
-      : {
-        'Content-Type': 'application/json-patch+json',
-      };
+    const headers = {
+      'Content-Type': 'application/json-patch+json',
+    };
     return this.doRequest(this.getDefaults('PATCH', path, {}, headers), opts);
   }
 

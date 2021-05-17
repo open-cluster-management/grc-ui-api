@@ -10,7 +10,6 @@
 /* Copyright Contributors to the Open Cluster Management project */
 
 import _ from 'lodash';
-import crypto from 'crypto';
 import KubeModel from './kube';
 import logger from '../lib/logger';
 import buildSelfLinK from '../lib/buildSelfLink';

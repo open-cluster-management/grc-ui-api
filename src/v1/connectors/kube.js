@@ -10,7 +10,6 @@
 /* Copyright Contributors to the Open Cluster Management project */
 
 import _ from 'lodash';
-import crypto from 'crypto';
 import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';

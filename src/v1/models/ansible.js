@@ -112,14 +112,19 @@ export default class AnsibleModel extends KubeModel {
       );
       return matched !== undefined;
     });
-    return automation.map((au) => ({
-      name: au.metadata.name,
-      namespace: au.metadata.namespace,
-      status: _.get(au, 'status.ansibleJobResult.status'),
-      started: _.get(au, 'status.ansibleJobResult.started'),
-      finished: _.get(au, 'status.ansibleJobResult.finished'),
-      job: _.get(au, 'status.k8sJob.namespacedName'),
-    }));
+    return automation.map((au) => {
+      const conditions = _.get(au, 'status.conditions', []);
+      const ansibleResultCondition = conditions.find((arc) => arc.ansibleResult);
+      return {
+        name: au.metadata.name,
+        namespace: au.metadata.namespace,
+        status: _.get(au, 'status.ansibleJobResult.status') ? _.get(au, 'status.ansibleJobResult.status') : _.get(ansibleResultCondition, 'reason'),
+        message: _.get(ansibleResultCondition, 'message'),
+        started: _.get(au, 'status.ansibleJobResult.started') ? _.get(au, 'status.ansibleJobResult.started') : _.get(ansibleResultCondition, 'lastTransitionTime'),
+        finished: _.get(au, 'status.ansibleJobResult.finished'),
+        job: _.get(au, 'status.k8sJob.namespacedName'),
+      };
+    });
   }
 
   async modifyPolicyAutomation(args) {

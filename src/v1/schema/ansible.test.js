@@ -192,6 +192,7 @@ describe('Ansible Automation Resolver', () => {
           ansibleAutomationHistories(name: "policy-role", namespace:"default") {
             name
             namespace
+            message
             status
             started
             finished

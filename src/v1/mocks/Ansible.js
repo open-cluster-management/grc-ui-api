@@ -436,6 +436,62 @@ export const mockAnsibleJobListResponse = {
         message: 'This job instance is already running or has reached its end state.',
       },
     },
+    {
+      apiVersion: 'tower.ansible.com/v1alpha1',
+      kind: 'AnsibleJob',
+      metadata: {
+        creationTimestamp: '2021-05-03T17:31:32Z',
+        generateName: 'policy-role-once-',
+        generation: 1,
+        labels: {
+          tower_job_id: '22',
+        },
+        name: 'policy-role-once-7fg9p',
+        namespace: 'default',
+        ownerReferences: [
+          {
+            apiVersion: 'policy.open-cluster-management.io/v1beta1',
+            blockOwnerDeletion: true,
+            controller: true,
+            kind: 'PolicyAutomation',
+            name: 'policy-role',
+            uid: 'bddcd0d3-341e-4480-b2ed-e62a428f4ee5',
+          },
+        ],
+        resourceVersion: '371219',
+        selfLink: '/apis/tower.ansible.com/v1alpha1/namespaces/default/ansiblejobs/policy-role-once-7fg9p',
+        uid: 'c61d3d3c-a8b8-48ed-9afb-b94ab0cc447b',
+      },
+      spec: {
+        extra_vars: {
+          sn_priority: 1,
+          sn_severity: 1,
+          target_clusters: [
+            'local-cluster',
+          ],
+        },
+        job_template_name: 'Demo Job Template',
+        tower_auth_secret: 'toweraccess',
+      },
+      status: {
+        conditions: [
+          {
+            ansibleResult: {
+              changed: 0,
+              completion: '2021-05-03T17:32:18.620627',
+              failures: 0,
+              ok: 3,
+              skipped: 0,
+            },
+            lastTransitionTime: '2021-05-03T17:31:32Z',
+            message: 'Tower Secret must exists',
+            reason: 'Failed',
+            status: 'True',
+            type: 'Failure',
+          },
+        ],
+      },
+    },
   ],
   kind: 'AnsibleJobList',
   metadata: {

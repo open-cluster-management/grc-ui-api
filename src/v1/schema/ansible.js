@@ -30,6 +30,7 @@ type AnsibleAutomationHistory {
   name: String
   namespace: String
   status: String
+  message: String
   started: String
   finished: String
   job: String

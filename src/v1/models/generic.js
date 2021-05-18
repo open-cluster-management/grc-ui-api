@@ -10,6 +10,7 @@
 /* Copyright Contributors to the Open Cluster Management project */
 
 import _ from 'lodash';
+import crypto from 'crypto';
 import KubeModel from './kube';
 import logger from '../lib/logger';
 import buildSelfLinK from '../lib/buildSelfLink';
@@ -126,25 +127,38 @@ export default class GenericModel extends KubeModel {
       deleteAfterUse = true,
     } = args;
 
-    const apiGroup = getApiGroupFromSelfLink(selfLink);
-    const response = await this.kubeConnector.managedClusterViewQuery(
-      cluster,
-      apiGroup,
-      kind,
-      name,
-      namespace,
-      updateInterval,
-      deleteAfterUse,
+    // Check if the ManagedClusterView already exists if not create it
+    const managedClusterViewName = crypto.createHash('sha1').update(`${cluster}-${name}-${kind}`).digest('hex').substr(0, 63);
+
+    const resourceResponse = await this.kubeConnector.get(
+      `/apis/view.open-cluster-management.io/v1beta1/namespaces/${cluster}/managedclusterviews/${managedClusterViewName}`,
     ).catch((err) => {
       logger.error(err);
       throw err;
     });
+    if (resourceResponse.status === 'Failure' || resourceResponse.code >= 400) {
+      const apiGroup = getApiGroupFromSelfLink(selfLink);
+      const response = await this.kubeConnector.managedClusterViewQuery(
+        cluster,
+        apiGroup,
+        kind,
+        name,
+        namespace,
+        updateInterval,
+        deleteAfterUse,
+      ).catch((err) => {
+        logger.error(err);
+        throw err;
+      });
 
-    const resourceResult = _.get(response, 'status.result');
-    if (!resourceResult) {
+      const resourceResult = _.get(response, 'status.result');
+      if (resourceResult) {
+        return resourceResult;
+      }
+
       throw new Error('Unable to load resource data - Check to make sure the cluster hosting this resource is online');
     }
-    return resourceResult;
+    return _.get(resourceResponse, 'status.result');
   }
 
   async getResourceEndPoint(resource, k8sPaths) {

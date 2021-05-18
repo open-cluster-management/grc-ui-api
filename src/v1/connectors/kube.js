@@ -10,6 +10,7 @@
 /* Copyright Contributors to the Open Cluster Management project */
 
 import _ from 'lodash';
+import crypto from 'crypto';
 import logger from '../lib/logger';
 import { isRequired } from '../lib/utils';
 import config from '../../../config';
@@ -226,7 +227,7 @@ export default class KubeConnector {
 
   async managedClusterViewQuery(managedClusterNamespace, apiGroup, kind, resourceName, namespace, updateInterval, deleteAfterUse) {
     // name cannot be long than 63 chars in length
-    const name = `${Date.now()}-${managedClusterNamespace}-${resourceName}-${kind}`.toLocaleLowerCase().substr(0, 63);
+    const name = crypto.createHash('sha1').update(`${managedClusterNamespace}-${resourceName}-${kind}`).digest('hex').substr(0, 63);
 
     // scope.name is required, and either GKV (scope.apiGroup+kind+version) or scope.resource
     const body = {

@@ -22,7 +22,7 @@ describe('Ansible Automation Resolver', () => {
   test('Correctly resolves ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
-      APIServer.persist().get(`/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/provider=ans`).reply(200, mockAnsibleSecretsResponse(ns));
+      APIServer.persist().get(`/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`).reply(200, mockAnsibleSecretsResponse(ns));
     });
     supertest(server)
       .post(GRAPHQL_PATH)

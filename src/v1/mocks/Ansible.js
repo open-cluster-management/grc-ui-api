@@ -10,8 +10,8 @@ export const mockAnsibleSecretsResponse = (ns) => ({
     resourceVersion: '157909',
     creationTimestamp: '2021-04-30T14:41:02Z',
     labels: {
-      'cluster.open-cluster-management.io/cloudconnection': '',
-      'cluster.open-cluster-management.io/provider': 'ans',
+      'cluster.open-cluster-management.io/credentials': '',
+      'cluster.open-cluster-management.io/type': 'ans',
     },
   },
   data: {
@@ -246,8 +246,8 @@ export const mockRootAnsibleSecetResponse = {
     resourceVersion: '352981',
     creationTimestamp: '2021-04-30T17:57:44Z',
     labels: {
-      'cluster.open-cluster-management.io/cloudconnection': '',
-      'cluster.open-cluster-management.io/provider': 'ans',
+      'cluster.open-cluster-management.io/credentials': '',
+      'cluster.open-cluster-management.io/type': 'ans',
     },
   },
   data: {
@@ -269,8 +269,8 @@ export const mockCopiedSecetResponse = {
     resourceVersion: '352981',
     creationTimestamp: '2021-04-30T17:57:44Z',
     labels: {
-      'cluster.open-cluster-management.io/cloudconnection': '',
-      'cluster.open-cluster-management.io/provider': 'ans',
+      'cluster.open-cluster-management.io/credentials': '',
+      'cluster.open-cluster-management.io/type': 'ans',
     },
   },
   data: {

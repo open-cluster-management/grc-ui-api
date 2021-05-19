@@ -15,7 +15,6 @@ export const mockAnsibleSecretsResponse = (ns) => ({
     },
   },
   data: {
-    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
     host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
     token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
   },
@@ -222,7 +221,6 @@ export const mockSecretExistsInTargetNamespaceResponse = {
         },
       },
       data: {
-        'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
         host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
         token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
       },
@@ -251,7 +249,6 @@ export const mockRootAnsibleSecetResponse = {
     },
   },
   data: {
-    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
     host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
     token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
   },
@@ -274,7 +271,6 @@ export const mockCopiedSecetResponse = {
     },
   },
   data: {
-    'credential-hash': 'QI9XaZW68D77JSvtKGlucILe71JH+SPK3JWNyu3cE3g=',
     host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
     token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
   },

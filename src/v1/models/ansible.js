@@ -76,7 +76,6 @@ export default class AnsibleModel extends KubeModel {
             'cluster.open-cluster-management.io/copiedFromSecretName': name,
           };
           rootSecret.metadata.namespace = targetNamespace;
-          rootSecret.metadata.name = `${namespace}.${name}`;
           delete rootSecret.metadata.resourceVersion;
           const result = await this.kubeConnector.post(`/api/v1/namespaces/${targetNamespace}/secrets`, rootSecret);
           if (!result.metadata.name) {
@@ -97,6 +96,9 @@ export default class AnsibleModel extends KubeModel {
   async ansibleAutomationHistories(args) {
     const { name, namespace } = args;
     const ansibleJobs = await this.kubeConnector.get(`/apis/tower.ansible.com/v1alpha1/namespaces/${namespace}/ansiblejobs`);
+    if (_.isString(ansibleJobs) && ansibleJobs === '404 page not found\n') {
+      throw new Error('Ansible Automation Platform Resource Operator not installed');
+    }
     if (!ansibleJobs.items) {
       logger.error(ansibleJobs);
       throw new Error('Failed to retrieve ansiblejobs');

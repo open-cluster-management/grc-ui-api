@@ -60,8 +60,8 @@ describe('Ansible Automation Resolver', () => {
             }
             spec
           }
-        }
-      `,
+        }`,
+        variables: { namespace: 'default' },
       })
       .end((err, res) => {
         expect(JSON.parse(res.text)).toMatchSnapshot();

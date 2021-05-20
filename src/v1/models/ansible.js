@@ -7,10 +7,13 @@ import logger from '../lib/logger';
 import ApiGroup from '../lib/ApiGroup';
 
 export default class AnsibleModel extends KubeModel {
-  async getPolicyAutomations(namespace) {
+  async getPolicyAutomations(args) {
     let policyAutomation;
-    if (namespace) {
-      policyAutomation = await this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`);
+    if (args.namespace) {
+      policyAutomation = await this.kubeConnector.getResources(
+        (ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`,
+        { namespaces: [args.namespace] },
+      );
     } else {
       [policyAutomation] = await Promise.all([
         this.kubeConnector.getResources((ns) => `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${ns}/policyautomations`),

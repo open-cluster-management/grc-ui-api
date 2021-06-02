@@ -50,9 +50,17 @@ const apolloServer = new ApolloServer({
   },
   context: ({ req }) => {
     const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
+    const clusterNamespaces = req.user.namespaces.items
+      .filter((ns) => ns.metadata.labels && ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'] === ns.metadata.name)
+      .map((ns) => ns.metadata.name);
+    const userNamespaces = req.user.namespaces.items
+      .filter((ns) => !ns.metadata.labels || !ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'])
+      .map((ns) => ns.metadata.name);
     const kubeConnector = new KubeConnector({
       token: req.kubeToken,
       namespaces,
+      clusterNamespaces,
+      userNamespaces,
     });
     if (isTest) {
       kubeConnector.kubeApiEndpoint = 'http://0.0.0.0/kubernetes';

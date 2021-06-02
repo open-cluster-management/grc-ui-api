@@ -342,8 +342,7 @@ export default class GenericModel extends KubeModel {
       'policy.open-cluster-management.io',
       'apps.open-cluster-management.io',
     ];
-
-    const { namespaces } = this.kubeConnector;
-    return getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, namespaces);
+    const { userNamespaces } = this.kubeConnector;
+    return getUserAccessInfo(this.kubeConnector, targetAPIGroups, null, userNamespaces);
   }
 }

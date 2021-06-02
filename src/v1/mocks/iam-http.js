@@ -31,11 +31,17 @@ export default function createMockHttp() {
         { // cluster namespace
           metadata: {
             name: 'cluster1',
+            labels: {
+              'cluster.open-cluster-management.io/managedCluster': 'cluster1',
+            },
           },
         },
         { // cluster namespace
           metadata: {
             name: 'local-cluster',
+            labels: {
+              'cluster.open-cluster-management.io/managedCluster': 'local-cluster',
+            },
           },
         },
       ],

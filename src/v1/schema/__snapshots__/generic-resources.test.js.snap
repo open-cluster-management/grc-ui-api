@@ -266,22 +266,6 @@ Object {
           ],
         },
       },
-      Object {
-        "namespace": "cluster1",
-        "rules": Object {
-          "*/*": Array [
-            "*",
-          ],
-        },
-      },
-      Object {
-        "namespace": "local-cluster",
-        "rules": Object {
-          "*/*": Array [
-            "*",
-          ],
-        },
-      },
     ],
   },
 }

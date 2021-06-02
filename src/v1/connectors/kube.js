@@ -26,6 +26,8 @@ export default class KubeConnector {
     httpLib = requestLib,
     kubeApiEndpoint = process.env.API_SERVER_URL || 'https://kubernetes.default.svc',
     namespaces = isRequired('namespaces'),
+    clusterNamespaces,
+    userNamespaces,
     pollTimeout = config.get('hcmPollTimeout'),
     pollInterval = config.get('hcmPollInterval'),
     uid = Date.now,
@@ -34,6 +36,8 @@ export default class KubeConnector {
     this.http = httpLib;
     this.kubeApiEndpoint = kubeApiEndpoint;
     this.namespaces = namespaces;
+    this.clusterNamespaces = clusterNamespaces;
+    this.userNamespaces = userNamespaces;
     this.pollInterval = pollInterval;
     this.pollTimeout = pollTimeout;
     // to-do how to deal with this after removing all resource view

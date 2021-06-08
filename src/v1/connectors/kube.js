@@ -247,7 +247,7 @@ export default class KubeConnector {
       spec: {
         scope: {
           name: resourceName,
-          resource: apiGroup ? `${kind}.${apiGroup}.${version}` : `${kind}.${version}`,
+          resource: apiGroup ? `${kind.toLowerCase()}.${version}.${apiGroup}` : `${kind.toLowerCase()}.${version}`,
         },
       },
     };

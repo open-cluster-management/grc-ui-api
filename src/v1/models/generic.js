@@ -17,18 +17,21 @@ import buildSelfLinK from '../lib/buildSelfLink';
 
 const noResourcetypeStr = '##cannot find resourcetype##';
 
-function getApiGroupFromSelfLink(selfLink, kind) {
+function getApiGroupVersionFromSelfLink(selfLink, kind) {
   let apiGroup = ''; // api group to differentiate between duplicate resources (ie. endpoints & subscriptions)
+  let version = '';
   const selfLinkData = selfLink.split('/');
   // When splitting the selfLink, the item at selfLinkData[3] is either the api version (if the resource has an apiGroup namespaced or not),
   // resource kind (if the resource is non-namespaced AND doesn’t have an apiGroup) or
   // namespaces (if the resource is namespaced AND doesn’t have an apiGroup).
   // knowing this we grab the apiGroup if selfLinkData[3] is not the kind or 'namespaces'
   if (selfLinkData[3] !== kind && selfLinkData[3] !== 'namespaces') {
-    // eslint-disable-next-line prefer-destructuring
     apiGroup = selfLinkData[2];
+    version = selfLinkData[3];
+  } else {
+    version = selfLinkData[1];
   }
-  return apiGroup;
+  return { apiGroup, version };
 }
 
 function formatApi(api, resourceRule, trgtAPIGroups, singleNSAccess) {
@@ -137,10 +140,11 @@ export default class GenericModel extends KubeModel {
       throw err;
     });
     if (resourceResponse.status === 'Failure' || resourceResponse.code >= 400) {
-      const apiGroup = getApiGroupFromSelfLink(selfLink);
+      const { apiGroup, version } = getApiGroupVersionFromSelfLink(selfLink);
       const response = await this.kubeConnector.managedClusterViewQuery(
         cluster,
         apiGroup,
+        version,
         kind,
         name,
         namespace,

@@ -40,7 +40,7 @@
     "@babel/preset-env": "^7.14.4",
     "@open-cluster-management/security-middleware": "^1.0.4",
     "apollo-errors": "^1.9.0",
-    "apollo-server-express": "^2.25.0",
+    "apollo-server-express": "^2.25.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cross-env": "^7.0.3",

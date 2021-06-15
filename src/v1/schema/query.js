@@ -41,6 +41,8 @@ type Query {
   copyAnsibleSecret(name: String!, namespace: String!, targetNamespace: String!): AnsibleSecretName
   # Ansible Automation History
   ansibleAutomationHistories(name: String!, namespace: String!): [AnsibleAutomationHistory]
+  # Ansible Operator Installed
+  ansibleOperatorInstalled: AnsibleOperatorInstalled
 }
 
 type Mutation {

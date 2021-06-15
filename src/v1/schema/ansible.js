@@ -35,6 +35,10 @@ type AnsibleAutomationHistory {
   finished: String
   job: String
 }
+
+type AnsibleOperatorInstalled {
+  installed: Boolean
+}
 `;
 
 export const resolver = {
@@ -44,6 +48,7 @@ export const resolver = {
     ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
     copyAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.copyAnsibleSecret(args),
     ansibleAutomationHistories: (parent, args, { ansibleModel }) => ansibleModel.ansibleAutomationHistories(args),
+    ansibleOperatorInstalled: (parent, args, { ansibleModel }) => ansibleModel.ansibleOperatorInstalled(args),
   },
   Mutation: {
     modifyPolicyAutomation: (parent, args, { ansibleModel }) => ansibleModel.modifyPolicyAutomation(args),

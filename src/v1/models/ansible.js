@@ -98,9 +98,11 @@ export default class AnsibleModel extends KubeModel {
 
   async ansibleOperatorInstalled() {
     const ansibleJobs = await this.kubeConnector.get('/apis/apiextensions.k8s.io/v1/customresourcedefinitions/ansiblejobs.tower.ansible.com');
+    const kind = _.get(ansibleJobs, 'kind');
+    const name = _.get(ansibleJobs, 'metadata.name');
     // if not installed, k8s will respond with a Status instead of the CRD.
     return {
-      installed: (ansibleJobs.kind === 'CustomResourceDefinition' && ansibleJobs.metadata.name === 'ansiblejobs.tower.ansible.com'),
+      installed: (kind === 'CustomResourceDefinition' && name === 'ansiblejobs.tower.ansible.com'),
     };
   }
 

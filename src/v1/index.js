@@ -10,7 +10,7 @@
 /* Copyright Contributors to the Open Cluster Management project */
 
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import { isInstance as isApolloErrorInstance, formatError as formatApolloError } from 'apollo-errors';
 import morganBody from 'morgan-body';
 import helmet from 'helmet';
@@ -49,6 +49,10 @@ const apolloServer = new ApolloServer({
     endpoint: GRAPHQL_PATH,
   },
   context: ({ req }) => {
+    if (req.user.namespaces.code === 401) {
+      logger.error('Found 401 Unauthorized returned for user namespaces')
+      throw new AuthenticationError('Unauthorized')
+    }
     const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
     const clusterNamespaces = req.user.namespaces.items
       .filter((ns) => ns.metadata.labels && ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'] === ns.metadata.name)

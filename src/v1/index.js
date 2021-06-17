@@ -50,8 +50,8 @@ const apolloServer = new ApolloServer({
   },
   context: ({ req }) => {
     if (req.user.namespaces.code === 401) {
-      logger.error('Found 401 unauthenticated returned for user namespaces')
-      throw new AuthenticationError('Unauthenticated')
+      logger.error('Found 401 unauthenticated returned for user namespaces');
+      throw new AuthenticationError('Unauthenticated');
     }
     const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
     const clusterNamespaces = req.user.namespaces.items

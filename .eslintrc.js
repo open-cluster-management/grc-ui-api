@@ -15,5 +15,6 @@ module.exports = {
     // turn off here for airbnb-base v14, which set limit to 100, sonar stil check this at limit 180
     'max-len': 'off',
     'no-underscore-dangle': 'off',
+    'prefer-destructuring': ['error', { object: true, array: false }],
   },
 };

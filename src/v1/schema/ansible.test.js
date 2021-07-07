@@ -9,6 +9,7 @@ import {
   mockAnsibleSecretsResponse,
   mockSecretExistsInTargetNamespaceResponse,
   mockSecretNotExistsInTargetNamespaceResponse,
+  mockFilterSecretInResponse,
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
   mockPolicyAutomationsResponse,
@@ -19,6 +20,29 @@ import {
 import ApiGroup from '../lib/ApiGroup';
 
 describe('Ansible Automation Resolver', () => {
+  test('Correctly filters ansible credentials', () => new Promise((done) => {
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    APIServer.persist().get(`/api/v1/namespaces/kube-system/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`).reply(200, mockFilterSecretInResponse);
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+          ansibleCredentials{
+            name
+            namespace
+            host
+            token
+          }
+        }
+      `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        nock.cleanAll(); // clear mock
+        done();
+      });
+  }));
+
   test('Correctly resolves ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {

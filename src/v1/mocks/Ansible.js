@@ -229,6 +229,53 @@ export const mockSecretExistsInTargetNamespaceResponse = {
   ],
 };
 
+export const mockFilterSecretInResponse = {
+  items: [
+    {
+      kind: 'Secret',
+      apiVersion: 'v1',
+      metadata: {
+        name: 'copied_toweraccess',
+        namespace: 'kube-system',
+        selfLink: '/api/v1/namespaces/kube-system/secrets/copied_toweraccess',
+        uid: 'e573a6c0-d15d-4774-a65e-0c04afaf8e35',
+        resourceVersion: '352982',
+        creationTimestamp: '2021-04-30T17:57:44Z',
+        labels: {
+          'cluster.open-cluster-management.io/type': 'ans',
+          'cluster.open-cluster-management.io/copiedFromNamespace': 'default',
+          'cluster.open-cluster-management.io/copiedFromSecretName': 'toweraccess',
+        },
+      },
+      data: {
+        host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+        token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+      },
+      type: 'Opaque',
+    },
+    {
+      kind: 'Secret',
+      apiVersion: 'v1',
+      metadata: {
+        name: 'toweraccess',
+        namespace: 'kube-system',
+        selfLink: '/api/v1/namespaces/kube-system/secrets/original_toweraccess',
+        uid: 'e573a6c0-d15d-4774-a65e-0c04afaf8e36',
+        resourceVersion: '352983',
+        creationTimestamp: '2021-04-30T17:57:44Z',
+        labels: {
+          'cluster.open-cluster-management.io/type': 'ans',
+        },
+      },
+      data: {
+        host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+        token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+      },
+      type: 'Opaque',
+    },
+  ],
+};
+
 export const mockSecretNotExistsInTargetNamespaceResponse = {
   items: [],
 };

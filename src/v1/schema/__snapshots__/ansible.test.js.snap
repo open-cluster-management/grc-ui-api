@@ -290,6 +290,42 @@ Object {
 }
 `;
 
+exports[`Correctly Resolves Delete Policy Automation Mutation 1`] = `
+Object {
+  "data": Object {
+    "modifyPolicyAutomation": Object {
+      "errors": Array [],
+      "result": Array [
+        Object {
+          "kind": "PolicyAutomation",
+          "response": Object {
+            "apiVersion": "policy.open-cluster-management.io/v1alpha1",
+            "kind": "PolicyAutomation",
+            "metadata": Object {
+              "name": "policy-grc-default-PolicyAutomation",
+              "namespace": "default",
+            },
+            "spec": Object {
+              "automationDef": Object {
+                "extra_vars": Object {
+                  "selector": "new-cluster",
+                },
+                "name": "New job Template",
+                "secret": "grc-testing",
+                "type": "AnsibleJob",
+              },
+              "eventHook": "non-compliance",
+              "mode": "manually",
+              "policyRef": "policy-grc-111",
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`Correctly Resolves Update Policy Automation Mutation 1`] = `
 Object {
   "data": Object {

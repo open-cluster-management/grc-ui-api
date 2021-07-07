@@ -112,6 +112,7 @@ export default class ComplianceModel {
   }
 
   async deleteCompliance(input) {
+    logger.info(JSON.stringify(input));
     const response = await this.kubeConnector.delete(input.selfLink);
     if (response.code || response.message) {
       throw new Error(`GRC ERROR ${response.code} - ${response.message}`);

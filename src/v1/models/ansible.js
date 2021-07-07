@@ -176,11 +176,12 @@ export default class AnsibleModel extends KubeModel {
   async policyAutomationAction(json, action) {
     const name = _.get(json, 'metadata.name');
     const namespace = _.get(json, 'metadata.namespace');
-    const url = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
+    const createURL = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
+    const updateURL = `${createURL}/${name}`;
     let response;
     switch (action.trim().toLowerCase()) {
       case 'post':
-        response = await this.kubeConnector.post(url, json);
+        response = await this.kubeConnector.post(createURL, json);
         break;
       case 'patch': {
         // The Kubernetes API server will not recursively create nested objects for a JSON patch input.
@@ -191,9 +192,12 @@ export default class AnsibleModel extends KubeModel {
             'Content-Type': 'application/merge-patch+json',
           },
         };
-        response = await this.kubeConnector.patch(`${url}/${name}`, requestBody);
+        response = await this.kubeConnector.patch(updateURL, requestBody);
         break;
       }
+      case 'delete':
+        response = await this.kubeConnector.delete(updateURL);
+        break;
       default:
         // do nothing
     }

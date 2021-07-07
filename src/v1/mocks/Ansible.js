@@ -540,3 +540,5 @@ export const mockUpdatePolicyAutomationResponse = {
     },
   },
 };
+
+// export const mockDeletePolicyAutomationResponse

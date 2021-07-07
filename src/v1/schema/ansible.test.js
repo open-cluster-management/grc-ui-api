@@ -319,3 +319,47 @@ test('Correctly Resolves Update Policy Automation Mutation', () => new Promise((
       done();
     });
 }));
+
+test('Correctly Resolves Delete Policy Automation Mutation', () => new Promise((done) => {
+  const APIServer = nock('http://0.0.0.0/kubernetes');
+  ['default'].forEach((namespace) => {
+    APIServer.persist().delete(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
+      .reply(200, mockUpdatePolicyAutomationResponse);
+  });
+  supertest(server)
+    .post(GRAPHQL_PATH)
+    .send({
+      query: `
+      mutation {
+        modifyPolicyAutomation(
+          poliyAutomationJSON: [{
+            kind: "PolicyAutomation",
+            apiVersion: "policy.open-cluster-management.io/v1alpha1",
+            metadata: {
+              name: "policy-grc-default-policyAutomation",
+              namespace: "default",
+            },
+            spec: {
+              policyRef: "policy-etcdencryption-policy-automation",
+              eventHook: "non-compliance",
+              mode: "once",
+              automationDef: {
+                type: "AnsibleJob",
+                name: "Demo Job Template",
+                secret: "grc-testing",
+                extra_vars: {
+                  selector: "target-cluster",
+                },
+              },
+            },
+          }],
+          action: "delete"
+        )
+      }
+    `,
+    })
+    .end((err, res) => {
+      expect(JSON.parse(res.text)).toMatchSnapshot();
+      done();
+    });
+}));

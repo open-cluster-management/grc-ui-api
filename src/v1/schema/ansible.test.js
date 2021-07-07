@@ -15,6 +15,7 @@ import {
   mockAnsibleJobListResponse,
   mockCreatePolicyAutomationResponse,
   mockUpdatePolicyAutomationResponse,
+  mockDeletePolicyAutomationResponse,
 } from '../mocks/Ansible';
 import ApiGroup from '../lib/ApiGroup';
 
@@ -324,7 +325,7 @@ test('Correctly Resolves Delete Policy Automation Mutation', () => new Promise((
   const APIServer = nock('http://0.0.0.0/kubernetes');
   ['default'].forEach((namespace) => {
     APIServer.persist().delete(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
-      .reply(200, mockUpdatePolicyAutomationResponse);
+      .reply(200, mockDeletePolicyAutomationResponse);
   });
   supertest(server)
     .post(GRAPHQL_PATH)

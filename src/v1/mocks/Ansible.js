@@ -541,4 +541,20 @@ export const mockUpdatePolicyAutomationResponse = {
   },
 };
 
-// export const mockDeletePolicyAutomationResponse
+export const mockDeletePolicyAutomationResponse = [
+  {
+    response: {
+      kind: 'Status',
+      apiVersion: 'v1',
+      metadata: {},
+      status: 'Success',
+      details: {
+        name: 'policy-etcdencryption-policy-automation',
+        group: 'policy.open-cluster-management.io',
+        kind: 'policyautomations',
+        uid: '9841034a-bcb9-4c5b-96a4-827daaf8101a',
+      },
+    },
+    kind: 'PolicyAutomation',
+  },
+];

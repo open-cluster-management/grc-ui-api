@@ -298,27 +298,23 @@ Object {
       "result": Array [
         Object {
           "kind": "PolicyAutomation",
-          "response": Object {
-            "apiVersion": "policy.open-cluster-management.io/v1alpha1",
-            "kind": "PolicyAutomation",
-            "metadata": Object {
-              "name": "policy-grc-default-PolicyAutomation",
-              "namespace": "default",
-            },
-            "spec": Object {
-              "automationDef": Object {
-                "extra_vars": Object {
-                  "selector": "new-cluster",
+          "response": Array [
+            Object {
+              "kind": "PolicyAutomation",
+              "response": Object {
+                "apiVersion": "v1",
+                "details": Object {
+                  "group": "policy.open-cluster-management.io",
+                  "kind": "policyautomations",
+                  "name": "policy-etcdencryption-policy-automation",
+                  "uid": "9841034a-bcb9-4c5b-96a4-827daaf8101a",
                 },
-                "name": "New job Template",
-                "secret": "grc-testing",
-                "type": "AnsibleJob",
+                "kind": "Status",
+                "metadata": Object {},
+                "status": "Success",
               },
-              "eventHook": "non-compliance",
-              "mode": "manually",
-              "policyRef": "policy-grc-111",
             },
-          },
+          ],
         },
       ],
     },

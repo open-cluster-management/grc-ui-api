@@ -42,7 +42,7 @@ type Query {
   # Ansible Automation History
   ansibleAutomationHistories(name: String!, namespace: String!): [AnsibleAutomationHistory]
   # Ansible Operator Installed
-  ansibleOperatorInstalled: AnsibleOperatorInstalled
+  ansibleOperatorInstalled(namespace: String!): AnsibleOperatorInstalled
 }
 
 type Mutation {

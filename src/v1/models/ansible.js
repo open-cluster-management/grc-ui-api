@@ -55,7 +55,7 @@ export default class AnsibleModel extends KubeModel {
     let creds = ansibleCredentials.filter((ans) => ans.metadata.labels['cluster.open-cluster-management.io/copiedFromSecretName'] === undefined);
     // Check for the expected credential name
     if (name && namespace) {
-      const credsFound = (creds.filter((ans) => ans.metadata.name === name && ans.metadata.namespace === namespace).length === 1);
+      const credsFound = (creds.filter((ans) => ans.metadata.name === name).length === 1);
       // Credential wasn't found--fall back to the copied credential
       if (!credsFound) {
         creds = [await this.kubeConnector.get(

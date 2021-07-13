@@ -129,6 +129,7 @@ export default class AnsibleModel extends KubeModel {
         logger.error(`ACM ERROR ${code} - ${message}`)
       } else {
         logger.error(`Unknown error: Ansible Operator check to look for AnsibleJobs failed { apiVersion:\'${receivedVersion}\', kind: \'${kind}\' }`)
+        throw new Error('Failed to retrieve ansiblejobs');
       }
     }
     return {

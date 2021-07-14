@@ -115,20 +115,20 @@ export default class AnsibleModel extends KubeModel {
   async ansibleOperatorInstalled(args) {
     const { namespace } = args;
     let installed = false;
-    const ansibleApiVersion = 'tower.ansible.com/v1alpha1'
+    const ansibleApiVersion = 'tower.ansible.com/v1alpha1';
     const ansibleJobs = await this.kubeConnector.get(`/apis/${ansibleApiVersion}/namespaces/${namespace}/ansiblejobs`);
     const kind = _.get(ansibleJobs, 'kind', '');
     const receivedVersion = _.get(ansibleJobs, 'apiVersion', '');
     if (kind === 'AnsibleJobList' && receivedVersion === ansibleApiVersion) {
       installed = true;
     } else {
-      const status = _.get(ansibleJobs, 'status')
-      const message = _.get(ansibleJobs, 'message')
-      const code = _.get(ansibleJobs, 'code', '')
+      const status = _.get(ansibleJobs, 'status');
+      const message = _.get(ansibleJobs, 'message');
+      const code = _.get(ansibleJobs, 'code', '');
       if (status === 'Failure' || message !== undefined) {
-        logger.error(`ACM ERROR ${code} - ${message}`)
+        logger.error(`ACM ERROR ${code} - ${message}`);
       } else {
-        logger.error(`Unknown error: Ansible Operator check to look for AnsibleJobs failed { apiVersion:\'${receivedVersion}\', kind: \'${kind}\' }`)
+        logger.error(`Unknown error: Ansible Operator check to look for AnsibleJobs failed { apiVersion:'${receivedVersion}', kind: '${kind}' }`);
         throw new Error('Failed to retrieve ansiblejobs');
       }
     }

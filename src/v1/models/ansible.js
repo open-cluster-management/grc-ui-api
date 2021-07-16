@@ -50,7 +50,8 @@ export default class AnsibleModel extends KubeModel {
   async getAnsibleCredentials(args) {
     const { name, namespace } = args;
     const [ansibleCredentials] = await Promise.all([
-      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`),
+      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?` +
+        'labelSelector=cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans'),
     ]);
     let creds = ansibleCredentials.filter((ans) => ans.metadata.labels['cluster.open-cluster-management.io/copiedFromSecretName'] === undefined);
     // Check for the expected credential name
@@ -59,7 +60,8 @@ export default class AnsibleModel extends KubeModel {
       // Credential wasn't found--fall back to the copied credential
       if (!credsFound) {
         creds = [await this.kubeConnector.get(
-          `/api/v1/namespaces/${namespace}/secrets/${name}?labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name}`,
+          `/api/v1/namespaces/${namespace}/secrets/${name}?`
+          + `labelSelector=cluster.open-cluster-management.io/type=ans,cluster.open-cluster-management.io/copiedFromSecretName=${name}`,
         )];
         if (!(creds[0] && creds[0].metadata && creds[0].metadata.name === name)) {
           logger.error(creds);
@@ -78,10 +80,10 @@ export default class AnsibleModel extends KubeModel {
   async copyAnsibleSecret(args) {
     const { name, namespace, targetNamespace } = args;
     if (namespace !== targetNamespace) {
-      // check if credentianl has been already created
+      // check if credential has been already created
       const secret = await this.kubeConnector.get(
-        `/api/v1/namespaces/${targetNamespace}/secrets?`
-        + `labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
+        `/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans,`
+        + `cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`,
       );
       if (!secret.items) {
         logger.error(secret);
@@ -91,6 +93,7 @@ export default class AnsibleModel extends KubeModel {
           // no secret in targetNamespace, need to copy rootSecret and return the name
           const rootSecret = await this.kubeConnector.get(`/api/v1/namespaces/${namespace}/secrets/${name}`);
           rootSecret.metadata.labels = {
+            'cluster.open-cluster-management.io/type': 'ans',
             'cluster.open-cluster-management.io/copiedFromNamespace': namespace,
             'cluster.open-cluster-management.io/copiedFromSecretName': name,
           };

@@ -23,7 +23,9 @@ import ApiGroup from '../lib/ApiGroup';
 describe('Ansible Automation Resolver', () => {
   test('Correctly filters ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
-    APIServer.persist().get('/api/v1/namespaces/kube-system/secrets?labelSelector=cluster.open-cluster-management.io/type=ans').reply(200, mockFilterSecretInResponse);
+    APIServer.persist().get(`/api/v1/namespaces/kube-system/secrets?labelSelector=`
+      + 'cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans')
+      .reply(200, mockFilterSecretInResponse);
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -47,7 +49,9 @@ describe('Ansible Automation Resolver', () => {
   test('Correctly resolves ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
     ['local-cluster', 'cluster1', 'policy-namespace', 'default', 'kube-system'].forEach((ns) => {
-      APIServer.persist().get(`/api/v1/namespaces/${ns}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`).reply(200, mockAnsibleSecretsResponse(ns));
+      APIServer.persist().get(`/api/v1/namespaces/${ns}/secrets?labelSelector=`
+        + 'cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans')
+        .reply(200, mockAnsibleSecretsResponse(ns));
     });
     supertest(server)
       .post(GRAPHQL_PATH)
@@ -164,7 +168,9 @@ describe('Ansible Automation Resolver', () => {
     const namespace = 'default';
     const targetNamespace = 'kube-system';
     const APIServer = nock('http://0.0.0.0/kubernetes');
-    APIServer.persist().get(`/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`).reply(200, mockSecretExistsInTargetNamespaceResponse);
+    APIServer.persist().get(`/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans,`
+      + `cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`)
+      .reply(200, mockSecretExistsInTargetNamespaceResponse);
     supertest(server)
       .post(GRAPHQL_PATH)
       .send({
@@ -187,7 +193,9 @@ describe('Ansible Automation Resolver', () => {
     const namespace = 'default';
     const targetNamespace = 'kube-system';
     const APIServer = nock('http://0.0.0.0/kubernetes');
-    APIServer.persist().get(`/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`).reply(200, mockSecretNotExistsInTargetNamespaceResponse);
+    APIServer.persist().get(`/api/v1/namespaces/${targetNamespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans,`
+      + `cluster.open-cluster-management.io/copiedFromSecretName=${name},cluster.open-cluster-management.io/copiedFromNamespace=${namespace}`)
+      .reply(200, mockSecretNotExistsInTargetNamespaceResponse);
     APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets/${name}`).reply(200, mockRootAnsibleSecetResponse);
     APIServer.persist().post(`/api/v1/namespaces/${targetNamespace}/secrets`).reply(200, mockCopiedSecetResponse);
     supertest(server)

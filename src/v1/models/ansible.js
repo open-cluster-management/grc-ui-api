@@ -50,8 +50,8 @@ export default class AnsibleModel extends KubeModel {
   async getAnsibleCredentials(args) {
     const { name, namespace } = args;
     const [ansibleCredentials] = await Promise.all([
-      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?` +
-        'labelSelector=cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans'),
+      this.kubeConnector.getResources((ns) => `/api/v1/namespaces/${ns}/secrets?`
+        + 'labelSelector=cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans'),
     ]);
     let creds = ansibleCredentials.filter((ans) => ans.metadata.labels['cluster.open-cluster-management.io/copiedFromSecretName'] === undefined);
     // Check for the expected credential name

@@ -23,7 +23,7 @@ import ApiGroup from '../lib/ApiGroup';
 describe('Ansible Automation Resolver', () => {
   test('Correctly filters ansible credentials', () => new Promise((done) => {
     const APIServer = nock('http://0.0.0.0/kubernetes');
-    APIServer.persist().get(`/api/v1/namespaces/kube-system/secrets?labelSelector=`
+    APIServer.persist().get('/api/v1/namespaces/kube-system/secrets?labelSelector='
       + 'cluster.open-cluster-management.io/credentials=,cluster.open-cluster-management.io/type=ans')
       .reply(200, mockFilterSecretInResponse);
     supertest(server)

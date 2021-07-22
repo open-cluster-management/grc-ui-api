@@ -3,7 +3,7 @@
 FROM registry.ci.openshift.org/open-cluster-management/common-nodejs-parent:nodejs-14 as builder
 
 USER root
-RUN yum install git -y
+RUN microdnf install git -y
 
 RUN mkdir -p /opt/app-root/src/grc-ui
 WORKDIR /opt/app-root/src/grc-ui-api

@@ -1,9 +1,9 @@
 # Copyright Contributors to the Open Cluster Management project
 
-FROM registry.ci.openshift.org/open-cluster-management/common-nodejs-parent:nodejs-14 as builder
+FROM registry.access.redhat.com/ubi8/nodejs-14:1 as builder
 
 USER root
-RUN microdnf install git -y
+RUN yum install git -y
 
 RUN mkdir -p /opt/app-root/src/grc-ui
 WORKDIR /opt/app-root/src/grc-ui-api

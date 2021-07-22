@@ -1,6 +1,6 @@
 # Copyright Contributors to the Open Cluster Management project
 
-FROM registry.ci.openshift.org/open-cluster-management/common-nodejs-parent:nodejs-14
+FROM registry.ci.openshift.org/open-cluster-management/common-nodejs-parent:nodejs-14 as builder
 RUN microdnf install git -y
 RUN ./install-npm.sh
 

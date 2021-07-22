@@ -15,7 +15,6 @@ RUN make prune
 
 FROM registry.ci.openshift.org/open-cluster-management/common-nodejs-parent:nodejs-14
 RUN microdnf update
-RUN ./install-npm.sh
 
 RUN mkdir -p /opt/app-root/src/grc-ui-api
 WORKDIR /opt/app-root/src/grc-ui-api

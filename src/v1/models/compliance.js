@@ -41,6 +41,8 @@ const templateMetaNameStr = 'templateMeta.name';
 const historyLatestMessageStr = 'history[0].message';
 const historyLatestTimestampStr = 'history[0].lastTimestamp';
 
+const knownExternalManagers = ['multicluster-operators-subscription', 'argocd-application-controller'];
+
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
   Object.entries(policy.spec || []).forEach(([key, value]) => {
@@ -463,6 +465,11 @@ export default class ComplianceModel {
       controls: _.get(rawAnnotations, `${ApiGroup.policiesGroup}/controls`, '-'),
       standards: _.get(rawAnnotations, `${ApiGroup.policiesGroup}/standards`, '-'),
     };
+  }
+
+  static resolveExternal(parent) {
+    const managedFields = _.get(parent, 'metadata.managedFields', []);
+    return _.some(managedFields, (mf) => _.includes(knownExternalManagers, _.get(mf, 'manager', 'none')));
   }
 
   async getPlacementRulesFromParent(parent = {}) {

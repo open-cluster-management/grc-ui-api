@@ -9,6 +9,7 @@ const ApiGroup = {
   version: 'v1',
   clusterInfoGroup: 'internal.open-cluster-management.io',
   clusterAPIVersion: 'v1beta1',
+  helmGroup: 'meta.helm.sh',
 };
 
 export default ApiGroup;

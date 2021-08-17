@@ -1022,7 +1022,7 @@ export default class ComplianceModel {
         gitCommit: getGitAnnotation(subscriptionAnnotations, 'commit'),
         type: _.get(channel, 'spec.type'),
         pathname: _.get(channel, 'spec.pathname'),
-        package: _.get(subscription, 'spec.package'),
+        package: _.get(subscription, 'spec.name'),
         packageFilterVersion: _.get(subscription, 'spec.packageFilter.version'),
       };
     }

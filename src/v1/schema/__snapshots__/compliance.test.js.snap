@@ -77,6 +77,7 @@ Object {
           "standards": "-",
         },
         "clusterCompliant": "-",
+        "external": false,
         "metadata": null,
         "name": "",
         "namespace": "",
@@ -85,6 +86,7 @@ Object {
         "policyCompliant": "0/0",
         "raw": Object {},
         "remediation": "",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -93,8 +95,11 @@ Object {
           "standards": "-",
         },
         "clusterCompliant": "0/2/0",
+        "external": true,
         "metadata": Object {
-          "annotations": null,
+          "annotations": Object {
+            "apps.open-cluster-management.io/hosting-subscription": "policy-namespace/demo-stable-policies-sub",
+          },
           "name": "policy-certificatepolicy",
           "namespace": "policy-namespace",
           "resourceVersion": "3666045",
@@ -109,12 +114,21 @@ Object {
           "apiVersion": "policy.open-cluster-management.io/v1",
           "kind": "Policy",
           "metadata": Object {
+            "annotations": Object {
+              "apps.open-cluster-management.io/hosting-subscription": "policy-namespace/demo-stable-policies-sub",
+            },
             "creationTimestamp": "2019-09-03T18:34:05Z",
             "finalizers": Array [
               "finalizer.policies.ibm.com",
               "propagator.finalizer.mcm.ibm.com",
             ],
             "generation": 24,
+            "managedFields": Array [
+              Object {
+                "apiVersion": "policy.open-cluster-management.io/v1",
+                "manager": "multicluster-operators-subscription",
+              },
+            ],
             "name": "policy-certificatepolicy",
             "namespace": "policy-namespace",
             "resourceVersion": "3666045",
@@ -192,6 +206,14 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": Object {
+          "bucketPath": "examples",
+          "gitBranch": "main",
+          "gitCommit": "8de23f",
+          "gitPath": "my-policies",
+          "pathname": "https://github.com/open-cluster-management/policy-collection",
+          "type": "GitHub",
+        },
       },
       Object {
         "annotations": Object {
@@ -200,8 +222,11 @@ Object {
           "standards": "FISMA",
         },
         "clusterCompliant": "2/3/1",
+        "external": true,
         "metadata": Object {
           "annotations": Object {
+            "meta.helm.sh/release-name": "chart-policies-xyz",
+            "meta.helm.sh/release-namespace": "policy-namespace",
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
             "policy.open-cluster-management.io/controls": "MutationAdvisor",
             "policy.open-cluster-management.io/standards": "FISMA",
@@ -221,6 +246,8 @@ Object {
           "kind": "Policy",
           "metadata": Object {
             "annotations": Object {
+              "meta.helm.sh/release-name": "chart-policies-xyz",
+              "meta.helm.sh/release-namespace": "policy-namespace",
               "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
               "policy.open-cluster-management.io/controls": "MutationAdvisor",
               "policy.open-cluster-management.io/standards": "FISMA",
@@ -231,6 +258,12 @@ Object {
               "propagator.finalizer.mcm.ibm.com",
             ],
             "generation": 22,
+            "managedFields": Array [
+              Object {
+                "apiVersion": "policy.open-cluster-management.io/v1",
+                "manager": "multicluster-operators-subscription",
+              },
+            ],
             "name": "policy-iampolicy",
             "namespace": "policy-namespace",
             "resourceVersion": "3664798",
@@ -312,6 +345,12 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": Object {
+          "package": "iampolicy",
+          "packageFilterVersion": "1.1.0",
+          "pathname": "https://example.com/policy-charts",
+          "type": "HelmRepo",
+        },
       },
       Object {
         "annotations": Object {
@@ -320,6 +359,7 @@ Object {
           "standards": "FISMA, TEST",
         },
         "clusterCompliant": "2/3/1",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -424,6 +464,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -432,6 +473,7 @@ Object {
           "standards": "HIPAA",
         },
         "clusterCompliant": "2/2/0",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -542,6 +584,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -550,6 +593,7 @@ Object {
           "standards": "FISMA",
         },
         "clusterCompliant": "2/2/0",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -647,6 +691,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -655,6 +700,7 @@ Object {
           "standards": "FISMA",
         },
         "clusterCompliant": "2/2/0",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -764,6 +810,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -772,6 +819,7 @@ Object {
           "standards": "FISMA",
         },
         "clusterCompliant": "2/2/0",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndCommunicationsProtections",
@@ -881,6 +929,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
       Object {
         "annotations": Object {
@@ -889,6 +938,7 @@ Object {
           "standards": "PCI",
         },
         "clusterCompliant": "1/2/0",
+        "external": false,
         "metadata": Object {
           "annotations": Object {
             "policy.open-cluster-management.io/categories": "SystemAndInformationIntegrity",
@@ -1001,6 +1051,7 @@ Object {
           },
         },
         "remediation": "inform",
+        "source": null,
       },
     ],
   },

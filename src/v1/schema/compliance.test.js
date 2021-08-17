@@ -24,6 +24,14 @@ import {
 import {
   mockClusterCluster1Response, mockClusterHubResponse, mockClusterNonclusterNs,
 } from '../mocks/ClusterList';
+import {
+  mockSubscriptionListDefaultResponse,
+  mockSubscriptionListPolicyNamespaceResponse,
+  mockChannelListDefaultResponse,
+  mockChannelListPolicyNamespaceResponse,
+  mockHelmReleaseListDefaultResponse,
+  mockHelmReleaseListPolicyNamespaceResponse,
+} from '../mocks/SourceLists';
 
 describe('Compliance Resolver', () => {
   beforeAll(() => {
@@ -89,6 +97,42 @@ describe('Compliance Resolver', () => {
     APIServer.persist().get(`/${ApiGroup.clusterInfoGroup}/${ApiGroup.clusterAPIVersion}/namespaces/kube-system/managedclusterinfos`)
       .reply(200, mockClusterNonclusterNs);
 
+    // Subscriptions
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/policy-namespace/subscriptions`)
+      .reply(200, mockSubscriptionListPolicyNamespaceResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/cluster1/subscriptions`)
+      .reply(200, mockSubscriptionListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/local-cluster/subscriptions`)
+      .reply(200, mockSubscriptionListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/kube-system/subscriptions`)
+      .reply(200, mockSubscriptionListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/default/subscriptions`)
+      .reply(200, mockSubscriptionListDefaultResponse);
+
+    // Channels
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/policy-namespace/channels`)
+      .reply(200, mockChannelListPolicyNamespaceResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/cluster1/channels`)
+      .reply(200, mockChannelListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/local-cluster/channels`)
+      .reply(200, mockChannelListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/kube-system/channels`)
+      .reply(200, mockChannelListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/default/channels`)
+      .reply(200, mockChannelListDefaultResponse);
+
+    // HelmReleases
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/policy-namespace/helmreleases`)
+      .reply(200, mockHelmReleaseListPolicyNamespaceResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/cluster1/helmreleases`)
+      .reply(200, mockHelmReleaseListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/local-cluster/helmreleases`)
+      .reply(200, mockHelmReleaseListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/kube-system/helmreleases`)
+      .reply(200, mockHelmReleaseListDefaultResponse);
+    APIServer.persist().get(`/${ApiGroup.appsGroup}/${ApiGroup.version}/namespaces/default/helmreleases`)
+      .reply(200, mockHelmReleaseListDefaultResponse);
+
     // DELETE responses
     APIServer.persist().delete('/path/to/valid/resource')
       .reply(200, {
@@ -137,6 +181,8 @@ describe('Compliance Resolver', () => {
                   selfLink
                 }
               }
+              external
+              source
             }
           }
         `,

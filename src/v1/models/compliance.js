@@ -1012,19 +1012,21 @@ export default class ComplianceModel {
       const subscriptionMap = await this.getSubscriptionMap();
       const channelMap = await this.getChannelMap();
       const subscription = subscriptionMap.get(hostingSubscription);
-      const subscriptionAnnotations = getAnnotations(subscription);
-      const channel = channelMap.get(subscription.spec.channel);
-      const getGitAnnotation = (annotations, name) => _.get(annotations, `${ApiGroup.appsGroup}/git-${name}`) || _.get(annotations, `${ApiGroup.appsGroup}/github-${name}`);
-      return {
-        bucketPath: _.get(subscriptionAnnotations, `${ApiGroup.appsGroup}/bucket-path`),
-        gitPath: getGitAnnotation(subscriptionAnnotations, 'path'),
-        gitBranch: getGitAnnotation(subscriptionAnnotations, 'branch'),
-        gitCommit: getGitAnnotation(subscriptionAnnotations, 'commit'),
-        type: _.get(channel, 'spec.type'),
-        pathname: _.get(channel, 'spec.pathname'),
-        package: _.get(subscription, 'spec.name'),
-        packageFilterVersion: _.get(subscription, 'spec.packageFilter.version'),
-      };
+      const channel = channelMap.get(_.get(subscription, 'spec.channel'));
+      if (subscription && channel) {
+        const subscriptionAnnotations = getAnnotations(subscription);
+        const getGitAnnotation = (annotations, name) => _.get(annotations, `${ApiGroup.appsGroup}/git-${name}`) || _.get(annotations, `${ApiGroup.appsGroup}/github-${name}`);
+        return {
+          bucketPath: _.get(subscriptionAnnotations, `${ApiGroup.appsGroup}/bucket-path`),
+          gitPath: getGitAnnotation(subscriptionAnnotations, 'path'),
+          gitBranch: getGitAnnotation(subscriptionAnnotations, 'branch'),
+          gitCommit: getGitAnnotation(subscriptionAnnotations, 'commit'),
+          type: _.get(channel, 'spec.type'),
+          pathname: _.get(channel, 'spec.pathname'),
+          package: _.get(subscription, 'spec.name'),
+          packageFilterVersion: _.get(subscription, 'spec.packageFilter.version'),
+        };
+      }
     }
     return null;
   }

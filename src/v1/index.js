@@ -42,91 +42,95 @@ const formatError = (error) => {
   return formatApolloError(error);
 };
 
-const apolloServer = new ApolloServer({
-  ...schema,
-  formatError,
-  playground: {
-    endpoint: GRAPHQL_PATH,
-  },
-  context: ({ req }) => {
-    if (req.user.namespaces.code === 401) {
-      logger.error('Found 401 unauthenticated returned for user namespaces');
-      throw new AuthenticationError('Unauthenticated');
-    }
-    const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
-    const clusterNamespaces = req.user.namespaces.items
-      .filter((ns) => ns.metadata.labels && ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'] === ns.metadata.name)
-      .map((ns) => ns.metadata.name);
-    const userNamespaces = req.user.namespaces.items
-      .filter((ns) => !ns.metadata.labels || !ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'])
-      .map((ns) => ns.metadata.name);
-    const kubeConnector = new KubeConnector({
-      token: req.kubeToken,
-      namespaces,
-      clusterNamespaces,
-      userNamespaces,
-    });
-    if (isTest) {
-      kubeConnector.kubeApiEndpoint = 'http://0.0.0.0/kubernetes';
-    }
-
-    return {
-      req,
-      clusterModel: new ClusterModel({ kubeConnector }),
-      genericModel: new GenericModel({ kubeConnector }),
-      complianceModel: new ComplianceModel({ kubeConnector }),
-      ansibleModel: new AnsibleModel({ kubeConnector }),
-    };
-  },
-});
-
-const graphQLServer = express();
-graphQLServer.use(compression());
-
-// These headers are dealt with in icp-management-ingress
-const callbacks = isProd
-  ? [helmet({
-    frameguard: false,
-    noSniff: false,
-    xssFilter: false,
-  })]
-  : [];
-callbacks.push(noCache(), cookieParser());
-graphQLServer.use('*', callbacks);
-
-graphQLServer.get('/livenessProbe', (req, res) => {
-  res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);
-});
-
-graphQLServer.get('/readinessProbe', (req, res) => {
-  res.send(`Testing readinessProbe --> ${new Date().toLocaleString()}`);
-});
-
-morganBody(graphQLServer, {
-  noColors: true,
-  logRequestBody: config.get('requestLogger') === 'true',
-  logResponseBody: config.get('requestLogger') === 'true',
-  stream: {
-    write: (message) => {
-      logger.info(message.trimEnd());
+async function startApolloServer() {
+  const apolloServer = new ApolloServer({
+    ...schema,
+    formatError,
+    playground: {
+      endpoint: GRAPHQL_PATH,
     },
-  },
-});
+    context: ({ req }) => {
+      if (req.user.namespaces.code === 401) {
+        logger.error('Found 401 unauthenticated returned for user namespaces');
+        throw new AuthenticationError('Unauthenticated');
+      }
+      const namespaces = req.user.namespaces.items.map((ns) => ns.metadata.name);
+      const clusterNamespaces = req.user.namespaces.items
+        .filter((ns) => ns.metadata.labels && ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'] === ns.metadata.name)
+        .map((ns) => ns.metadata.name);
+      const userNamespaces = req.user.namespaces.items
+        .filter((ns) => !ns.metadata.labels || !ns.metadata.labels['cluster.open-cluster-management.io/managedCluster'])
+        .map((ns) => ns.metadata.name);
+      const kubeConnector = new KubeConnector({
+        token: req.kubeToken,
+        namespaces,
+        clusterNamespaces,
+        userNamespaces,
+      });
+      if (isTest) {
+        kubeConnector.kubeApiEndpoint = 'http://0.0.0.0/kubernetes';
+      }
 
-const auth = [];
+      return {
+        req,
+        clusterModel: new ClusterModel({ kubeConnector }),
+        genericModel: new GenericModel({ kubeConnector }),
+        complianceModel: new ComplianceModel({ kubeConnector }),
+        ansibleModel: new AnsibleModel({ kubeConnector }),
+      };
+    },
+  });
 
-if (isProd) {
-  logger.info('Authentication enabled');
-  auth.push(inspect.app, authMiddleware());
-} else {
-  auth.push(authMiddleware({ shouldLocalAuth: true }));
+  const graphQLServer = express();
+  graphQLServer.use(compression());
+
+  // These headers are dealt with in icp-management-ingress
+  const callbacks = isProd
+    ? [helmet({
+      frameguard: false,
+      noSniff: false,
+      xssFilter: false,
+    })]
+    : [];
+  callbacks.push(noCache(), cookieParser());
+  graphQLServer.use('*', callbacks);
+
+  graphQLServer.get('/livenessProbe', (_req, res) => {
+    res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);
+  });
+
+  graphQLServer.get('/readinessProbe', (_req, res) => {
+    res.send(`Testing readinessProbe --> ${new Date().toLocaleString()}`);
+  });
+
+  morganBody(graphQLServer, {
+    noColors: true,
+    logRequestBody: config.get('requestLogger') === 'true',
+    logResponseBody: config.get('requestLogger') === 'true',
+    stream: {
+      write: (message) => {
+        logger.info(message.trimEnd());
+      },
+    },
+  });
+
+  const auth = [];
+
+  if (isProd) {
+    logger.info('Authentication enabled');
+    auth.push(inspect.app, authMiddleware());
+  } else {
+    auth.push(authMiddleware({ shouldLocalAuth: true }));
+  }
+
+  if (isTest) {
+    logger.info('Running in mock mode');
+  }
+
+  apolloServer.applyMiddleware({ app: graphQLServer, path: GRAPHQL_PATH });
+  graphQLServer.use(...auth);
+
+  return graphQLServer;
 }
 
-if (isTest) {
-  logger.info('Running in mock mode');
-}
-
-graphQLServer.use(...auth);
-apolloServer.applyMiddleware({ app: graphQLServer, path: GRAPHQL_PATH });
-
-export default graphQLServer;
+export default startApolloServer;

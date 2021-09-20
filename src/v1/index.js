@@ -42,7 +42,7 @@ const formatError = (error) => {
   return formatApolloError(error);
 };
 
-async function startApolloServer() {
+export async function startServer() {
   const apolloServer = new ApolloServer({
     ...schema,
     formatError,
@@ -127,10 +127,10 @@ async function startApolloServer() {
     logger.info('Running in mock mode');
   }
 
-  apolloServer.applyMiddleware({ app: graphQLServer, path: GRAPHQL_PATH });
+  await apolloServer.start();
+
   graphQLServer.use(...auth);
+  apolloServer.applyMiddleware({ app: graphQLServer, path: GRAPHQL_PATH });
 
   return graphQLServer;
 }
-
-export default startApolloServer;

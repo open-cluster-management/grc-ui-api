@@ -41,6 +41,8 @@ const templateMetaNameStr = 'templateMeta.name';
 const historyLatestMessageStr = 'history[0].message';
 const historyLatestTimestampStr = 'history[0].lastTimestamp';
 
+const knownExternalManagers = ['multicluster-operators-subscription', 'argocd-application-controller'];
+
 function getTemplates(policy = {}, templateType = '') {
   const templates = [];
   Object.entries(policy.spec || []).forEach(([key, value]) => {
@@ -72,6 +74,14 @@ function getErrorMessage(item, errorMessage) {
   }
 
   return updatedErrorMessage;
+}
+
+function mapResources(resources) {
+  const resourceMap = new Map();
+  resources.forEach((r) => {
+    resourceMap.set(`${r.metadata.namespace}/${r.metadata.name}`, r);
+  });
+  return resourceMap;
 }
 
 export default class ComplianceModel {
@@ -207,7 +217,53 @@ export default class ComplianceModel {
     return policies.filter((policy) => _.get(policy, ['metadata', 'labels', 'policy.open-cluster-management.io/root-policy']) === undefined);
   }
 
-  async getCompliances(name, namespace) {
+  async getSubscriptionMap() {
+    if (!this.sourceSubscriptions) {
+      this.sourceSubscriptions = this.kubeConnector.getResources(
+        (ns) => `${appAPIPrefix}/${ns}/subscriptions`,
+        { kind: 'Subscription' },
+      ).then((subscriptions) => mapResources(subscriptions));
+    }
+    return this.sourceSubscriptions;
+  }
+
+  async getChannelMap() {
+    if (!this.sourceChannels) {
+      this.sourceChannels = this.kubeConnector.getResources(
+        (ns) => `${appAPIPrefix}/${ns}/channels`,
+        { kind: 'Channel' },
+      ).then((channels) => mapResources(channels));
+    }
+    return this.sourceChannels;
+  }
+
+  async getHelmReleaseMap() {
+    if (!this.sourceHelmReleases) {
+      this.sourceHelmReleases = this.kubeConnector.getResources(
+        (ns) => `${appAPIPrefix}/${ns}/helmreleases`,
+        { kind: 'HelmRelease' },
+      ).then((helmReleases) => mapResources(helmReleases));
+    }
+    return this.sourceHelmReleases;
+  }
+
+  async getCompliances(name, namespace, info) {
+    // if the query includes the "source" field, fetch resources to use during resolution
+    if (_.find(
+      _.get(
+        _.find(
+          _.get(info, 'fieldNodes', []),
+          { kind: 'Field', name: { value: 'compliances' } },
+        ),
+        'selectionSet.selections',
+        [],
+      ),
+      { kind: 'Field', name: { value: 'source' } },
+    )) {
+      this.getSubscriptionMap();
+      this.getChannelMap();
+      this.getHelmReleaseMap();
+    }
     const urlNS = namespace || (config.get('complianceNamespace') ? config.get('complianceNamespace') : 'acm');
     let policies = [];
     let clusterNS = {};
@@ -463,6 +519,11 @@ export default class ComplianceModel {
       controls: _.get(rawAnnotations, `${ApiGroup.policiesGroup}/controls`, '-'),
       standards: _.get(rawAnnotations, `${ApiGroup.policiesGroup}/standards`, '-'),
     };
+  }
+
+  static resolveExternal(parent) {
+    const managedFields = _.get(parent, 'metadata.managedFields', []);
+    return _.some(managedFields, (mf) => _.includes(knownExternalManagers, _.get(mf, 'manager', 'none')));
   }
 
   async getPlacementRulesFromParent(parent = {}) {
@@ -929,5 +990,44 @@ export default class ComplianceModel {
       });
     });
     return violationArray;
+  }
+
+  async resolveSource(parent) {
+    const getAnnotations = (item) => _.get(item, 'metadata.annotations', {});
+    const getHostingSubscription = (annotations) => _.get(annotations, `${ApiGroup.appsGroup}/hosting-subscription`);
+    const parentAnnotations = getAnnotations(parent);
+    let hostingSubscription = getHostingSubscription(parentAnnotations);
+    if (!hostingSubscription) {
+      // check if this policy was deployed by a Helm release
+      const releaseNamespace = _.get(parentAnnotations, `${ApiGroup.helmGroup}/release-namespace`);
+      const releaseName = _.get(parentAnnotations, `${ApiGroup.helmGroup}/release-name`);
+      if (releaseNamespace && releaseName) {
+        const helmReleaseMap = await this.getHelmReleaseMap();
+        const helmRelease = helmReleaseMap.get(`${releaseNamespace}/${releaseName}`);
+        const helmReleaseAnnotations = getAnnotations(helmRelease);
+        hostingSubscription = getHostingSubscription(helmReleaseAnnotations);
+      }
+    }
+    if (hostingSubscription) {
+      const subscriptionMap = await this.getSubscriptionMap();
+      const channelMap = await this.getChannelMap();
+      const subscription = subscriptionMap.get(hostingSubscription);
+      const channel = channelMap.get(_.get(subscription, 'spec.channel'));
+      if (subscription && channel) {
+        const subscriptionAnnotations = getAnnotations(subscription);
+        const getGitAnnotation = (annotations, name) => _.get(annotations, `${ApiGroup.appsGroup}/git-${name}`) || _.get(annotations, `${ApiGroup.appsGroup}/github-${name}`);
+        return {
+          bucketPath: _.get(subscriptionAnnotations, `${ApiGroup.appsGroup}/bucket-path`),
+          gitPath: getGitAnnotation(subscriptionAnnotations, 'path'),
+          gitBranch: getGitAnnotation(subscriptionAnnotations, 'branch'),
+          gitCommit: getGitAnnotation(subscriptionAnnotations, 'commit'),
+          type: _.get(channel, 'spec.type'),
+          pathname: _.get(channel, 'spec.pathname'),
+          package: _.get(subscription, 'spec.name'),
+          packageFilterVersion: _.get(subscription, 'spec.packageFilter.version'),
+        };
+      }
+    }
+    return null;
   }
 }

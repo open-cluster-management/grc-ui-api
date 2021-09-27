@@ -31,6 +31,8 @@ type Compliance implements K8sObject {
   remediation: String
   clusters: [String]
   allTemplates: [MixedTemplate]
+  external: Boolean
+  source: JSON
 }
 
 # Placement Schemas
@@ -127,7 +129,7 @@ type MixedTemplate {
 
 export const resolver = {
   Query: {
-    compliances: (root, args, { complianceModel }) => complianceModel.getCompliances(args.name, args.namespace),
+    compliances: (root, args, { complianceModel }, info) => complianceModel.getCompliances(args.name, args.namespace, info),
   },
   Compliance: {
     compliancePolicies: (parent) => ComplianceModel.resolveCompliancePolicies(parent),
@@ -138,6 +140,8 @@ export const resolver = {
     annotations: (parent) => ComplianceModel.resolveAnnotations(parent),
     placementPolicies: (parent, args, { complianceModel }) => complianceModel.getPlacementRulesFromParent(parent),
     placementBindings: (parent, args, { complianceModel }) => complianceModel.getPlacementBindingsFromParent(parent),
+    external: (parent) => ComplianceModel.resolveExternal(parent),
+    source: (parent, args, { complianceModel }) => complianceModel.resolveSource(parent),
   },
   Mutation: {
     deleteCompliance: (root, args, { complianceModel }) => complianceModel.deleteCompliance(args),

@@ -51,6 +51,15 @@ export const mockComplianceListMCMResponse = {
         resourceVersion: '3666045',
         selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-certificatepolicy`,
         uid: '68d772b1-ce79-11e9-a1ed-005056a0b88e',
+        annotations: {
+          'apps.open-cluster-management.io/hosting-subscription': 'policy-namespace/demo-stable-policies-sub',
+        },
+        managedFields: [
+          {
+            apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
+            manager: 'multicluster-operators-subscription',
+          },
+        ],
       },
       spec: {
         complianceType: 'musthave',
@@ -134,6 +143,8 @@ export const mockComplianceListMCMResponse = {
           'policy.open-cluster-management.io/categories': 'SystemAndCommunicationsProtections',
           'policy.open-cluster-management.io/controls': 'MutationAdvisor',
           'policy.open-cluster-management.io/standards': 'FISMA',
+          'meta.helm.sh/release-namespace': 'policy-namespace',
+          'meta.helm.sh/release-name': 'chart-policies-xyz',
         },
         creationTimestamp: '2019-08-30T14:58:31Z',
         finalizers: [
@@ -146,6 +157,12 @@ export const mockComplianceListMCMResponse = {
         resourceVersion: '3664798',
         selfLink: `/apis/${ApiGroup.policiesGroup}/${ApiGroup.version}/namespaces/policy-namespace/policies/policy-iampolicy`,
         uid: 'a18d825a-cb36-11e9-a1eb-005056a0b88e',
+        managedFields: [
+          {
+            apiVersion: `${ApiGroup.policiesGroup}/${ApiGroup.version}`,
+            manager: 'multicluster-operators-subscription',
+          },
+        ],
       },
       spec: {
         complianceType: 'musthave',

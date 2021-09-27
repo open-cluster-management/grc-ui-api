@@ -84,11 +84,15 @@ const graphQLServer = express();
 graphQLServer.use(compression());
 
 // These headers are dealt with in icp-management-ingress
-graphQLServer.use('*', helmet({
-  frameguard: false,
-  noSniff: false,
-  xssFilter: false,
-}), noCache(), cookieParser());
+const callbacks = isProd
+  ? [helmet({
+    frameguard: false,
+    noSniff: false,
+    xssFilter: false,
+  })]
+  : [];
+callbacks.push(noCache(), cookieParser());
+graphQLServer.use('*', callbacks);
 
 graphQLServer.get('/livenessProbe', (req, res) => {
   res.send(`Testing livenessProbe --> ${new Date().toLocaleString()}`);

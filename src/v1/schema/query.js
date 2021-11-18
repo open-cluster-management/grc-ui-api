@@ -39,6 +39,9 @@ type Query {
   ansibleCredentials(name: String, namespace: String): [AnsibleCredential]
   # Copy and return secret name for given Ansible credential
   copyAnsibleSecret(name: String!, namespace: String!, targetNamespace: String!): AnsibleSecretName
+  # Clean up ansible secrets after delete all policy automations under single namespace
+  # and return the deleted ansible secrets name list
+  cleanAnsibleSecret(namespaceList: [String]!): [AnsibleSecretName]
   # Ansible Automation History
   ansibleAutomationHistories(name: String!, namespace: String!): [AnsibleAutomationHistory]
   # Ansible Operator Installed

@@ -47,6 +47,7 @@ export const resolver = {
     ansibleJobTemplates: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleJobTemplates(args),
     ansibleCredentials: (parent, args, { ansibleModel }) => ansibleModel.getAnsibleCredentials(args),
     copyAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.copyAnsibleSecret(args),
+    cleanAnsibleSecret: (parent, args, { ansibleModel }) => ansibleModel.cleanAnsibleSecret(args),
     ansibleAutomationHistories: (parent, args, { ansibleModel }) => ansibleModel.ansibleAutomationHistories(args),
     ansibleOperatorInstalled: (parent, args, { ansibleModel }) => ansibleModel.ansibleOperatorInstalled(args),
   },

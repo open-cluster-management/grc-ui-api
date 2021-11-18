@@ -9,6 +9,8 @@ import {
   mockAnsibleSecretsResponse,
   mockSecretExistsInTargetNamespaceResponse,
   mockSecretNotExistsInTargetNamespaceResponse,
+  mockSecretInResponse,
+  mockDeleteAnsibleSecretResponse,
   mockFilterSecretInResponse,
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
@@ -214,6 +216,39 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
+  test('Should clean up all ansible secret under single namespace', () => new Promise((done) => {
+    const namespace1 = 'e2e-rbac-test-1';
+    const namespace2 = 'e2e-rbac-test-2';
+    const namespaceList = [namespace1, namespace2];
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    namespaceList.forEach((namespace) => {
+      APIServer.get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+        .reply(200, mockPolicyAutomationsResponse(namespace));
+      APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`)
+        .reply(200, mockSecretInResponse(namespace));
+      const ansibleSecretItems = mockSecretInResponse(namespace).items;
+      ansibleSecretItems.forEach((ansibleSecret) => {
+        const ansibleSecretName = ansibleSecret.metadata.name;
+        APIServer.persist().delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`)
+          .reply(200, mockDeleteAnsibleSecretResponse(ansibleSecretName, 'Success'));
+      });
+    });
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+            cleanAnsibleSecret(namespaceList: ["e2e-rbac-test-1", "e2e-rbac-test-2"]){
+              name
+            }
+          }
+        `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
   test('Should correctly resolve ansible automation history', () => new Promise((done) => {
     const namespace = 'default';
     const APIServer = nock('http://0.0.0.0/kubernetes');
@@ -358,6 +393,16 @@ test('Correctly Resolves Delete Policy Automation Mutation', () => new Promise((
   ['default'].forEach((namespace) => {
     APIServer.persist().delete(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations/policy-grc-default-policyAutomation`)
       .reply(200, mockDeletePolicyAutomationResponse);
+    APIServer.get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, mockPolicyAutomationsResponse(namespace));
+    APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`)
+      .reply(200, mockSecretInResponse(namespace));
+    const ansibleSecretItems = mockSecretInResponse(namespace).items;
+    ansibleSecretItems.forEach((ansibleSecret) => {
+      const ansibleSecretName = ansibleSecret.metadata.name;
+      APIServer.persist().delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`)
+        .reply(200, mockDeleteAnsibleSecretResponse(ansibleSecretName, 'Success'));
+    });
   });
   supertest(server)
     .post(GRAPHQL_PATH)

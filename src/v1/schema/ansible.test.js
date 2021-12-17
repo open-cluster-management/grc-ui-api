@@ -283,7 +283,7 @@ describe('Ansible Automation Resolver', () => {
       });
   }));
 
-  test('No response for cleanning up all ansible secret under single namespace', () => new Promise((done) => {
+  test('No response for cleaning up all ansible secret under single namespace', () => new Promise((done) => {
     const namespace = 'e2e-rbac-test-3';
     const APIServer = nock('http://0.0.0.0/kubernetes');
     const mockSecret = mockSecretInResponse(namespace);

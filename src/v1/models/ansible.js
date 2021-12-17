@@ -129,7 +129,10 @@ export default class AnsibleModel extends KubeModel {
         `/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`,
       );
       const ansibleSecretItems = ansibleSecrets.items;
-      if (Array.isArray(ansibleSecretItems) && ansibleSecretItems.length > 0) {
+      if (!Array.isArray(ansibleSecretItems)) {
+        logger.error(ansibleSecrets);
+        throw new Error(`Failed to retrieve ansible secrets from ${namespace}`);
+      } else if (ansibleSecretItems.length > 0) {
         //  delete ansible secret under this namespace one by one
         ansibleSecretDeletion = await Promise.all(ansibleSecretItems.map(async (ansibleSecret) => {
           const ansibleSecretName = _.get(ansibleSecret, 'metadata.name');

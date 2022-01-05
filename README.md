@@ -1,7 +1,7 @@
 # grc-ui-api
-[![Build Status](https://travis-ci.com/open-cluster-management/grc-ui-api.svg?token=1xoYGv8XzWhB2heDk2My&branch=master)](https://travis-ci.com/open-cluster-management/grc-ui-api)
+[![Build Status](https://travis-ci.com/stolostron/grc-ui-api.svg?token=1xoYGv8XzWhB2heDk2My&branch=release-2.2)](https://travis-ci.com/stolostron/grc-ui-api)
 
-The UI API microservice, `grc-ui-api`, is the API server for the governance and risk dashboard UI in Red Hat Advanced Cluster Management. (See [`grc-ui`](https://github.com/open-cluster-management/grc-ui) for the UI microservice)
+The UI API microservice, `grc-ui-api`, is the API server for the governance and risk dashboard UI in Red Hat Advanced Cluster Management. (See [`grc-ui`](https://github.com/stolostron/grc-ui) for the UI microservice)
 
 ## Running
 1. The following environment variables need to be set.

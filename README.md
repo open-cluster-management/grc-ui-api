@@ -1,9 +1,9 @@
 [comment]: # ( Copyright Contributors to the Open Cluster Management project )
 
 # grc-ui-api
-[![Build Status](https://travis-ci.com/open-cluster-management/grc-ui-api.svg?token=2jHocNax82kqKsGV1uTE&branch=main)](https://travis-ci.com/open-cluster-management/grc-ui-api)
+[![Build Status](https://travis-ci.com/stolostron/grc-ui-api.svg?token=2jHocNax82kqKsGV1uTE&branch=main)](https://travis-ci.com/stolostron/grc-ui-api)
 
-The UI API microservice, `grc-ui-api`, is the API server for the governance and risk dashboard UI for Open Cluster Management. (See [`grc-ui`](https://github.com/open-cluster-management/grc-ui) for the UI microservice that uses it)
+The UI API microservice, `grc-ui-api`, is the API server for the governance and risk dashboard UI for Open Cluster Management. (See [`grc-ui`](https://github.com/stolostron/grc-ui) for the UI microservice that uses it)
 
 ## Build
 

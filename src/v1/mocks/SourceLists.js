@@ -76,7 +76,7 @@ export const mockChannelListPolicyNamespaceResponse = {
         namespace: 'policy-namespace',
       },
       spec: {
-        pathname: 'https://github.com/open-cluster-management/policy-collection',
+        pathname: 'https://github.com/stolostron/policy-collection',
         type: 'GitHub',
       },
     },

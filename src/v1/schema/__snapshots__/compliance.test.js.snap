@@ -211,7 +211,7 @@ Object {
           "gitBranch": "main",
           "gitCommit": "8de23f",
           "gitPath": "my-policies",
-          "pathname": "https://github.com/open-cluster-management/policy-collection",
+          "pathname": "https://github.com/stolostron/policy-collection",
           "type": "GitHub",
         },
       },

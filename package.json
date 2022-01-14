@@ -1,5 +1,5 @@
 {
-  "name": "@open-cluster-management/grc-ui-api",
+  "name": "@stolostron/grc-ui-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:open-cluster-management/grc-ui-api.git"
+    "url": "git@github.com:stolostron/grc-ui-api.git"
   },
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
@@ -38,7 +38,6 @@
     "@babel/plugin-transform-async-to-generator": "^7.14.5",
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.14.7",
-    "@open-cluster-management/security-middleware": "^1.0.5",
     "apollo-errors": "^1.9.0",
     "apollo-server-express": "^2.25.2",
     "compression": "^1.7.4",

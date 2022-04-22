@@ -115,6 +115,58 @@ export default class AnsibleModel extends KubeModel {
     }
   }
 
+  // clean up all ansible secrets under a namespace if no policy automations
+  async cleanAnsibleSecret(args) {
+    const { namespace } = args;
+    let ansibleSecretDeletion = [];
+
+    // get all policy automations under this namespace
+    const policyAutomations = this.getPolicyAutomations(namespace);
+    // if there isn't any policy automations
+    if (!policyAutomations || Object.entries(policyAutomations).length === 0) {
+      // get all ansible secret under this namespace
+      const ansibleSecrets = await this.kubeConnector.get(
+        `/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`,
+      );
+      const ansibleSecretItems = ansibleSecrets.items;
+      if (!Array.isArray(ansibleSecretItems)) {
+        logger.error(ansibleSecrets);
+        throw new Error(`Failed to retrieve ansible secrets from ${namespace}`);
+      } else if (ansibleSecretItems.length > 0) {
+        //  delete ansible secret under this namespace one by one
+        ansibleSecretDeletion = await Promise.all(ansibleSecretItems.map(async (ansibleSecret) => {
+          const ansibleSecretName = _.get(ansibleSecret, 'metadata.name');
+          const results = await this.kubeConnector.delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`);
+          const deletionResult = {
+            name: ansibleSecretName,
+            namespace,
+            deletionStatus: 'N/A',
+          };
+          const { items } = results;
+          if (Array.isArray(items) && items.length > 0) {
+            const deletionName = _.get(items[0], 'details.name');
+            const deletionStatus = _.get(items[0], 'status');
+            if (deletionName && deletionStatus) {
+              deletionResult.name = deletionName;
+              deletionResult.deletionStatus = deletionStatus;
+            }
+          } else {
+            deletionResult.deletionStatus = 'Unavailable response from deleting ansible secrets API';
+          }
+
+          return deletionResult;
+        }));
+      }
+    }
+
+    if (ansibleSecretDeletion.length > 0) {
+      logger.info(`Clean up all ansible secrets under namespace ${namespace} 
+      : ${JSON.stringify(ansibleSecretDeletion)}`);
+    }
+
+    return ansibleSecretDeletion;
+  }
+
   async ansibleOperatorInstalled(args) {
     const { namespace } = args;
     let installed = false;
@@ -212,8 +264,9 @@ export default class AnsibleModel extends KubeModel {
     const namespace = _.get(json, 'metadata.namespace');
     const createURL = `/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`;
     const updateURL = `${createURL}/${name}`;
+    const actionType = action.trim().toLowerCase();
     let response;
-    switch (action.trim().toLowerCase()) {
+    switch (actionType) {
       case 'post':
         response = await this.kubeConnector.post(createURL, json);
         break;
@@ -237,6 +290,10 @@ export default class AnsibleModel extends KubeModel {
     }
     if (response && (response.code || response.message)) {
       throw new Error(`${response.code} - ${response.message}`);
+    } else if (actionType === 'delete') {
+      // if successfully deleting policyAutomation then check & clean up ansible secret
+      // and no need to await cleanAnsibleSecret all done before returning response
+      this.cleanAnsibleSecret({ namespace });
     }
     return response;
   }

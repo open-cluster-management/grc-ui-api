@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Ansible Automation Resolver Correctly filters ansible credentials 1`] = `
+Object {
+  "data": Object {
+    "ansibleCredentials": Array [
+      Object {
+        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
+        "name": "toweraccess",
+        "namespace": "kube-system",
+        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Ansible Automation Resolver Correctly resolves Ansible Job Templates 1`] = `
 Object {
   "data": Object {
@@ -197,6 +212,44 @@ Object {
 }
 `;
 
+exports[`Ansible Automation Resolver No response for cleanning up all ansible secret under single namespace 1`] = `
+Object {
+  "data": Object {
+    "cleanAnsibleSecret": Array [
+      Object {
+        "deletionStatus": "Unavailable response from deleting ansible secrets API",
+        "name": "testSecret1",
+        "namespace": "e2e-rbac-test-3",
+      },
+      Object {
+        "deletionStatus": "Unavailable response from deleting ansible secrets API",
+        "name": "testSecret2",
+        "namespace": "e2e-rbac-test-3",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Ansible Automation Resolver Should clean up all ansible secret under single namespace 1`] = `
+Object {
+  "data": Object {
+    "cleanAnsibleSecret": Array [
+      Object {
+        "deletionStatus": "Success",
+        "name": "testSecret1",
+        "namespace": "e2e-rbac-test-1",
+      },
+      Object {
+        "deletionStatus": "Success",
+        "name": "testSecret2",
+        "namespace": "e2e-rbac-test-1",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Ansible Automation Resolver Should copy and return secret name as credential needs to be copied 1`] = `
 Object {
   "data": Object {
@@ -234,27 +287,31 @@ Object {
 }
 `;
 
+exports[`Ansible Automation Resolver Should failed to clean up all ansible secret under single namespace 1`] = `
+Object {
+  "data": Object {
+    "cleanAnsibleSecret": Array [
+      Object {
+        "deletionStatus": "Failed",
+        "name": "testSecret1",
+        "namespace": "e2e-rbac-test-2",
+      },
+      Object {
+        "deletionStatus": "Failed",
+        "name": "testSecret2",
+        "namespace": "e2e-rbac-test-2",
+      },
+    ],
+  },
+}
+`;
+
 exports[`Ansible Automation Resolver Should return existing secret name as the copied secret already exists 1`] = `
 Object {
   "data": Object {
     "copyAnsibleSecret": Object {
       "name": "existing_toweraccess",
     },
-  },
-}
-`;
-
-exports[`Ansible Automation Resolver Correctly filters ansible credentials 1`] = `
-Object {
-  "data": Object {
-    "ansibleCredentials": Array [
-      Object {
-        "host": "https://ansible-tower-web-svc-tower.apps.policy-grc-cp-dev-z4bg2.dev08.red-chesterfield.com",
-        "name": "toweraccess",
-        "namespace": "kube-system",
-        "token": "cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN",
-      },
-    ],
   },
 }
 `;

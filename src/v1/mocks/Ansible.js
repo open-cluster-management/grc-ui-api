@@ -230,6 +230,64 @@ export const mockSecretExistsInTargetNamespaceResponse = {
   ],
 };
 
+export const mockSecretInResponse = (ns) => ({
+  items: [
+    {
+      kind: 'Secret',
+      apiVersion: 'v1',
+      metadata: {
+        name: 'testSecret1',
+        namespace: ns,
+        labels: {
+          'cluster.open-cluster-management.io/credentials': '',
+          'cluster.open-cluster-management.io/type': 'ans',
+        },
+      },
+      data: {
+        host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+        token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+      },
+      type: 'Opaque',
+    },
+    {
+      kind: 'Secret',
+      apiVersion: 'v1',
+      metadata: {
+        name: 'testSecret2',
+        namespace: ns,
+        labels: {
+          'cluster.open-cluster-management.io/credentials': '',
+          'cluster.open-cluster-management.io/type': 'ans',
+        },
+      },
+      data: {
+        host: 'aHR0cHM6Ly9hbnNpYmxlLXRvd2VyLXdlYi1zdmMtdG93ZXIuYXBwcy5wb2xpY3ktZ3JjLWNwLWRldi16NGJnMi5kZXYwOC5yZWQtY2hlc3RlcmZpZWxkLmNvbQ==',
+        token: 'cjRqWnl5eWh1M2pYMzNuUFNrY25oQ2VKQ1ZNQlNN',
+      },
+      type: 'Opaque',
+    },
+  ],
+});
+
+export const mockDeleteAnsibleSecretResponse = (name, status) => ({
+  items: [
+    {
+      kind: 'Status',
+      apiVersion: 'v1',
+      metadata: {},
+      status,
+      details: {
+        name,
+        kind: 'secrets',
+        uid: '2cd70258-09c3-46bb-abf6-09d7dd6d961c',
+      },
+    },
+  ],
+});
+
+export const mockDeleteAnsibleSecretNoResponse = {
+};
+
 export const mockFilterSecretInResponse = {
   items: [
     {

@@ -9,6 +9,9 @@ import {
   mockAnsibleSecretsResponse,
   mockSecretExistsInTargetNamespaceResponse,
   mockSecretNotExistsInTargetNamespaceResponse,
+  mockSecretInResponse,
+  mockDeleteAnsibleSecretResponse,
+  mockDeleteAnsibleSecretNoResponse,
   mockFilterSecretInResponse,
   mockRootAnsibleSecetResponse,
   mockCopiedSecetResponse,
@@ -207,6 +210,105 @@ describe('Ansible Automation Resolver', () => {
           }
         }
       `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Should clean up all ansible secret under single namespace', () => new Promise((done) => {
+    const namespace = 'e2e-rbac-test-1';
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    const mockSecret = mockSecretInResponse(namespace);
+    // mock no policyautomations then move to clean up ansible secret
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, []);
+    APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`)
+      .reply(200, mockSecret);
+    const ansibleSecretItems = mockSecret.items;
+    ansibleSecretItems.forEach((ansibleSecret) => {
+      const ansibleSecretName = ansibleSecret.metadata.name;
+      APIServer.persist().delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`)
+        .reply(200, mockDeleteAnsibleSecretResponse(ansibleSecretName, 'Success'));
+    });
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+            cleanAnsibleSecret(namespace: "e2e-rbac-test-1"){
+              name
+              namespace
+              deletionStatus
+            }
+          }
+        `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('Should failed to clean up all ansible secret under single namespace', () => new Promise((done) => {
+    const namespace = 'e2e-rbac-test-2';
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    const mockSecret = mockSecretInResponse(namespace);
+    // mock no policyautomations then move to clean up ansible secret
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, []);
+    APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`)
+      .reply(200, mockSecret);
+    const ansibleSecretItems = mockSecret.items;
+    ansibleSecretItems.forEach((ansibleSecret) => {
+      const ansibleSecretName = ansibleSecret.metadata.name;
+      APIServer.persist().delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`)
+        .reply(200, mockDeleteAnsibleSecretResponse(ansibleSecretName, 'Failed'));
+    });
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+            cleanAnsibleSecret(namespace: "e2e-rbac-test-2"){
+              name
+              namespace
+              deletionStatus
+            }
+          }
+        `,
+      })
+      .end((err, res) => {
+        expect(JSON.parse(res.text)).toMatchSnapshot();
+        done();
+      });
+  }));
+
+  test('No response for cleaning up all ansible secret under single namespace', () => new Promise((done) => {
+    const namespace = 'e2e-rbac-test-3';
+    const APIServer = nock('http://0.0.0.0/kubernetes');
+    const mockSecret = mockSecretInResponse(namespace);
+    // mock no policyautomations then move to clean up ansible secret
+    APIServer.persist().get(`/apis/${ApiGroup.policiesGroup}/v1beta1/namespaces/${namespace}/policyautomations`)
+      .reply(200, []);
+    APIServer.persist().get(`/api/v1/namespaces/${namespace}/secrets?labelSelector=cluster.open-cluster-management.io/type=ans`)
+      .reply(200, mockSecret);
+    const ansibleSecretItems = mockSecret.items;
+    ansibleSecretItems.forEach((ansibleSecret) => {
+      const ansibleSecretName = ansibleSecret.metadata.name;
+      APIServer.persist().delete(`/api/v1/namespaces/${namespace}/secrets/${ansibleSecretName}`)
+        .reply(200, mockDeleteAnsibleSecretNoResponse);
+    });
+    supertest(server)
+      .post(GRAPHQL_PATH)
+      .send({
+        query: `{
+            cleanAnsibleSecret(namespace: "e2e-rbac-test-3"){
+              name
+              namespace
+              deletionStatus
+            }
+          }
+        `,
       })
       .end((err, res) => {
         expect(JSON.parse(res.text)).toMatchSnapshot();

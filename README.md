@@ -3,6 +3,12 @@
 # grc-ui-api
 [![Build Status](https://travis-ci.com/stolostron/grc-ui-api.svg?token=2jHocNax82kqKsGV1uTE&branch=main)](https://travis-ci.com/stolostron/grc-ui-api)
 
+# Deprecation Notice
+
+The GRC UI API is consolidated into the [console](https://github.com/stolostron/console) repository starting in RHACM 2.5.
+
+## Description
+
 The UI API microservice, `grc-ui-api`, is the API server for the governance and risk dashboard UI for Open Cluster Management. (See [`grc-ui`](https://github.com/stolostron/grc-ui) for the UI microservice that uses it)
 
 ## Build
